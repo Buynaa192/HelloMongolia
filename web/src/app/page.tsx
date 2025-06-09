@@ -1,13 +1,15 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "./_providers/AuthProvider";
+
+import { Header } from "./_components/ariukas/Header";
+import { Hero1 } from "./_components/ariukas/Hero1";
+import { Hero2 } from "./_components/ariukas/Hero2";
 
 export default function Home() {
-  const { signOut } = useAuth();
   return (
-    <div className="w-screen h-screen bg-white">
-      Home Page
-      <Button onClick={signOut}>signOut</Button>
+    <div className="w-full flex flex-col">
+      <Header />
+      <Hero1 />
+      <Hero2 />
     </div>
   );
 }
