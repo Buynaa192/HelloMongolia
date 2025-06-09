@@ -1,9 +1,8 @@
 
-
-export default function Home() {
+export default function About() {
   return (
     <div className="w-screen h-screen">
-     Home Page
+     About Page
     </div>
   );
 }
