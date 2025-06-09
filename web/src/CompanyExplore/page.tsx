@@ -1,9 +1,7 @@
-
-
-export default function Home() {
+export default function CompanyExplore() {
   return (
     <div className="w-screen h-screen">
-     Home Page
+     Destination Page
     </div>
   );
 }
