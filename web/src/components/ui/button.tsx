@@ -33,11 +33,7 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-<<<<<<< HEAD
-)
-=======
 );
->>>>>>> 2fd403e (homePage)
 
 function Button({
   className,
@@ -47,15 +43,9 @@ function Button({
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-<<<<<<< HEAD
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot : "button"
-=======
     asChild?: boolean;
   }) {
   const Comp = asChild ? Slot : "button";
->>>>>>> 2fd403e (homePage)
 
   return (
     <Comp
@@ -63,14 +53,7 @@ function Button({
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
-<<<<<<< HEAD
-  )
-}
-
-export { Button, buttonVariants }
-=======
   );
 }
 
 export { Button, buttonVariants };
->>>>>>> 2fd403e (homePage)
