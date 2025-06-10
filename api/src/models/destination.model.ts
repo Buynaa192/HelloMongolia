@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 const destinationItemSchema=new Schema ({
-    activity:{type:Schema.Types.ObjectId,ref:"activity",required:true}
+    activity:{type:Schema.Types.ObjectId,ref:"activity",required:false}
 })
 const destinationSchema= new Schema ({
     destinationName:{type:String, required:true},
