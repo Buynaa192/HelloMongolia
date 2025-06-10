@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Hero2Text } from "./Hero2Text";
-import { Videos } from "./Videos";
+import VideoGallery from "./Videos";
 
 export const Hero2 = () => {
   return (
