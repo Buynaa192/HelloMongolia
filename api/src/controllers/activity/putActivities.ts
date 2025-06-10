@@ -3,7 +3,7 @@ import { activityModel } from "../../models/activity.model";
 export const putActivity=async(req , res)=>{
     try{
     const {emoji, activityName, activityId}= req.body;
-    await activityModel.findByIdAndUpdate(activityId, {
+    await activityModel.updateOne(activityId, {
         emoji,
         activityName,
         updatedAt: new Date(),

@@ -6,4 +6,4 @@ const activitySchema= new Schema ({
     updatedAt:{type:Date ,required:true},
     createdAt:{type:Date,required:true}
 })
-export const activityModel=model("activity",activitySchema)
+export const activityModel=model("activity",activitySchema) 
