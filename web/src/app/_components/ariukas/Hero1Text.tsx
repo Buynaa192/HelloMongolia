@@ -1,53 +1,44 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
-const animatedWords = [
-  "EXPLORE",
-  "DISCOVER",
-  "TRAVEL",
-  "VENTURE",
-  "WANDER",
-  "ROAM",
-  "JOURNEY",
-  "ESCAPE",
-  "UNVEIL",
-  "EXPERIENCE",
-];
-export default function Hero1Text() {
-  const [index, setIndex] = useState<number>(0);
+const animatedWords = ["DISCOVER", "EXPLORE", "EXPERIENCE", "FEEL"];
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % animatedWords.length);
-    }, 2600);
-    return () => clearInterval(timer);
-  }, []);
+export const Hero1Text = () => {
+	const [index, setIndex] = useState(0);
 
-  return (
-    <div className="relative flex flex-col items-center justify-center w-full h-full">
-      <div className="h-[100px] relative flex items-center text-5xl md:text-7xl font-bold gap-3">
-        <div className="relative w-[450px] h-full overflow-hidden flex items-center justify-end">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={animatedWords[index]}
-              initial={{ y: -60, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 60, opacity: 0 }}
-              transition={{ duration: 0.6 }}
-              className="absolute"
-            >
-              {animatedWords[index]}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setIndex((prev) => (prev + 1) % animatedWords.length);
+		}, 2600);
+		return () => clearInterval(timer);
+	}, []);
 
-        <span className=" text-white">MONGOLIA</span>
-      </div>
-      <Button className=" px-4 py-2 border rounded-md text-white bg-transparent border-white hover:bg-white hover:text-black transition">
-        🔍🇲🇳 Search in Mongolia
-      </Button>
-    </div>
-  );
-}
+	return (
+		<div className="absolute flex flex-col gap-8 items-center justify-center w-full h-full">
+			<div className="flex flex-col items-center font-extrabold text-5xl lg:text-6xl">
+				<div className="flex justify-center ">
+					<AnimatePresence mode="wait">
+						<motion.div
+							key={animatedWords[index]}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							transition={{ duration: 0.8 }}>
+							{animatedWords[index]}
+						</motion.div>
+					</AnimatePresence>
+				</div>
+				<div className="text-white">
+					<span>MONGOLIA</span>
+				</div>
+			</div>
+
+			<Button className="px-6 py-3 text-lg border rounded-md text-white bg-transparent border-white hover:bg-white hover:text-black transition">
+				🔍🇲🇳 Search in Mongolia
+			</Button>
+		</div>
+	);
+};
