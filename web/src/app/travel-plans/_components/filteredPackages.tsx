@@ -59,11 +59,11 @@ export const FilteredPackages = () => {
         <div className="w-full   grid grid-cols-3   ">
           {packages.map((item, index) => {
             return (
-              <div className="w-full h-100 flex items-center justify-center ">
-                <div
-                  key={index}
-                  className="flex w-90 h-90 rounded-2xl hover:shadow-2xl flex-col hover:w-95 hover:h-95 duration-200"
-                >
+              <div
+                key={index}
+                className="w-full h-100 flex items-center justify-center "
+              >
+                <div className="flex w-90 h-90 rounded-2xl hover:shadow-2xl flex-col hover:w-95 hover:h-95 duration-200">
                   <img
                     src={item.image}
                     className={`w-full min-h-[250px] rounded-2xl object-cover `}
@@ -88,7 +88,7 @@ export const FilteredPackages = () => {
         </div>
       </div>
       <div className="w-full h-20 flex items-center justify-center">
-        <button className="w-[150px] h-[40px]  bg-red-600 border-1  rounded-[20px] flex items-center justify-center text-[16px] text-white font-semibold hover:bg-white hover:border-1 hover:border-black hover:text-black duration-200">
+        <button className="w-[150px] h-[40px]  bg-red-600 border-1  rounded-[20px] flex items-center justify-center text-[16px] text-white font-semibold hover:bg-white  hover:text-black duration-200 hover:shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:border-0">
           SEE MORE
         </button>
       </div>
