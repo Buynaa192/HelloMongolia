@@ -73,11 +73,18 @@ export const FilteredPackages = () => {
                       {item.company}
                     </div>
                     <div className="text-[24px] font-bold">{item.title}</div>
-                    <div className="flex w-[150px] justify-between items-center text-[12px] font-medium">
-                      <div>{item.duration}days</div>
-                      <div className="flex items-center">
-                        <img src={"/images/star.png"} className="w-5 h-5" />
-                        {item.rating}
+                    <div className="flex w-full justify-between items-center text-[12px] font-medium">
+                      <div className="flex w-[150px] justify-between items-center text-[12px] font-medium">
+                        {" "}
+                        <div>{item.duration}days</div>
+                        <div className="flex items-center">
+                          <img src={"/images/star.png"} className="w-5 h-5" />
+                          {item.rating}
+                        </div>
+                      </div>
+
+                      <div className="text-[24px] font-bold text-green-500">
+                        {item.cost}
                       </div>
                     </div>
                   </div>

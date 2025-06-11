@@ -14,7 +14,7 @@ export const SearchFilter = () => {
     "Adventure",
   ];
   return (
-    <div className="w-full h-100 bg-white flex-col flex gap-4 border-1  items-center">
+    <div className="w-full h-100 bg-white flex-col flex gap-4  items-center">
       <div className="w-full h-[80px] flex items-center justify-between pl-[40px] pr-[40px] ">
         <div className="text-[24px] font-semibold ">All Search Filters</div>
         <div className="flex gap-2 h-full items-center">
@@ -29,7 +29,7 @@ export const SearchFilter = () => {
           </button>
         </div>
       </div>
-      <div className="w-[calc(100%-80px)] border-b-2"> </div>
+      <div className="w-[calc(100%-80px)] border-b-1 border-[#f1f1f1]"> </div>
       <div className="flex w-full flex-1 ">
         <div className="flex-1 h-full  p-5">
           <div className="w-full h-full  flex flex-col gap-2 item">
