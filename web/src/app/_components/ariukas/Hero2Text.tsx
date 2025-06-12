@@ -36,7 +36,9 @@ export const Hero2Text = () => {
             </p>
           </div>
         </div>
-        <Button className="w-fit">EXPLORE ALL EXPERIENCES</Button>
+        <Button className=" bg-black text-white w-fit">
+          EXPLORE ALL EXPERIENCES
+        </Button>
       </div>
     </motion.div>
   );

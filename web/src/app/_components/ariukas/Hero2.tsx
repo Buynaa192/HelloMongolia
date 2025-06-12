@@ -4,7 +4,7 @@ export const Hero2 = () => {
   return (
     <div className="relative h-screen w-full">
       <div
-        className="absolute top-0 left-0 w-full md:h-100 h-150 pointer-events-none z-10"
+        className="absolute top-0 left-0 w-full md:h-80 h-120 pointer-events-none z-10"
         style={{
           background: "linear-gradient(to top, transparent, white)",
         }}
