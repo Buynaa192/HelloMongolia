@@ -1,17 +1,17 @@
 import { Schema, model } from "mongoose";
-const companyProfile = new Schema({
-email:{
-    type:String,
-    required:true
 
+const companyProfile = new Schema({
+  email: {
+    type: String,
+    required: true
   },
   password: {
     type: String,
     required: true,
   },
-  phoneNumber:{
-    type:String,
-     required: true,
+  phoneNumber: {
+    type: String,
+    required: true,
   },
   name: {
     type: String,
@@ -25,40 +25,37 @@ email:{
     type: String,
     required: true,
   },
-
- since:{
-    type:String,
-     required: true,
- },
-
-  websiteURL:{
-     type:String,
-     required: true,
-
+  since: {
+    type: String,
+    required: true,
   },
-  about:{
-    type:String,
-     required: true,
+  websiteURL: {
+    type: String,
+    required: true,
   },
-  packages:{
+  about: {
+    type: String,
+    required: true,
+  },
+  packages: [{
     type: Schema.Types.ObjectId,
     ref: "package",
     required: true,
-  },
- availableDestinations:{
-     type: Schema.Types.ObjectId,
+  }],
+  availableDestinations: [{
+    type: Schema.Types.ObjectId,
     ref: "destination",
     required: true,
- },
- reviews:{
-     type: Number,
-    required: true,
- },
- Rating:{
+  }],
+  reviews: {
     type: Number,
     required: true,
- },
-    createdAt: {
+  },
+  Rating: {
+    type: Number,
+    required: true,
+  },
+  createdAt: {
     type: Date,
     required: true,
   },
@@ -67,4 +64,5 @@ email:{
     required: true,
   },
 });
-export const foodModel = model("companyProfile", companyProfile);
+
+export const companyProfileModel = model("companyProfile", companyProfile);
