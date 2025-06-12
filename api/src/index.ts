@@ -4,6 +4,8 @@ import { destination } from "./routes/destination.route";
 import { config } from "dotenv";
 import { connectToDatabase } from "./database/connect-to-db";
 import { activityRouter } from "./routes/activity.route";
+import { authRouter } from "./routes/auth.route";
+import {companyRouter } from "./routes/company.route";
 config()
 connectToDatabase()
 const app = express();
@@ -13,6 +15,8 @@ app.use(cors())
 .use(express.json())
 .use("/destination",destination)
 .use("/activity", activityRouter)
+.use("/company",companyRouter)
+.use("/auth",authRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
