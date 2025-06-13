@@ -1,8 +1,10 @@
+import Link from "next/link";
+
 const packages = [
   {
     rating: 4.8,
     title: "Best Of Gobi in 12 days",
-    duration: 12,
+    duration: 5,
     image: "/images/pack1.png",
     cost: "$5001",
     company: "MongolianTravel",
@@ -11,7 +13,7 @@ const packages = [
   {
     rating: 4.8,
     title: "Best Of Gobi in 12 days",
-    duration: 12,
+    duration: 5,
     image: "/images/pack2.png",
     company: "MongolianTravel",
     cost: "$5002",
@@ -19,7 +21,7 @@ const packages = [
   {
     title: "Best Of Gobi in 12 days",
     rating: 4.8,
-    duration: 12,
+    duration: 5,
     image: "/images/pack3.png",
     company: "MongolianTravel",
     cost: "$5003",
@@ -27,13 +29,13 @@ const packages = [
   {
     rating: 4.8,
     title: "Best Of Gobi in 12 days",
-    duration: 12,
+    duration: 5,
     image: "/images/pack4.png",
     company: "MongolianTravel",
     cost: "$5004",
   },
   {
-    duration: 12,
+    duration: 5,
     title: "Best Of Gobi in 12 days",
     rating: 4.8,
     image: "/images/pack4.png",
@@ -43,7 +45,7 @@ const packages = [
   {
     rating: 4.8,
     title: "Best Of Gobi in 12 days",
-    duration: 12,
+    duration: 5,
     image: "/images/pack4.png",
     company: "MongolianTravel",
     cost: "$5004",
@@ -59,7 +61,8 @@ export const FilteredPackages = () => {
         <div className="w-full   grid grid-cols-3   ">
           {packages.map((item, index) => {
             return (
-              <div
+              <Link
+                href={"package/1"}
                 key={index}
                 className="w-full h-100 flex items-center justify-center "
               >
@@ -89,7 +92,7 @@ export const FilteredPackages = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
