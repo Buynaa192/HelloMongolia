@@ -74,7 +74,7 @@ const packages = {
 
 export default function PackagePage() {
   return (
-    <div className="w-full text-black flex flex-col gap-4">
+    <div className="w-full text-black flex flex-col gap-4 bg-white">
       <div
         className="w-full h-180 relative overflow-hidden 
       "
@@ -120,8 +120,8 @@ export default function PackagePage() {
           </div>
         </div>
       </div>
-      <div className="p-3">Home | Explore tour | {packages.title} </div>
-      <div className="w-full flex min-h-100 p-3 items-center ">
+      <div className="p-3 ">Home | Explore tour | {packages.title} </div>
+      <div className="w-full flex min-h-100 p-3 items-center  ">
         <div className="flex flex-col w-100">
           <div className="w-full flex flex-col gap-4">
             <div className="text-[24px] font-bold">Trip Overview:</div>
