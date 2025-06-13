@@ -26,7 +26,6 @@ export default function DestinatioExplore() {
     try {
       const res = await axios.get(`http://localhost:3001/destination`);
       setDestination(res.data.destinations);
-      console.log("asdasdas", res.data.destinations);
     } catch (error) {
       console.error("Failed to fetch destinations:", error);
     }
