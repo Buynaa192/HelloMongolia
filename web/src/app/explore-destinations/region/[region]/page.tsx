@@ -1,6 +1,6 @@
 "use client";
+import { api } from "@/axios";
 import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
-import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -31,9 +31,7 @@ export default function RegionPage() {
   const region = useParams<paramsType>();
 
   const GetRegionDestination = async () => {
-    const res = await axios.get(
-      `http://localhost:3001/destination/regions?region=${region.region} `
-    );
+    const res = await api.get(`/destination/regions?region=${region.region} `);
     setRegionDestination(res.data.regionDestination);
   };
   useEffect(() => {
