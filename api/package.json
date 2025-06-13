@@ -22,7 +22,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
     "multer": "^2.0.1",
-    "vercel": "^41.7.6"
+    "vercel": "^43.1.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

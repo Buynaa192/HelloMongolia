@@ -44,10 +44,12 @@ export default function SignUpPage() {
       setTimeout(() => {
         router.push("/login");
       }, 1000);
-    } catch (err: any) {
-      toast.error(
-        err?.response?.data?.message || "Signup failed. Please try again."
-      );
+    } catch (err) {
+      console.error(err);
+
+      // toast.error(
+      //   err?.response?.data?.message || "Signup failed. Please try again."
+      // );
     }
   };
 
