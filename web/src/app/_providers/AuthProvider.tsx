@@ -11,27 +11,27 @@ import { toast } from "sonner";
 import axios from "axios";
 import { api, setAuthToken } from "@/axios";
 import { string } from "zod";
-export type Activity = {
-  id: string;
+export type ActivityType = {
+  _id: string;
   emoji: string;
   name: string;
 };
-export type PackageItem = {
-  id: string;
+export type PackageItemType = {
+  _id: string;
   order: number;
   title: string;
   image: string;
   destination: string;
   description: string;
-  activity: Activity[];
+  activity: ActivityType[];
   accomodation: string;
 };
-export type Package = {
-  id: string;
+export type PackageType = {
+  _id: string;
   owner: string;
   coverPhoto: string;
   description: string;
-  packageItem: PackageItem[];
+  packageItem: PackageItemType[];
   duration: number;
   availableFrom: Date;
   availableUntil: Date;
@@ -40,22 +40,22 @@ export type Package = {
   tripType: string;
   rating: number;
 };
-export type Review = {
-  id: string;
+export type ReviewType = {
+  _id: string;
   reviewerName: string;
   companyId: string;
   message: string;
 };
-export type Destination = {
-  id: string;
+export type DestinationType = {
+  _id: string;
   name: string;
   images: string[];
   region: string;
   description: string;
-  activities: Activity[];
+  activities: ActivityType[];
 };
-export type Company = {
-  id: string;
+export type CompanyType = {
+  _id: string;
   email: string;
   password: string;
   name: string;
@@ -65,21 +65,21 @@ export type Company = {
   phoneNumber: number;
   websiteURL: string;
   about: string;
-  packages: Package[];
-  availableDestinations: Destination[];
-  reviews: Review[];
+  packages: PackageType[];
+  availableDestinations: DestinationType[];
+  reviews: ReviewType[];
   Rating: number;
 };
 type AuthContextType = {
-  company?: Company;
+  company?: CompanyType;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
-  setCompany: (company?: Company) => void;
+  setCompany: (company?: CompanyType) => void;
   getCompany: () => Promise<void>;
 };
 const AuthContext = createContext({} as AuthContextType);
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [company, setCompany] = useState<Company>();
+  const [company, setCompany] = useState<CompanyType>();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const signIn = async (email: string, password: string) => {
