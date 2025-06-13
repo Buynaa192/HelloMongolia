@@ -21,7 +21,6 @@ export type regionDestinationType = {
   destinationImages: string;
   region: string;
   description: string;
-  activities: any[];
 };
 
 export default function RegionPage() {
