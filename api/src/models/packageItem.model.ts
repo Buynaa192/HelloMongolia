@@ -12,11 +12,6 @@ const packageItemSchema = new Schema({
     type:String,
     required: true,
  },
- packageId:{
-    type: Schema.Types.ObjectId,
-    ref: "package",
-    required: true,
-    },
     destinationId:{
         type: Schema.Types.ObjectId,
         ref: "destination",

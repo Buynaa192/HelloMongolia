@@ -12,12 +12,6 @@ export const getPackageByCompanyId: RequestHandler = async (req, res) => {
     const packages = await packageModel
       .find({ companyId: companyId })
       .populate("companyId"); 
-
-    if (packages.length===0) {
-      res.status(404).json({ message: " package not found" });
-      return;
-    }
-
      res.status(200).json({ packages });
      return;
   } catch (error: any) {

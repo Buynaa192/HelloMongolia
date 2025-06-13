@@ -6,7 +6,6 @@ export const createPackageController = async (req, res) => {
       companyId,
       coverPhoto,
       description,
-      packageItem,
       duration,
       availableFrom,
       availableUntil,
@@ -15,14 +14,12 @@ export const createPackageController = async (req, res) => {
       tripType,
       rating,
     } = req.body;
-
-    const packageItems = typeof packageItem === "string" ? [packageItem] : packageItem;
+      
 
     const newPackage = await packageModel.create({
       companyId,
       coverPhoto,
       description,
-      packageItem: packageItems,
       duration,
       availableFrom: new Date(availableFrom),
       availableUntil: new Date(availableUntil),

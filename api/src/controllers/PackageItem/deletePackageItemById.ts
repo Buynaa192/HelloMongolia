@@ -11,8 +11,8 @@ export const deletePackageItemById: RequestHandler = async (req, res) => {
         res.status(404).json({ message: "PackageItem not found" });
         return;
       }
-      await packageModel.updateOne(
-        { _id: deletedPackageItem.packageId },
+      await packageModel.updateMany(
+        { packageItem: deletedPackageItem._id },
         {
           $pull: { packageItem: deletedPackageItem._id },
           $set: { updatedAt: new Date() },
