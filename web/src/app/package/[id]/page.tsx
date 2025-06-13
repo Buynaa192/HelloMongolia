@@ -82,7 +82,7 @@ export default function PackagePage() {
         <div className="w-fit h-full flex animate-wiggle relative ">
           {packages.packageItems.map((item, index) => {
             return (
-              <div className="w-[1440px]">
+              <div key={index} className="w-[1440px]">
                 <img
                   src={item.image}
                   key={index}
