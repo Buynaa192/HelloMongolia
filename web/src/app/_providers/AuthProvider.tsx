@@ -8,9 +8,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import axios from "axios";
 import { api, setAuthToken } from "@/axios";
-import { string } from "zod";
 export type ActivityType = {
   _id: string;
   emoji: string;
@@ -84,7 +82,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const signIn = async (email: string, password: string) => {
     try {
-      const { data } = await axios.post(`/auth/sign-in`, {
+      const { data } = await api.post(`/auth/sign-in`, {
         email,
         password,
       });

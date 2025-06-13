@@ -8,8 +8,8 @@ import { SearchIcon } from "lucide-react";
 import { Regions } from "@/components/buynaasComponents/regions/regions";
 import { PopularDestination } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestination";
 import Link from "next/link";
-import axios from "axios";
 import { regionDestinationType } from "./region/[region]/page";
+import { api } from "@/axios";
 
 const images = [
   "/images/pack1.png",
@@ -24,7 +24,7 @@ export default function DestinatioExplore() {
   const [searchDestination, SetsearchDestination] = useState("");
   const getDestination = async () => {
     try {
-      const res = await axios.get(`http://localhost:3001/destination`);
+      const res = await api.get(`/destination`);
       setDestination(res.data.destinations);
     } catch (error) {
       console.error("Failed to fetch destinations:", error);
