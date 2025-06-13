@@ -48,8 +48,8 @@ export type ReviewType = {
 };
 export type DestinationType = {
   _id: string;
-  name: string;
-  images: string[];
+  destinationName: string;
+  destinationImages: string[];
   region: string;
   description: string;
   activities: ActivityType[];
