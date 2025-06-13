@@ -1,74 +1,99 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { TravelTypeCard } from "./TravelTypeCard";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { type CarouselApi } from "@/components/ui/carousel";
 
 export const ScrollTypes = () => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [current, setCurrent] = useState(4);
+  const [api, setApi] = useState<CarouselApi | null>(null);
 
-  const [centerIndex, setCenterIndex] = useState(0);
-
-  const items = [
-    "Item 1",
-    "Item 2",
-    "Item 3",
-    "Item 4",
-    "Item 5",
-    "Item 6",
-    "Item 7",
+  const Types = [
+    {
+      title: "ADVENTURE",
+      image: "/images/ariukasImages/adventure.jpg",
+      buttonURL: "",
+    },
+    {
+      title: "FAMILY",
+      image: "/images/ariukasImages/family.jpg",
+      buttonURL: "",
+    },
+    {
+      title: "SCENERY",
+      image: "/images/ariukasImages/scenery.jpg",
+      buttonURL: "",
+    },
+    {
+      title: "WILDLIFE",
+      image: "/images/ariukasImages/wildlife.jpg",
+      buttonURL: "",
+    },
+    {
+      title: "CULTURAL",
+      image: "/images/ariukasImages/culture.jpg",
+      buttonURL: "",
+    },
+    {
+      title: "HISTORICAL",
+      image: "/images/ariukasImages/history.jpg",
+      buttonURL: "",
+    },
+    {
+      title: "SCIENTIFIC",
+      image: "/images/ariukasImages/science.jpg",
+      buttonURL: "",
+    },
   ];
 
-  const onScroll = () => {
-    if (!containerRef.current) return;
-
-    const container = containerRef.current;
-    const containerCenter = container.scrollLeft + container.offsetWidth / 2;
-
-    const itemElements = Array.from(container.children) as HTMLElement[];
-    let closestIndex = 0;
-    let closestDistance = Infinity;
-
-    itemElements.forEach((item, idx) => {
-      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
-      const distance = Math.abs(containerCenter - itemCenter);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = idx;
-      }
-    });
-
-    setCenterIndex(closestIndex);
-  };
-
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    container.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+    if (api) {
+      const handleSelect = () => {
+        setCurrent(api.selectedScrollSnap());
+      };
 
-    return () => container.removeEventListener("scroll", onScroll);
-  }, []);
+      api.on("select", handleSelect);
+
+      setCurrent(api.selectedScrollSnap());
+
+      return () => {
+        api.off("select", handleSelect);
+      };
+    }
+  }, [api]);
 
   return (
-    <div
-      ref={containerRef}
-      className="flex overflow-x-auto snap-x snap-mandatory p-5 border border-gray-300 gap-5 scroll-smooth"
+    <Carousel
+      setApi={setApi}
+      opts={{ align: "center" }}
+      className="w-full max-w-5xl mx-auto "
     >
-      {items.map((item, idx) => (
-        <div
-          key={idx}
-          className={`
-            min-w-[150px] h-[150px] flex-shrink-0 rounded-lg flex items-center justify-center snap-center
-            transition-transform duration-300
-            ${
-              idx === centerIndex
-                ? "bg-blue-600 text-white scale-110"
-                : "bg-gray-300 text-gray-600 scale-100"
-            }
-          `}
-        >
-          {item}
-        </div>
-      ))}
-    </div>
+      <CarouselContent className="-ml-4">
+        {Types.map((item, idx) => (
+          <CarouselItem
+            key={idx}
+            className="basis-[400px] flex justify-center"
+            onMouseEnter={() => api?.scrollTo(idx)}
+            onFocus={() => api?.scrollTo(idx)}
+          >
+            <TravelTypeCard
+              title={item.title}
+              imageSrc={item.image}
+              buttonURL={item.buttonURL}
+              isFocused={idx === current}
+            />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
   );
 };

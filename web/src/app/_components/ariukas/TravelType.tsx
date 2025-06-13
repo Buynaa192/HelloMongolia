@@ -22,7 +22,7 @@ export const ChooseTravelType = () => {
           }}
         />
         <div className="absolute inset-0 bg-black/60 z-10" />
-        <div className="w-full h-full border-1 border-white z-20 flex items-center justify-center">
+        <div className="w-full h-full z-20 flex items-center justify-center">
           <ScrollTypes />
         </div>
       </div>
