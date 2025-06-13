@@ -10,17 +10,65 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import axios from "axios";
 import { api, setAuthToken } from "@/axios";
-type Company = {
+import { string } from "zod";
+export type Activity = {
   id: string;
+  emoji: string;
+  name: string;
+};
+export type PackageItem = {
+  id: string;
+  order: number;
+  title: string;
+  image: string;
+  destination: string;
+  description: string;
+  activity: Activity[];
+  accomodation: string;
+};
+export type Package = {
+  id: string;
+  owner: string;
+  coverPhoto: string;
+  description: string;
+  packageItem: PackageItem[];
+  duration: number;
+  availableFrom: Date;
+  availableUntil: Date;
+  cost: number;
+  hutulbur: File;
+  tripType: string;
+  rating: number;
+};
+export type Review = {
+  id: string;
+  reviewerName: string;
+  companyId: string;
+  message: string;
+};
+export type Destination = {
+  id: string;
+  name: string;
+  images: string[];
+  region: string;
+  description: string;
+  activities: Activity[];
+};
+export type Company = {
+  id: string;
+  email: string;
+  password: string;
+  name: string;
   background: string;
   avatarImage: string;
-  name: string;
-  email: string;
-  image: string;
-  profile: {
-    id: number;
-    image: string;
-  };
+  since: number;
+  phoneNumber: number;
+  websiteURL: string;
+  about: string;
+  packages: Package[];
+  availableDestinations: Destination[];
+  reviews: Review[];
+  Rating: number;
 };
 type AuthContextType = {
   company?: Company;
