@@ -8,6 +8,7 @@ export const deleteCompanyById: RequestHandler = async (req, res) => {
   
       if (!deletedCompany) {
         res.status(404).json({ message: "Company not found" });
+        return;
       }
   
       res.status(200).json({ message: "Company deleted successfully" });

@@ -6,6 +6,8 @@ import { connectToDatabase } from "./database/connect-to-db";
 import { activityRouter } from "./routes/activity.route";
 import { authRouter } from "./routes/auth.route";
 import {companyRouter } from "./routes/company.route";
+import { packageRouter } from "./routes/package.route";
+import { packageItemRouter } from "./routes/packageItem.route";
 config()
 connectToDatabase()
 const app = express();
@@ -16,7 +18,9 @@ app.use(cors())
 .use("/destination",destination)
 .use("/activity", activityRouter)
 .use("/company",companyRouter)
-.use("/auth",authRouter)
+.use("/auth", authRouter)
+.use("/package",packageRouter)
+.use("/packageItem",packageItemRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
