@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
 
-const companyProfile = new Schema({
+const companyProfileSchema = new Schema({
   email: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
@@ -11,49 +11,49 @@ const companyProfile = new Schema({
   },
   phoneNumber: {
     type: String,
-    required: true,
+    default: "",
   },
   name: {
     type: String,
-    required: true,
+    default: "",
   },
   background: {
     type: String,
-    required: true,
+    default: "",
   },
   AvatarImage: {
     type: String,
-    required: true,
+    default: "",
   },
   since: {
     type: String,
-    required: true,
+    default: "",
   },
   websiteURL: {
     type: String,
-    required: true,
+    default: "",
   },
   about: {
     type: String,
-    required: true,
+    default: "",
   },
-  packages: [{
-    type: Schema.Types.ObjectId,
+  packages: {
+    type: [Schema.Types.ObjectId],
     ref: "package",
-    required: true,
-  }],
-  availableDestinations: [{
-    type: Schema.Types.ObjectId,
+    default: [],
+  },
+  availableDestinations: {
+    type: [Schema.Types.ObjectId],
     ref: "destination",
-    required: true,
-  }],
+    default: [],
+  },
   reviews: {
     type: Number,
-    required: true,
+    default: 0,
   },
   Rating: {
     type: Number,
-    required: true,
+    default: 0,
   },
   createdAt: {
     type: Date,
@@ -65,4 +65,7 @@ const companyProfile = new Schema({
   },
 });
 
-export const companyProfileModel = model("companyProfile", companyProfile);
+export const companyProfileModel = model(
+  "companyProfile",
+  companyProfileSchema
+);
