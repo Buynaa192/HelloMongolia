@@ -8,7 +8,7 @@ export const getCompanyById: RequestHandler = async (req, res) => {
     try {
       const companies = await companyProfileModel.find(
         companyId ? { _id: companyId } : {}
-      );
+      ).populate("packages")
   
       res.status(200).json({ companies });
     } catch (error) {

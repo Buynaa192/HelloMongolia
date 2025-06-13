@@ -7,7 +7,7 @@ const companyProfileSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
   phoneNumber: {
     type: String,

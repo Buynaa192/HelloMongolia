@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 const packageSchema = new Schema({
-    owner:{
+    companyId:{
     type: Schema.Types.ObjectId,
     ref: "companyProfile",
     required: true,
@@ -14,7 +14,8 @@ const packageSchema = new Schema({
     required: true,
  },
  packageItem:[{
-     type:String,
+     type:Schema.Types.ObjectId,
+     ref: "packageItem",
     required: true,
  }],
  duration:{
@@ -35,14 +36,9 @@ const packageSchema = new Schema({
     
   },
   itinerary: {
-   data: {
-     type: Buffer,
-     required: true
-   },
-   contentType: {
+  
      type: String,
      required: true
-   }
  },
 tripType:{
 type: String,
