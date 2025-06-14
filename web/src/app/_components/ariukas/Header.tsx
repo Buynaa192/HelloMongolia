@@ -13,7 +13,7 @@ export const Header = () => {
   ];
 
   return (
-    <div className=" flex gap-20 absolute top-5 px-10 z-10">
+    <div className="w-full flex md:gap-20  justify-between absolute top-5 px-10 z-10">
       {headers.map(({ name, url }) => (
         <Button
           key={name}

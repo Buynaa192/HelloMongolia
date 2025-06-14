@@ -22,7 +22,7 @@ export const TopDestinationsHero = () => {
   ];
 
   return (
-    <div className="w-full h-full relative flex flex-col">
+    <div className="w-full h-fit relative flex flex-col">
       <HomePageTitle title="TOP DESTINATIONS" />
 
       <div className="w-full h-full flex flex-col relative z-20">
