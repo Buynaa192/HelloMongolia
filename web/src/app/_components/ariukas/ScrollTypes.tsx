@@ -73,13 +73,13 @@ export const ScrollTypes = () => {
     <Carousel
       setApi={setApi}
       opts={{ align: "center" }}
-      className="w-full max-w-5xl mx-auto "
+      className="w-full md:max-w-5xl max-w-2xl overflow-hidden"
     >
       <CarouselContent className="-ml-4">
         {Types.map((item, idx) => (
           <CarouselItem
             key={idx}
-            className="basis-[400px] flex justify-center"
+            className="md:basis-[400px] basis-[250px] flex flex-col justify-center p-0"
             onMouseEnter={() => api?.scrollTo(idx)}
             onFocus={() => api?.scrollTo(idx)}
           >

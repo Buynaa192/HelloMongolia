@@ -19,16 +19,16 @@ export const TravelTypeCard = ({
 
   return (
     <div
-      className={`relative w-full h-[400px] rounded-md overflow-hidden  transition-all duration-300 ease-in-out transform flex items-center ${
+      className={`relative w-full md:h-[500px] h-[300px] rounded-md overflow-hidden  transition-all duration-300 ease-in-out transform flex items-center ${
         isFocused
-          ? "scale-110 w-full h-[600px] z-10 shadow-2xl"
+          ? "scale-110 w-full md:h-[600px] h-[400px] z-10 shadow-2xl"
           : "scale-100 opacity-70"
       }`}
     >
       <Image src={imageSrc} alt={title} fill className="object-cover" />
 
       {isFocused ? (
-        <div className="absolute inset-0 flex flex-col justify-between items-center p-15 rounded-md">
+        <div className="w-full h-full absolute inset-0 flex flex-col justify-between items-center p-15 rounded-md">
           <div
             className="absolute top-0 left-0 w-full h-80 pointer-events-none z-10"
             style={{
