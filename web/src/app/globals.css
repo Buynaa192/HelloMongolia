@@ -1,51 +1,45 @@
-<<<<<<< HEAD
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Savate:ital,wght@0,200..900;1,200..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Savate:ital,wght@0,200..900;1,200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @theme {
-  --animate-wiggle: wiggle 20s ease-in-out 3s infinite;
-  @keyframes wiggle {
-    0% {
-      left: 0;
-    }
-    5% {
-      left: -100%;
-    }
-    10% {
-      left: -100%;
-    }
-    20% {
-      left: -200%;
-    }
-    30% {
-      left: -200%;
-    }
-       40% {
-      left: -300%;
-    }
-    50% {
-      left: -300%;
-    } 
-    60% {
-      left: -400%;
-    }
-    70% {
-      left: -400%;
-    }
-    80% {
-      left: 0;
-    }
-    100% {
-      left: 0;
-    }
-  }
+	--animate-wiggle: wiggle 20s ease-in-out 3s infinite;
+	@keyframes wiggle {
+		0% {
+			left: 0;
+		}
+		5% {
+			left: -100%;
+		}
+		10% {
+			left: -100%;
+		}
+		20% {
+			left: -200%;
+		}
+		30% {
+			left: -200%;
+		}
+		40% {
+			left: -300%;
+		}
+		50% {
+			left: -300%;
+		}
+		60% {
+			left: -400%;
+		}
+		70% {
+			left: -400%;
+		}
+		80% {
+			left: 0;
+		}
+		100% {
+			left: 0;
+		}
+	}
 }
-=======
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
-@import "tailwindcss";
-@import "tw-animate-css";
->>>>>>> 7b2902d (hero2added)
