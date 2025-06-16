@@ -25,7 +25,6 @@ export default function Destination() {
 
     fetchDestination();
   }, [id]);
-  console.log(destination);
 
   return (
     <div className="w-full min-h-screen bg-white">
