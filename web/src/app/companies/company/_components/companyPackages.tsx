@@ -2,9 +2,8 @@
 import { PackageType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { useEffect, useState } from "react";
-
-import { PackageCardSkeleton } from "./packageSkeleton";
 import { PackageCard } from "./packageCard";
+import { PackageCardSkeleton } from "./packageSkeleton";
 
 type CompanyPackagesProps = {
   companyId: string;
