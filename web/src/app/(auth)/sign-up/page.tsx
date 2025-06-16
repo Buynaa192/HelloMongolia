@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { api } from "@/axios";
+import Link from "next/link";
+import { AxiosError } from "axios";
 
 const signUpSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -47,25 +49,29 @@ export default function SignUpPage() {
     } catch (err) {
       console.error(err);
 
-      // toast.error(
-      //   err?.response?.data?.message || "Signup failed. Please try again."
-      // );
+      toast.error(
+        (err as AxiosError<{ message: string }>).response?.data.message ||
+          "Signup failed. Please try again."
+      );
     }
   };
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="w-96 p-6 border rounded-lg shadow bg-white">
-        <h2 className="text-2xl font-semibold mb-6">Sign Up</h2>
+      <div className="w-150 p-6 border rounded-lg shadow bg-white flex flex-col gap-8">
+        <div className="w-full flex justify-center">
+          <img src="/images/Logo.png" className="w-40" alt="" />
+        </div>
+        <h2 className="text-2xl font-semibold ">Sign Up</h2>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="mb-3">Email</FormLabel>
                   <FormControl>
                     <Input placeholder="you@example.com" {...field} />
                   </FormControl>
@@ -79,7 +85,7 @@ export default function SignUpPage() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="mb-3">Password</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="********" {...field} />
                   </FormControl>
@@ -87,10 +93,20 @@ export default function SignUpPage() {
                 </FormItem>
               )}
             />
-
+            <div>
+              <p>
+                Already have an account ?{" "}
+                <Link
+                  href="/login"
+                  className="text-blue-500 underline underline-offset-1"
+                >
+                  click here
+                </Link>
+              </p>
+            </div>
             <Button
               type="submit"
-              className="w-full"
+              className="w-full bg-black text-white "
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? "Signing up..." : "Sign Up"}

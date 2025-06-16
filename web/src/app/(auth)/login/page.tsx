@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/app/_providers/AuthProvider";
+import Link from "next/link";
 
 const loginSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -52,11 +53,14 @@ export default function LoginPage() {
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="w-96 p-6 border rounded-lg shadow bg-white">
+      <div className="w-150 p-6 border rounded-lg shadow bg-white flex flex-col gap-8">
+        <div className="w-full flex justify-center">
+          <img src="/images/Logo.png" className="w-40" alt="" />
+        </div>
         <h2 className="text-2xl font-semibold mb-6">Login</h2>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
             <FormField
               control={form.control}
               name="email"
@@ -84,10 +88,20 @@ export default function LoginPage() {
                 </FormItem>
               )}
             />
-
+            <div>
+              <p>
+                Dont have an account ?{" "}
+                <Link
+                  href={"/sign-up"}
+                  className="text-blue-500 underline underline-offset-1"
+                >
+                  Sign up
+                </Link>
+              </p>
+            </div>
             <Button
               type="submit"
-              className="w-full"
+              className="w-full bg-black text-white"
               disabled={form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? "Logging in..." : "Login"}
