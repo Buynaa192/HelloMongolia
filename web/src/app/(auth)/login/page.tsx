@@ -47,7 +47,7 @@ export default function LoginPage() {
       }, 1000);
     } catch (err) {
       console.error(err);
-      toast.error("Login failed. Please check your credentials.");
+      toast.error("Login failed. Password or email wrong.");
     }
   };
 
@@ -66,7 +66,7 @@ export default function LoginPage() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="mb-3">Email</FormLabel>
                   <FormControl>
                     <Input placeholder="you@example.com" {...field} />
                   </FormControl>
@@ -80,7 +80,7 @@ export default function LoginPage() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="mb-3">Password</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="********" {...field} />
                   </FormControl>

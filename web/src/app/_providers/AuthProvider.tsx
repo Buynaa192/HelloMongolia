@@ -82,18 +82,16 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const signIn = async (email: string, password: string) => {
     try {
-      const { data } = await api.post(`/auth/sign-in`, {
+      const { data } = await api.post(`/auth/signin`, {
         email,
         password,
       });
-      console.log("USer", data.user);
+      console.log("User", data.user);
       localStorage.setItem("token", data.token);
       setCompany(data.user);
-      router.push("/");
       return data.user;
     } catch {
-      toast.error("Failed to log in");
-      return undefined;
+      throw new Error("error");
     }
   };
 
