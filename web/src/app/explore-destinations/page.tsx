@@ -8,7 +8,7 @@ import { SearchIcon } from "lucide-react";
 import { Regions } from "@/components/buynaasComponents/regions/regions";
 import { PopularDestination } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestination";
 import Link from "next/link";
-import { regionDestinationType } from "./region/[region]/page";
+import { regionDestinationType } from "./[region]/page";
 import { api } from "@/axios";
 
 const images = [
