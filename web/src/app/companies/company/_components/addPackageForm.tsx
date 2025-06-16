@@ -19,6 +19,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "./ui/textarea";
 import { Input } from "@/components/ui/input";
+import { CreatePackageFun } from "./createPackageFunction";
+const companyId = "684b7452cf844286f738f2db";
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -68,12 +70,12 @@ export const AddPackageForm = () => {
       availableUntil: "",
       coverPhoto: undefined,
       itinerary: undefined,
-      rating: 0,
+      rating: 0
     },
   });
   const { formState } = form;
   const onSubmit = async (data: FormData) => {
-    console.log(data);
+    await CreatePackageFun({ companyId, data, setLoading })
   };
   return (
     <DialogContent className="w-full bg-white max-h-screen overflow-y-auto rounded-xl">

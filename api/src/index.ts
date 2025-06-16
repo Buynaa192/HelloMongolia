@@ -11,17 +11,20 @@ import { packageItemRouter } from "./routes/packageItem.route";
 config();
 connectToDatabase();
 const app = express();
-const port = 3001;
+const port = 3002;
 
 app
   .use(cors())
   .use(express.json())
-  .use("/destination", destination)
+  .get("/", (_req, res) => {
+    res.send("Health check")
+  })
+  .use("/destination",destination)
   .use("/activity", activityRouter)
-  .use("/company", companyRouter)
+  .use("/company",companyRouter)
   .use("/auth", authRouter)
-  .use("/package", packageRouter)
-  .use("/packageItem", packageItemRouter);
+  .use("/package",packageRouter)
+  .use("/packageItem",packageItemRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

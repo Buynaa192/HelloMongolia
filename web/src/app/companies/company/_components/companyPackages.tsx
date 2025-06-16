@@ -25,6 +25,7 @@ export const CompanyPackages = ({
       try {
         const response = await api.get(`/package/${companyId}`);
         const data = response.data;
+        console.log("data",data)
         if (data?.packages) {
           setPackages(data.packages);
         } else {
