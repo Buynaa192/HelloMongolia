@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { api } from "@/axios";
 import Link from "next/link";
+import { AxiosError } from "axios";
 
 const signUpSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -48,9 +49,10 @@ export default function SignUpPage() {
     } catch (err) {
       console.error(err);
 
-      // toast.error(
-      //   err?.response?.data?.message || "Signup failed. Please try again."
-      // );
+      toast.error(
+        (err as AxiosError<{ message: string }>).response?.data.message ||
+          "Signup failed. Please try again."
+      );
     }
   };
 
