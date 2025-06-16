@@ -23,8 +23,8 @@ export default function About() {
             <p>
               Mongolia is a land of breathtaking landscapes, ancient history,
               and a rare nomadic culture found nowhere else. But despite its
-              beauty and uniqueness, it's still a hidden gem in the world of
-              travel. Why? Because it's far away, not well-promoted
+              beauty and uniqueness, it&apos;s still a hidden gem in the world
+              of travel. Why? Because it&apos;s far away, not well-promoted
               internationally, and travel information is scattered—making it
               hard for travelers to plan a trip with confidence.
             </p>
