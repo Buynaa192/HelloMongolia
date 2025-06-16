@@ -7,7 +7,6 @@ import {
   useState,
 } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { api, setAuthToken } from "@/axios";
 export type ActivityType = {
   _id: string;
