@@ -16,10 +16,7 @@ export const Regions = () => {
       <p className="font-bold text-3xl ml-5">Travel regions</p>
       <div className="w-full grid grid-cols-4 gap-4">
         {regions.map((item, i) => (
-          <Link
-            href={`/explore-destinations/region/${slugify(item.name)}`}
-            key={i}
-          >
+          <Link href={`/explore-destinations/${slugify(item.name)}`} key={i}>
             <RegionCard item={item} />
           </Link>
         ))}
