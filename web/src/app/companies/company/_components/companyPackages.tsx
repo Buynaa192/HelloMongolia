@@ -2,8 +2,9 @@
 import { PackageType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { useEffect, useState } from "react";
-import { PackageCard } from "./packageCard";
+
 import { PackageCardSkeleton } from "./packageSkeleton";
+import { PackageCard } from "./packageCard";
 
 type CompanyPackagesProps = {
   companyId: string;
@@ -63,15 +64,17 @@ export const CompanyPackages = ({
   }
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-3 gap-8">
       {packages.map((item) => (
         <PackageCard
           key={item._id}
           loading={false}
+          duration={item.duration}
           image={item.coverPhoto}
           title={item.description}
           description={item.description}
           price={`$${item.cost}`}
+          rating={item.rating}
           isCompanyLoggedIn={isCompanyLoggedIn}
           Update={() => console.log("Update", item._id)}
           Delete={() => console.log("Delete", item._id)}

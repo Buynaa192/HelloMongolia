@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Star } from "lucide-react";
 import { PackageCardSkeleton } from "./packageSkeleton";
 import { Button } from "@/components/ui/button";
 
@@ -8,56 +8,86 @@ type PackageCardProps = {
   title: string;
   description: string;
   price: string;
+  duration: number;
+  rating: number;
   isCompanyLoggedIn: boolean;
   Update?: () => void;
   Delete?: () => void;
 };
-
 export const PackageCard = ({
   loading,
   image,
   title,
   description,
   price,
+  duration,
+  rating,
   isCompanyLoggedIn,
   Update,
   Delete,
 }: PackageCardProps) => {
   if (loading) return <PackageCardSkeleton />;
-  return (
-    <div className="w-full max-w-sm bg-white rounded-xl shadow-md overflow-hidden">
-      <div className="relative h-60 w-full">
-        <Image
-          src={image.startsWith("http") ? image : `/images/${image}`}
-          alt={title}
-          fill
-          className="object-cover"
-        />
-      </div>
-      <div className="p-4 ">
-        <h3 className="text-lg font-medium">{title}</h3>
-        <p className="text-sm text-gray-600">{description}</p>
-        <p className="text-base font-bold text-gray-800">{price}</p>
+  const ratingStar = (rating: number) => {
+    return Array.from({ length: 4 }).map((_, i) => (
+      <Star
+        key={i}
+        size={18}
+        className={
+          i < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
+        }
+      />
+    ));
+  };
 
-        {!isCompanyLoggedIn ? (
-          <div className="w-full flex flex-row gap-3 ">
-            <Button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition mr-2">
-              See Details
-            </Button>
-            <Button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
-              Book
-            </Button>
+  return (
+    <div className="w-full flex items-stretch justify-center">
+      <div className="flex w-[90%] min-h-[420px] rounded-2xl shadow-xl hover:shadow-2xl flex-col hover:w-[92%] duration-200 bg-white">
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-[250px] rounded-t-2xl object-cover"
+        />
+        <div className="flex flex-col justify-between flex-1 p-4 gap-2">
+          <h2 className="text-[20px] font-bold line-clamp-2">{title}</h2>
+          <p className="text-sm text-gray-600 line-clamp-3">{description}</p>
+
+          <div className="flex justify-between items-center text-[12px] font-medium mt-auto pt-2">
+            <div className="flex items-center gap-4">
+              <span>{duration} days</span>
+              <div className="flex items-center gap-1">
+                <img src="/images/star.png" alt="Star" className="w-5 h-5" />
+                {ratingStar(rating)}
+              </div>
+            </div>
+            <div className="text-[20px] font-bold text-green-500">{price}</div>
           </div>
-        ) : (
-          <div className="w-full flex flex-row gap-3 ">
-            <Button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition mr-2">
-              Update
-            </Button>
-            <Button className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
-              Delete
-            </Button>
+
+          <div className="flex gap-3 mt-4">
+            {!isCompanyLoggedIn ? (
+              <>
+                <Button className="bg-blue-600 text-white hover:bg-blue-700 transition">
+                  See Details
+                </Button>
+                <Button className="bg-green-600 text-white hover:bg-green-700 transition">
+                  Book
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={Update}
+                  className="bg-yellow-500 text-white hover:bg-yellow-600 transition">
+                  Update
+                </Button>
+                <Button
+                  onClick={Delete}
+                  className="bg-red-600 text-white hover:bg-red-700 transition">
+                  Delete
+                </Button>
+              </>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
