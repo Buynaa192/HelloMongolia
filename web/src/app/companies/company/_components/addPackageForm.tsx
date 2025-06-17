@@ -70,12 +70,12 @@ export const AddPackageForm = () => {
       availableUntil: "",
       coverPhoto: undefined,
       itinerary: undefined,
-      rating: 0
+      rating: 0,
     },
   });
   const { formState } = form;
   const onSubmit = async (data: FormData) => {
-    await CreatePackageFun({ companyId, data, setLoading })
+    await CreatePackageFun({ companyId, data, setLoading });
   };
   return (
     <DialogContent className="w-full bg-white max-h-screen overflow-y-auto rounded-xl">
