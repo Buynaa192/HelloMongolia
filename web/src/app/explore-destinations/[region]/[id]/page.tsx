@@ -2,6 +2,7 @@
 
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -25,6 +26,7 @@ export default function Destination() {
 
     fetchDestination();
   }, [id]);
+console.log("destinations",destination);
 
   return (
     <div className="w-full min-h-screen bg-white">
@@ -44,12 +46,14 @@ export default function Destination() {
           {destination?.region}
         </Link>
         {`>`}
-        <Link
-          href={`/exolore-destinations/${destination?.region}/${destination?.destinationName}`}
-        >
+       
           {destination?.destinationName}
-        </Link>
+        
       </p>
+      <div className="w-full border-2 grid grid-cols-2 gap-4 p-4">
+        <div className="w-full border-2">{destination?.description}</div>
+        <div className="w-full border-2">{destination?.destinationImages}</div>
+      </div>
     </div>
   );
 }
