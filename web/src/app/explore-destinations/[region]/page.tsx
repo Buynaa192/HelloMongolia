@@ -2,7 +2,7 @@
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
-import { Description } from "@radix-ui/react-dialog";
+
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
