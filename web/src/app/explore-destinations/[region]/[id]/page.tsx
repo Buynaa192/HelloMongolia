@@ -2,7 +2,7 @@
 
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
-import { de } from "date-fns/locale";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
