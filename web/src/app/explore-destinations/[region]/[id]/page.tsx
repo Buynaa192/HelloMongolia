@@ -26,10 +26,9 @@ export default function Destination() {
 
     fetchDestination();
   }, [id]);
-console.log("destinations",destination);
 
   return (
-    <div className="w-full min-h-screen bg-white">
+    <div className="w-full min-h-screen bg-white flex flex-col gap-4">
       <div className="w-full h-120 border-2 border-red-400">
         <Image
           className="w-full h-full"
@@ -39,21 +38,28 @@ console.log("destinations",destination);
           alt="bg"
         ></Image>
       </div>
-      <p>
+      <p className="ml-4">
         <Link href={"/"}>Home</Link> {`>`}
         <Link href={"/explore-destinations"}> Explore-destinations </Link> {`>`}
         <Link href={`/explore-destinations/${destination?.region}`}>
           {destination?.region}
         </Link>
         {`>`}
-       
-          {destination?.destinationName}
-        
+        {destination?.destinationName}
       </p>
-      <div className="w-full border-2 grid grid-cols-2 gap-4 p-4">
-        <div className="w-full border-2">{destination?.description}</div>
-        <div className="w-full border-2">{destination?.destinationImages}</div>
+      <div className="w-full  grid grid-cols-2 gap-4 p-4">
+        <div className="w-full h-80 border-2">{destination?.description}</div>
+        <div className="w-full border-2">
+          {destination?.destinationImages[1]}
+        </div>
       </div>
+      <div className="w-full  grid grid-cols-2 gap-4 p-4">
+        <div className="w-full h-80 border-2">
+          {destination?.destinationImages[0]}
+        </div>
+        <div className="w-full border-2">{destination?.description}</div>
+      </div>
+      <div className="w-full grid grid-cols-5"></div>
     </div>
   );
 }

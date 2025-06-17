@@ -6,8 +6,8 @@ export const getMe: RequestHandler = async (req, res) => {
     const companyId = req.companyId;
 
     if (!companyId) {
-       res.status(401).json({ message: "Unauthorized" });
-       return;
+      res.status(401).json({ message: "Unauthorized" });
+      return;
     }
 
     const company = await companyProfileModel
@@ -16,12 +16,12 @@ export const getMe: RequestHandler = async (req, res) => {
 
     if (!company) {
       res.status(404).json({ message: "User not found" });
-      return
+      return;
     }
 
     res.status(200).json(company);
   } catch (error) {
-    console.error( error);
+    console.error(error);
     res.status(500).json({ message: "Server error", error });
   }
 };

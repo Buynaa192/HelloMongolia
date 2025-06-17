@@ -17,12 +17,12 @@ export const authenticationMiddleware: RequestHandler = (req, res, next) => {
   }
 
   try {
-    const { companyId, } = jwt.verify(token, process.env.JWT_SECRET) as {
+    const { companyId } = jwt.verify(token, process.env.JWT_SECRET) as {
       companyId: string;
     };
 
     req.companyId = companyId;
-   
+
     next();
   } catch (error) {
     res.status(500).json({ message: "Server error", error });

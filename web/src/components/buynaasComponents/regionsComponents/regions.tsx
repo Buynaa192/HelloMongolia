@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { RegionCard } from "../regionsComponents/regionCard";
+import { RegionCard } from "./regionCard";
 
 const regions = [
   { name: "Southern Mongolia" },

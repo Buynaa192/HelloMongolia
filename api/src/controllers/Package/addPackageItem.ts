@@ -4,19 +4,19 @@ import { packageItemModel } from "../../models/packageItem.model";
 
 export const addPackageItem: RequestHandler = async (req, res) => {
   const { packageId } = req.params;
-  const { packageItemId } = req.body; 
+  const { packageItemId } = req.body;
 
   try {
     const addedPackageItem = await packageItemModel.findById(packageItemId);
     if (!addedPackageItem) {
-     res.status(404).json({ message: "Package Item not found" });
-     return 
+      res.status(404).json({ message: "Package Item not found" });
+      return;
     }
 
-    await packageModel.findByIdAndUpdate(
-      packageId,
-      { $push: { packageItem: addedPackageItem._id }, updatedAt: new Date() }
-    );
+    await packageModel.findByIdAndUpdate(packageId, {
+      $push: { packageItem: addedPackageItem._id },
+      updatedAt: new Date(),
+    });
 
     res.status(200).json({ message: "PackageItem added successfully" });
   } catch (error) {

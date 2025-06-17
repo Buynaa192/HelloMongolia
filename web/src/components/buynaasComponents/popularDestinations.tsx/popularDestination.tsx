@@ -1,15 +1,10 @@
 "use client";
 
+import { DestinationType } from "@/app/_providers/AuthProvider";
 import { PopularDestinationCard } from "./popularDestinationCard";
-type des = {
-  description: string;
-  destinationImages: string;
-  destinationName: string;
-  region: string;
-  _id: string;
-};
+
 type destinationType = {
-  destination: des[];
+  destination: DestinationType[];
 };
 export const PopularDestination = ({ destination }: destinationType) => {
   return (

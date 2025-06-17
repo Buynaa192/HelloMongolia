@@ -1,36 +1,35 @@
 import { Schema, model } from "mongoose";
 const packageItemSchema = new Schema({
-    order:{
-    type:Number,
+  order: {
+    type: Number,
     required: true,
-    },
- title:{
-    type:String,
+  },
+  title: {
+    type: String,
     required: true,
- },
- image:{
-    type:String,
+  },
+  image: {
+    type: String,
     required: true,
- },
-    destinationId:{
-        type: Schema.Types.ObjectId,
-        ref: "destination",
-        required: true,
-
-    },
- description:{
-    type:String,
+  },
+  destinationId: {
+    type: Schema.Types.ObjectId,
+    ref: "destination",
     required: true,
- },
- activity:{
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  activity: {
     type: [Schema.Types.ObjectId],
     ref: "activity",
     default: [],
- },
- accomodation:{
-    type:String,
+  },
+  accomodation: {
+    type: String,
     required: true,
- },
+  },
 
   createdAt: {
     type: Date,
@@ -40,6 +39,5 @@ const packageItemSchema = new Schema({
     type: Date,
     required: true,
   },
- 
 });
-export const packageItemModel = model("packageItem",packageItemSchema);
+export const packageItemModel = model("packageItem", packageItemSchema);

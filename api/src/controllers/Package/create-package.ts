@@ -14,7 +14,6 @@ export const createPackageController = async (req, res) => {
       tripType,
       rating,
     } = req.body;
-      
 
     const newPackage = await packageModel.create({
       companyId,
@@ -24,19 +23,23 @@ export const createPackageController = async (req, res) => {
       availableFrom: new Date(availableFrom),
       availableUntil: new Date(availableUntil),
       cost: Number(cost),
-      itinerary, 
+      itinerary,
       tripType,
       rating: Number(rating),
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-    await companyProfileModel.findByIdAndUpdate(
-      companyId,
-      { $push: { packages: newPackage._id }, updatedAt: new Date() }
-    );
-    return res.status(201).json({ message: "successfully created", package: newPackage });
+    await companyProfileModel.findByIdAndUpdate(companyId, {
+      $push: { packages: newPackage._id },
+      updatedAt: new Date(),
+    });
+    return res
+      .status(201)
+      .json({ message: "successfully created", package: newPackage });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "server error", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "server error", error: error.message });
   }
 };

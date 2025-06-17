@@ -1,13 +1,10 @@
 "use client";
+import { DestinationType } from "@/app/_providers/AuthProvider";
 import Image from "next/image";
 import Link from "next/link";
-type destinationType = {
-  destinationName: string;
-  _id: string;
-  region: string;
-};
+
 type itemType = {
-  item: destinationType;
+  item: DestinationType;
 };
 export const PopularDestinationCard = ({ item }: itemType) => {
   return (
