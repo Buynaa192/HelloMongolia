@@ -5,7 +5,7 @@ import Image from "next/image";
 const packages = {
   rating: 4.8,
   title: "Mongolia Exploration with Mongolian travel agency to Mongolia",
-  duration: 4,
+  duration: 5,
   coverPhoto: "/images/pack1.png",
   cost: 5001,
   company: {
@@ -204,51 +204,47 @@ export default function PackagePage() {
             </div>
           </div>
 
-          <div className="w-full h-[500px] overflow-scroll scroll-smooth rounded- ">
-            <div
-              className={`w-full h-[calc(100%_*_${packages.packageItems.length})]`}
-            >
-              {packages.packageItems.map((item, index) => (
-                <div key={index} className={`w-full h-[500px] relative`}>
-                  <img
-                    src={item.image}
-                    id={`section${index + 1}`}
-                    className="w-full h-full object-cover object-left"
-                  />
-                  <div className="absolute w-[50%] h-full bg-linear-to-r from-[#000000b8] to-100%  to-[#00000028] inset-0 p-4 flex flex-col items-center justify-center gap-4">
-                    <div
-                      className="text-[40px] text-white font-bold"
-                      style={{ fontFamily: "Dancing Script" }}
-                    >
-                      {item.destination} Day{index + 1}
-                    </div>
-                    <div className="text-center text-white">
-                      This is the best tour of Mongolia, using private vehicle
-                      experiencing Mongolian Gobi desert, unique Eagle valley ,
-                      Tsenkher hot spring, Erdenezuu monastery inscribed on the
-                      World Heritage List and other attractions of Mongolia only
-                      in 10 days.
-                    </div>
-                    <div className=" w-full text-white flex gap-10">
-                      <div className="flex flex-col w-[50%]  h-full">
-                        Activity{" "}
-                        <div className="w-full p-3">
-                          {item.activity.map((item, index) => {
-                            return <div key={index}>• {item}</div>;
-                          })}
-                        </div>
+          <div className="w-full h-[500px] overflow-scroll scroll-smooth rounded-[8px] ">
+            {packages.packageItems.map((item, index) => (
+              <div key={index} className={`w-full h-[500px] relative`}>
+                <img
+                  src={item.image}
+                  id={`section${index + 1}`}
+                  className="w-full h-full object-cover object-left"
+                />
+                <div className="absolute w-[50%] h-full bg-linear-to-r from-[#000000b8] to-100%  to-[#00000028] inset-0 p-4 flex flex-col items-center justify-center gap-4">
+                  <div
+                    className="text-[40px] text-white font-bold"
+                    style={{ fontFamily: "Dancing Script" }}
+                  >
+                    {item.destination} Day{index + 1}
+                  </div>
+                  <div className="text-center text-white">
+                    This is the best tour of Mongolia, using private vehicle
+                    experiencing Mongolian Gobi desert, unique Eagle valley ,
+                    Tsenkher hot spring, Erdenezuu monastery inscribed on the
+                    World Heritage List and other attractions of Mongolia only
+                    in 10 days.
+                  </div>
+                  <div className=" w-full text-white flex gap-10">
+                    <div className="flex flex-col w-[50%]  h-full">
+                      Activity{" "}
+                      <div className="w-full p-3">
+                        {item.activity.map((item, index) => {
+                          return <div key={index}>• {item}</div>;
+                        })}
                       </div>
-                      <div className="flex flex-col w-[50%]  h-full">
-                        Accomodation
-                        <div className="w-full p-3 ">
-                          Ymar negen hotel or ger.
-                        </div>
+                    </div>
+                    <div className="flex flex-col w-[50%]  h-full">
+                      Accomodation
+                      <div className="w-full p-3 ">
+                        Ymar negen hotel or ger.
                       </div>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -293,6 +289,14 @@ export default function PackagePage() {
           <div className="w-full flex items-center justify-between ">
             <div>Destinations:</div>
             <div>+20 destinations</div>
+          </div>
+          <div className="w-full flex items-center justify-between ">
+            <div>Social URL:</div>
+            <div>www.Amicus.com</div>
+          </div>
+          <div className="w-full flex items-center justify-between ">
+            <div>PhoneNumber:</div>
+            <div>+976 77777777</div>
           </div>
         </div>
       </div>
