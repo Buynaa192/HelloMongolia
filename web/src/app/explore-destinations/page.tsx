@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
-import { Regions } from "@/components/buynaasComponents/regions/regions";
+import { Regions } from "@/components/buynaasComponents/regionsComponents/regions";
 import { PopularDestination } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestination";
 import Link from "next/link";
-import { regionDestinationType } from "./[region]/page";
 import { api } from "@/axios";
+import { DestinationType } from "../_providers/AuthProvider";
 
 const images = [
   "/images/pack1.png",
@@ -20,7 +20,7 @@ const images = [
 
 export default function DestinatioExplore() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [destination, setDestination] = useState<regionDestinationType[]>([]);
+  const [destination, setDestination] = useState<DestinationType[]>([]);
   const [searchDestination, SetsearchDestination] = useState("");
   const getDestination = async () => {
     try {

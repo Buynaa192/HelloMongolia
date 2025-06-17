@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { companyProfileModel } from "../../models/companyProfile.model";
 
-
 export const signIn: RequestHandler = async (req, res) => {
   const { email, password } = req.body;
 
@@ -11,8 +10,8 @@ export const signIn: RequestHandler = async (req, res) => {
     const company = await companyProfileModel.findOne({ email });
 
     if (!company) {
-       res.status(404).json({ message: "Email is not registered" });
-       return;
+      res.status(404).json({ message: "Email is not registered" });
+      return;
     }
 
     const isPasswordMatch = await bcrypt.compare(password, company.password);
@@ -23,11 +22,7 @@ export const signIn: RequestHandler = async (req, res) => {
 
     const { password: _, ...companyWithoutPassword } = company.toObject();
 
-    const token = jwt.sign(
-      { companyId: company._id },
-      process.env.JWT_SECRET 
-     
-    );
+    const token = jwt.sign({ companyId: company._id }, process.env.JWT_SECRET);
 
     res.status(200).json({ user: companyWithoutPassword, token });
   } catch (error) {

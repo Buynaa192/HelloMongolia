@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 const destinationSchema = new Schema({
   destinationName: { type: String, required: true },
-  destinationImages:  [{type: String, required: true }],
+  destinationImages: [{ type: String, required: true }],
   region: {
     type: String,
     enum: [
@@ -13,7 +13,7 @@ const destinationSchema = new Schema({
     required: true,
   },
   description: { type: String, required: true },
-  location:{type:String, default:""},
+  location: { type: String, default: "" },
   activities: { type: [Schema.Types.ObjectId], ref: "activity" },
   updatedAt: { type: Date, required: true },
   createdAt: { type: Date, required: true },
