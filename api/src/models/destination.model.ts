@@ -13,6 +13,7 @@ const destinationSchema = new Schema({
     required: true,
   },
   description: { type: String, required: true },
+  location:{type:String, default:""},
   activities: { type: [Schema.Types.ObjectId], ref: "activity" },
   updatedAt: { type: Date, required: true },
   createdAt: { type: Date, required: true },
