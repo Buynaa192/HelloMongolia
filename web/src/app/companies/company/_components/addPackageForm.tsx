@@ -247,7 +247,7 @@ export const AddPackageForm = () => {
                 <FormField
                   control={form.control}
                   name="itinerary"
-                  render={({ field }) => (
+                  render={({}) => (
                     <FormItem>
                       <FormLabel>Itinerary PDF</FormLabel>
                       <FormControl>
