@@ -19,7 +19,6 @@ export const UpdatePackageFun = async ({
     const availableFrm = new Date(data.availableFrom);
     const availableUntl = new Date(data.availableUntil);
     const cost = Number(data.cost);
-
     const coverPhoto = await uploadImage(data.coverPhoto!);
     const itineraryPdf = await uploadImage(data.itinerary!);
 
@@ -48,13 +47,14 @@ export const UpdatePackageFun = async ({
   }
 };
 
-export const deletePackageFun = async (packageId: string) => {
+export const deletePackageFun = async (packageId: string,setLoading:(value:boolean)=>void) => {
   try {
+    setLoading(true)
     await api.delete(`/package/${packageId}`);
     toast.success("Package deleted successfully");
   } catch (error) {
     console.error(error);
     toast.error("Failed to delete the package");
-  }
+  }finally{setLoading(false)}
 };
 

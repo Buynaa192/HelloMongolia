@@ -31,24 +31,13 @@ const ACCEPTED_IMAGE_TYPES = [
 ];
 
 const schema = z.object({
-  coverPhoto: z
-    .any()
-    .refine(
-      (file) => file?.[0] && ACCEPTED_IMAGE_TYPES.includes(file[0].type),
-      {
-        message: "Only .jpg, .jpeg, .png and .webp formats are supported.",
-      }
-    ),
+  coverPhoto: z.any().optional(),
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
   duration: z.string().min(1),
   cost: z.string().min(1),
   tripType: z.string().min(1),
-  itinerary: z
-    .any()
-    .refine((file) => file?.[0] && file[0].type === "application/pdf", {
-      message: "Please upload a valid PDF file",
-    }),
+  itinerary: z.any().optional(),
   availableFrom: z.string(),
   availableUntil: z.string(),
   rating: z.number().min(0).max(5),
@@ -57,9 +46,10 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 export type Props = {
   packageData: PackageType;
+  getPackages:()=>Promise<void>
 };
 
-export const UpdatePackageForm = ({ packageData }: Props) => {
+export const UpdatePackageForm = ({ packageData,getPackages }: Props) => {
   const [loading, setLoading] = useState(false);
   const [prevProfileImage, setPrevProfileImage] = useState(
     packageData.coverPhoto
@@ -68,28 +58,31 @@ export const UpdatePackageForm = ({ packageData }: Props) => {
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
-      name: packageData.title,
-      description: packageData.description,
-      duration: packageData.duration,
-      cost: packageData.cost,
-      tripType: packageData.tripType,
-      itinerary: packageData.itinerary,
+      coverPhoto:packageData.coverPhoto,
+      name: packageData.title ?? "",
+      description: packageData.description ?? "",
+      duration: packageData.duration ?? "",
+      cost: packageData.cost ? String(packageData.cost) : "",
+      tripType: packageData.tripType ?? "",
+      itinerary: packageData.itinerary ?? "",
       availableFrom: new Date(packageData.availableFrom)
         .toISOString()
-        .split("T")[0],
+        .split("T")[0] ?? "",
       availableUntil: new Date(packageData.availableUntil)
         .toISOString()
-        .split("T")[0],
-      rating: Number(packageData.rating),
+        .split("T")[0] ?? "",
+      rating: Number(packageData.rating) ?? 0,
     },
   });
 
   const onSubmit = async (data: FormData) => {
+    console.log(data)
     await UpdatePackageFun({
       packageId: packageData._id,
       data,
       setLoading,
     });
+    await getPackages()
   };
 
   return (
@@ -184,7 +177,7 @@ export const UpdatePackageForm = ({ packageData }: Props) => {
                   <FormItem>
                     <FormLabel>Cost ($)</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} />
+                      <Input type="number" {...field}  />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -288,8 +281,7 @@ export const UpdatePackageForm = ({ packageData }: Props) => {
             <div className="flex justify-end">
               <Button
                 type="submit"
-                // disabled={loading || !form.formState.isValid}
-                className={` text-white px-4 py-2 rounded hover:bg-green-700 transition ${
+                className={` text-white px-4 py-2 rounded hover:bg-yellow-700 transition ${
                   loading ? "bg-yellow-200" : "bg-yellow-500"
                 } text-white`}>
                 {loading ? (
