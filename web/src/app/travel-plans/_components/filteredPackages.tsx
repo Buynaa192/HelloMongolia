@@ -1,11 +1,12 @@
 "use client";
-import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { PackagesType } from "../page";
+import { useState } from "react";
+import { StarIcon } from "../assets/star";
+import { PackageType } from "@/app/_providers/AuthProvider";
+import { FilterIcon } from "lucide-react";
 
 type FilteredPackagesProps = {
-  packages: PackagesType[];
+  packages: PackageType[];
 };
 
 export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
@@ -18,11 +19,20 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
 
   return (
     <div className="w-full flex flex-col p-5 bg-white">
-      <div className="flex bg-white items-center text-[16px] font-semibold">
-        <img src={"/images/filter (1).png"} className="w-5 h-5" />
-        {packages.length} RESULTS
+      <div className="flex bg-white items-center text-[16px] font-semibold gap-3">
+        <FilterIcon />
+        <div className="flex items-baseline gap-1">
+          {" "}
+          <p className="text-[20px]">{packages.length}</p> RESULTS
+        </div>
       </div>
+
       <div className="w-full h-fit bg-white p-10">
+        {packages.length == 0 ? (
+          <div className="w-full flex justify-center text-[#e4e4e5]">
+            There is no package here in your filter
+          </div>
+        ) : null}
         <div className="w-full grid grid-cols-3 gap-5">
           {packages.slice(0, visibleCount).map((item, index) => (
             <Link
@@ -32,21 +42,31 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
             >
               <div className="flex w-90 h-90 rounded-2xl hover:shadow-2xl flex-col hover:w-95 hover:h-95 duration-200">
                 <img
-                  src={item.coverPhoto}
+                  src={
+                    item.coverPhoto == null || item.coverPhoto == ""
+                      ? "/images/NoImagePack.png"
+                      : item.coverPhoto
+                  }
                   className="w-full min-h-[250px] rounded-2xl object-cover"
                 />
                 <div className="w-full h-full flex flex-col justify-between p-3">
                   <div className="text-[12px] w-fit font-medium text-stone-500">
-                    {item.companyId}
+                    {item.companyId.map((el, index) => {
+                      return <div key={index}>{el.email}</div>;
+                    })}
                   </div>
                   <div className="text-[24px] font-bold truncate">
-                    {item.description}
+                    {item.title ? item.title : item.description}
                   </div>
                   <div className="flex w-full justify-between items-center text-[12px] font-medium">
-                    <div className="flex w-[150px] justify-between items-center">
-                      <div>{item.duration}</div>
+                    <div className="flex w-[100px] justify-between items-center">
+                      <div>
+                        {item.duration.includes("days")
+                          ? item.duration
+                          : `${item.duration} days`}{" "}
+                      </div>
                       <div className="flex items-center">
-                        <img src={"/images/star.png"} className="w-5 h-5" />
+                        <StarIcon />
                         {item.rating}
                       </div>
                     </div>
@@ -64,7 +84,7 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
         {visibleCount < packages.length && (
           <button
             onClick={handleSeeMore}
-            className="w-[150px] h-[40px] bg-red-600 border-1 rounded-[20px] flex items-center justify-center text-[16px] text-white font-semibold hover:bg-white hover:text-black duration-200 hover:shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:border-0"
+            className="w-[150px] h-[40px] bg-red-600  rounded-[20px] flex items-center justify-center text-[16px] text-white font-semibold hover:bg-white hover:text-black duration-200 hover:shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] "
           >
             SEE MORE
           </button>
@@ -72,7 +92,7 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
         {visibleCount > 3 && (
           <button
             onClick={handleSeeLess}
-            className="w-[150px] h-[40px] bg-white rounded-[20px] flex items-center justify-center text-[16px] text-black font-semibold hover:bg-black hover:text-white duration-200 shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:border-0"
+            className="w-[150px] h-[40px] bg-white rounded-[20px] flex items-center justify-center text-[16px] text-black font-semibold hover:bg-black hover:text-white duration-200 shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:border-0 "
           >
             SEE LESS
           </button>

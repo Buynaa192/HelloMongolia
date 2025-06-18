@@ -7,23 +7,9 @@ import { Search } from "./_components/search";
 import { SearchFilter } from "./_components/searchFIlter";
 import { TravelPlanHome } from "./_components/travelPLanHome";
 import SmoothScroll from "./assets/smoothScroll";
+import { PackageType } from "../_providers/AuthProvider";
+import Link from "next/link";
 
-export type PackagesType = {
-  _id: string;
-  companyId: string;
-  coverPhoto: string;
-  description: string;
-  packageItem: string[];
-  duration: string;
-  availableFrom: string;
-  availableUntil: string;
-  cost: number;
-  itinerary: string;
-  tripType: TripType;
-  rating: number;
-  createdAt: string;
-  updatedAt: string;
-};
 export type TripType =
   | "Sightseeing"
   | "Adventure"
@@ -32,8 +18,8 @@ export type TripType =
   | "Scientific"
   | "Festival & Events";
 export default function PackagesExplore() {
-  const [allPackages, setAllPackages] = useState<PackagesType[]>([]);
-  const [filteredPackages, setFilteredPackages] = useState<PackagesType[]>([]);
+  const [allPackages, setAllPackages] = useState<PackageType[]>([]);
+  const [filteredPackages, setFilteredPackages] = useState<PackageType[]>([]);
 
   const [keyword, setKeyword] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -67,6 +53,7 @@ export default function PackagesExplore() {
   };
 
   const applyAllFilters = () => {
+    console.log(selectedTripTypes);
     const filtered = allPackages.filter((e) => {
       const matchesKeyword =
         keyword === "" ||
@@ -74,7 +61,7 @@ export default function PackagesExplore() {
 
       const matchesTripType =
         selectedTripTypes.length === 0 ||
-        selectedTripTypes.includes(e.tripType);
+        selectedTripTypes.includes(e.tripType as TripType);
 
       const matchesCost =
         selectedCosts.length === 0 ||
@@ -84,11 +71,11 @@ export default function PackagesExplore() {
             case "0-500$":
               return cost >= 0 && cost <= 500;
             case "500-1000$":
-              return cost > 500 && cost <= 1000;
+              return cost >= 500 && cost <= 1000;
             case "1000-5000$":
-              return cost > 1000 && cost <= 5000;
+              return cost >= 1000 && cost <= 5000;
             case "5000$+":
-              return cost > 5000;
+              return cost >= 5000;
             default:
               return true;
           }
@@ -139,6 +126,8 @@ export default function PackagesExplore() {
   const clearAllFilters = () => {
     setKeyword("");
     setSelectedTripTypes([]);
+    setStartDate("");
+    setEndDate("");
     setSelectedCosts([]); // reset cost filter too
     setFilteredPackages(allPackages);
   };
@@ -147,7 +136,10 @@ export default function PackagesExplore() {
     <div className="w-full h-full ">
       <SmoothScroll />
       <TravelPlanHome />
-      <div className="bg-white w-full p-2">HOME | EXPLORE PLANS</div>
+      <div className="bg-white w-full p-2">
+        <Link href={"/"}> Home</Link> |{" "}
+        <Link href={"/travel-plans"}> Explore tour</Link>
+      </div>
 
       <Search
         keyword={keyword}
@@ -162,7 +154,6 @@ export default function PackagesExplore() {
       />
 
       <SearchFilter
-        allPackages={allPackages}
         selectedTripTypes={selectedTripTypes}
         setSelectedTripTypes={setSelectedTripTypes}
         applyFilters={applyAllFilters}

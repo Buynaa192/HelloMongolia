@@ -1,11 +1,10 @@
 "use client";
 
-// adjust path as needed
 import React from "react";
-import { PackagesType, TripType } from "../page";
+import { TripType } from "../page";
+import { PackageType } from "@/app/_providers/AuthProvider";
 
 type SearchFilterProps = {
-  allPackages: PackagesType[];
   selectedTripTypes: TripType[];
   setSelectedTripTypes: React.Dispatch<React.SetStateAction<TripType[]>>;
   applyFilters: () => void;
@@ -17,7 +16,6 @@ type SearchFilterProps = {
 };
 
 export const SearchFilter: React.FC<SearchFilterProps> = ({
-  allPackages,
   selectedTripTypes,
   setSelectedTripTypes,
   applyFilters,
@@ -60,14 +58,14 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
         <div className="flex gap-2 h-full items-center">
           <button
             onClick={clearAllFilters}
-            className="w-[150px] bg-white text-black h-[40px] border rounded-[20px] flex items-center justify-center font-semibold hover:shadow-lg duration-100"
+            className="w-[150px] bg-white text-red-600 h-[40px]  rounded-[20px] flex items-center justify-center font-semibold shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:bg-black hover:text-white hover:shadow-lg duration-200"
           >
             CLEAR
           </button>
 
           <button
             onClick={applyFilters}
-            className="w-[150px] bg-red-600 text-white h-[40px] rounded-[20px] flex items-center justify-center font-semibold hover:bg-white hover:text-black duration-200"
+            className="w-[150px] bg-red-600 text-white h-[40px] rounded-[20px] flex items-center justify-center font-semibold hover:bg-white hover:text-black hover:shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] duration-200"
           >
             APPLY
           </button>

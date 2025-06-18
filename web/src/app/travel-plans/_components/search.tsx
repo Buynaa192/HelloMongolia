@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { CalendarIcon } from "../assets/calendar";
+import { SearchIcon } from "../assets/searchIcon";
 
 type SearchProps = {
   keyword: string;
@@ -28,7 +30,7 @@ export const Search: React.FC<SearchProps> = ({
       <div className="w-[1000px] h-[60px] border rounded-[30px] flex items-center pl-2 pr-2">
         {/* Keyword Input */}
         <div className="flex-1 h-full rounded-s-[30px] flex gap-2 items-center pl-2">
-          <img src={"/images/passkey.png"} className="w-5 h-5" alt="Keyword" />
+          <SearchIcon />
           <input
             type="text"
             className="h-full outline-none border-0"
@@ -42,12 +44,12 @@ export const Search: React.FC<SearchProps> = ({
 
         {/* Dates picker toggle */}
         <div className="flex-1 h-full flex gap-2 items-center pl-2">
-          <img
-            src={"/images/date.png"}
-            className="w-5 h-5 cursor-pointer"
+          <div
+            className="w-5 h-5 cursor-pointer flex items-center"
             onClick={() => setShowDates(!showDates)}
-            alt="Select dates"
-          />
+          >
+            <CalendarIcon />
+          </div>
           {!showDates ? (
             <span
               className="text-gray-500 text-[14px] cursor-pointer"
@@ -67,6 +69,7 @@ export const Search: React.FC<SearchProps> = ({
                   onChange={(e) => setStartDate(e.target.value)}
                   className="outline-none border-0 text-[14px]"
                 />
+                <div className="h-2"></div>
               </div>
               <span>-</span>
               <div className="flex flex-col gap-0 justify-between">
@@ -77,6 +80,7 @@ export const Search: React.FC<SearchProps> = ({
                   onChange={(e) => setEndDate(e.target.value)}
                   className="outline-none border-0 text-[14px]"
                 />
+                <div className="h-2"></div>
               </div>
             </div>
           )}
