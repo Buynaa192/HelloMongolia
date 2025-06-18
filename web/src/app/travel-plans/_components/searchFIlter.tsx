@@ -2,7 +2,6 @@
 
 import React from "react";
 import { TripType } from "../page";
-import { PackageType } from "@/app/_providers/AuthProvider";
 
 type SearchFilterProps = {
   selectedTripTypes: TripType[];
