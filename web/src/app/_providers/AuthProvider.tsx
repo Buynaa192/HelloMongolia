@@ -33,10 +33,11 @@ export type PackageType = {
   duration: string;
   availableFrom: string;
   availableUntil: string;
-  cost: string;
+  cost: number;
   itinerary: string;
   tripType: string;
   rating: number;
+  companyId: CompanyType[];
 };
 export type ReviewType = {
   _id: string;
