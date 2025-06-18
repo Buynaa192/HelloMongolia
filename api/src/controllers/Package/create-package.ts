@@ -4,6 +4,7 @@ export const createPackageController = async (req, res) => {
   try {
     const {
       companyId,
+      title,
       coverPhoto,
       description,
       duration,
@@ -17,6 +18,7 @@ export const createPackageController = async (req, res) => {
 
     const newPackage = await packageModel.create({
       companyId,
+      title,
       coverPhoto,
       description,
       duration,

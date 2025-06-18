@@ -11,11 +11,14 @@ import { packageItemRouter } from "./routes/packageItem.route";
 config();
 connectToDatabase();
 const app = express();
-const port = 3001;
+const port = 3002;
 
 app
   .use(cors())
   .use(express.json())
+  .get("/", (_req, res) => {
+    res.send("Health check");
+  })
   .use("/destination", destination)
   .use("/activity", activityRouter)
   .use("/company", companyRouter)

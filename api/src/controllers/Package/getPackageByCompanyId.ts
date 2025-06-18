@@ -4,6 +4,7 @@ import { packageModel } from "../../models/package.model";
 export const getPackageByCompanyId: RequestHandler = async (req, res) => {
   try {
     const { companyId } = req.params;
+   
     if (!companyId) {
       res.status(400).json({ message: "CompanyId is required" });
       return;

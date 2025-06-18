@@ -5,6 +5,10 @@ const packageSchema = new Schema({
     ref: "companyProfile",
     required: true,
   },
+  title: {
+    type: String,
+    required: true,
+  },
   coverPhoto: {
     type: String,
     required: true,
