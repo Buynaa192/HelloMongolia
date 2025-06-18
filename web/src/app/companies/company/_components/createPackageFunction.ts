@@ -6,7 +6,7 @@ export type DataType = {
   name: string;
   description: string;
   duration: string;
-  cost: string;
+  cost: number;
   tripType: string;
   availableFrom: string;
   availableUntil: string;

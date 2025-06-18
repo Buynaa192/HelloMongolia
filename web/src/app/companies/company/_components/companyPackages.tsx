@@ -74,7 +74,7 @@ export const CompanyPackages = ({
           image={item.coverPhoto}
           title={item.title}
           description={item.description}
-          price={item.cost}
+          price={String(item.cost)}
           duration={item.duration}
           rating={item.rating}
         />

@@ -2,7 +2,6 @@
 
 import React from "react";
 import { TripType } from "../page";
-
 type SearchFilterProps = {
   selectedTripTypes: TripType[];
   setSelectedTripTypes: React.Dispatch<React.SetStateAction<TripType[]>>;
