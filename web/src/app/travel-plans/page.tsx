@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { FilteredPackages } from "./_components/filteredPackages";
 import { Search } from "./_components/search";
 import { SearchFilter } from "./_components/searchFIlter";
@@ -9,6 +8,7 @@ import { TravelPlanHome } from "./_components/travelPLanHome";
 import SmoothScroll from "./assets/smoothScroll";
 import { PackageType } from "../_providers/AuthProvider";
 import Link from "next/link";
+import { api } from "@/axios";
 
 export type TripType =
   | "Sightseeing"
@@ -28,13 +28,12 @@ export default function PackagesExplore() {
 
   const [selectedDurations, setSelectedDurations] = useState<string[]>([]);
 
-  // const [destination, setDestination] = useState("");
   const [selectedTripTypes, setSelectedTripTypes] = useState<TripType[]>([]);
 
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const res = await axios.get(`http://localhost:3001/package`);
+        const res = await api.get(`/package`);
         setAllPackages(res.data.packages);
         setFilteredPackages(res.data.packages);
         console.log(res.data.packages);
@@ -46,7 +45,6 @@ export default function PackagesExplore() {
     fetchPackages();
   }, []);
 
-  // Helper: parse duration string like "7 days" to number 7
   const parseDurationToDays = (durationStr: string): number => {
     const match = durationStr.match(/\d+/);
     return match ? parseInt(match[0], 10) : 0;
@@ -101,15 +99,15 @@ export default function PackagesExplore() {
               return true;
           }
         });
-      // Date filtering (optional)
+
       const packageStart = new Date(e.availableFrom);
       const packageEnd = new Date(e.availableUntil);
       const filterStart = startDate ? new Date(startDate) : null;
       const filterEnd = endDate ? new Date(endDate) : null;
 
       const matchesDates =
-        (!filterStart || packageEnd >= filterStart) && // package ends after filter start
-        (!filterEnd || packageStart <= filterEnd); // package starts before filter end
+        (!filterStart || packageEnd >= filterStart) &&
+        (!filterEnd || packageStart <= filterEnd);
 
       return (
         matchesKeyword &&
@@ -128,7 +126,7 @@ export default function PackagesExplore() {
     setSelectedTripTypes([]);
     setStartDate("");
     setEndDate("");
-    setSelectedCosts([]); // reset cost filter too
+    setSelectedCosts([]);
     setFilteredPackages(allPackages);
   };
 
@@ -144,9 +142,7 @@ export default function PackagesExplore() {
       <Search
         keyword={keyword}
         setKeyword={setKeyword}
-        // destination={destination}
-        // setDestination={setDestination}
-        startDate={startDate} // <-- Add this
+        startDate={startDate}
         setStartDate={setStartDate}
         applyFilters={applyAllFilters}
         endDate={endDate}

@@ -51,9 +51,7 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
                 />
                 <div className="w-full h-full flex flex-col justify-between p-3">
                   <div className="text-[12px] w-fit font-medium text-stone-500">
-                    {item.companyId.map((el, index) => {
-                      return <div key={index}>{el.email}</div>;
-                    })}
+                    {item.companyId.email}
                   </div>
                   <div className="text-[24px] font-bold truncate">
                     {item.title ? item.title : item.description}
