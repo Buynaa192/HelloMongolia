@@ -11,7 +11,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="w-screen flex justify-center bg-black h-full">
         <AuthProvider>
-          <div className="w-[1440px] h-full">{children}</div>
+          <div className="max-w-[1440px] w-full h-full">{children}</div>
         </AuthProvider>
         <Toaster />
       </body>

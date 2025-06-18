@@ -1,10 +1,8 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+
+import Link from "next/link";
 
 export const Header = () => {
-  const router = useRouter();
-
   const headers = [
     { name: "Destinations", url: "/explore-destinations" },
     { name: "Travel Plans", url: "/travel-plans" },
@@ -13,16 +11,15 @@ export const Header = () => {
   ];
 
   return (
-    <div className="w-full flex md:gap-20  justify-between absolute top-5 px-10 z-10">
+    <div className="max-w-[1440px] w-full flex justify-between absolute top-5 px-20 z-10">
       {headers.map(({ name, url }) => (
-        <Button
+        <Link
           key={name}
-          variant={"ghost"}
-          onClick={() => router.push(url)}
-          className="text-m text-white"
+          href={url}
+          className="text-white text-m  cursor-pointer"
         >
           {name}
-        </Button>
+        </Link>
       ))}
     </div>
   );

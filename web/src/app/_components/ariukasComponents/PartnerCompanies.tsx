@@ -62,7 +62,6 @@ export const PartnerCompanies = () => {
               alt="Company logo"
               width={112}
               height={112}
-              objectFit="contain"
               priority
             />
           </a>
