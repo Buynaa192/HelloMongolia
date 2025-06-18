@@ -1,5 +1,6 @@
 import { PackageCard } from "./PackageCard";
 import { TripReview } from "./TripReview";
+import { motion } from "framer-motion";
 
 export type PackageDetailsType = {
   title: string;
@@ -23,20 +24,25 @@ type BestRatedPackagesProps = {
 
 export const ShowPackage = ({ topTours }: BestRatedPackagesProps) => {
   return (
-    <div className="w-full h-fit flex flex-col gap-6 md:px-0 px-4">
+    <div className="w-full h-fit flex flex-col md:space-y-[-80px]">
       {topTours.map((tours, index) => (
-        <div
+        <motion.div
           key={index}
-          className={`w-full flex items-center justify-between md:space-y-[-80px] ${
-            index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-          }`}>
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
+          viewport={{ once: true }}
+          className={`w-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 p-4 ${
+            index % 2 !== 0 ? "md:flex-row-reverse" : ""
+          }`}
+        >
           <PackageCard trip={tours.trip} />
           <TripReview
             title={tours.trip.title}
             reviewMessage={tours.reviewMessage}
             row={index % 2 === 0 ? "left" : "right"}
           />
-        </div>
+        </motion.div>
       ))}
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { TravelTypeCard } from "./TravelTypeCard";
@@ -86,19 +86,19 @@ export const ScrollTypes = () => {
   }, [api]);
 
   return (
-    <div className="w-full h-full flex items-center justify-center flex-col space-y-4">
+    <div className="w-full h-full flex flex-col items-center justify-center space-y-6">
       <Carousel
         setApi={setApi}
         opts={{ align: "center" }}
-        className="w-full md:max-w-6xl max-w-2xl overflow-hidden"
+        className="w-full max-w-2xl md:max-w-6xl overflow-hidden"
       >
-        <CarouselContent className="ml-4">
+        <CarouselContent>
           {Types.map((item, idx) => (
             <CarouselItem
               key={idx}
-              className="md:basis-[400px] basis-[250px] flex flex-col justify-center p-0"
-              onMouseEnter={() => api?.scrollTo(idx)}
-              onFocus={() => api?.scrollTo(idx)}
+              className="basis-[250px] md:basis-[480px] flex flex-col justify-center p-0"
+              onMouseEnter={() => api?.scrollTo(idx, false)}
+              onFocus={() => api?.scrollTo(idx, false)}
             >
               <TravelTypeCard
                 title={item.title}
@@ -109,22 +109,21 @@ export const ScrollTypes = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
+
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+
       <AnimatePresence mode="wait">
         <motion.div
           key={Types[current]?.title}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="w-full px-4 md:max-w-6xl max-w-2xl flex justify-between items-center text-white mt-4 gap-5"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="w-full px-4 max-w-2xl md:max-w-6xl flex flex-col md:flex-row justify-between items-center text-white mt-6 gap-4"
         >
-          <div className="text-3xl font-semibold hidden md:flex">
-            {Types[current]?.title}
-          </div>
-          <div className="italic text-xl md:text-base text-center md:text-left">
+          <div className="italic text-lg md:text-base text-center ">
             {Types[current]?.description || "No description available."}
           </div>
         </motion.div>

@@ -66,7 +66,7 @@ export const TopRatedPackages = () => {
   ];
 
   return (
-    <div className="w-full h-fit relative flex flex-col md:mb-20 md:10">
+    <div className="w-full h-fit relative flex flex-col md:mb-20 mb-10">
       <motion.div
         initial={{ y: 60, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -75,15 +75,17 @@ export const TopRatedPackages = () => {
       >
         <HomePageTitle title="BEST-SELLING PACKAGES" />
       </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-        viewport={{ once: true }}
-      >
-        <ShowPackage topTours={tourPackagesWithReviews} />
-      </motion.div>
+      <div className="w-full flex flex-col items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+          viewport={{ once: true }}
+          className="w-full max-w-7xl px-4"
+        >
+          <ShowPackage topTours={tourPackagesWithReviews} />
+        </motion.div>
+      </div>
     </div>
   );
 };

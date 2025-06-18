@@ -77,7 +77,7 @@ export const PackageCard = ({ trip }: PackageCardProps) => {
           </div>
         </div>
 
-        <div className="hidden md:flex items-center justify-between mt-6">
+        <div className="flex items-center justify-between mt-6">
           <Button
             asChild
             variant="link"

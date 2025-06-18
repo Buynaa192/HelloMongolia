@@ -31,7 +31,7 @@ export const PartnerCompanies = () => {
   ];
 
   return (
-    <div className="w-full h-fit relative flex flex-col items-center mb-12">
+    <div className="w-full h-fit relative flex flex-col items-center mb-25">
       <motion.div
         initial={{ y: 60, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
