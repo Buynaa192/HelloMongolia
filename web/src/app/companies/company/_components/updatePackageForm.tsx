@@ -61,7 +61,6 @@ export type Props = {
 
 export const UpdatePackageForm = ({ packageData }: Props) => {
   const [loading, setLoading] = useState(false);
-  console.log("", packageData);
   const [prevProfileImage, setPrevProfileImage] = useState(
     packageData.coverPhoto
   );
@@ -105,7 +104,7 @@ export const UpdatePackageForm = ({ packageData }: Props) => {
             <FormField
               control={form.control}
               name="coverPhoto"
-              render={({ field }) => (
+              render={({ }) => (
                 <FormItem>
                   <FormLabel>Cover Photo</FormLabel>
                   <FormControl>

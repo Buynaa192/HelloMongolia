@@ -1,4 +1,4 @@
-import { PackageItemType, PackageType } from "@/app/_providers/AuthProvider";
+import { PackageItemType} from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { useEffect, useState } from "react";
 import { PackageItemCard } from "./_components/packageItemCard";

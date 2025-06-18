@@ -20,7 +20,7 @@ import { z } from "zod";
 import { Textarea } from "./ui/textarea";
 import { Input } from "@/components/ui/input";
 import { CreatePackageFun } from "./createPackageFunction";
-import { PackageItemType, PackageType } from "@/app/_providers/AuthProvider";
+import { PackageType } from "@/app/_providers/AuthProvider";
 import { PackageItemList } from "../addPackageList";
 const companyId = "684b7452cf844286f738f2db";
 const ACCEPTED_IMAGE_TYPES = [
@@ -62,7 +62,6 @@ type FormData = z.infer<typeof schema>;
 export const AddPackageForm = () => {
   const [packageId, setPackageId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [uploadImageFile, setUploadImageFile] = useState<File>();
   const [prevProfileImage, setPrevProfileImage] = useState("");
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -105,7 +104,7 @@ export const AddPackageForm = () => {
               <FormField
                 control={form.control}
                 name="coverPhoto"
-                render={({ field }) => (
+                render={({}) => (
                   <FormItem>
                     <FormLabel>Cover Photo</FormLabel>
                     <FormControl>
@@ -125,7 +124,7 @@ export const AddPackageForm = () => {
                             onChange={(e) => {
                               const file = e.target.files?.[0];
                               if (file) {
-                                form.setValue("coverPhoto", e.target.files);
+                                form.setValue("coverPhoto", file);
                                 setPrevProfileImage(URL.createObjectURL(file));
                               }
                             }}
@@ -256,8 +255,11 @@ export const AddPackageForm = () => {
                           type="file"
                           accept="application/pdf"
                           onChange={(e) => {
-                            const files = e.target.files;
-                            field.onChange(files);
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              form.setValue("itinerary", file);
+                             
+                            }
                           }}
                           className="w-full"
                         />
@@ -292,7 +294,7 @@ export const AddPackageForm = () => {
               <div className="flex justify-end">
                 <Button
                   type="submit"
-                  // disabled={loading || !form.formState.isValid}
+                  
                   className={` text-white px-4 py-2 rounded hover:bg-green-700 transition ${
                     loading ? "bg-green-200" : "bg-green-500"
                   } text-white`}>

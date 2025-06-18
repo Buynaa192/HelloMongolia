@@ -4,7 +4,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Props } from "./updatePackageForm";
 import { deletePackageFun } from "./updateAndDeletePackageFunction";
 type TitlePropsType = {
   title: string;
@@ -15,7 +14,7 @@ export const DeletePackage = ({ title, packageId }: TitlePropsType) => {
     <DialogContent className="bg-white rounded-xl">
       <DialogHeader>
         <DialogTitle className="text-lg font-semibold">
-          Are you sure you want to delete the '{title}' package?
+          Are you sure you want to delete the &apos;{title}&apos; package?
         </DialogTitle>
       </DialogHeader>
       <div className="flex justify-end gap-4 mt-6">

@@ -1,6 +1,4 @@
 "use client";
-
-import { useAuth } from "@/app/_providers/AuthProvider";
 import Image from "next/image";
 import { CompanyPackages } from "./_components/companyPackages";
 import { Button } from "@/components/ui/button";
@@ -33,7 +31,7 @@ export default function CompanyExplore() {
         )}
         <div className="absolute inset-0 flex flex-col justify-center items-center z-20 text-white px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-2xl">
-            Welcome to our company's website.
+            Welcome to our company&apos;s website.
           </h1>
           <p className="text-lg  drop-shadow-md">
             We will bring you an amazing journey.

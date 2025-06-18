@@ -29,12 +29,13 @@ export const PackageItemCard = ({
   const addToPackage = async () => {
     try {
       setLoading(true);
-      const response = await api.post(`/package/addPackageItem/${packageId}`, {
+    await api.post(`/package/addPackageItem/${packageId}`, {
         packageItemId,
       });
       setIsAdded(true);
       toast.success("Successfully added to package");
-    } catch (error: any) {
+    } catch (error) {
+     console.log(error)
       toast.error("Failed to add item to package");
     } finally {
       setLoading(false);

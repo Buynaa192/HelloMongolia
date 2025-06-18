@@ -1,6 +1,5 @@
 import { api } from "@/axios";
 import axios from "axios";
-import { title } from "process";
 import { toast } from "sonner";
 
 export type DataType = {
@@ -12,8 +11,8 @@ export type DataType = {
   availableFrom: string;
   availableUntil: string;
   rating: number;
-  coverPhoto?: any;
-  itinerary?: any;
+  coverPhoto?: File;
+  itinerary?: File;
 };
 type FormdataType = {
   companyId: string;
@@ -22,11 +21,9 @@ type FormdataType = {
 };
 export const UPLOUD_PRESSET = "temuulen";
 export const CLOUD_NAME = "dpmo1etqt";
-export const uploadImage = async (file: File | undefined) => {
-  console.log(file);
+export const uploadImage = async (file: File) => {
   if (!file) {
-    console.warn("No file provided for upload");
-    return undefined;
+    return 
   }
   const formData = new FormData();
   formData.append("file", file);
@@ -52,10 +49,9 @@ export const CreatePackageFun = async ({
 
   const availableUntl = new Date(data.availableUntil);
   const cost = Number(data.cost);
-  const coverPhoto = await uploadImage(data.coverPhoto[0]);
-  console.log(coverPhoto);
-  const itineraryPdf = await uploadImage(data.itinerary[0]);
-  console.log(itineraryPdf);
+  const coverPhoto = await uploadImage(data.coverPhoto!);
+  const itineraryPdf = await uploadImage(data.itinerary!);
+ 
   try {
     setLoading(true);
     const response = await api.post(`/package`, {
