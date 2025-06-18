@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-
 const animatedWords = ["DISCOVER", "EXPLORE", "EXPERIENCE", "FEEL"];
 
 export const Hero1Text = () => {
