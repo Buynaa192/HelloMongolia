@@ -6,8 +6,8 @@ import { Hero2 } from "./_components/ariukasComponents/Hero2";
 import { TopRatedPackages } from "./_components/ariukasComponents/TopRatedPackages";
 import { TopDestinationsHero } from "./_components/ariukasComponents/TopDestinations";
 import { ChooseTravelType } from "./_components/ariukasComponents/TravelType";
-import { PartnerCompanies } from "./_components/PartnerCompanies";
 import { Footer } from "./_components/ariukasComponents/Footer";
+import { PartnerCompanies } from "./_components/ariukasComponents/PartnerCompanies";
 
 export default function Home() {
   return (

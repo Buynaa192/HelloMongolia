@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 export const Hero2Text = () => {
+  const description = `Because it's one of the last places on Earth where you can truly disconnect—and reconnect.`;
+
   return (
     <motion.div
       initial={{ y: 90, opacity: 0 }}
@@ -24,14 +26,10 @@ export const Hero2Text = () => {
             </h1>
           </div>
           <div className="md:w-1/2 text-[16px] md:text-[18px] lg:text-xl flex flex-col gap-8">
-            <p className="w-full md:text-left text-center ">
-              Because it's one of the last places on Earth where you can truly
-              disconnect—and reconnect. Vast untouched landscapes, ancient
-              traditions, and warm-hearted nomadic hospitality offer not just a
-              trip, but a transformation.
-            </p>
+            <p className="w-full md:text-left text-center ">{description}</p>
             <p className="w-full md:text-left text-center text-white">
-              If you're seeking something real, raw, and unforgettable, <br />
+              If you&rsquo;re seeking something real, raw, and unforgettable,{" "}
+              <br />
               <span className="font-bold text-2xl">Mongolia is calling.</span>
             </p>
           </div>
