@@ -25,15 +25,16 @@ export type PackageItemType = {
 };
 export type PackageType = {
   _id: string;
+  title: string;
   owner: string;
   coverPhoto: string;
   description: string;
   packageItem: PackageItemType[];
-  duration: number;
-  availableFrom: Date;
-  availableUntil: Date;
-  cost: number;
-  hutulbur: File;
+  duration: string;
+  availableFrom: string;
+  availableUntil: string;
+  cost: string;
+  itinerary: string;
   tripType: string;
   rating: number;
 };
@@ -120,8 +121,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <AuthContext.Provider
-      value={{ company, signIn, signOut, setCompany, getCompany }}
-    >
+      value={{ company, signIn, signOut, setCompany, getCompany }}>
       {!loading && children}
     </AuthContext.Provider>
   );

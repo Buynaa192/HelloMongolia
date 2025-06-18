@@ -69,15 +69,14 @@ export const CompanyPackages = ({
         <PackageCard
           key={item._id}
           loading={false}
-          duration={item.duration}
-          image={item.coverPhoto}
-          title={item.description}
-          description={item.description}
-          price={`$${item.cost}`}
-          rating={item.rating}
           isCompanyLoggedIn={isCompanyLoggedIn}
-          Update={() => console.log("Update", item._id)}
-          Delete={() => console.log("Delete", item._id)}
+          packages={item}
+          image={item.coverPhoto}
+          title={item.title}
+          description={item.description}
+          price={item.cost}
+          duration={item.duration}
+          rating={item.rating}
         />
       ))}
     </div>

@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     API_URL: process.env.API_URL,
   },
   images: {
-    domains: ["res.cloudinary.com","cloudinary-marketing-res.cloudinary.com",],
+    domains: ["res.cloudinary.com", "cloudinary-marketing-res.cloudinary.com"],
   },
 };
 
