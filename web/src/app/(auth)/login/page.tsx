@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-
 import {
   Form,
   FormField,
@@ -18,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import Link from "next/link";
+import Image from "next/image";
 
 const loginSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -55,7 +55,7 @@ export default function LoginPage() {
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-150 p-6 border rounded-lg shadow bg-white flex flex-col gap-8">
         <div className="w-full flex justify-center">
-          <img src="/images/Logo.png" className="w-40" alt="" />
+          <Image src="/images/Logo.png" className="w-40" alt="" />
         </div>
         <h2 className="text-2xl font-semibold mb-6">Login</h2>
 

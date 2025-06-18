@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { api } from "@/axios";
 import Link from "next/link";
 import { AxiosError } from "axios";
+import Image from "next/image";
 
 const signUpSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -60,7 +61,7 @@ export default function SignUpPage() {
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-150 p-6 border rounded-lg shadow bg-white flex flex-col gap-8">
         <div className="w-full flex justify-center">
-          <img src="/images/Logo.png" className="w-40" alt="" />
+          <Image src="/images/Logo.png" className="w-40" alt="" />
         </div>
         <h2 className="text-2xl font-semibold ">Sign Up</h2>
 

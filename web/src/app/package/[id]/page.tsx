@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 const packages = {
   rating: 4.8,
   title: "Mongolia Exploration with Mongolian travel agency to Mongolia",
@@ -110,9 +112,11 @@ export default function PackagePage() {
             {packages.packageItems.slice(0, 5).map((item, index) => {
               return (
                 <div key={index} className="w-full  h-[calc(100%/5)] p-3">
-                  <img
+                  <Image
                     src={item.image}
-                    className="w-full h-full object-cover rounded-[10px]"
+                    alt="Your alt text"
+                    className="object-cover"
+                    fill
                   />
                 </div>
               );
