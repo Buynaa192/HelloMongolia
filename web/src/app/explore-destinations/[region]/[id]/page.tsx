@@ -2,7 +2,6 @@
 
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
-
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -59,7 +58,13 @@ export default function Destination() {
         </div>
         <div className="w-full border-2">{destination?.description}</div>
       </div>
-      <div className="w-full grid grid-cols-5"></div>
+      <div className="w-full grid grid-cols-5 border-2 h-100 gap-4 p-4">
+        <div className="border-2  w-full">packageCard</div>
+        <div className="border-2 w-full">packageCard</div>
+        <div className="border-2 w-full">packageCard</div>
+        <div className="border-2 w-full">packageCard</div>
+        <div className="border-2 w-full">packageCard</div>
+      </div>
     </div>
   );
 }
