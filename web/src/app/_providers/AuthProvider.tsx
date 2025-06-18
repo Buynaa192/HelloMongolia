@@ -121,7 +121,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <AuthContext.Provider
-      value={{ company, signIn, signOut, setCompany, getCompany }}>
+      value={{ company, signIn, signOut, setCompany, getCompany }}
+    >
       {!loading && children}
     </AuthContext.Provider>
   );

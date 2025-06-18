@@ -2,14 +2,16 @@
 
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
-
+import { DesdinationPackage } from "@/components/buynaasComponents/destinationPackage/desPackage";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-
+type idType = {
+  id: string;
+};
 export default function Destination() {
-  const params = useParams();
+  const params = useParams<idType>();
   const id = params.id;
   const [destination, setDestination] = useState<DestinationType>();
   useEffect(() => {
@@ -59,7 +61,7 @@ export default function Destination() {
         </div>
         <div className="w-full border-2">{destination?.description}</div>
       </div>
-      <div className="w-full grid grid-cols-5"></div>
+      <DesdinationPackage id={id} />
     </div>
   );
 }
