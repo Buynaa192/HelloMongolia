@@ -17,7 +17,6 @@ export const DesdinationPackage = ({ id }: idType) => {
     };
     GetPackage();
   }, []);
-  console.log(packages);
 
   return (
     <div className="w-full grid grid-cols-5 border-2 h-100 gap-4 p-4">
