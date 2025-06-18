@@ -13,4 +13,4 @@ export const packageRouter = Router()
   .put("/:packageId", updatePackageById)
   .post("/addPackageItem/:packageId", addPackageItem)
   .delete("/:packageId", deletePackageById)
-  .get("/:destinationId", getPackagesByDestinationId);
+  .get("/destination/:destinationId", getPackagesByDestinationId);

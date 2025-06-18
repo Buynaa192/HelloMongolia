@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import { packageItemModel } from "../../models/packageItem.model";
 import { packageModel } from "../../models/package.model";
 
@@ -6,19 +5,16 @@ export const getPackagesByDestinationId = async (req, res) => {
   try {
     const { destinationId } = req.params;
 
-    // packageItem collection-аас тухайн destinationId-тай packageItem-уудыг олно
     const packageItems = await packageItemModel.find({ destinationId });
 
-    // packageItem-уудын ID-г цуглуулах
     const itemIds = packageItems.map((item) => item._id);
 
-    // Эдгээр packageItem-уудыг ашигласан бүх package-уудыг олох
     const packages = await packageModel
       .find({ packageItem: { $in: itemIds } })
       .populate({
         path: "packageItem",
         populate: {
-          path: "destinationId activity", // дотроос destination болон activity-г populate хийнэ
+          path: "destinationId activity",
         },
       })
       .populate("companyId");
