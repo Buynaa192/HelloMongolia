@@ -37,7 +37,7 @@ export type PackageType = {
   itinerary: string;
   tripType: string;
   rating: number;
-  companyId: CompanyType[];
+  companyId: CompanyType;
 };
 export type ReviewType = {
   _id: string;
@@ -66,7 +66,7 @@ export type CompanyType = {
   about: string;
   packages: PackageType[];
   availableDestinations: DestinationType[];
-  reviews: ReviewType[];
+  reviews: number;
   Rating: number;
 };
 type AuthContextType = {

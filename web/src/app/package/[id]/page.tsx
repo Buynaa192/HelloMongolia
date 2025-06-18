@@ -4,7 +4,8 @@ import { PackageType } from "@/app/_providers/AuthProvider";
 import { CashIcon } from "@/app/travel-plans/assets/cash";
 import { DurationIcon } from "@/app/travel-plans/assets/durationIcon";
 import { StarIcon } from "@/app/travel-plans/assets/star";
-import axios from "axios";
+import { api } from "@/axios";
+
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,9 +19,7 @@ export default function PackagePage() {
   useEffect(() => {
     const fetchPackage = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:3001/package?packageId=${id}`
-        );
+        const res = await api.get(`/package?packageId=${id}`);
         setPackage(res.data.packages);
         console.log(res.data);
       } catch (err) {
@@ -107,7 +106,7 @@ export default function PackagePage() {
                   <div className="flex flex-col gap-2">
                     <div>Tour by:</div>
                     <div className="flex w-full h-10 gap-4">
-                      {item.companyId[0].background == "" ? (
+                      {item.companyId.background == "" ? (
                         <img
                           src="/images/NoImage.jpg"
                           className="w-10 h-full rounded-[40px] object-cover border-1 border-black"
@@ -115,17 +114,17 @@ export default function PackagePage() {
                         />
                       ) : (
                         <img
-                          src={item.companyId[0].background}
+                          src={item.companyId.background}
                           className="w-10 h-full rounded-[40px] object-cover border-1 border-black"
                           alt="Company background"
                         />
                       )}
                       <div className="flex flex-col h-full justify-center">
                         <div className="text-[20px] font-bold">
-                          {item.companyId[0].email}
+                          {item.companyId.email}
                         </div>
                         <div className="text-[12px]">
-                          {item.companyId[0].websiteURL}
+                          {item.companyId.websiteURL}
                         </div>
                       </div>
                     </div>
@@ -155,7 +154,7 @@ export default function PackagePage() {
               <div className="flex-1 pl-2 pr-2 flex flex-col relative ">
                 <div className="w-full  ">
                   <div className="w-full h-15 bg-[#000000] flex rounded-t-[8px]">
-                    {item.packageItem.map((item, index) => {
+                    {item.packageItem.map((_, index) => {
                       return (
                         <a
                           key={index}
@@ -230,7 +229,7 @@ export default function PackagePage() {
                   About the Company
                 </div>
                 <div className="w-50 flex overflow-hidden items-center">
-                  {item.companyId[0].background == "" ? (
+                  {item.companyId.background == "" ? (
                     <img
                       src="/images/NoImage.jpg"
                       className="w-50 h-50  object-cover rounded-[calc(100%/2)] "
@@ -238,65 +237,65 @@ export default function PackagePage() {
                     />
                   ) : (
                     <img
-                      src={item.companyId[0].background}
+                      src={item.companyId.background}
                       className="w-full h-full  object-cover "
                       alt="Company background"
                     />
                   )}
                 </div>
-                <div className="text-[24px]">{item.companyId[0].email}</div>
+                <div className="text-[24px]">{item.companyId.email}</div>
               </div>
               <div className="flex-1 flex p-5 text-2xl font-light ">
-                {item.companyId[0].about}
+                {item.companyId.about}
               </div>
               <div className="flex-1 flex flex-col items-center  p-5 text-[24px] gap-5">
-                {item.companyId[0].since == 0 ||
-                item.companyId[0].since == null ? null : (
+                {item.companyId.since == 0 ||
+                item.companyId.since == null ? null : (
                   <div className="w-full flex items-center justify-between ">
                     <div>Since:</div>
-                    <div>{item.companyId[0].since}</div>
+                    <div>{item.companyId.since}</div>
                   </div>
                 )}
                 <div className="w-full flex items-center justify-between ">
                   <div>Rating:</div>
                   <div className="flex gap-1 items-center">
                     <StarIcon />
-                    {item.companyId[0].Rating}
+                    {item.companyId.Rating}
                   </div>
                 </div>{" "}
                 <div className="w-full flex items-center justify-between ">
                   <div>Experience:</div>
                   <div>
-                    {item.companyId[0].reviews.length == 0 ||
-                    item.companyId[0].reviews.length == null
+                    {/* {item.companyId.reviews.length == 0 ||
+                    item.companyId.reviews.length == null
                       ? "0"
-                      : item.companyId[0].reviews.length}{" "}
+                      : item.companyId.reviews.length} */}
                     travellers
                   </div>
                 </div>{" "}
                 <div className="w-full flex items-center justify-between ">
                   <div>Destinations:</div>
-                  <div className="flex gap-2">
-                    {item.companyId[0].availableDestinations.length}
+                  {/* <div className="flex gap-2">
+                    {item.companyId.availableDestinations[0]._id}
                     <p>
-                      {item.companyId[0].availableDestinations.length == 0 ||
-                      item.companyId[0].availableDestinations.length == 1
+                      {item.companyId.availableDestinations.length == 0 ||
+                      item.companyId.availableDestinations.length == 1
                         ? "destination"
                         : "destinations"}
                     </p>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="w-full flex items-center justify-between ">
                   <div>Social URL:</div>
                   <div>
-                    {item.companyId[0].websiteURL == ""
-                      ? item.companyId[0].email
-                      : item.companyId[0].websiteURL}
+                    {item.companyId.websiteURL == ""
+                      ? item.companyId.email
+                      : item.companyId.websiteURL}
                   </div>
                 </div>
                 <div className="w-full flex items-center justify-between ">
                   <div>PhoneNumber:</div>
-                  <div>+976 {item.companyId[0].phoneNumber}</div>
+                  <div>+976 {item.companyId.phoneNumber}</div>
                 </div>
               </div>
             </div>
