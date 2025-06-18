@@ -22,8 +22,8 @@ type FormdataType = {
 export const UPLOUD_PRESSET = "temuulen";
 export const CLOUD_NAME = "dpmo1etqt";
 export const uploadImage = async (file: File) => {
-  if (!file) {
-    return 
+  if (!file) {  
+    return;
   }
   const formData = new FormData();
   formData.append("file", file);

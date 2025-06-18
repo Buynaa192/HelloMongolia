@@ -37,7 +37,7 @@ const schema = z.object({
   coverPhoto: z
     .any()
     .refine(
-      (file) => file?.[0] && ACCEPTED_IMAGE_TYPES.includes(file[0].type),
+      (file) => file && ACCEPTED_IMAGE_TYPES.includes(file.type),
       {
         message: "Only .jpg, .jpeg, .png and .webp formats are supported.",
       }
@@ -49,7 +49,7 @@ const schema = z.object({
   tripType: z.string().min(1),
   itinerary: z
     .any()
-    .refine((file) => file?.[0] && file[0].type === "application/pdf", {
+    .refine((file) => file && file.type === "application/pdf", {
       message: "Please upload a valid PDF file",
     }),
   availableFrom: z.string(),

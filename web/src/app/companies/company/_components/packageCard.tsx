@@ -5,6 +5,8 @@ import { PackageType } from "@/app/_providers/AuthProvider";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { UpdatePackageForm } from "./updatePackageForm";
 import { DeletePackage } from "./deletePackage";
+import { _isoDuration } from "zod/v4/core";
+import { useState } from "react";
 
 type PackageCardProps = {
   loading: boolean;
@@ -16,9 +18,7 @@ type PackageCardProps = {
   price: string;
   duration: string;
   rating: number;
-
-  Update?: () => void;
-  Delete?: () => void;
+  getPackages: ()=>Promise<void>;
 };
 export const PackageCard = ({
   loading,
@@ -30,8 +30,7 @@ export const PackageCard = ({
   price,
   duration,
   rating,
-  Update,
-  Delete,
+  getPackages
 }: PackageCardProps) => {
   if (loading) return <PackageCardSkeleton />;
   const ratingStar = (rating: number) => {
@@ -49,18 +48,18 @@ export const PackageCard = ({
   return (
     <div className="w-full flex items-stretch justify-center">
       <div className="flex w-[90%] min-h-[420px] rounded-2xl shadow-xl hover:shadow-2xl flex-col hover:w-[92%] duration-200 bg-white">
-        <img
+        {/* <img
           src={image}
           alt={title}
           className="w-full h-[250px] rounded-t-2xl object-cover"
-        />
+        /> */}
         <div className="flex flex-col justify-between flex-1 p-4 gap-2">
           <h2 className="text-[20px] font-bold line-clamp-2">{title}</h2>
           <p className="text-sm text-gray-600 line-clamp-3">{description}</p>
 
           <div className="flex justify-between items-center text-[12px] font-medium mt-auto pt-2">
             <div className="flex items-center gap-4">
-              <span>{duration} </span>
+              <span>{duration} { Number(duration)==1 ? "day" :"days"}  </span>
               <div className="flex items-center gap-1">
                 <img src="/images/star.png" alt="Star" className="w-5 h-5" />
                 {ratingStar(rating)}
@@ -69,7 +68,7 @@ export const PackageCard = ({
             <div className="text-[20px] font-bold text-green-500">{price}</div>
           </div>
 
-          <div className="flex gap-3 mt-4">
+          <div className="flex gap-4 mt-4 ">
             {!isCompanyLoggedIn ? (
               <>
                 <Button className="bg-blue-600 text-white hover:bg-blue-700 transition">
@@ -84,22 +83,20 @@ export const PackageCard = ({
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button
-                      onClick={Update}
                       className="bg-yellow-500 text-white hover:bg-yellow-600 transition">
                       Update
                     </Button>
                   </DialogTrigger>
-                  <UpdatePackageForm packageData={packages} />
+                  <UpdatePackageForm packageData={packages} getPackages={getPackages} />
                 </Dialog>
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button
-                      onClick={Delete}
                       className="bg-red-600 text-white hover:bg-red-700 transition">
                       Delete
                     </Button>
                   </DialogTrigger>
-                  <DeletePackage title={title} packageId={packages._id} />
+                  <DeletePackage title={title} packageId={packages._id} getPackages={getPackages} />
                 </Dialog>
               </>
             )}
