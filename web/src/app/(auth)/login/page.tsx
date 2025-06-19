@@ -43,7 +43,7 @@ export default function LoginPage() {
       await signIn(values.email, values.password);
       toast.success("Logged in successfully!");
       setTimeout(() => {
-        router.push("/");
+        router.push("/companies/company");
       }, 1000);
     } catch (err) {
       console.error(err);
@@ -55,7 +55,13 @@ export default function LoginPage() {
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-150 p-6 border rounded-lg shadow bg-white flex flex-col gap-8">
         <div className="w-full flex justify-center">
-          <Image src="/images/Logo.png" className="w-40" alt="" />
+          <Image
+            width={200}
+            height={200}
+            src="https://res.cloudinary.com/df60cobe2/image/upload/v1750323871/Screenshot_2025-06-19_at_5.04.10_PM_xxqsgx.png"
+            className="w-40"
+            alt=""
+          />
         </div>
         <h2 className="text-2xl font-semibold mb-6">Login</h2>
 
@@ -90,7 +96,7 @@ export default function LoginPage() {
             />
             <div>
               <p>
-                Dont have an account ?{" "}
+                Dont have an account ?
                 <Link
                   href={"/sign-up"}
                   className="text-blue-500 underline underline-offset-1"
