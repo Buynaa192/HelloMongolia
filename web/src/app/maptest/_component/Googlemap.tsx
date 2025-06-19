@@ -48,29 +48,6 @@ export default function MyGoogleMap({ apiKey }: Props) {
 
   const generateId = () => crypto.randomUUID();
 
-  const handleMapClick = useCallback(
-    async (e: google.maps.MapMouseEvent) => {
-      if (!e.latLng) return;
-      const lat = e.latLng.lat();
-      const lng = e.latLng.lng();
-
-      const res = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`
-      );
-      const data = await res.json();
-
-      // Clean address: remove plus code
-      const rawAddress =
-        data.results?.[0]?.formatted_address || "Unknown location";
-      const address = rawAddress.replace(/^[A-Z0-9+]+ /, "");
-
-      const newMarker = { id: generateId(), lat, lng, address };
-      setMarkers((prev) => [...prev, newMarker]);
-      setSelected(newMarker);
-    },
-    [apiKey]
-  );
-
   const handlePlaceChanged = () => {
     if (!autocomplete) return;
 
@@ -84,6 +61,8 @@ export default function MyGoogleMap({ apiKey }: Props) {
     const newMarker = { id: generateId(), lat, lng, address };
     setMarkers((prev) => [...prev, newMarker]);
     setSelected(newMarker);
+
+    if (inputRef.current) inputRef.current.value = "";
   };
 
   const handleMarkerDragEnd = useCallback(
@@ -155,7 +134,12 @@ export default function MyGoogleMap({ apiKey }: Props) {
     <div className="w-full flex flex-col gap-4">
       <div className="flex gap-2 items-center">
         <Autocomplete
-          onLoad={setAutocomplete}
+          onLoad={(ac) => {
+            ac.setOptions({
+              componentRestrictions: { country: "mn" },
+            });
+            setAutocomplete(ac);
+          }}
           onPlaceChanged={handlePlaceChanged}
         >
           <input
@@ -164,7 +148,11 @@ export default function MyGoogleMap({ apiKey }: Props) {
             className="p-2 border rounded w-full max-w-md"
           />
         </Autocomplete>
-        <Button onClick={clearMarkers} variant="destructive">
+        <Button
+          onClick={clearMarkers}
+          variant="destructive"
+          className="bg-black"
+        >
           Clear
         </Button>
       </div>
@@ -175,15 +163,19 @@ export default function MyGoogleMap({ apiKey }: Props) {
             mapContainerStyle={containerStyle}
             center={markers[markers.length - 1] || defaultCenter}
             zoom={6}
-            onClick={handleMapClick}
           >
-            {markers.map((m) => (
+            {markers.map((m, index) => (
               <Marker
                 key={m.id}
                 position={{ lat: m.lat, lng: m.lng }}
                 draggable
                 onClick={() => setSelected(m)}
                 onDragEnd={(e) => handleMarkerDragEnd(e, m.id)}
+                label={{
+                  text: String.fromCharCode(65 + index),
+                  fontWeight: "bold",
+                  color: "white",
+                }}
                 onLoad={(marker) => {
                   marker.addListener("dblclick", () =>
                     handleMarkerDblClick(m.id)
@@ -191,7 +183,12 @@ export default function MyGoogleMap({ apiKey }: Props) {
                 }}
               />
             ))}
-            {directions && <DirectionsRenderer directions={directions} />}
+            {directions && (
+              <DirectionsRenderer
+                directions={directions}
+                options={{ suppressMarkers: true }}
+              />
+            )}
           </GoogleMap>
         </div>
 
