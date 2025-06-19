@@ -10,10 +10,12 @@ export const getPackageById: RequestHandler = async (req, res) => {
       .populate({
         path: "packageItem",
         populate: [
-    { path: "destinationId", model: "destination" },
-    { path: "activity", model: "activity" }, 
-  ],
-      }).populate("companyId");
+          {
+            path: "destinationId",
+            model: "destination",
+          },
+        ],
+      });
 
     res.status(200).json({ packages });
   } catch (error) {

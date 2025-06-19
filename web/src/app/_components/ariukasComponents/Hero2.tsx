@@ -18,7 +18,7 @@ export const Hero2 = () => {
           playsInline
         >
           <source
-            src="/images/ariukasImages/18789355-uhd_3840_2160_30fps.mp4"
+            src="https://res.cloudinary.com/df60cobe2/video/upload/v1750321203/18789355-uhd_3840_2160_30fps_ov7a75.mp4"
             type="video/mp4"
           />
         </video>

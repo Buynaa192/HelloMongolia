@@ -12,7 +12,7 @@ export const Hero1 = () => {
           playsInline
         >
           <source
-            src="/images/ariukasImages/855785-hd_1920_1080_24fps.mp4"
+            src="https://res.cloudinary.com/df60cobe2/video/upload/v1750320997/855785-hd_1920_1080_24fps_pnp6xn.mp4"
             type="video/mp4"
           />
         </video>

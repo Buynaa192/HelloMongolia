@@ -7,9 +7,9 @@ import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { Regions } from "@/components/buynaasComponents/regionsComponents/regions";
 import { PopularDestination } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestination";
-import Link from "next/link";
 import { api } from "@/axios";
 import { DestinationType } from "../_providers/AuthProvider";
+import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
 
 const images = [
   "/images/pack1.png",
@@ -101,10 +101,7 @@ export default function DestinatioExplore() {
           )}
         </div>
       </div>
-      <div className="flex ml-4 gap-1">
-        <Link href={"/"}>Home</Link> {">"} <p>Explore-destinations</p>{" "}
-      </div>
-
+      <BackToHomePathButtons />
       <Regions />
       <PopularDestination destination={destination} />
     </div>

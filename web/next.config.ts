@@ -7,7 +7,12 @@ const nextConfig: NextConfig = {
       process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   },
   images: {
-    domains: ["res.cloudinary.com", "cloudinary-marketing-res.cloudinary.com"],
+    domains: [
+      "res.cloudinary.com",
+      "cloudinary-marketing-res.cloudinary.com",
+      "www.qantas.com",
+      "www.escapetomongolia.com",
+    ],
   },
 };
 
