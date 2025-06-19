@@ -5,27 +5,27 @@ import { HomePageTitle } from "./HomePageTitle";
 export const PartnerCompanies = () => {
   const companies = [
     {
-      logo: "/images/ariukasImages/antLogo.PNG",
+      logo: "https://res.cloudinary.com/df60cobe2/image/upload/v1750327943/nteLogo_jthqil.png",
       link: "https://www.ariukas.com",
     },
     {
-      logo: "/images/ariukasImages/nteLogo.PNG",
+      logo: "https://res.cloudinary.com/df60cobe2/image/upload/v1750327943/nteLogo_jthqil.png",
       link: "https://www.nomadictours.mn",
     },
     {
-      logo: "/images/ariukasImages/tclLogo.PNG",
+      logo: "https://res.cloudinary.com/df60cobe2/image/upload/v1750327943/nteLogo_jthqil.png",
       link: "https://www.adventuretours.mn",
     },
     {
-      logo: "/images/ariukasImages/tgnLogo.PNG",
+      logo: "https://res.cloudinary.com/df60cobe2/image/upload/v1750327943/nteLogo_jthqil.png",
       link: "https://www.adventuretours.mn",
     },
     {
-      logo: "/images/ariukasImages/wmLogo.PNG",
+      logo: "https://res.cloudinary.com/df60cobe2/image/upload/v1750327943/nteLogo_jthqil.png",
       link: "https://www.adventuretours.mn",
     },
     {
-      logo: "/images/ariukasImages/njLogo.PNG",
+      logo: "https://res.cloudinary.com/df60cobe2/image/upload/v1750327943/nteLogo_jthqil.png",
       link: "https://www.adventuretours.mn",
     },
   ];

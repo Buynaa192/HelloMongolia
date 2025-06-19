@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { TravelTypeCard } from "./TravelTypeCard";
@@ -16,7 +16,8 @@ import { type CarouselApi } from "@/components/ui/carousel";
 const Types = [
   {
     title: "ADVENTURE",
-    image: "/images/ariukasImages/adventure.jpg",
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750321221/adventure_znjzmi.jpg",
     buttonURL: "",
     description:
       "Adventure travel in Mongolia offers raw, untamed experiences like horseback riding across vast steppes, trekking in the Altai Mountains, or camping under the stars in the Gobi Desert. It’s ideal for thrill-seekers looking to disconnect from modern life. You'll encounter challenging terrain, unpredictable weather, and unforgettable landscapes. Whether it's crossing frozen rivers in winter or climbing remote peaks, Mongolia delivers true wilderness exploration.",

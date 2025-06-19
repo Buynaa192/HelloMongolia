@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { Regions } from "@/components/buynaasComponents/regionsComponents/regions";
 import { PopularDestination } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestination";
-import Link from "next/link";
 import { api } from "@/axios";
 import { DestinationType } from "../_providers/AuthProvider";
 import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";

@@ -7,7 +7,6 @@ import { SearchFilter } from "./_components/searchFIlter";
 import { TravelPlanHome } from "./_components/travelPLanHome";
 import SmoothScroll from "./assets/smoothScroll";
 import { PackageType } from "../_providers/AuthProvider";
-import Link from "next/link";
 import { api } from "@/axios";
 import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
 

@@ -18,7 +18,7 @@ export const TopRatedPackages = () => {
 
         setPackages(response.data.packages);
       } catch (err) {
-        console.error("failed to fetch packages");
+        console.error("failed to fetch packages", err);
       } finally {
         setLoading(false);
       }

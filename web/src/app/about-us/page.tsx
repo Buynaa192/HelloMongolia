@@ -40,22 +40,22 @@ export default function AboutPage() {
           <p className="text-whiteleading-relaxed">
             Mongolia is a land of breathtaking landscapes, ancient history, and
             a rare nomadic culture found nowhere else. But despite its beauty
-            and uniqueness, it's still a hidden gem in the world of travel. Why?
-            Because it’s far away, not well-promoted internationally, and travel
-            information is scattered—making it hard for travelers to plan a trip
-            with confidence.
+            and uniqueness, it`&apos;`s still a hidden gem in the world of
+            travel. Why? Because it`&apos;`s far away, not well-promoted
+            internationally, and travel information is scattered—making it hard
+            for travelers to plan a trip with confidence.
           </p>
         </div>
         <div>
           <h2 className="text-2xl font-semibold mb-4">Our Solution:</h2>
           <p className="text-white leading-relaxed">
-            We're building a smart, easy-to-use digital platform to help the
-            world discover Mongolia. Whether you're looking for epic nature,
-            cultural adventures, or trusted tour companies, our site brings
-            everything together in one place. Even if you have no idea where to
-            start, we'll guide you to the perfect route, experiences, and local
-            experts—so your journey to Mongolia feels closer, safer, and more
-            unforgettable than ever.
+            We`&apos;`re building a smart, easy-to-use digital platform to help
+            the world discover Mongolia. Whether you`&apos;`re looking for epic
+            nature, cultural adventures, or trusted tour companies, our site
+            brings everything together in one place. Even if you have no idea
+            where to start, we`&apos;`ll guide you to the perfect route,
+            experiences, and local experts—so your journey to Mongolia feels
+            closer, safer, and more unforgettable than ever.
           </p>
         </div>
       </div>
@@ -86,7 +86,7 @@ export default function AboutPage() {
       <div className="max-w-3xl mx-auto px-6 py-16 text-center">
         <h2 className="text-2xl font-semibold mb-4">Our vision:</h2>
         <p className="text-white leading-relaxed text-lg">
-          To make Mongolia one of the world’s most sought-after travel
+          To make Mongolia one of the world`&apos;`s most sought-after travel
           destinations—celebrated for its untouched landscapes, ancient culture,
           and the enduring spirit of its nomadic people.
           <br />
@@ -97,8 +97,8 @@ export default function AboutPage() {
           <br />
           <br />
           Through innovation, collaboration, and passion, we aim to open
-          Mongolia’s doors to the world— responsibly, sustainably, and with the
-          respect its heritage deserves.
+          Mongolia`&apos;`s doors to the world— responsibly, sustainably, and
+          with the respect its heritage deserves.
         </p>
       </div>
     </div>
