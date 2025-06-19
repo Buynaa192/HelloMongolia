@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { packageModel } from "../../models/package.model";
 
 export const removePackageItem: RequestHandler = async (req, res) => {
-    const { packageId,packageItemId } = req.params;
+  const { packageId, packageItemId } = req.params;
 
   try {
     const updatedPackage = await packageModel.findByIdAndUpdate(
@@ -15,8 +15,8 @@ export const removePackageItem: RequestHandler = async (req, res) => {
     );
 
     if (!updatedPackage) {
-        res.status(404).json({ message: "Package not found" });
-        return;
+      res.status(404).json({ message: "Package not found" });
+      return;
     }
 
     res.status(200).json({ message: "Package item removed successfully" });
