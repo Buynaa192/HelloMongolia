@@ -6,7 +6,7 @@ export const getPackageItemById = async (req, res) => {
 
     const packageItem = await packageItemModel
       .find(packageItemId ? { _id: packageItemId } : {})
-      .populate("destinationId");
+      .populate("destinationId").populate("activity");
 
     if (!packageItem) {
       return res.status(404).json({ message: "Package item not found" });

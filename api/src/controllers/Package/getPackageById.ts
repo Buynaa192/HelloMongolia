@@ -9,11 +9,11 @@ export const getPackageById: RequestHandler = async (req, res) => {
       .find(packageId ? { _id: packageId } : {})
       .populate({
         path: "packageItem",
-        populate: {
-          path: "destinationId",
-          model: "destination",
-        },
-      });
+        populate: [
+    { path: "destinationId", model: "destination" },
+    { path: "activity", model: "activity" }, 
+  ],
+      }).populate("companyId");
 
     res.status(200).json({ packages });
   } catch (error) {
