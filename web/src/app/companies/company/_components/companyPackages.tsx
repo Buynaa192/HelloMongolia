@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { PackageCardSkeleton } from "./packageSkeleton";
 import { PackageCard } from "./packageCard";
+import Link from "next/link";
 
 type CompanyPackagesProps = {
   companyId: string;
@@ -38,8 +39,6 @@ export const CompanyPackages = ({
     }
   };
   useEffect(() => {
-   
-
     if (companyId) {
       getPackages();
     }
@@ -65,20 +64,22 @@ export const CompanyPackages = ({
 
   return (
     <div className="grid grid-cols-3 gap-8">
-      {packages.map((item) => (
-        <PackageCard
-          key={item._id}
-          loading={false}
-          isCompanyLoggedIn={isCompanyLoggedIn}
-          packages={item}
-          image={item.coverPhoto}
-          title={item.title}
-          description={item.description}
-          price={String(item.cost)}
-          duration={item.duration}
-          rating={item.rating}
-          getPackages={getPackages}
-        />
+      {packages.map((item, i) => (
+        <Link href={`/package/${item._id}`} key={i}>
+          <PackageCard
+            key={item._id}
+            loading={false}
+            isCompanyLoggedIn={isCompanyLoggedIn}
+            packages={item}
+            image={item.coverPhoto}
+            title={item.title}
+            description={item.description}
+            price={String(item.cost)}
+            duration={item.duration}
+            rating={item.rating}
+            getPackages={getPackages}
+          />
+        </Link>
       ))}
     </div>
   );
