@@ -2,18 +2,15 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
-import { PackageDetailsType } from "./ShowPackage";
+
 import Link from "next/link";
+import { PackageType } from "@/app/_providers/AuthProvider";
 
-export type PackageCardProps = {
-  trip: PackageDetailsType;
-};
-
-export const PackageCard = ({ trip }: PackageCardProps) => {
+export const PackageCard = ({ trip }: { trip: PackageType }) => {
   return (
     <Card className="relative text-white md:h-[400px] h-[400px] w-full max-w-4xl overflow-hidden shadow-xl border-0">
       <Image
-        src={trip.image}
+        src={trip.coverPhoto}
         alt="nature photo"
         fill
         className="object-cover"
@@ -33,46 +30,45 @@ export const PackageCard = ({ trip }: PackageCardProps) => {
               />
             ))}
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:text-sm  text-gray-200">
-            <div className="flex flex-col gap-2 ">
-              <h3 className="font-semibold">Destinations</h3>
-              <ul className="hidden md:flex flex-col  list-disc ml-4 italic">
-                {trip.destinations.map((dest, i) => (
-                  <li key={i}>{dest}</li>
-                ))}
-              </ul>
-              <div className="flex flex-col md:hidden italic ">
-                {trip.destinations.map((dest, i) => (
-                  <p key={i}>{dest}</p>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h3 className="font-semibold items-center">Activities</h3>
-              <ul className="hidden md:flex flex-col list-disc ml-4 italic ">
-                {trip.activities.map((act, i) => (
-                  <li key={i}>{act}</li>
-                ))}
-              </ul>
-              <div className="flex flex-col md:hidden italic">
-                {trip.activities.map((act, i) => (
-                  <p key={i}>{act}</p>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h3 className="font-semibold">Group</h3>
-              <p className="italic">{trip.group.join(", ")}</p>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h3 className="font-semibold">Cost</h3>
-              <div className="text-lg font-bold">
-                ${trip.cost} {""}
-                <div className="hidden md:inline ">
-                  <br />
+          {trip.packageItem.map((item, index) => (
+            <div
+              key={index}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:text-sm text-gray-200"
+            >
+              <div className="flex flex-col gap-2">
+                <h3 className="font-semibold">Destination</h3>
+                <ul className="hidden md:flex flex-col list-disc ml-4 italic">
+                  <li>{item.destination}</li>
+                </ul>
+                <div className="flex flex-col md:hidden italic">
+                  <li>{item.destination}</li>
                 </div>
-                <span className="text-sm font-normal italic">per person</span>
               </div>
+
+              <div className="flex flex-col gap-2">
+                <h3 className="font-semibold">Activities</h3>
+                <ul className="hidden md:flex flex-col list-disc ml-4 italic">
+                  {item.activity?.map((act, i) => (
+                    <li key={i}>{act.name}</li>
+                  ))}
+                </ul>
+                <div className="flex flex-col md:hidden italic">
+                  {item.activity?.map((act, i) => (
+                    <li key={i}>{act.name}</li>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+
+          <div className="flex flex-col gap-2">
+            <h3 className="font-semibold">Cost</h3>
+            <div className="text-lg font-bold">
+              ${trip.cost} {""}
+              <div className="hidden md:inline ">
+                <br />
+              </div>
+              <span className="text-sm font-normal italic">per person</span>
             </div>
           </div>
         </div>
@@ -94,12 +90,10 @@ export const PackageCard = ({ trip }: PackageCardProps) => {
           <p className="text-xs text-gray-300">
             Tour Operator:{" "}
             <Link
-              href={`/operators/${trip.operator
-                .replace(/\s+/g, "-")
-                .toLowerCase()}`}
+              href={`/operators/${trip.companyId._id}`}
               className="hover:underline hover:text-white transition-colors flex flex-nowrap"
             >
-              {trip.operator}
+              {trip.companyId.name}
             </Link>
           </p>
         </div>

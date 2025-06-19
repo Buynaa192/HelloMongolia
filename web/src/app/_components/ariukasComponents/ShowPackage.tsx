@@ -1,31 +1,16 @@
+import { PackageType } from "@/app/_providers/AuthProvider";
 import { PackageCard } from "./PackageCard";
 import { TripReview } from "./TripReview";
 import { motion } from "framer-motion";
 
-export type PackageDetailsType = {
-  title: string;
-  rating: number;
-  destinations: string[];
-  activities: string[];
-  group: string[];
-  cost: number;
-  image: string;
-  operator: string;
-};
-
-export type TourPackageType = {
-  trip: PackageDetailsType;
-  reviewMessage: string;
-};
-
-type BestRatedPackagesProps = {
-  topTours: TourPackageType[];
-};
-
-export const ShowPackage = ({ topTours }: BestRatedPackagesProps) => {
+export const ShowPackage = ({
+  topPackages,
+}: {
+  topPackages: PackageType[];
+}) => {
   return (
     <div className="w-full h-fit flex flex-col md:space-y-[-80px]">
-      {topTours.map((tours, index) => (
+      {topPackages.map((pack, index) => (
         <motion.div
           key={index}
           initial={{ opacity: 0, y: 40 }}
@@ -36,10 +21,10 @@ export const ShowPackage = ({ topTours }: BestRatedPackagesProps) => {
             index % 2 !== 0 ? "md:flex-row-reverse" : ""
           }`}
         >
-          <PackageCard trip={tours.trip} />
+          <PackageCard trip={pack} />
           <TripReview
-            title={tours.trip.title}
-            reviewMessage={tours.reviewMessage}
+            title={pack.title}
+            reviewMessage={pack.description}
             row={index % 2 === 0 ? "left" : "right"}
           />
         </motion.div>

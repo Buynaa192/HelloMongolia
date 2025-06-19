@@ -6,31 +6,15 @@ export const TopDestinationsHero = () => {
   const regions = [
     {
       name: "Southern Mongolia/ Gobi",
-      video: "/images/ariukasImages/Govivideo.mp4",
+      video:
+        "https://res.cloudinary.com/df60cobe2/video/upload/v1750321551/Govivideo_xolvr9.mp4",
       details:
         "Discover ancient culture, vast landscapes, and incredible wildlife.",
       destinations: [
         {
-          name: "🧱 Flaming Cliffs",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
-          description:
-            "Famous for stunning red sandstone cliffs and dinosaur fossils.",
-          activities: [
-            "🦕 Dinosaur fossil tours",
-            "🥾 Hiking",
-            "📸 Photography",
-            "🏕️ Camping under the stars",
-          ],
-          weather: [
-            { season: "Summer", averageTemperature: "25°C" },
-            { season: "Winter", averageTemperature: "-15°C" },
-            { season: "Autumn", averageTemperature: "10°C" },
-            { season: "Spring", averageTemperature: "5°C" },
-          ],
-        },
-        {
           name: "🏜️ Khongoryn Els",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321662/IMG_0317-scaled_cqfgeu.jpg",
           description:
             "Also called the Singing Dunes, largest sand dunes in Mongolia.",
           activities: [
@@ -48,7 +32,9 @@ export const TopDestinationsHero = () => {
         },
         {
           name: "🦖 Bayanzag",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321615/DJI_0787_zhsrqj.jpg",
+
           description:
             "Known for paleontological discoveries and unique desert landscapes.",
           activities: [
@@ -66,8 +52,10 @@ export const TopDestinationsHero = () => {
         },
         {
           name: "❄️ Yolyn Am",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
-          description: "A deep and narrow gorge with a permanent ice field.",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
+          description:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           activities: [
             "🥾 Hiking",
             "❄️ Ice field exploration",
@@ -85,13 +73,15 @@ export const TopDestinationsHero = () => {
     },
     {
       name: "Northern Mongolia",
-      video: "/images/ariukasImages/hangaivideo.mp4",
+      video:
+        "https://res.cloudinary.com/df60cobe2/video/upload/v1750321530/hangaivideo_ys3x25.mp4",
       details:
         "Discover ancient culture, vast landscapes, and incredible wildlife.",
       destinations: [
         {
           name: "🐎 Hustai National Park",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description:
             "Home of the rare Przewalski's wild horses and diverse wildlife.",
           activities: [
@@ -109,7 +99,8 @@ export const TopDestinationsHero = () => {
         },
         {
           name: "⛰️ Terelj National Park",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description:
             "Popular for hiking, rock formations, and nomadic culture.",
           activities: [
@@ -127,7 +118,8 @@ export const TopDestinationsHero = () => {
         },
         {
           name: "🌊 Khuvsgul Lake",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description:
             "One of the largest freshwater lakes in Mongolia surrounded by forest.",
           activities: [
@@ -145,7 +137,8 @@ export const TopDestinationsHero = () => {
         },
         {
           name: "🏯 Amarbayasgalant Monastery",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description: "One of Mongolia’s most important Buddhist monasteries.",
           activities: [
             "🏛️ Cultural tours",
@@ -164,13 +157,15 @@ export const TopDestinationsHero = () => {
     },
     {
       name: "Western Mongolia",
-      video: "/images/ariukasImages/ulgiiVideo.mp4",
+      video:
+        "https://res.cloudinary.com/df60cobe2/video/upload/v1750321240/ulgiiVideo_sykirw.mp4",
       details:
         "Discover ancient culture, vast landscapes, and incredible wildlife.",
       destinations: [
         {
           name: "🏔️ Altai Tavan Bogd National Park",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description: "Majestic mountains with glaciers and petroglyphs.",
           activities: [
             "🥾 Mountain hiking",
@@ -187,7 +182,8 @@ export const TopDestinationsHero = () => {
         },
         {
           name: "🏙️ Ulgii Town",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description: "Gateway to western Mongolia and Kazakh culture.",
           activities: [
             "🏛️ Cultural tours",
@@ -204,7 +200,8 @@ export const TopDestinationsHero = () => {
         },
         {
           name: "🌄 Khovd Province",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description:
             "Known for diverse ethnic groups and dramatic landscapes.",
           activities: [
@@ -222,7 +219,8 @@ export const TopDestinationsHero = () => {
         },
         {
           name: "🌿 Tsambagarav National Park",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description:
             "A park with alpine meadows, glaciers, and rare animals.",
           activities: [
@@ -242,13 +240,15 @@ export const TopDestinationsHero = () => {
     },
     {
       name: "Eastern Mongolia",
-      video: "/images/ariukasImages/zuunVideo.mp4",
+      video:
+        "https://res.cloudinary.com/df60cobe2/video/upload/v1750321404/zuunVideo_vwkdmj.mp4",
       details:
         "Discover ancient culture, vast landscapes, and incredible wildlife.",
       destinations: [
         {
           name: "🌾 Dornod Mongol Biosphere Reserve",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description:
             "Expansive steppe ecosystem with unique flora and fauna.",
           activities: [
@@ -266,7 +266,8 @@ export const TopDestinationsHero = () => {
         },
         {
           name: "🦅 Mongol Daguur Strictly Protected Area",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description: "UNESCO World Heritage Site known for migratory birds.",
           activities: [
             "🦆 Bird watching",
@@ -283,7 +284,8 @@ export const TopDestinationsHero = () => {
         },
         {
           name: "🌲 Khentii Mountains",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description:
             "Forest and mountain region, home to Genghis Khan’s birthplace.",
           activities: [
@@ -301,7 +303,8 @@ export const TopDestinationsHero = () => {
         },
         {
           name: "🏞️ Onon-Balj National Park",
-          mediaUrl: "/images/ariukasImages/scenery.jpg",
+          mediaUrl:
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750321767/yolyn-am-hiking-photo_evigv4.jpg",
           description: "Scenic river valley and forested mountains.",
           activities: [
             "🚣 Kayaking",

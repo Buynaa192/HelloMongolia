@@ -17,7 +17,7 @@ export const ChooseTravelType = () => {
 
       <div className="w-full relative flex items-center justify-center overflow-hidden">
         <Image
-          src="/images/ariukasImages/blackmts.jpg"
+          src="https://res.cloudinary.com/df60cobe2/image/upload/v1750321216/blackmts_rzcpoc.jpg"
           alt="backgroundSky"
           fill
           className="object-cover"

@@ -9,6 +9,7 @@ import SmoothScroll from "./assets/smoothScroll";
 import { PackageType } from "../_providers/AuthProvider";
 import Link from "next/link";
 import { api } from "@/axios";
+import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
 
 export type TripType =
   | "Sightseeing"
@@ -132,10 +133,7 @@ export default function PackagesExplore() {
     <div className="w-full h-full ">
       <SmoothScroll />
       <TravelPlanHome />
-      <div className="bg-white w-full p-2">
-        <Link href={"/"}> Home</Link> |{" "}
-        <Link href={"/travel-plans"}> Explore tour</Link>
-      </div>
+      <BackToHomePathButtons />
 
       <Search
         keyword={keyword}
