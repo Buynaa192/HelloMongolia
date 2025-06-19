@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Camera, Loader } from "lucide-react";
+import { Camera, Loader, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -37,7 +37,7 @@ const schema = z.object({
   coverPhoto: z
     .any()
     .refine(
-      (file) => file?.[0] && ACCEPTED_IMAGE_TYPES.includes(file[0].type),
+      (file) => file && ACCEPTED_IMAGE_TYPES.includes(file.type),
       {
         message: "Only .jpg, .jpeg, .png and .webp formats are supported.",
       }
@@ -49,7 +49,7 @@ const schema = z.object({
   tripType: z.string().min(1),
   itinerary: z
     .any()
-    .refine((file) => file?.[0] && file[0].type === "application/pdf", {
+    .refine((file) => file && file.type === "application/pdf", {
       message: "Please upload a valid PDF file",
     }),
   availableFrom: z.string(),
@@ -76,7 +76,7 @@ export const AddPackageForm = () => {
       availableUntil: "",
       coverPhoto: undefined,
       itinerary: undefined,
-      rating: 0,
+     
     },
   });
   const onSubmit = async (data: FormData) => {
@@ -92,10 +92,11 @@ export const AddPackageForm = () => {
   };
   return (
     <DialogContent className="w-full bg-white max-h-screen overflow-y-auto rounded-xl">
-      <DialogHeader>
-        <DialogTitle>
-          {packageId ? "add PackageItem" : "Add Package"}
-        </DialogTitle>
+      <DialogHeader className="flex justify-center">
+  <DialogTitle className="text-center">
+    {packageId ? "add PackageItem" : "Add Package"}
+  </DialogTitle>
+</DialogHeader>
         {!packageId ? (
           <Form {...form}>
             <form
@@ -309,11 +310,15 @@ export const AddPackageForm = () => {
             </form>
           </Form>
         ) : (
-          <div>
+            <div className="flex flex-col gap4">
+              <Button className="flex items-center gap-2 bg-green-600 text-white hover:bg-green-700 shadow-md transition">
+                <PlusCircle size={18} />
+                Create Package Item
+              </Button>
             <PackageItemList packageId={packageId} />
           </div>
         )}
-      </DialogHeader>
+      
     </DialogContent>
   );
 };

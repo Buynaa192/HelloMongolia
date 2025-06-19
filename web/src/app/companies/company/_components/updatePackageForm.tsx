@@ -22,33 +22,14 @@ import { Input } from "@/components/ui/input";
 import { PackageType } from "@/app/_providers/AuthProvider";
 import { UpdatePackageFun } from "./updateAndDeletePackageFunction";
 import { Textarea } from "./ui/textarea";
-
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
-
 const schema = z.object({
-  coverPhoto: z
-    .any()
-    .refine(
-      (file) => file?.[0] && ACCEPTED_IMAGE_TYPES.includes(file[0].type),
-      {
-        message: "Only .jpg, .jpeg, .png and .webp formats are supported.",
-      }
-    ),
+  coverPhoto: z.any().optional(),
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
   duration: z.string().min(1),
   cost: z.number().min(1),
   tripType: z.string().min(1),
-  itinerary: z
-    .any()
-    .refine((file) => file?.[0] && file[0].type === "application/pdf", {
-      message: "Please upload a valid PDF file",
-    }),
+  itinerary: z.any().optional(),
   availableFrom: z.string(),
   availableUntil: z.string(),
   rating: z.number().min(0).max(5),
@@ -57,9 +38,10 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 export type Props = {
   packageData: PackageType;
+  getPackages: () => Promise<void>;
 };
 
-export const UpdatePackageForm = ({ packageData }: Props) => {
+export const UpdatePackageForm = ({ packageData, getPackages }: Props) => {
   const [loading, setLoading] = useState(false);
   const [prevProfileImage, setPrevProfileImage] = useState(
     packageData.coverPhoto
@@ -68,19 +50,18 @@ export const UpdatePackageForm = ({ packageData }: Props) => {
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
-      name: packageData.title,
-      description: packageData.description,
-      duration: packageData.duration,
-      cost: packageData.cost,
-      tripType: packageData.tripType,
-      itinerary: packageData.itinerary,
-      availableFrom: new Date(packageData.availableFrom)
-        .toISOString()
-        .split("T")[0],
-      availableUntil: new Date(packageData.availableUntil)
-        .toISOString()
-        .split("T")[0],
-      rating: Number(packageData.rating),
+      coverPhoto: packageData.coverPhoto,
+      name: packageData.title ?? "",
+      description: packageData.description ?? "",
+      duration: packageData.duration ?? "",
+      cost: packageData.cost ?? 0,
+      tripType: packageData.tripType ?? "",
+      itinerary: packageData.itinerary ?? "",
+      availableFrom:
+        new Date(packageData.availableFrom).toISOString().split("T")[0] ?? "",
+      availableUntil:
+        new Date(packageData.availableUntil).toISOString().split("T")[0] ?? "",
+      rating: Number(packageData.rating) ?? 0,
     },
   });
 
@@ -90,6 +71,7 @@ export const UpdatePackageForm = ({ packageData }: Props) => {
       data,
       setLoading,
     });
+    await getPackages();
   };
 
   return (
@@ -100,8 +82,7 @@ export const UpdatePackageForm = ({ packageData }: Props) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 bg-white p-6 rounded-xl shadow-lg w-full  "
-          >
+            className="space-y-6 bg-white p-6 rounded-xl shadow-lg w-full  ">
             <FormField
               control={form.control}
               name="coverPhoto"
@@ -125,7 +106,7 @@ export const UpdatePackageForm = ({ packageData }: Props) => {
                           onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                              form.setValue("coverPhoto", e.target.files);
+                              form.setValue("coverPhoto", file);
                               setPrevProfileImage(URL.createObjectURL(file));
                             }
                           }}
@@ -254,8 +235,10 @@ export const UpdatePackageForm = ({ packageData }: Props) => {
                         type="file"
                         accept="application/pdf"
                         onChange={(e) => {
-                          const files = e.target.files;
-                          field.onChange(files);
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            field.onChange(file);
+                          }
                         }}
                         className="w-full"
                       />
@@ -289,11 +272,9 @@ export const UpdatePackageForm = ({ packageData }: Props) => {
             <div className="flex justify-end">
               <Button
                 type="submit"
-                // disabled={loading || !form.formState.isValid}
-                className={` text-white px-4 py-2 rounded hover:bg-green-700 transition ${
+                className={` text-white px-4 py-2 rounded hover:bg-yellow-700 transition ${
                   loading ? "bg-yellow-200" : "bg-yellow-500"
-                } text-white`}
-              >
+                } text-white`}>
                 {loading ? (
                   <Loader className="animate-spin" />
                 ) : (

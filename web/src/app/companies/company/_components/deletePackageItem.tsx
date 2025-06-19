@@ -6,21 +6,21 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { deletePackageFun } from "./updateAndDeletePackageFunction";
+import { deletePackageItemFun } from "./updateAndDeletePackageFunction";
 import { useState } from "react";
 import { Loader } from "lucide-react";
 type TitlePropsType = {
   title: string;
-  packageId: string;
-  getPackages: ()=>Promise<void>;
+  packageItemId: string;
+  packageItems: ()=>Promise<void>;
 };
-export const DeletePackage = ({ title, packageId, getPackages }: TitlePropsType) => {
+export const DeletePackageItem = ({ title, packageItemId, packageItems }: TitlePropsType) => {
   const [loading, setLoading] = useState(false)
   return (
     <DialogContent className="bg-white rounded-xl flex flex-col justify-center">
       <DialogHeader>
         <DialogTitle className="text-lg font-semibold">
-          Are you sure you want to delete the &apos;{title} &apos; package?
+          Are you sure you want to delete the &apos;{title} &apos; package item?
         </DialogTitle>
       </DialogHeader>
       <DialogFooter className="w-full flex justify-center gap-4">
@@ -36,8 +36,8 @@ export const DeletePackage = ({ title, packageId, getPackages }: TitlePropsType)
   <Button
     className="bg-red-600 text-white hover:bg-red-700"
     onClick={async () => {
-      await deletePackageFun(packageId,setLoading);
-      await getPackages(); 
+      await deletePackageItemFun(packageItemId,setLoading);
+      await packageItems(); 
     }}
   >
     {loading ? <Loader className="animate-spin"/>:"delete"}

@@ -21,7 +21,6 @@ export default function PackagePage() {
       try {
         const res = await api.get(`/package?packageId=${id}`);
         setPackage(res.data.packages);
-        console.log(res.data);
       } catch (err) {
         console.error("Failed to fetch packages", err);
       }
@@ -36,8 +35,7 @@ export default function PackagePage() {
         return (
           <div
             key={index}
-            className="w-full text-black flex flex-col gap-4 bg-white"
-          >
+            className="w-full text-black flex flex-col gap-4 bg-white">
             <div className="w-full h-180 relative overflow-hidden ">
               <div>
                 {" "}
@@ -50,8 +48,7 @@ export default function PackagePage() {
                   <div
                     className={`w-fit h-full flex ${
                       item.packageItem.length <= 5 ? "" : "animate-wiggle"
-                    } relative `}
-                  >
+                    } relative `}>
                     {item.packageItem.map((item, index) => {
                       return (
                         <div key={index} className="w-[1440px]">
@@ -74,8 +71,7 @@ export default function PackagePage() {
                   </div>
                   <div
                     className="text-[16px] text-white w-full font-semibold "
-                    style={{ fontFamily: "Orbitron" }}
-                  >
+                    style={{ fontFamily: "Orbitron" }}>
                     {item.duration} days • Gobi dessert • Orkhon Valley •
                     Erdenezuu Monastery
                   </div>
@@ -159,8 +155,7 @@ export default function PackagePage() {
                         <a
                           key={index}
                           href={`#section${index + 1}`}
-                          className="flex-1 h-full  flex items-center justify-center text-[24px] text-white font-bold hover:bg-[#ffffff] hover:text-black rounded-t-[7px] duration-300"
-                        >
+                          className="flex-1 h-full  flex items-center justify-center text-[24px] text-white font-bold hover:bg-[#ffffff] hover:text-black rounded-t-[7px] duration-300">
                           Day {index + 1}
                         </a>
                       );
@@ -179,8 +174,7 @@ export default function PackagePage() {
                       <div className="absolute w-[50%] h-full bg-linear-to-r from-[#000000b8] to-100%  to-[#00000028] inset-0 p-4 flex flex-col items-center justify-center gap-4">
                         <div
                           className="text-[40px] text-white font-bold"
-                          style={{ fontFamily: "Dancing Script" }}
-                        >
+                          style={{ fontFamily: "Dancing Script" }}>
                           {item.title} Day{index + 1}
                         </div>
                         <div className="text-center text-white">
@@ -224,8 +218,7 @@ export default function PackagePage() {
               <div className="flex-1 h-100 flex flex-col  items-center">
                 <div
                   className="text-[50px] font-bold "
-                  style={{ fontFamily: "Serif" }}
-                >
+                  style={{ fontFamily: "Serif" }}>
                   About the Company
                 </div>
                 <div className="w-50 flex overflow-hidden items-center">

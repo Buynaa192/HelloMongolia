@@ -11,7 +11,7 @@ import { packageItemRouter } from "./routes/packageItem.route";
 config();
 connectToDatabase();
 const app = express();
-const port = 3002;
+const port = 3001;
 
 app
   .use(cors())

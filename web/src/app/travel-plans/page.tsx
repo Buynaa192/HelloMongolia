@@ -36,7 +36,6 @@ export default function PackagesExplore() {
         const res = await api.get(`/package`);
         setAllPackages(res.data.packages);
         setFilteredPackages(res.data.packages);
-        console.log(res.data.packages);
       } catch (err) {
         console.error("Failed to fetch packages", err);
       }
@@ -51,7 +50,6 @@ export default function PackagesExplore() {
   };
 
   const applyAllFilters = () => {
-    console.log(selectedTripTypes);
     const filtered = allPackages.filter((e) => {
       const matchesKeyword =
         keyword === "" ||
