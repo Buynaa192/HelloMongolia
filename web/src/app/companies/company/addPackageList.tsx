@@ -5,14 +5,12 @@ import { PackageItemCard } from "./_components/packageItemCard";
 
 export const PackageItemList = ({ packageId }: { packageId: string }) => {
   const [items, setItems] = useState<PackageItemType[]>([]);
-
+  const packageItems = async () => {
+    const res = await api.get(`/packageItem`);
+    setItems(res.data.packageItem);
+  };
   useEffect(() => {
-    const packageItems = async () => {
-      const res = await api.get(`/packageItem`);
-      setItems(res.data.packageItem);
-    };
-
-    packageItems();
+ packageItems();
   }, [packageId]);
 
   return (
@@ -27,6 +25,7 @@ export const PackageItemList = ({ packageId }: { packageId: string }) => {
           activity={item.activity}
           packageId={packageId}
           packageItemId={item._id}
+          packageItems={packageItems}
         />
       ))}
     </div>

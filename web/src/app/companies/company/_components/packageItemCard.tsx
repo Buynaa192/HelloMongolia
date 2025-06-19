@@ -1,10 +1,11 @@
 import { ActivityType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-
+import { DeletePackageItem } from "./deletePackageItem";
 type PackageItemCardProps = {
   order: number;
   title: string;
@@ -13,6 +14,7 @@ type PackageItemCardProps = {
   activity: ActivityType[];
   packageId: string;
   packageItemId: string;
+  packageItems: () => Promise<void>;
 };
 
 export const PackageItemCard = ({
@@ -23,20 +25,35 @@ export const PackageItemCard = ({
   activity,
   packageId,
   packageItemId,
+  packageItems,
 }: PackageItemCardProps) => {
   const [loading, setLoading] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   const addToPackage = async () => {
     try {
       setLoading(true);
-    await api.post(`/package/addPackageItem/${packageId}`, {
+      await api.post(`/package/addPackageItem/${packageId}`, {
         packageItemId,
       });
       setIsAdded(true);
       toast.success("Successfully added to package");
     } catch (error) {
-     console.log(error)
+      console.log(error);
       toast.error("Failed to add item to package");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const removeFromPackage = async () => {
+    try {
+      setLoading(true);
+      await api.delete(`/package/${packageId}/removeItem/${packageItemId}`);
+      setIsAdded(true);
+      toast.success("Package item removed successfully");
+      setIsAdded(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed ");
     } finally {
       setLoading(false);
     }
@@ -85,16 +102,40 @@ export const PackageItemCard = ({
                 "Add to Package"
               )}
             </Button>
-            <Button
-              // onClick={deletePackageItem}
-              disabled={loading || isAdded}
-              className={`text-white transition ${
-                isAdded
-                  ? "bg-red-400 cursor-not-allowed"
-                  : "bg-red-600 hover:bg-red-700"
-              }`}>
-              {loading ? <Loader className="animate-spin w-4 h-4" /> : "delete"}
-            </Button>
+            {isAdded ? (
+              <Button
+                className="bg-red-400 text-white hover:bg-red-500 transition"
+                onClick={removeFromPackage}>
+                {loading ? (
+                  <Loader className="animate-spin w-4 h-4" />
+                ) : (
+                  "Remove from package"
+                )}
+              </Button>
+            ) : (
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    disabled={loading || isAdded}
+                    className={`text-white transition ${
+                      isAdded
+                        ? "bg-red-400 cursor-not-allowed"
+                        : "bg-red-600 hover:bg-red-700"
+                    }`}>
+                    {loading ? (
+                      <Loader className="animate-spin w-4 h-4" />
+                    ) : (
+                      "delete"
+                    )}
+                  </Button>
+                </DialogTrigger>
+                <DeletePackageItem
+                  title={title}
+                  packageItemId={packageItemId}
+                  packageItems={packageItems}
+                />
+              </Dialog>
+            )}
           </div>
         </div>
       </div>

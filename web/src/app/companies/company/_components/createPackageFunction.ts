@@ -21,24 +21,23 @@ type FormdataType = {
 };
 export const UPLOUD_PRESSET = "temuulen";
 export const CLOUD_NAME = "dpmo1etqt";
+
 export const uploadImage = async (file: File) => {
-  if (!file) {  
+  if (!(file instanceof File)) {
+    console.error(" a valid file");
     return;
   }
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", UPLOUD_PRESSET);
+  console.log("hi1");
 
-  try {
-    const responseImg = await axios.post(
-      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-      formData
-    );
-    return responseImg.data.secure_url || responseImg.data.url;
-  } catch (error) {
-    console.error("Upload failed:", error);
-    return undefined;
-  }
+  const responseImg = await axios.post(
+    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+    formData
+  );
+
+  return responseImg.data.secure_url || responseImg.data.url;
 };
 export const CreatePackageFun = async ({
   companyId,
@@ -51,7 +50,7 @@ export const CreatePackageFun = async ({
   const cost = Number(data.cost);
   const coverPhoto = await uploadImage(data.coverPhoto!);
   const itineraryPdf = await uploadImage(data.itinerary!);
- 
+
   try {
     setLoading(true);
     const response = await api.post(`/package`, {

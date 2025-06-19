@@ -22,14 +22,6 @@ import { Input } from "@/components/ui/input";
 import { PackageType } from "@/app/_providers/AuthProvider";
 import { UpdatePackageFun } from "./updateAndDeletePackageFunction";
 import { Textarea } from "./ui/textarea";
-
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
-
 const schema = z.object({
   coverPhoto: z.any().optional(),
   name: z.string().min(1, "Name is required"),
@@ -46,10 +38,10 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 export type Props = {
   packageData: PackageType;
-  getPackages:()=>Promise<void>
+  getPackages: () => Promise<void>;
 };
 
-export const UpdatePackageForm = ({ packageData,getPackages }: Props) => {
+export const UpdatePackageForm = ({ packageData, getPackages }: Props) => {
   const [loading, setLoading] = useState(false);
   const [prevProfileImage, setPrevProfileImage] = useState(
     packageData.coverPhoto
@@ -58,31 +50,29 @@ export const UpdatePackageForm = ({ packageData,getPackages }: Props) => {
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
-      coverPhoto:packageData.coverPhoto,
+      coverPhoto: packageData.coverPhoto,
       name: packageData.title ?? "",
       description: packageData.description ?? "",
       duration: packageData.duration ?? "",
       cost: packageData.cost ? String(packageData.cost) : "",
       tripType: packageData.tripType ?? "",
       itinerary: packageData.itinerary ?? "",
-      availableFrom: new Date(packageData.availableFrom)
-        .toISOString()
-        .split("T")[0] ?? "",
-      availableUntil: new Date(packageData.availableUntil)
-        .toISOString()
-        .split("T")[0] ?? "",
+      availableFrom:
+        new Date(packageData.availableFrom).toISOString().split("T")[0] ?? "",
+      availableUntil:
+        new Date(packageData.availableUntil).toISOString().split("T")[0] ?? "",
       rating: Number(packageData.rating) ?? 0,
     },
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log(data)
+    console.log(data);
     await UpdatePackageFun({
       packageId: packageData._id,
       data,
       setLoading,
     });
-    await getPackages()
+    await getPackages();
   };
 
   return (
@@ -118,7 +108,7 @@ export const UpdatePackageForm = ({ packageData,getPackages }: Props) => {
                           onChange={(e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                              form.setValue("coverPhoto", e.target.files);
+                              form.setValue("coverPhoto", file);
                               setPrevProfileImage(URL.createObjectURL(file));
                             }
                           }}
@@ -178,7 +168,7 @@ export const UpdatePackageForm = ({ packageData,getPackages }: Props) => {
                   <FormItem>
                     <FormLabel>Cost ($)</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field}  />
+                      <Input type="number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -247,8 +237,10 @@ export const UpdatePackageForm = ({ packageData,getPackages }: Props) => {
                         type="file"
                         accept="application/pdf"
                         onChange={(e) => {
-                          const files = e.target.files;
-                          field.onChange(files);
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            field.onChange(file);
+                          }
                         }}
                         className="w-full"
                       />
