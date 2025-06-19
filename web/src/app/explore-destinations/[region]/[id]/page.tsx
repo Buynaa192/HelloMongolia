@@ -28,7 +28,6 @@ export default function Destination() {
 
     fetchDestination();
   }, [id]);
-  console.log(destination);
 
   return (
     <div className="w-full min-h-screen bg-white flex flex-col gap-4">
@@ -38,8 +37,7 @@ export default function Destination() {
           src={"/images/pack3.png"}
           width={500}
           height={100}
-          alt="bg"
-        ></Image>
+          alt="bg"></Image>
       </div>
       <p className="ml-4">
         <Link href={"/"}>Home</Link> {`>`}

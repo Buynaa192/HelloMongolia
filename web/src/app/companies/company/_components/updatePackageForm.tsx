@@ -54,7 +54,7 @@ export const UpdatePackageForm = ({ packageData, getPackages }: Props) => {
       name: packageData.title ?? "",
       description: packageData.description ?? "",
       duration: packageData.duration ?? "",
-      cost: packageData.cost ? String(packageData.cost) : "",
+      cost: packageData.cost ?? 0,
       tripType: packageData.tripType ?? "",
       itinerary: packageData.itinerary ?? "",
       availableFrom:
@@ -66,7 +66,6 @@ export const UpdatePackageForm = ({ packageData, getPackages }: Props) => {
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
     await UpdatePackageFun({
       packageId: packageData._id,
       data,
@@ -83,8 +82,7 @@ export const UpdatePackageForm = ({ packageData, getPackages }: Props) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 bg-white p-6 rounded-xl shadow-lg w-full  "
-          >
+            className="space-y-6 bg-white p-6 rounded-xl shadow-lg w-full  ">
             <FormField
               control={form.control}
               name="coverPhoto"
@@ -276,8 +274,7 @@ export const UpdatePackageForm = ({ packageData, getPackages }: Props) => {
                 type="submit"
                 className={` text-white px-4 py-2 rounded hover:bg-yellow-700 transition ${
                   loading ? "bg-yellow-200" : "bg-yellow-500"
-                } text-white`}
-              >
+                } text-white`}>
                 {loading ? (
                   <Loader className="animate-spin" />
                 ) : (

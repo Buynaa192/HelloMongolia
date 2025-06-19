@@ -18,7 +18,6 @@ export const DesdinationPackage = ({ id }: idType) => {
     };
     GetPackage();
   }, []);
-  console.log("packages", packages);
 
   return (
     <div className="w-full grid grid-cols-5 border-2 h-100 gap-4 p-4">
@@ -31,8 +30,7 @@ export const DesdinationPackage = ({ id }: idType) => {
                 alt={item.coverPhoto}
                 src={item.coverPhoto}
                 width={500}
-                height={100}
-              ></Image>
+                height={100}></Image>
               <p>{item.title}</p>
             </div>
           </Link>
