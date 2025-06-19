@@ -12,10 +12,10 @@ import { DestinationType } from "../_providers/AuthProvider";
 import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
 
 const images = [
-  "/images/pack1.png",
-  "/images/pack2.png",
-  "/images/pack3.png",
-  "/images/pack4.png",
+  "https://res.cloudinary.com/df60cobe2/image/upload/v1750344900/zvtv2v8ujkwank2sed1x.jpg",
+  "https://res.cloudinary.com/df60cobe2/image/upload/v1750344684/bmuknygaru47y1us260s.jpg",
+  "https://res.cloudinary.com/df60cobe2/image/upload/v1750344552/gftoyhpqzhc1kitmwezb.jpg",
+  "https://res.cloudinary.com/df60cobe2/image/upload/v1750344336/image_1920_rsbpbh.jpg",
 ];
 
 export default function DestinatioExplore() {
