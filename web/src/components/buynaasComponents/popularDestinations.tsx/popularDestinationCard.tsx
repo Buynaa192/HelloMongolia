@@ -13,8 +13,8 @@ export const PopularDestinationCard = ({ item }: itemType) => {
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
         <div className="w-full h-[calc(100%-35px)] relative rounded-lg flex items-center justify-center">
           <Image
-            src="/images/gobi.jpg"
-            alt="gobi"
+            src={item.destinationImages[0]}
+            alt={item.destinationName}
             fill
             className="object-cover rounded-lg "
           />

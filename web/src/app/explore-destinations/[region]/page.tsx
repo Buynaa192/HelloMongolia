@@ -2,7 +2,6 @@
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
-
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,10 +10,10 @@ import { useEffect, useState } from "react";
 
 const NorthernMongolia = {
   images: [
-    "/images/pack1.png",
-    "/images/pack2.png",
-    "/images/pack3.png",
-    "/images/pack4.png",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344746/images_p3qco7.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344684/bmuknygaru47y1us260s.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344655/lhlxnmm5j8zmfrfmolkz.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344652/ro87sojntukua6vns2il.jpg",
   ],
   video: "https://www.youtube.com/embed/H94ntp93SGY",
   description:
@@ -22,10 +21,10 @@ const NorthernMongolia = {
 };
 const SouthernMongolia = {
   images: [
-    "/images/horseriding (1).png",
-    "/images/horseriding.png",
-    "/images/hiking.png",
-    "/images/journey.png",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344900/zvtv2v8ujkwank2sed1x.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344881/Yolyn_20Am1_mpxcn2.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344877/d26e9btyskc1skftxadp.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344828/ukcxe5yilvidvpwsuckf.jpg",
   ],
   video: "https://www.youtube.com/embed/R4WO9IUgIyY",
   description:
@@ -33,10 +32,10 @@ const SouthernMongolia = {
 };
 const WesternMongolia = {
   images: [
-    "/images/money.png",
-    "/images/key.png",
-    "/images/Logo.png",
-    "/images/filter.png",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344622/ly7zekpo5tegc4zmzxcy.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344610/hbrdikfshqysoum1ifno.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344590/h4chrkja9f1lyoxohfia.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344552/gftoyhpqzhc1kitmwezb.jpg",
   ],
   video: "https://www.youtube.com/embed/R4WO9IUgIyY",
   description:
@@ -44,10 +43,10 @@ const WesternMongolia = {
 };
 const EasternMongolia = {
   images: [
-    "/images/pillar.png",
-    "/images/pin.png",
-    "/images/rate.png",
-    "/images/star.png",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344900/zvtv2v8ujkwank2sed1x.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344881/Yolyn_20Am1_mpxcn2.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344877/d26e9btyskc1skftxadp.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750344828/ukcxe5yilvidvpwsuckf.jpg",
   ],
   video: "https://www.youtube.com/embed/R4WO9IUgIyY",
   description:
@@ -107,7 +106,8 @@ export default function RegionPage() {
             <Image
               src={currentImages.images[currentIndex]}
               alt={`Slide ${currentIndex + 1}`}
-              fill
+              width={1920}
+              height={800}
               className="object-cover"
             />
           </motion.div>

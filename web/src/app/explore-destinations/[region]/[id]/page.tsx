@@ -34,7 +34,7 @@ export default function Destination() {
       <div className="w-full h-120 ">
         <Image
           className="w-full h-full"
-          src={"/images/pack3.png"}
+          src={destination?.destinationImages?.[0] || "https://res.cloudinary.com/df60cobe2/image/upload/v1750344336/image_1920_rsbpbh.jpg"}
           width={500}
           height={100}
           alt="bg"></Image>
