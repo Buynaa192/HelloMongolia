@@ -15,7 +15,7 @@ type PackageCardProps = {
   price: string;
   duration: string;
   rating: number;
-  getPackages: ()=>Promise<void>;
+  getPackages: () => Promise<void>;
 };
 export const PackageCard = ({
   loading,
@@ -27,16 +27,16 @@ export const PackageCard = ({
   price,
   duration,
   rating,
-  getPackages
+  getPackages,
 }: PackageCardProps) => {
   if (loading) return <PackageCardSkeleton />;
   const ratingStar = (rating: number) => {
-    return Array.from({ length: 4 }).map((_, i) => (
+    return Array.from({ length: 5 }).map((_, i) => (
       <Star
         key={i}
         size={18}
         className={
-          i < rating - 1 ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
+          i <= rating - 1 ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
         }
       />
     ));
@@ -45,26 +45,27 @@ export const PackageCard = ({
   return (
     <div className="w-full flex items-stretch justify-center">
       <div className="flex w-[90%] min-h-[420px] rounded-2xl shadow-xl hover:shadow-2xl flex-col hover:w-[92%] duration-200 bg-white">
-      {image ? (
-  <img
-    src={image}
-    alt={title}
-    className="w-full h-[250px] rounded-t-2xl object-cover"
-  />
-) : (
-  <div className="w-full h-[250px] rounded-t-2xl bg-gray-200 flex items-center justify-center text-gray-500">
-    No Image Available
-  </div>
-)}
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-[250px] rounded-t-2xl object-cover"
+          />
+        ) : (
+          <div className="w-full h-[250px] rounded-t-2xl bg-gray-200 flex items-center justify-center text-gray-500">
+            No Image Available
+          </div>
+        )}
         <div className="flex flex-col justify-between flex-1 p-4 gap-2">
           <h2 className="text-[20px] font-bold line-clamp-2">{title}</h2>
           <p className="text-sm text-gray-600 line-clamp-3">{description}</p>
 
           <div className="flex justify-between items-center text-[12px] font-medium mt-auto pt-2">
             <div className="flex items-center gap-4">
-              <span>{duration} { Number(duration)==1 ? "day" :"days"}  </span>
+              <span>
+                {duration} {Number(duration) == 1 ? "day" : "days"}{" "}
+              </span>
               <div className="flex items-center gap-1">
-                <img src="/images/star.png" alt="Star" className="w-5 h-5" />
                 {ratingStar(rating)}
               </div>
             </div>
@@ -85,21 +86,26 @@ export const PackageCard = ({
               <>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button
-                      className="bg-yellow-500 text-white hover:bg-yellow-600 transition">
+                    <Button className="bg-yellow-500 text-white hover:bg-yellow-600 transition">
                       Update
                     </Button>
                   </DialogTrigger>
-                  <UpdatePackageForm packageData={packages} getPackages={getPackages} />
+                  <UpdatePackageForm
+                    packageData={packages}
+                    getPackages={getPackages}
+                  />
                 </Dialog>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button
-                      className="bg-red-600 text-white hover:bg-red-700 transition">
+                    <Button className="bg-red-600 text-white hover:bg-red-700 transition">
                       Delete
                     </Button>
                   </DialogTrigger>
-                  <DeletePackage title={title} packageId={packages._id} getPackages={getPackages} />
+                  <DeletePackage
+                    title={title}
+                    packageId={packages._id}
+                    getPackages={getPackages}
+                  />
                 </Dialog>
               </>
             )}
