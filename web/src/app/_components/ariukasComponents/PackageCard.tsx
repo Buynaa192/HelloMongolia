@@ -79,13 +79,7 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
             variant="link"
             className="text-black bg-white hover:bg-black hover:text-white"
           >
-            <Link
-              href={`/packages/${trip.title
-                .replace(/\s+/g, "-")
-                .toLowerCase()}`}
-            >
-              View details
-            </Link>
+            <Link href={`/packages/${trip._id}`}>View details</Link>
           </Button>
           <p className="text-xs text-gray-300">
             Tour Operator:{" "}
