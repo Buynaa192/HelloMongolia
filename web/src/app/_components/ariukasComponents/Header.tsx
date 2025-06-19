@@ -2,8 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
+  const router = useRouter();
   const headers = [
     { name: "Destinations", url: "/explore-destinations" },
     { name: "Travel Plans", url: "/travel-plans" },
@@ -23,10 +25,18 @@ export const Header = () => {
         </Link>
       ))}
       <div className="flex gap-2">
-        <Button className=" bg-white text-black hover:text-white hover:bg-blue-500">
+        <Button
+          className="bg-white text-black hover:text-white hover:bg-blue-500"
+          variant="link"
+          onClick={() => router.push("/login")}
+        >
           Log in
         </Button>
-        <Button variant="ghost" className="text-white hover:bg-white">
+        <Button
+          variant="ghost"
+          className="text-white hover:bg-white hover:text-black"
+          onClick={() => router.push("/sign-up")}
+        >
           Sign up
         </Button>
       </div>
