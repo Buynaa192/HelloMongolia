@@ -28,10 +28,11 @@ export default function Destination() {
 
     fetchDestination();
   }, [id]);
+  console.log(destination);
 
   return (
     <div className="w-full min-h-screen bg-white flex flex-col gap-4">
-      <div className="w-full h-120 border-2 border-red-400">
+      <div className="w-full h-120 ">
         <Image
           className="w-full h-full"
           src={"/images/pack3.png"}
@@ -52,12 +53,26 @@ export default function Destination() {
       <div className="w-full  grid grid-cols-2 gap-4 p-4">
         <div className="w-full h-80 border-2">{destination?.description}</div>
         <div className="w-full border-2">
-          {destination?.destinationImages[1]}
+          {destination?.destinationImages?.[1] && (
+            <Image
+              src={destination.destinationImages[1]}
+              width={400}
+              height={300}
+              alt={destination.destinationName || "destination image"}
+            />
+          )}
         </div>
       </div>
       <div className="w-full  grid grid-cols-2 gap-4 p-4">
         <div className="w-full h-80 border-2">
-          {destination?.destinationImages[0]}
+          {destination?.destinationImages?.[0] && (
+            <Image
+              src={destination.destinationImages[1]}
+              width={400}
+              height={300}
+              alt={destination.destinationName || "destination image"}
+            />
+          )}
         </div>
         <div className="w-full border-2">{destination?.description}</div>
       </div>

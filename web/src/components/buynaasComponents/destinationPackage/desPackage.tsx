@@ -18,16 +18,16 @@ export const DesdinationPackage = ({ id }: idType) => {
     };
     GetPackage();
   }, []);
-  console.log(packages);
+  console.log("packages", packages);
 
   return (
     <div className="w-full grid grid-cols-5 border-2 h-100 gap-4 p-4">
       {packages.map((item, indx) => {
         return (
-          <Link key={indx} href={"/"}>
-            <div className="border-2">
+          <Link key={indx} href={`/package/${item._id}`}>
+            <div className="w-full h-full">
               <Image
-                className="w-full h-[calc(100%-40px)]"
+                className="w-full h-[calc(100%-50px)]"
                 alt={item.coverPhoto}
                 src={item.coverPhoto}
                 width={500}

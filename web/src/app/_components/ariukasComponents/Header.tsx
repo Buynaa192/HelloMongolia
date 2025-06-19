@@ -7,7 +7,7 @@ export const Header = () => {
     { name: "Destinations", url: "/explore-destinations" },
     { name: "Travel Plans", url: "/travel-plans" },
     { name: "About", url: "/about-us" },
-    { name: "Partners", url: "/companies" },
+    { name: "Partners", url: "/companies/company" },
   ];
 
   return (

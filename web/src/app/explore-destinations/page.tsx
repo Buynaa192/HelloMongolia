@@ -43,6 +43,7 @@ export default function DestinatioExplore() {
   const filteredDestinations = destination.filter((dest) =>
     dest.destinationName.toLowerCase().includes(searchDestination.toLowerCase())
   );
+
   return (
     <div className="w-full h-full border-2 border-white text-white flex flex-col gap-4">
       <div className="relative w-full h-[800px] overflow-hidden">
@@ -79,14 +80,23 @@ export default function DestinatioExplore() {
             />
           </div>
           {searchDestination.length > 0 && (
-            <div className="border-2">
-              {filteredDestinations.map((item, idx) => {
-                return (
-                  <div className="" key={idx}>
-                    {item.destinationName}
-                  </div>
-                );
-              })}
+            <div className="border-2 border-red-400 max-h-96 overflow-auto">
+              <p>Destinations</p>
+              {filteredDestinations.map((item) => (
+                <div
+                  className="border-2 flex items-end  gap-2 p-2"
+                  key={item._id}
+                >
+                  <Image
+                    src={item.destinationImages[0]}
+                    width={200}
+                    height={100}
+                    alt={item.destinationName}
+                    className="rounded"
+                  />
+                  <p className="absolute">{item.destinationName}</p>
+                </div>
+              ))}
             </div>
           )}
         </div>
