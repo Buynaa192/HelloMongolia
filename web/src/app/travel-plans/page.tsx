@@ -17,6 +17,7 @@ export type TripType =
   | "Family vacations"
   | "Scientific"
   | "Festival & Events";
+
 export default function PackagesExplore() {
   const [allPackages, setAllPackages] = useState<PackageType[]>([]);
   const [filteredPackages, setFilteredPackages] = useState<PackageType[]>([]);

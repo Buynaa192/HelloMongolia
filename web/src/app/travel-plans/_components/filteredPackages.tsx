@@ -44,14 +44,22 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
                 <img
                   src={
                     item.coverPhoto == null || item.coverPhoto == ""
-                      ? "/images/NoImagePack.png"
+                      ? "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png"
                       : item.coverPhoto
                   }
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.onerror = null;
+                    target.src =
+                      "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
+                  }}
                   className="w-full min-h-[250px] rounded-2xl object-cover"
                 />
                 <div className="w-full h-full flex flex-col justify-between p-3">
                   <div className="text-[12px] w-fit font-medium text-stone-500">
-                    {item.companyId.email}
+                    {item.companyId == undefined
+                      ? item._id
+                      : item.companyId.email}
                   </div>
                   <div className="text-[24px] font-bold truncate">
                     {item.title ? item.title : item.description}

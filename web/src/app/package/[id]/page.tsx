@@ -35,7 +35,8 @@ export default function PackagePage() {
         return (
           <div
             key={index}
-            className="w-full text-black flex flex-col gap-4 bg-white">
+            className="w-full text-black flex flex-col gap-4 bg-white"
+          >
             <div className="w-full h-180 relative overflow-hidden ">
               <div>
                 {" "}
@@ -48,7 +49,8 @@ export default function PackagePage() {
                   <div
                     className={`w-fit h-full flex ${
                       item.packageItem.length <= 5 ? "" : "animate-wiggle"
-                    } relative `}>
+                    } relative `}
+                  >
                     {item.packageItem.map((item, index) => {
                       return (
                         <div key={index} className="w-[1440px]">
@@ -67,13 +69,16 @@ export default function PackagePage() {
               <div className=" w-full h-full  absolute inset-0 flex  items-end justify-between bg-linear-to-tr from-black to-100% ">
                 <div className="w-[60%] h-[60%] flex flex-col items-center p-10 gap-10">
                   <div className="text-white text-[50px] font-bold ">
-                    <div>{item.description}</div>
+                    <div>{item.title}</div>
                   </div>
                   <div
                     className="text-[16px] text-white w-full font-semibold "
-                    style={{ fontFamily: "Orbitron" }}>
-                    {item.duration} days • Gobi dessert • Orkhon Valley •
-                    Erdenezuu Monastery
+                    style={{ fontFamily: "Orbitron" }}
+                  >
+                    {item.duration.includes("days")
+                      ? item.duration
+                      : `${item.duration} days `}
+                    {` • ${item.packageItem[0].title}`}
                   </div>
                 </div>
                 <div className="w-50 h-full flex flex-col items-center justify-around ">
@@ -82,6 +87,12 @@ export default function PackagePage() {
                       <div key={ind} className="w-full  h-[calc(100%/5)] p-3">
                         <img
                           src={it.image}
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.onerror = null;
+                            target.src =
+                              "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
+                          }}
                           className="w-full h-full object-cover rounded-[10px]"
                         />
                       </div>
@@ -104,7 +115,7 @@ export default function PackagePage() {
                     <div className="flex w-full h-10 gap-4">
                       {item.companyId.background == "" ? (
                         <img
-                          src="/images/NoImage.jpg"
+                          src="https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg"
                           className="w-10 h-full rounded-[40px] object-cover border-1 border-black"
                           alt="Default background"
                         />
@@ -155,7 +166,8 @@ export default function PackagePage() {
                         <a
                           key={index}
                           href={`#section${index + 1}`}
-                          className="flex-1 h-full  flex items-center justify-center text-[24px] text-white font-bold hover:bg-[#ffffff] hover:text-black rounded-t-[7px] duration-300">
+                          className="flex-1 h-full  flex items-center justify-center text-[24px] text-white font-bold hover:bg-[#ffffff] hover:text-black rounded-t-[7px] duration-300"
+                        >
                           Day {index + 1}
                         </a>
                       );
@@ -168,13 +180,21 @@ export default function PackagePage() {
                     <div key={index} className={`w-full h-[500px] relative`}>
                       <img
                         src={item.image}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.onerror = null;
+                          target.src =
+                            "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
+                        }}
+                        alt="Image"
                         id={`section${index + 1}`}
                         className="w-full h-full object-cover object-left"
                       />
                       <div className="absolute w-[50%] h-full bg-linear-to-r from-[#000000b8] to-100%  to-[#00000028] inset-0 p-4 flex flex-col items-center justify-center gap-4">
                         <div
                           className="text-[40px] text-white font-bold"
-                          style={{ fontFamily: "Dancing Script" }}>
+                          style={{ fontFamily: "Dancing Script" }}
+                        >
                           {item.title} Day{index + 1}
                         </div>
                         <div className="text-center text-white">
@@ -187,14 +207,7 @@ export default function PackagePage() {
                               {item.activity.map((item, index) => {
                                 return (
                                   <div key={index} className="flex ">
-                                    {" "}
-                                    {item.emoji == "" ? null : (
-                                      <img
-                                        src={item.emoji}
-                                        className="w-4 h-4  border-black"
-                                        alt="Company background"
-                                      />
-                                    )}
+                                    {item.emoji}
                                     {item.name}
                                   </div>
                                 );
@@ -218,13 +231,14 @@ export default function PackagePage() {
               <div className="flex-1 h-100 flex flex-col  items-center">
                 <div
                   className="text-[50px] font-bold "
-                  style={{ fontFamily: "Serif" }}>
+                  style={{ fontFamily: "Serif" }}
+                >
                   About the Company
                 </div>
                 <div className="w-50 flex overflow-hidden items-center">
                   {item.companyId.background == "" ? (
                     <img
-                      src="/images/NoImage.jpg"
+                      src="https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg"
                       className="w-50 h-50  object-cover rounded-[calc(100%/2)] "
                       alt="Default background"
                     />
@@ -258,25 +272,27 @@ export default function PackagePage() {
                 </div>{" "}
                 <div className="w-full flex items-center justify-between ">
                   <div>Experience:</div>
-                  <div>
+                  <div className="flex gap-2">
+                    {item.companyId.reviews}
                     {/* {item.companyId.reviews.length == 0 ||
                     item.companyId.reviews.length == null
                       ? "0"
                       : item.companyId.reviews.length} */}
-                    travellers
+                    <p>travellers</p>
                   </div>
                 </div>{" "}
                 <div className="w-full flex items-center justify-between ">
                   <div>Destinations:</div>
-                  {/* <div className="flex gap-2">
-                    {item.companyId.availableDestinations[0]._id}
+
+                  <div className="flex gap-2">
+                    {item.companyId.availableDestinations.length}
                     <p>
                       {item.companyId.availableDestinations.length == 0 ||
                       item.companyId.availableDestinations.length == 1
                         ? "destination"
                         : "destinations"}
                     </p>
-                  </div> */}
+                  </div>
                 </div>
                 <div className="w-full flex items-center justify-between ">
                   <div>Social URL:</div>

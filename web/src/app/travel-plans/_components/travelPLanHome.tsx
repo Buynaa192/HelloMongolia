@@ -1,7 +1,12 @@
 export const TravelPlanHome = () => {
   return (
     <div className="w-full h-230 relative bg-linear-to-br from-red-500 to-40% to-black">
-      <img src={"/images/BG.png"} className="w-full h-full border-red-600" />
+      <img
+        src={
+          "https://res.cloudinary.com/df60cobe2/image/upload/v1750322562/nice_hr595q.jpg"
+        }
+        className="w-full h-full border-red-600"
+      />
       <div className="absolute  inset-0 text-white flex flex-col items-center justify-center w-full h-full ">
         <div className="text-[80px] " style={{ fontFamily: "Dancing Script" }}>
           BEYOND ROADS
