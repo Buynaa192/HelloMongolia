@@ -29,8 +29,7 @@ export const ShowPackage = ({ topTours }: BestRatedPackagesProps) => {
           key={index}
           className={`w-full flex items-center justify-between md:space-y-[-80px] ${
             index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-          }`}
-        >
+          }`}>
           <PackageCard trip={tours.trip} />
           <TripReview
             title={tours.trip.title}
