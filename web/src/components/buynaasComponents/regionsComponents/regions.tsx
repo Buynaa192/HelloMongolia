@@ -2,10 +2,26 @@
 import Link from "next/link";
 import { RegionCard } from "./regionCard";
 const regions = [
-  { name: "Southern Mongolia" },
-  { name: "Northern Mongolia" },
-  { name: "Eastern Mongolia" },
-  { name: "Western Mongolia" },
+  {
+    name: "Southern Mongolia",
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750344877/d26e9btyskc1skftxadp.jpg",
+  },
+  {
+    name: "Northern Mongolia",
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750344655/lhlxnmm5j8zmfrfmolkz.jpg",
+  },
+  {
+    name: "Eastern Mongolia",
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750344336/image_1920_rsbpbh.jpg",
+  },
+  {
+    name: "Western Mongolia",
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750344552/gftoyhpqzhc1kitmwezb.jpg",
+  },
 ];
 const slugify = (text: string) => text.replace(/\s+/g, "-");
 
