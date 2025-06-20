@@ -10,7 +10,7 @@ export const RegionCard = ({item}:itemType) => {
       <div className="w-full h-[calc(100%-35px)] relative rounded-lg flex items-center justify-center">
         <Image
           src="https://res.cloudinary.com/df60cobe2/image/upload/v1750344245/uIQQCU3MdRI14R7HWoqX-large_u1capj.jpg"
-          alt="gobi"
+          alt={item.name}
           fill
           className="object-cover rounded-lg "
         />
