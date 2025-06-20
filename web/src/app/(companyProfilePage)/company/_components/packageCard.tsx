@@ -15,7 +15,6 @@ type PackageCardProps = {
   price: string;
   duration: string;
   rating: number;
-  getPackages: () => Promise<void>;
 };
 export const PackageCard = ({
   loading,
@@ -27,8 +26,8 @@ export const PackageCard = ({
   price,
   duration,
   rating,
-  getPackages,
 }: PackageCardProps) => {
+  const companyId = "684b7452cf844286f738f2db";
   if (loading) return <PackageCardSkeleton />;
   const ratingStar = (rating: number) => {
     return Array.from({ length: 5 }).map((_, i) => (
@@ -90,10 +89,7 @@ export const PackageCard = ({
                       Update
                     </Button>
                   </DialogTrigger>
-                  <UpdatePackageForm
-                    packageData={packages}
-                    getPackages={getPackages}
-                  />
+                  <UpdatePackageForm packageData={packages} />
                 </Dialog>
                 <Dialog>
                   <DialogTrigger asChild>
@@ -101,11 +97,7 @@ export const PackageCard = ({
                       Delete
                     </Button>
                   </DialogTrigger>
-                  <DeletePackage
-                    title={title}
-                    packageId={packages._id}
-                    getPackages={getPackages}
-                  />
+                  <DeletePackage title={title} packageId={packages._id} />
                 </Dialog>
               </>
             )}

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { PackageCardSkeleton } from "./packageSkeleton";
 import { PackageCard } from "./packageCard";
+import { usePackageContext } from "./PackageProvider";
 
 type CompanyPackagesProps = {
   companyId: string;
@@ -18,28 +19,10 @@ export const CompanyPackages = ({
   const [packages, setPackages] = useState<PackageType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const getPackages = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await api.get(`/package/${companyId}`);
-      const data = response.data;
-      if (data?.packages) {
-        setPackages(data.packages);
-      } else {
-        setPackages([]);
-        setError("Invalid package data");
-      }
-    } catch (error) {
-      console.log("error:", error);
-      setError("An error occurred");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { getPackages } = usePackageContext();
   useEffect(() => {
     if (companyId) {
-      getPackages();
+      getPackages(companyId);
     }
   }, [companyId]);
 
@@ -75,7 +58,6 @@ export const CompanyPackages = ({
           price={String(item.cost)}
           duration={item.duration}
           rating={item.rating}
-          getPackages={getPackages}
         />
       ))}
     </div>
