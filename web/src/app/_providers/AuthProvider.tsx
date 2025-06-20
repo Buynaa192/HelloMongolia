@@ -11,7 +11,7 @@ import { api, setAuthToken } from "@/axios";
 export type ActivityType = {
   _id: string;
   emoji: string;
-  name: string;
+  activityName: string;
 };
 export type PackageItemType = {
   _id: string;

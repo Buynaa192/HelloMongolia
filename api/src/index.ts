@@ -8,6 +8,8 @@ import { authRouter } from "./routes/auth.route";
 import { companyRouter } from "./routes/company.route";
 import { packageRouter } from "./routes/package.route";
 import { packageItemRouter } from "./routes/packageItem.route";
+import { searchRouter } from "./routes/Search.route";
+
 config();
 connectToDatabase();
 const app = express();
@@ -24,7 +26,8 @@ app
   .use("/company", companyRouter)
   .use("/auth", authRouter)
   .use("/package", packageRouter)
-  .use("/packageItem", packageItemRouter);
+  .use("/packageItem", packageItemRouter)
+  .use("/search", searchRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
