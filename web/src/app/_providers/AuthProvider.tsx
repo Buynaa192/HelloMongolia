@@ -59,9 +59,9 @@ export type CompanyType = {
   password: string;
   name: string;
   background: string;
-  avatarImage: string;
+  AvatarImage: string;
   since: number;
-  phoneNumber: number;
+  phoneNumber: number | null;
   websiteURL: string;
   about: string;
   packages: PackageType[];
@@ -71,7 +71,7 @@ export type CompanyType = {
 };
 type AuthContextType = {
   company?: CompanyType;
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<CompanyType>;
   signOut: () => Promise<void>;
   setCompany: (company?: CompanyType) => void;
   getCompany: () => Promise<void>;
