@@ -30,64 +30,86 @@ export default function Destination() {
     fetchDestination();
   }, [id]);
 
+  if (!destination) {
+    return (
+      <div className="w-full min-h-screen flex items-center justify-center text-xl">
+        Loading destination...
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full min-h-screen bg-white flex flex-col gap-4">
-     
+    <div className="w-full min-h-screen bg-white flex flex-col gap-6 pb-10">
       <div className="w-full h-[500px] relative">
         <Image
-          src={
-            destination?.destinationImages?.[0] ||
-            "https://res.cloudinary.com/df60cobe2/image/upload/v1750344336/image_1920_rsbpbh.jpg"
-          }
-          alt="bg"
+          src={destination.destinationImages[0]}
+          alt="Hero image"
           fill
           className="object-cover"
+          sizes="100vw"
+          priority
         />
-      </div>
- 
-     
-      <p className="ml-4">
-        <Link href="/">Home</Link> {`>`}
-        <Link href="/explore-destinations"> Explore-destinations </Link> {`>`}
-        <Link href={`/explore-destinations/${destination?.region}`}>
-          {destination?.region}
-        </Link>
-        {`>`}
-        {destination?.destinationName}
-      </p>
 
-    
-      <div className="w-full grid grid-cols-2 gap-4 p-4">
-        <div className="w-full h-80 border-2 p-4 text-gray-700 text-base">
-          {destination?.description}
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+          <h1 className="text-4xl font-bold text-white drop-shadow-md">
+            {destination.destinationName}
+          </h1>
         </div>
-        <div className="w-full border-2 relative h-80">
-          {destination?.destinationImages?.[1] && (
+      </div>
+
+      <div className="ml-6 text-sm text-gray-600 flex gap-1 flex-wrap">
+        <Link href="/" className="hover:underline">
+          Home
+        </Link>{" "}
+        <span>{`>`}</span>
+        <Link href="/explore-destinations" className="hover:underline">
+          Explore-destinations
+        </Link>{" "}
+        <span>{`>`}</span>
+        <Link
+          href={`/explore-destinations/${destination.region}`}
+          className="hover:underline"
+        >
+          {destination.region}
+        </Link>
+        <span>{`>`}</span>
+        <span className="font-medium">{destination.destinationName}</span>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6 px-6">
+        <div className="text-gray-700 text-base leading-relaxed border border-gray-200 rounded-lg p-4 bg-gray-50 shadow-sm">
+          {destination.description}
+        </div>
+        <div className="relative h-80 border border-gray-200 rounded-lg overflow-hidden">
+          {destination.destinationImages?.[1] && (
             <Image
               src={destination.destinationImages[1]}
-              alt={destination.destinationName || "destination image"}
+              alt={`${destination.destinationName} image`}
               fill
               className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           )}
         </div>
       </div>
-    
-      <div className="w-full grid grid-cols-2 gap-4 p-4">
-        <div className="w-full border-2 relative h-80">
-          {destination?.destinationImages?.[0] && (
+
+      <div className="grid md:grid-cols-2 gap-6 px-6">
+        <div className="relative h-80 border border-gray-200 rounded-lg overflow-hidden">
+          {destination.destinationImages?.[0] && (
             <Image
               src={destination.destinationImages[0]}
-              alt={destination.destinationName || "destination image"}
+              alt={`${destination.destinationName} image`}
               fill
               className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           )}
         </div>
-        <div className="w-full border-2 p-4 text-gray-700 text-base">
-          {destination?.description}
+        <div className="text-gray-700 text-base leading-relaxed border border-gray-200 rounded-lg p-4 bg-gray-50 shadow-sm">
+          {destination.description}
         </div>
       </div>
+
       <DesdinationPackage id={id} />
     </div>
   );
