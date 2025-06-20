@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 
 import Link from "next/link";
-import { PackageType } from "@/app/_providers/AuthProvider";
+import { PackageItemType, PackageType } from "@/app/_providers/AuthProvider";
 
 export const PackageCard = ({ trip }: { trip: PackageType }) => {
   return (
@@ -30,7 +30,7 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
               />
             ))}
           </div>
-          {trip.packageItem.map((item, index) => (
+          {trip.packageItem.map((item: PackageItemType, index) => (
             <div
               key={index}
               className="grid grid-cols-2 md:grid-cols-4 gap-4 md:text-sm text-gray-200"
@@ -38,10 +38,18 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
               <div className="flex flex-col gap-2">
                 <h3 className="font-semibold">Destination</h3>
                 <ul className="hidden md:flex flex-col list-disc ml-4 italic">
-                  <li>{item.destination}</li>
+                  <li>
+                    {item.destinationId?.map((item) => {
+                      return <div key={item._id}>{item.destinationName}</div>;
+                    })}
+                  </li>
                 </ul>
                 <div className="flex flex-col md:hidden italic">
-                  <li>{item.destination}</li>
+                  <li>
+                    {item.destinationId?.map((item) => {
+                      return <div key={item._id}>{item.destinationName}</div>;
+                    })}
+                  </li>
                 </div>
               </div>
 
