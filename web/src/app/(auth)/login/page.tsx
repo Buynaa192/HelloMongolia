@@ -40,10 +40,17 @@ export default function LoginPage() {
 
   const onSubmit = async (values: LoginInput) => {
     try {
-      await signIn(values.email, values.password);
+      const company = await signIn(values.email, values.password);
       toast.success("Logged in successfully!");
+
+      const hasProfile =
+        !!company?.phoneNumber ||
+        !!company?.AvatarImage?.trim() ||
+        !!company?.background?.trim() ||
+        !!company?.name?.trim();
+
       setTimeout(() => {
-        router.push("/companies/company");
+        router.push(hasProfile ? "/companies/company" : "/set-up-profile");
       }, 1000);
     } catch (err) {
       console.error(err);
