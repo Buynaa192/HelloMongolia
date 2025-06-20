@@ -8,8 +8,7 @@ type itemType = {
 };
 
 export const DestinationCard = ({ item }: itemType) => {
-  console.log(
-    "item",item);
+  
   
   return (
     <Link href={`/explore-destinations/${item.region}/${item._id}`}>
