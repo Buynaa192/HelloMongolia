@@ -53,7 +53,8 @@ export default function Destination() {
         <div className="w-full border-2">
           {destination?.destinationImages?.[1] && (
             <Image
-              src={destination.destinationImages[1]}
+              src={destination.destinationImages[1] || "https://res.cloudinary.com/df60cobe2/image/upload/v1750344336/image_1920_rsbpbh.jpg"
+              }
               width={400}
               height={300}
               alt={destination.destinationName || "destination image"}
@@ -65,7 +66,7 @@ export default function Destination() {
         <div className="w-full h-80 border-2">
           {destination?.destinationImages?.[0] && (
             <Image
-              src={destination.destinationImages[1]}
+              src={destination.destinationImages[1] || "https://res.cloudinary.com/df60cobe2/image/upload/v1750344336/image_1920_rsbpbh.jpg"}
               width={400}
               height={300}
               alt={destination.destinationName || "destination image"}

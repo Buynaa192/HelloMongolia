@@ -88,7 +88,7 @@ export default function DestinatioExplore() {
                   key={item._id}
                 >
                   <Image
-                    src={item.destinationImages[0]}
+                    src={item.destinationImages[0] || images[0]}
                     width={200}
                     height={100}
                     alt={item.destinationName}
