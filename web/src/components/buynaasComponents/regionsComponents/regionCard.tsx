@@ -9,8 +9,8 @@ export const RegionCard = ({item}:itemType) => {
       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
       <div className="w-full h-[calc(100%-35px)] relative rounded-lg flex items-center justify-center">
         <Image
-          src="https://res.cloudinary.com/df60cobe2/image/upload/v1750344245/uIQQCU3MdRI14R7HWoqX-large_u1capj.jpg"
-          alt="gobi"
+          src="https://res.cloudinary.com/df60cobe2/image/upload/v1750344828/ukcxe5yilvidvpwsuckf.jpg"
+          alt={item.name}
           fill
           className="object-cover rounded-lg "
         />
