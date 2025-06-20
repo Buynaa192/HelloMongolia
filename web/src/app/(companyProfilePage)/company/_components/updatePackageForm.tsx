@@ -20,8 +20,8 @@ import { z } from "zod";
 import { Input } from "@/components/ui/input";
 
 import { PackageType } from "@/app/_providers/AuthProvider";
-import { UpdatePackageFun } from "./updateAndDeletePackageFunction";
 import { Textarea } from "./ui/textarea";
+import { usePackageContext } from "./PackageProvider";
 const schema = z.object({
   coverPhoto: z.any().optional(),
   name: z.string().min(1, "Name is required"),
@@ -38,10 +38,10 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 export type Props = {
   packageData: PackageType;
-  getPackages: () => Promise<void>;
 };
 
-export const UpdatePackageForm = ({ packageData, getPackages }: Props) => {
+export const UpdatePackageForm = ({ packageData }: Props) => {
+  const { updatePackage } = usePackageContext();
   const [loading, setLoading] = useState(false);
   const [prevProfileImage, setPrevProfileImage] = useState(
     packageData.coverPhoto
@@ -66,12 +66,7 @@ export const UpdatePackageForm = ({ packageData, getPackages }: Props) => {
   });
 
   const onSubmit = async (data: FormData) => {
-    await UpdatePackageFun({
-      packageId: packageData._id,
-      data,
-      setLoading,
-    });
-    await getPackages();
+    await updatePackage(packageData._id, data, setLoading);
   };
 
   return (

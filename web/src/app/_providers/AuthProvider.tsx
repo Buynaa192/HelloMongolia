@@ -37,7 +37,7 @@ export type PackageType = {
   itinerary: string;
   tripType: string;
   rating: number;
-  companyId: CompanyType;
+  companyId: string;
 };
 export type ReviewType = {
   _id: string;
@@ -122,8 +122,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <AuthContext.Provider
-      value={{ company, signIn, signOut, setCompany, getCompany }}
-    >
+      value={{ company, signIn, signOut, setCompany, getCompany }}>
       {!loading && children}
     </AuthContext.Provider>
   );
