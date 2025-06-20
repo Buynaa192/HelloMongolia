@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+
 const destinationSchema = new Schema({
   destinationName: { type: String, required: true },
   destinationImages: [{ type: String, required: true }],
@@ -14,16 +15,8 @@ const destinationSchema = new Schema({
   },
   description: { type: String, required: true },
   location: {
-    type: "object",
-    properties: {
-      lat: {
-        type: "number",
-      },
-      lng: {
-        type: "number",
-      },
-    },
-    required: ["lat", "lng"],
+    lat: { type: Number },
+    lng: { type: Number },
   },
   activities: { type: [Schema.Types.ObjectId], ref: "activity" },
   updatedAt: { type: Date, required: true },
