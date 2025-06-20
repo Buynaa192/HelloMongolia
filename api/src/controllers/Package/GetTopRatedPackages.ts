@@ -5,16 +5,13 @@ export const GetTopRatedPackages: RequestHandler = async (req, res) => {
   try {
     const packages = await packageModel.find({ rating: 5 }).populate({
       path: "packageItem",
-      select: "activity destinationId ",
       populate: [
         {
           path: "destinationId",
-          select: "destinationName",
           model: "destination",
         },
         {
           path: "activity",
-          select: "name description",
           model: "activity",
         },
       ],

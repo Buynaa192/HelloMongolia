@@ -1,14 +1,14 @@
 import { Router } from "express";
 
-import { createPackageController } from "../controllers/Package/create-package";
-import { getPackageByCompanyId } from "../controllers/Package/getPackageByCompanyId";
-import { updatePackageById } from "../controllers/Package/updatePackageById";
-import { deletePackageById } from "../controllers/Package/deletePackageById";
-import { addPackageItem } from "../controllers/Package/addPackageItem";
-import { getPackagesByDestinationId } from "../controllers/Package/getPackageDestination";
-import { getPackageById } from "../controllers/Package/getPackageById";
-import { GetTopRatedPackages } from "../controllers/Package/GetTopRatedPackages";
-import { removePackageItem } from "../controllers/Package/removePackageItem";
+import { createPackageController } from "../controllers/package/create-package";
+import { getPackageByCompanyId } from "../controllers/package/getPackageByCompanyId";
+import { updatePackageById } from "../controllers/package/updatePackageById";
+import { deletePackageById } from "../controllers/package/deletePackageById";
+import { addPackageItem } from "../controllers/package/addPackageItem";
+import { getPackagesByDestinationId } from "../controllers/package/getPackageDestination";
+import { getPackageById } from "../controllers/package/getPackageById";
+import { GetTopRatedPackages } from "../controllers/package/GetTopRatedPackages";
+import { removePackageItem } from "../controllers/package/removePackageItem";
 export const packageRouter = Router()
   .post("/", createPackageController)
   .get("/", getPackageById)
