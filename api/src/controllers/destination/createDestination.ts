@@ -9,12 +9,14 @@ export const CreateDestination: RequestHandler = async (req, res) => {
       region,
       description,
       activities,
+      location,
     } = req.body;
     const newDestination = await destinationModel.create({
       destinationName,
       destinationImages,
       description,
       region,
+      location,
       activities,
       createdAt: new Date(),
       updatedAt: new Date(),
