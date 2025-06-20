@@ -19,8 +19,7 @@ export const ShowPackage = ({
           viewport={{ once: true }}
           className={`w-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 p-4 ${
             index % 2 !== 0 ? "md:flex-row-reverse" : ""
-          }`}
-        >
+          }`}>
           <PackageCard trip={pack} />
           <TripReview
             title={pack.title}
