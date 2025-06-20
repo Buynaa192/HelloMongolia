@@ -9,7 +9,7 @@ import { Regions } from "@/components/buynaasComponents/regionsComponents/region
 import { PopularDestination } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestination";
 import { api } from "@/axios";
 import { DestinationType } from "../_providers/AuthProvider";
-import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
+
 
 const images = [
   "https://res.cloudinary.com/df60cobe2/image/upload/v1750344900/zvtv2v8ujkwank2sed1x.jpg",
