@@ -338,8 +338,8 @@ export default function PackagePage() {
         );
       })}
       <div>
-        {location.map(() => {
-          return <div></div>;
+        {location.map((_, index) => {
+          return <div key={index}></div>;
         })}
       </div>
     </>
