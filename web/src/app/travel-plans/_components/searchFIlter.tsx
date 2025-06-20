@@ -24,12 +24,14 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
   setSelectedDurations,
 }) => {
   const tripTypes: TripType[] = [
-    "Sightseeing",
+    "Scenery",
     "Adventure",
-    "Culture & history",
-    "Family vacations",
+    "Cultural",
+    "Historical",
+    "Family",
     "Scientific",
     "Festival & Events",
+    "Off-road",
   ];
   const cost = ["0-500$", "500-1000$", "1000-5000$", "5000$+"];
   const duration = ["1 day", "1-7 days", "7-14 days", "14-21 days", "21+ days"];

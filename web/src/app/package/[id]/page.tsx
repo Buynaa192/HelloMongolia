@@ -12,15 +12,29 @@ import { useEffect, useState } from "react";
 type Params = {
   id: string;
 };
-
+type LocationType = {
+  lat: number;
+  lng: number;
+};
 export default function PackagePage() {
   const { id } = useParams<Params>();
   const [packages, setPackage] = useState<PackageType[]>([]);
+  const [location, setLocation] = useState<LocationType[]>([]);
   useEffect(() => {
     const fetchPackage = async () => {
       try {
         const res = await api.get(`/package?packageId=${id}`);
         setPackage(res.data.packages);
+        console.log(res.data.packages);
+        const allLocations = res.data.packages.flatMap((pkg: any) =>
+          pkg.packageItem.map((item: any) => ({
+            lat: item.destinationId?.location?.lat || item.location?.lat || 0,
+            lng: item.destinationId?.location?.lng || item.location?.lng || 0,
+          }))
+        );
+
+        setLocation(allLocations);
+        console.log("Location", allLocations);
       } catch (err) {
         console.error("Failed to fetch packages", err);
       }
@@ -57,6 +71,12 @@ export default function PackagePage() {
                           <img
                             src={item.image}
                             key={index}
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.onerror = null;
+                              target.src =
+                                "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
+                            }}
                             className="w-full h-full object-cover  "
                           />
                         </div>

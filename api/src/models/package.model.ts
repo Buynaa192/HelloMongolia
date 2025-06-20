@@ -47,12 +47,14 @@ const packageSchema = new Schema({
   tripType: {
     type: String,
     enum: [
-      "Sightseeing",
+      "Scenery",
       "Adventure",
-      "Culture & history",
-      "Family vacations",
+      "Cultural",
+      "Historical",
+      "Family",
       "Scientific",
       "Festival & Events",
+      "Off-road",
     ],
     default: "Adventure",
   },
