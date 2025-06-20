@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
@@ -9,13 +9,13 @@ import { PackageType } from "@/app/_providers/AuthProvider";
 export const PackageCard = ({ trip }: { trip: PackageType }) => {
   return (
     <Card className="relative text-white md:h-[400px] h-[400px] w-full max-w-4xl overflow-hidden shadow-xl border-0">
-      <Image
+      {/* <Image
         src={trip.coverPhoto}
         alt="nature photo"
         fill
         className="object-cover"
         priority
-      />
+      /> */}
       <div className="absolute inset-0 bg-black/65" />
       <CardContent className="relative z-10 flex flex-col justify-between h-full text-center md:text-start">
         <div>

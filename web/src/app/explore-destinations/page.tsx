@@ -43,6 +43,8 @@ export default function DestinatioExplore() {
     dest.destinationName.toLowerCase().includes(searchDestination.toLowerCase())
   );
 
+  if (destination.length === 0) return null;
+
   return (
     <div className="w-full h-full border-2 border-white text-white flex flex-col gap-4">
       <div className="relative w-full h-[800px] overflow-hidden">
