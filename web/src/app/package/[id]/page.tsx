@@ -1,6 +1,11 @@
 "use client";
 
-import { PackageType } from "@/app/_providers/AuthProvider";
+import {
+  DestinationType,
+  LocationType,
+  PackageItemType,
+  PackageType,
+} from "@/app/_providers/AuthProvider";
 import { CashIcon } from "@/app/travel-plans/assets/cash";
 import { DurationIcon } from "@/app/travel-plans/assets/durationIcon";
 import { StarIcon } from "@/app/travel-plans/assets/star";
@@ -16,11 +21,25 @@ type Params = {
 export default function PackagePage() {
   const { id } = useParams<Params>();
   const [packages, setPackage] = useState<PackageType[]>([]);
+  const [location, setLocation] = useState<LocationType[]>([]);
   useEffect(() => {
     const fetchPackage = async () => {
       try {
         const res = await api.get(`/package?packageId=${id}`);
         setPackage(res.data.packages);
+        console.log(res.data.packages);
+        const allLocations = res.data.packages.flatMap((pkg: PackageType) =>
+          pkg.packageItem.flatMap(
+            (item: PackageItemType) =>
+              item.destinationId?.map((destination: DestinationType) => ({
+                lat: destination.location[0]?.lat || 0,
+                lng: destination.location[0]?.lng || 0,
+              })) || []
+          )
+        );
+
+        setLocation(allLocations);
+        console.log("Location", allLocations);
       } catch (err) {
         console.error("Failed to fetch packages", err);
       }
@@ -57,6 +76,12 @@ export default function PackagePage() {
                           <img
                             src={item.image}
                             key={index}
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.onerror = null;
+                              target.src =
+                                "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
+                            }}
                             className="w-full h-full object-cover  "
                           />
                         </div>
@@ -274,10 +299,7 @@ export default function PackagePage() {
                   <div>Experience:</div>
                   <div className="flex gap-2">
                     {item.companyId.reviews}
-                    {/* {item.companyId.reviews.length == 0 ||
-                    item.companyId.reviews.length == null
-                      ? "0"
-                      : item.companyId.reviews.length} */}
+
                     <p>travellers</p>
                   </div>
                 </div>{" "}
@@ -303,7 +325,7 @@ export default function PackagePage() {
                   </div>
                 </div>
                 <div className="w-full flex items-center justify-between ">
-                  <div>PhoneNumber:</div>
+                  <div>Phonenumber:</div>
                   <div>+976 {item.companyId.phoneNumber}</div>
                 </div>
               </div>
@@ -312,6 +334,11 @@ export default function PackagePage() {
           </div>
         );
       })}
+      <div>
+        {location.map((_, index) => {
+          return <div key={index}></div>;
+        })}
+      </div>
     </>
   );
 }

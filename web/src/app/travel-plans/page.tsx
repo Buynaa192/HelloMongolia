@@ -11,12 +11,14 @@ import { api } from "@/axios";
 import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
 
 export type TripType =
-  | "Sightseeing"
+  | "Scenery"
   | "Adventure"
-  | "Culture & history"
-  | "Family vacations"
+  | "Cultural"
+  | "Historical"
+  | "Family"
   | "Scientific"
-  | "Festival & Events";
+  | "Festival & Events"
+  | "Off-road";
 
 export default function PackagesExplore() {
   const [allPackages, setAllPackages] = useState<PackageType[]>([]);
