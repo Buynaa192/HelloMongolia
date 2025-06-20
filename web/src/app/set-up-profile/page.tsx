@@ -125,7 +125,7 @@ export default function SetupProfile() {
       } as CompanyType);
 
       router.push("/companies/company");
-    } catch (err) {
+    } catch {
       alert("Update failed.");
     } finally {
       setLoading(false);
