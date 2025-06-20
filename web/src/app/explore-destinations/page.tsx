@@ -43,12 +43,10 @@ export default function DestinatioExplore() {
     dest.destinationName.toLowerCase().includes(searchDestination.toLowerCase())
   );
 
-  console.log("aa", filteredDestinations);
-
   if (destination.length === 0) return null;
 
   return (
-    <div className="w-full h-full border-2 border-white text-white flex flex-col gap-4">
+    <div className="w-full h-full  text-white flex flex-col gap-4">
       <div className="relative w-full h-[800px] overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
@@ -82,7 +80,7 @@ export default function DestinatioExplore() {
               onChange={(e) => SetsearchDestination(e.target.value)}
             />
           </div>
-          {/* {searchDestination.length > 0 && (
+          {searchDestination.length > 0 && (
             <div className="border-2 border-red-400 max-h-96 overflow-auto">
               <p>Destinations</p>
               {filteredDestinations.map((item) => (
@@ -104,7 +102,7 @@ export default function DestinatioExplore() {
                 </div>
               ))}
             </div>
-          )} */}
+          )}
         </div>
       </div>
 
