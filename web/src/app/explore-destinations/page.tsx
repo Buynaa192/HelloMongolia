@@ -88,7 +88,7 @@ export default function DestinatioExplore() {
                   key={item._id}
                 >
                   <Image
-                    src={item.destinationImages[0] || images[0]}
+                    src={item.destinationImages[0]|| "https://res.cloudinary.com/df60cobe2/image/upload/v1750344622/ly7zekpo5tegc4zmzxcy.jpg"}
                     width={200}
                     height={100}
                     alt={item.destinationName}
@@ -101,7 +101,7 @@ export default function DestinatioExplore() {
           )}
         </div>
       </div>
-      <BackToHomePathButtons />
+     
       <Regions />
       <PopularDestination destination={destination} />
     </div>

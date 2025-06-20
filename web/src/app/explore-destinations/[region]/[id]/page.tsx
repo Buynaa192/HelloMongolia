@@ -7,13 +7,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-type idType = {
-  id: string;
-};
+
+type idType = { id: string };
+
 export default function Destination() {
   const params = useParams<idType>();
   const id = params.id;
   const [destination, setDestination] = useState<DestinationType>();
+
   useEffect(() => {
     const fetchDestination = async () => {
       if (!id) return;
@@ -31,49 +32,61 @@ export default function Destination() {
 
   return (
     <div className="w-full min-h-screen bg-white flex flex-col gap-4">
-      <div className="w-full h-120 ">
+     
+      <div className="w-full h-[500px] relative">
         <Image
-          className="w-full h-full"
-          src={destination?.destinationImages?.[0] || "https://res.cloudinary.com/df60cobe2/image/upload/v1750344336/image_1920_rsbpbh.jpg"}
-          width={500}
-          height={100}
-          alt="bg"></Image>
+          src={
+            destination?.destinationImages?.[0] ||
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750344336/image_1920_rsbpbh.jpg"
+          }
+          alt="bg"
+          fill
+          className="object-cover"
+        />
       </div>
+ 
+     
       <p className="ml-4">
-        <Link href={"/"}>Home</Link> {`>`}
-        <Link href={"/explore-destinations"}> Explore-destinations </Link> {`>`}
+        <Link href="/">Home</Link> {`>`}
+        <Link href="/explore-destinations"> Explore-destinations </Link> {`>`}
         <Link href={`/explore-destinations/${destination?.region}`}>
           {destination?.region}
         </Link>
         {`>`}
         {destination?.destinationName}
       </p>
-      <div className="w-full  grid grid-cols-2 gap-4 p-4">
-        <div className="w-full h-80 border-2">{destination?.description}</div>
-        <div className="w-full border-2">
+
+    
+      <div className="w-full grid grid-cols-2 gap-4 p-4">
+        <div className="w-full h-80 border-2 p-4 text-gray-700 text-base">
+          {destination?.description}
+        </div>
+        <div className="w-full border-2 relative h-80">
           {destination?.destinationImages?.[1] && (
             <Image
-              src={destination.destinationImages[1] || "https://res.cloudinary.com/df60cobe2/image/upload/v1750344336/image_1920_rsbpbh.jpg"
-              }
-              width={400}
-              height={300}
+              src={destination.destinationImages[1]}
               alt={destination.destinationName || "destination image"}
+              fill
+              className="object-cover"
             />
           )}
         </div>
       </div>
-      <div className="w-full  grid grid-cols-2 gap-4 p-4">
-        <div className="w-full h-80 border-2">
+    
+      <div className="w-full grid grid-cols-2 gap-4 p-4">
+        <div className="w-full border-2 relative h-80">
           {destination?.destinationImages?.[0] && (
             <Image
-              src={destination.destinationImages[1] || "https://res.cloudinary.com/df60cobe2/image/upload/v1750344336/image_1920_rsbpbh.jpg"}
-              width={400}
-              height={300}
+              src={destination.destinationImages[0]}
               alt={destination.destinationName || "destination image"}
+              fill
+              className="object-cover"
             />
           )}
         </div>
-        <div className="w-full border-2">{destination?.description}</div>
+        <div className="w-full border-2 p-4 text-gray-700 text-base">
+          {destination?.description}
+        </div>
       </div>
       <DesdinationPackage id={id} />
     </div>
