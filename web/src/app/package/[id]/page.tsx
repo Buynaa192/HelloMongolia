@@ -1,6 +1,11 @@
 "use client";
 
-import { PackageType } from "@/app/_providers/AuthProvider";
+import {
+  DestinationType,
+  LocationType,
+  PackageItemType,
+  PackageType,
+} from "@/app/_providers/AuthProvider";
 import { CashIcon } from "@/app/travel-plans/assets/cash";
 import { DurationIcon } from "@/app/travel-plans/assets/durationIcon";
 import { StarIcon } from "@/app/travel-plans/assets/star";
@@ -12,10 +17,7 @@ import { useEffect, useState } from "react";
 type Params = {
   id: string;
 };
-type LocationType = {
-  lat: number;
-  lng: number;
-};
+
 export default function PackagePage() {
   const { id } = useParams<Params>();
   const [packages, setPackage] = useState<PackageType[]>([]);
@@ -26,11 +28,14 @@ export default function PackagePage() {
         const res = await api.get(`/package?packageId=${id}`);
         setPackage(res.data.packages);
         console.log(res.data.packages);
-        const allLocations = res.data.packages.flatMap((pkg: any) =>
-          pkg.packageItem.map((item: any) => ({
-            lat: item.destinationId?.location?.lat || item.location?.lat || 0,
-            lng: item.destinationId?.location?.lng || item.location?.lng || 0,
-          }))
+        const allLocations = res.data.packages.flatMap((pkg: PackageType) =>
+          pkg.packageItem.flatMap(
+            (item: PackageItemType) =>
+              item.destinationId?.map((destination: DestinationType) => ({
+                lat: destination.location[0]?.lat || 0,
+                lng: destination.location[0]?.lng || 0,
+              })) || []
+          )
         );
 
         setLocation(allLocations);
@@ -332,6 +337,11 @@ export default function PackagePage() {
           </div>
         );
       })}
+      <div>
+        {location.map(() => {
+          return <div></div>;
+        })}
+      </div>
     </>
   );
 }
