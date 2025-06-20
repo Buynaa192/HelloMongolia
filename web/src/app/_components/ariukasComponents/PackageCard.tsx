@@ -52,7 +52,6 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
                   </li>
                 </div>
               </div>
-
               <div className="flex flex-col gap-2">
                 <h3 className="font-semibold">Activities</h3>
                 <ul className="hidden md:flex flex-col list-disc ml-4 italic">
@@ -68,7 +67,6 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
               </div>
             </div>
           ))}
-
           <div className="flex flex-col gap-2">
             <h3 className="font-semibold">Cost</h3>
             <div className="text-lg font-bold">
@@ -80,7 +78,6 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
             </div>
           </div>
         </div>
-
         <div className="flex items-center justify-between mt-6">
           <Button
             asChild

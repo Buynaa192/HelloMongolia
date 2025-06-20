@@ -299,10 +299,7 @@ export default function PackagePage() {
                   <div>Experience:</div>
                   <div className="flex gap-2">
                     {item.companyId.reviews}
-                    {/* {item.companyId.reviews.length == 0 ||
-                    item.companyId.reviews.length == null
-                      ? "0"
-                      : item.companyId.reviews.length} */}
+
                     <p>travellers</p>
                   </div>
                 </div>{" "}
@@ -328,7 +325,7 @@ export default function PackagePage() {
                   </div>
                 </div>
                 <div className="w-full flex items-center justify-between ">
-                  <div>PhoneNumber:</div>
+                  <div>Phonenumber:</div>
                   <div>+976 {item.companyId.phoneNumber}</div>
                 </div>
               </div>
