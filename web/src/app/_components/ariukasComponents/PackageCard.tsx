@@ -10,7 +10,7 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
   return (
     <Card className="relative text-white md:h-[400px] h-[400px] w-full max-w-4xl overflow-hidden shadow-xl border-0">
       <Image
-        src={trip.coverPhoto}
+        src={trip?.coverPhoto || ""}
         alt="nature photo"
         fill
         className="object-cover"

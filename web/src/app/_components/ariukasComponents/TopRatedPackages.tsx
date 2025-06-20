@@ -27,8 +27,6 @@ export const TopRatedPackages = () => {
     fetchPackages();
   }, []);
 
-  
-
   if (loading) return <p className="text-white">Loading packages...</p>;
 
   return (
