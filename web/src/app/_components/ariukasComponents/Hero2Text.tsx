@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export const Hero2Text = () => {
   const description = `Because it's one of the last places on Earth where you can truly disconnect—and reconnect.`;
@@ -34,9 +35,12 @@ export const Hero2Text = () => {
             </p>
           </div>
         </div>
-        <Button className=" bg-black text-white w-fit">
-          EXPLORE ALL EXPERIENCES
-        </Button>
+
+        <Link href="/travel-plans" passHref>
+          <Button className="bg-black text-white w-fit">
+            EXPLORE ALL EXPERIENCES
+          </Button>
+        </Link>
       </div>
     </motion.div>
   );
