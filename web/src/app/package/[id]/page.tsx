@@ -233,7 +233,7 @@ export default function PackagePage() {
                                 return (
                                   <div key={index} className="flex ">
                                     {item.emoji}
-                                    {item.name}
+                                    {item.activityName}
                                   </div>
                                 );
                               })}

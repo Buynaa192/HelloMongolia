@@ -3,12 +3,34 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SearchInMongolia } from "./SearchMongolia";
+import {
+  ActivityType,
+  CompanyType,
+  DestinationType,
+  PackageType,
+} from "@/app/_providers/AuthProvider";
+
 const animatedWords = ["DISCOVER", "EXPLORE", "EXPERIENCE", "FEEL"];
+
+export type SearchResultsType = {
+  destinations: DestinationType[];
+  activities: ActivityType[];
+  companies: CompanyType[];
+  packages: PackageType[];
+};
+
+const emptyResults: SearchResultsType = {
+  destinations: [],
+  activities: [],
+  companies: [],
+  packages: [],
+};
 
 export const Hero1Text = () => {
   const [index, setIndex] = useState(0);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [results, setResults] = useState<SearchResultsType>(emptyResults);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -17,10 +39,17 @@ export const Hero1Text = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const searchResults =
+    results &&
+    (results.destinations?.length > 0 ||
+      results.activities?.length > 0 ||
+      results.companies?.length > 0 ||
+      results.packages?.length > 0);
+
   return (
     <div className="absolute flex flex-col gap-8 items-center justify-center w-full h-full">
-      {!query || loading ? (
-        <div className="flex flex-col items-center font-extrabold text-5xl lg:text-7xl">
+      {!query || loading || !searchResults ? (
+        <div className="flex flex-col items-center font-extrabold text-5xl lg:text-7xl z-45">
           <div className="flex justify-center ">
             <AnimatePresence mode="wait">
               <motion.div
@@ -47,6 +76,9 @@ export const Hero1Text = () => {
         setQuery={setQuery}
         loading={loading}
         setLoading={setLoading}
+        results={results}
+        setResults={setResults}
+        searchResults={searchResults}
       />
     </div>
   );
