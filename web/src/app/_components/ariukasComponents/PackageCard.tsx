@@ -5,17 +5,19 @@ import { Star } from "lucide-react";
 
 import Link from "next/link";
 import { PackageItemType, PackageType } from "@/app/_providers/AuthProvider";
+import Image from "next/image";
 
 export const PackageCard = ({ trip }: { trip: PackageType }) => {
+  console.log(trip);
   return (
     <Card className="relative text-white md:h-[400px] h-[400px] w-full max-w-4xl overflow-hidden shadow-xl border-0">
-      {/* <Image
+      <Image
         src={trip.coverPhoto}
         alt="nature photo"
         fill
         className="object-cover"
         priority
-      /> */}
+      />
       <div className="absolute inset-0 bg-black/65" />
       <CardContent className="relative z-10 flex flex-col justify-between h-full text-center md:text-start">
         <div>
@@ -56,12 +58,12 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
                 <h3 className="font-semibold">Activities</h3>
                 <ul className="hidden md:flex flex-col list-disc ml-4 italic">
                   {item.activity?.map((act, i) => (
-                    <li key={i}>{act.name}</li>
+                    <li key={i}>{act.activityName}</li>
                   ))}
                 </ul>
                 <div className="flex flex-col md:hidden italic">
                   {item.activity?.map((act, i) => (
-                    <li key={i}>{act.name}</li>
+                    <li key={i}>{act.activityName}</li>
                   ))}
                 </div>
               </div>
@@ -87,12 +89,12 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
             <Link href={`/packages/${trip._id}`}>View details</Link>
           </Button>
           <p className="text-xs text-gray-300">
-            Tour Operator:{" "}
+            Tour Operator:{trip.companyId?.name}
             <Link
-              href={`/operators/${trip.companyId._id}`}
+              href={`/operators/${trip.companyId?._id}`}
               className="hover:underline hover:text-white transition-colors flex flex-nowrap"
             >
-              {trip.companyId.name}
+              {trip.companyId?.name}
             </Link>
           </p>
         </div>
