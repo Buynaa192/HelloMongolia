@@ -1,10 +1,16 @@
 "use client";
 
 import { api } from "@/axios";
-import React, { useState, useEffect, useRef } from "react";
-import { SectionTitle } from "../SectionTitle";
+import React, { useEffect, useRef } from "react";
+import { SectionTitle } from "./SectionTitle";
 import { MyLoader } from "./Loader";
 import { SearchResultsType } from "./Hero1Text";
+import {
+  ActivityType,
+  CompanyType,
+  DestinationType,
+  PackageType,
+} from "@/app/_providers/AuthProvider";
 
 interface SearchInMongoliaProps {
   query: string;
@@ -17,7 +23,7 @@ interface SearchInMongoliaProps {
 }
 
 import clsx from "clsx";
-import { SearchSection } from "../SearchResultsSections";
+import { SearchSection } from "./SearchResultsSections";
 const cn = clsx;
 
 export const SearchInMongolia = ({
@@ -84,6 +90,8 @@ export const SearchInMongolia = ({
     e.preventDefault();
   };
 
+  console.log(results, "searchResults");
+
   return (
     <div className="w-full flex flex-col items-center justify-center relative">
       {searchResults && <div className="fixed inset-0 bg-black/80 z-10" />}
@@ -127,7 +135,7 @@ export const SearchInMongolia = ({
               )}
             >
               {results.destinations?.length > 0 && (
-                <SearchSection
+                <SearchSection<DestinationType>
                   title={
                     <SectionTitle
                       title="🏔️ Must See Destinations"
@@ -142,7 +150,7 @@ export const SearchInMongolia = ({
                 />
               )}
               {results.activities?.length > 0 && (
-                <SearchSection
+                <SearchSection<ActivityType>
                   title={
                     <SectionTitle
                       title="🎯 To do's in Mongolia"
@@ -157,7 +165,7 @@ export const SearchInMongolia = ({
                 />
               )}
               {results.companies?.length > 0 && (
-                <SearchSection
+                <SearchSection<CompanyType>
                   title={
                     <SectionTitle
                       title="🏢 Local Tour Operators"
@@ -165,14 +173,14 @@ export const SearchInMongolia = ({
                     />
                   }
                   items={results.companies}
-                  field="companyName"
+                  field="name"
                   emptyLabel="companies"
                   urlPrefix="/comapanies"
                   backgroundImage="https://res.cloudinary.com/df60cobe2/image/upload/v1750321227/MotoInDesert_qclalo.jpg"
                 />
               )}
               {results.packages?.length > 0 && (
-                <SearchSection
+                <SearchSection<PackageType>
                   title={
                     <SectionTitle
                       title="📦 Travel Plans"

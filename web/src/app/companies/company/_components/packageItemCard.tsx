@@ -79,8 +79,9 @@ export const PackageItemCard = ({
             {activity.map((act, idx) => (
               <span
                 key={idx}
-                className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">
-                {act.name}
+                className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full"
+              >
+                {act.activityName}
               </span>
             ))}
           </div>
@@ -93,7 +94,8 @@ export const PackageItemCard = ({
                 isAdded
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-green-600 hover:bg-green-700"
-              }`}>
+              }`}
+            >
               {loading ? (
                 <Loader className="animate-spin w-4 h-4" />
               ) : isAdded ? (
@@ -105,7 +107,8 @@ export const PackageItemCard = ({
             {isAdded ? (
               <Button
                 className="bg-red-400 text-white hover:bg-red-500 transition"
-                onClick={removeFromPackage}>
+                onClick={removeFromPackage}
+              >
                 {loading ? (
                   <Loader className="animate-spin w-4 h-4" />
                 ) : (
@@ -121,7 +124,8 @@ export const PackageItemCard = ({
                       isAdded
                         ? "bg-red-400 cursor-not-allowed"
                         : "bg-red-600 hover:bg-red-700"
-                    }`}>
+                    }`}
+                  >
                     {loading ? (
                       <Loader className="animate-spin w-4 h-4" />
                     ) : (

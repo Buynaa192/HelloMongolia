@@ -60,7 +60,7 @@ export const Header = () => {
           <Popover>
             <PopoverTrigger className="rounded-full overflow-hidden w-10 h-10">
               <Image
-                src={company.avatarImage}
+                src={company.AvatarImage}
                 alt="Company Avatar"
                 width={40}
                 height={40}
