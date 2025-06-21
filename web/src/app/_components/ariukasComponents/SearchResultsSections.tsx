@@ -1,22 +1,24 @@
 import Link from "next/link";
 
-interface SearchSectionProps {
+interface SearchSectionProps<
+  T extends { _id: string; [key: string]: React.ReactNode }
+> {
   title: React.ReactNode;
-  items?: any[];
-  field: string;
+  items?: T[];
+  field: keyof T;
   emptyLabel?: string;
   backgroundImage?: string;
   urlPrefix: string;
 }
 
-export const SearchSection = ({
+export const SearchSection = <T extends { _id: string }>({
   title,
   items,
   field,
   emptyLabel,
   backgroundImage,
   urlPrefix,
-}: SearchSectionProps) => {
+}: SearchSectionProps<T>) => {
   return (
     <section
       className="w-100 relative rounded-md h-[300px] overflow-hidden bg-opacity-10 bg-cover bg-center"
@@ -45,7 +47,7 @@ export const SearchSection = ({
                 className="py-2 cursor-pointer transition-colors hover:bg-white/20"
               >
                 <Link href={`${urlPrefix}/${item._id}`}>
-                  <p className="hover:font-semibold">{item[field]}</p>
+                  <p className="hover:font-semibold">{String(item[field])}</p>
                 </Link>
               </li>
             ))}
