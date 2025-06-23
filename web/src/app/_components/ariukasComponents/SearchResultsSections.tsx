@@ -21,7 +21,7 @@ export const SearchSection = <T extends { _id: string }>({
 }: SearchSectionProps<T>) => {
   return (
     <section
-      className="w-100 relative rounded-md h-[300px] overflow-hidden bg-opacity-10 bg-cover bg-center"
+      className="w-full relative rounded-md h-[300px] overflow-hidden bg-opacity-10 bg-cover bg-center"
       style={{
         backgroundImage: backgroundImage
           ? `url(${backgroundImage})`
@@ -32,7 +32,7 @@ export const SearchSection = <T extends { _id: string }>({
         <div className="absolute inset-0 bg-black/60 pointer-events-none" />
       )}
 
-      <div className="relative z-10 rounded-md overflow-hidden p-4 flex flex-col">
+      <div className="relative z-10 rounded-md overflow-hidden p-4 flex flex-col h-full">
         <Link href={urlPrefix}>
           <h3 className="font-bold text-lg mb-4 cursor-pointer hover:underline">
             {title}
@@ -40,7 +40,7 @@ export const SearchSection = <T extends { _id: string }>({
         </Link>
 
         {items && items.length ? (
-          <ul className="divide-y divide-gray-600 overflow-y-auto rounded-md">
+          <ul className="flex-1 overflow-y-auto max-h-[180px] divide-y divide-gray-600 rounded-md">
             {items.map((item) => (
               <li
                 key={item._id}
