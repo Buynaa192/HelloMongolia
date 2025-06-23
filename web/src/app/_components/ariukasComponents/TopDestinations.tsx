@@ -27,8 +27,6 @@ export const TopDestinationsHero = () => {
     getRegions();
   }, []);
 
-  console.log("regionsss", regions);
-
   return (
     <div className="w-full h-fit relative flex flex-col">
       <HomePageTitle title="TOP DESTINATIONS" />
