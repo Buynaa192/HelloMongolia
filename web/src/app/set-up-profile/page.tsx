@@ -31,7 +31,7 @@ const setupSchema = z.object({
     .max(new Date().getFullYear(), "Cannot be in the future"),
   websiteURL: z.string().url("Invalid URL").optional().or(z.literal("")),
   about: z.string().optional(),
-  avatarImageFile: z.any(),
+  AvatarImageFile: z.any(),
   backgroundImageFile: z.any(),
 });
 
@@ -62,7 +62,7 @@ export default function SetupProfile() {
   const [loading, setLoading] = useState(false);
 
   // Start empty, update after company loads
-  const [avatarPreview, setAvatarPreview] = useState("");
+  const [AvatarPreview, setAvatarPreview] = useState("");
   const [bgPreview, setBgPreview] = useState("");
 
   useEffect(() => {
@@ -86,11 +86,11 @@ export default function SetupProfile() {
   const onSubmit = async (values: SetupFormInput) => {
     setLoading(true);
     try {
-      let avatarUrl = company?.AvatarImage || "";
+      let AvatarUrl = company?.AvatarImage || "";
       let bgUrl = company?.background || "";
 
-      if (values.avatarImageFile && values.avatarImageFile[0]) {
-        avatarUrl = await uploadImage(values.avatarImageFile[0]);
+      if (values.AvatarImageFile && values.AvatarImageFile[0]) {
+        AvatarUrl = await uploadImage(values.AvatarImageFile[0]);
       }
 
       if (values.backgroundImageFile && values.backgroundImageFile[0]) {
@@ -103,7 +103,7 @@ export default function SetupProfile() {
         since: values.since,
         websiteURL: values.websiteURL,
         about: values.about,
-        avatarImage: avatarUrl, // lowercase 'a'
+        AvatarImage: AvatarUrl,
         background: bgUrl,
       };
 
@@ -212,7 +212,7 @@ export default function SetupProfile() {
           />
           <FormField
             control={form.control}
-            name="avatarImageFile"
+            name="AvatarImageFile"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Avatar Image</FormLabel>
@@ -231,9 +231,9 @@ export default function SetupProfile() {
                           }
                         }}
                       />
-                      {avatarPreview ? (
+                      {AvatarPreview ? (
                         <img
-                          src={avatarPreview}
+                          src={AvatarPreview}
                           alt="Avatar Preview"
                           className="object-cover w-full h-full"
                         />
