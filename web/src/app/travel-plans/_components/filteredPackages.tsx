@@ -36,7 +36,7 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
         <div className="w-full grid grid-cols-3 gap-5">
           {packages.slice(0, visibleCount).map((item, index) => (
             <Link
-              href={`package/${item._id}`}
+              href={`travel-plans/${item._id}`}
               key={index}
               className="w-full h-100 flex items-center justify-center"
             >

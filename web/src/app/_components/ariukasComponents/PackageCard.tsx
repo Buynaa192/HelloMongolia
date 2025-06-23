@@ -1,14 +1,14 @@
-// import Image from "next/image";
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 
 import Link from "next/link";
 import { PackageItemType, PackageType } from "@/app/_providers/AuthProvider";
-import Image from "next/image";
 
 export const PackageCard = ({ trip }: { trip: PackageType }) => {
   console.log(trip);
+
   return (
     <Card className="relative text-white md:h-[400px] h-[400px] w-full max-w-4xl overflow-hidden shadow-xl border-0">
       <Image
@@ -40,18 +40,10 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
               <div className="flex flex-col gap-2">
                 <h3 className="font-semibold">Destination</h3>
                 <ul className="hidden md:flex flex-col list-disc ml-4 italic">
-                  <li>
-                    {item.destinationId?.map((item) => {
-                      return <div key={item._id}>{item.destinationName}</div>;
-                    })}
-                  </li>
+                  <li>{item.destinationId?.destinationName}</li>
                 </ul>
                 <div className="flex flex-col md:hidden italic">
-                  <li>
-                    {item.destinationId?.map((item) => {
-                      return <div key={item._id}>{item.destinationName}</div>;
-                    })}
-                  </li>
+                  <li>{item.destinationId?.destinationName}</li>
                 </div>
               </div>
               <div className="flex flex-col gap-2">
@@ -89,12 +81,12 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
             <Link href={`/packages/${trip._id}`}>View details</Link>
           </Button>
           <p className="text-xs text-gray-300">
-            Tour Operator:{trip.companyId?.name}
+            Tour Operator:{" "}
             <Link
-              href={`/operators/${trip.companyId?._id}`}
+              href={`/operators/${trip.companyId._id}`}
               className="hover:underline hover:text-white transition-colors flex flex-nowrap"
             >
-              {trip.companyId?.name}
+              {trip.companyId.name}
             </Link>
           </p>
         </div>
