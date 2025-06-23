@@ -1,10 +1,10 @@
 "use client";
+import { BackToHomePathButtons } from "@/app/_components/ariukasComponents/BackToHomePagePathButtons";
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -92,7 +92,7 @@ export default function RegionPage() {
   }, [currentImages]);
 
   return (
-    <div className="w-full h-full border-2 border-white text-white flex flex-col gap-4">
+    <div className="w-full h-full text-white flex flex-col gap-4">
       <div className="relative w-full h-[800px] overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
@@ -116,11 +116,8 @@ export default function RegionPage() {
           <p className="font-bold text-[60px]">{region.region}</p>
         </div>
       </div>
-      <p className="ml-5">
-        <Link href={"/"}>Home </Link>
-        {`>`} <Link href={"/explore-destinations"}>Explore-destinations</Link>
-        {`>`} {region.region}
-      </p>
+
+      <BackToHomePathButtons />
       <p className="m-4">{currentImages.description}</p>
       <div className="w-full flex justify-center mb-20">
         <div className="w-full max-w-4xl aspect-video">
