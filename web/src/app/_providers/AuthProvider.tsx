@@ -18,7 +18,7 @@ export type PackageItemType = {
   order: number;
   title: string;
   image: string;
-  destinationId: DestinationType[] | null;
+  destinationId: DestinationType | null;
   description: string;
   activity: ActivityType[];
   accomodation: string;
