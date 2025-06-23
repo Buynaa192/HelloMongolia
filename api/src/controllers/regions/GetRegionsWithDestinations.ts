@@ -1,10 +1,11 @@
 import { destinationModel } from "../../models/destination.model";
+
 export const RegionDestination = async (req, res) => {
   try {
-    const { region } = req.query;
-    const filter = region ? { region } : {};
+    const { regionID } = req.params;
+
     const regionDestination = await destinationModel
-      .find(filter)
+      .find({ region: regionID })
       .populate("activities");
 
     res.status(200).json({ regionDestination });

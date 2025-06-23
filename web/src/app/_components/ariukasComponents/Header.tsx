@@ -22,7 +22,7 @@ export const Header = () => {
     { name: "Destinations", url: "/explore-destinations" },
     { name: "Travel Plans", url: "/travel-plans" },
     { name: "About", url: "/about-us" },
-    { name: "Partners", url: "/companies/company" },
+    { name: "Partners", url: "/companies" },
   ];
 
   return (
