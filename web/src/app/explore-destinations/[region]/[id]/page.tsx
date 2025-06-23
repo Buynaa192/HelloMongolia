@@ -4,7 +4,6 @@ import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DesdinationPackage } from "@/components/buynaasComponents/destinationPackage/desPackage";
 import { DestinationHero } from "@/components/buynaasComponents/destinationPackage/destinationImages";
-import { Bookmark, Share2, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -96,7 +95,6 @@ export default function Destination() {
           {destination.description}
         </div>
       </div>
-
       <DesdinationPackage id={id} />
     </div>
   );

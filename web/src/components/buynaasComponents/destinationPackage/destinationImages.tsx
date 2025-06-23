@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
+import { useKeenSlider } from "keen-slider/react";
 
 type Props = {
   destination: DestinationType;
@@ -18,6 +19,10 @@ type Props = {
 
 export const DestinationHero = ({ destination }: Props) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [sliderRef] = useKeenSlider<HTMLDivElement>({
+    loop: true,
+    mode: "snap",
+  });
 
   return (
     <section className="px-4 md:px-10 py-6">
@@ -66,7 +71,8 @@ export const DestinationHero = ({ destination }: Props) => {
             fill
             src={
               destination.destinationImages[3] ||
-              destination.destinationImages[2]
+              destination.destinationImages[2] ||
+              destination.destinationImages[0]
             }
             alt={destination.destinationName}
             className="w-full h-full object-cover rounded-xl"
@@ -78,13 +84,26 @@ export const DestinationHero = ({ destination }: Props) => {
                   Show All Photos
                 </button>
               </DialogTrigger>
-              <DialogContent className="w-full h-100 p-0 bg-black overflow-hidden">
+              <DialogContent className="w-full h-150 p-0 bg-black overflow-hidden">
                 <DialogHeader className="text-white px-4 pt-4">
                   <DialogTitle className="text-lg">All Photos</DialogTitle>
                 </DialogHeader>
-                {destination.destinationImages.map((item, idx) => {
-                  return <Image key={idx} fill src={item} alt="item"></Image>;
-                })}
+                <div ref={sliderRef} className="keen-slider h-full flex">
+                  {destination.destinationImages.map((item, idx) => (
+                    <div
+                      className="keen-slider__slide flex justify-center items-center "
+                      key={idx}
+                    >
+                      <Image
+                        src={item}
+                        alt={`image-${idx}`}
+                        width={1200}
+                        height={800}
+                        className="rounded-xl object-cover max-h-[80vh] w-auto"
+                      />
+                    </div>
+                  ))}
+                </div>
               </DialogContent>
             </Dialog>
           </div>
