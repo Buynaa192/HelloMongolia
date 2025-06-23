@@ -1,6 +1,6 @@
 "use client";
 import { BackToHomePathButtons } from "@/app/_components/ariukasComponents/BackToHomePagePathButtons";
-import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
+import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
 
@@ -12,10 +12,6 @@ type paramsType = {
 };
 
 export default function RegionPage() {
-  const [videoSource, setVideoSource] = useState();
-  const [regionDestinations, setRegionDestination] = useState<
-    DestinationType[]
-  >([]);
   const region = useParams<paramsType>();
 
   useEffect(() => {
@@ -29,7 +25,7 @@ export default function RegionPage() {
   return (
     <div className="w-full h-full text-white flex flex-col gap-4">
       <div className="relative w-full h-[800px] overflow-hidden">
-        <video
+        {/* <video
           key={videoSource}
           className="w-full h-full object-cover"
           autoPlay
@@ -37,7 +33,7 @@ export default function RegionPage() {
           loop
           playsInline
           src={videoSource}
-        />
+        /> */}
 
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-white bg-black/30 px-4 text-center">
           <p className="font-bold text-[60px]">{region.region}</p>
@@ -61,17 +57,17 @@ export default function RegionPage() {
       <div className="flex flex-col gap-3 m-4">
         <p className="font-bold text-2xl ml-10">Destinations</p>
         <div className="w-full grid grid-cols-4 gap-4">
-          {regionDestinations.map((item, i) => (
+          {/* {regionDestinations.map((item, i) => (
             <DestinationCard key={i} item={item} />
-          ))}
+          ))} */}
         </div>
       </div>
       <div className="flex flex-col gap-3 m-4">
         <p className="font-bold text-2xl ml-10">Packages:</p>
         <div className="w-full grid grid-cols-4 gap-4">
-          {regionDestinations.map((item, i) => (
+          {/* {regionDestinations.map((item, i) => (
             <DestinationCard key={i} item={item} />
-          ))}
+          ))} */}
         </div>
       </div>
     </div>
