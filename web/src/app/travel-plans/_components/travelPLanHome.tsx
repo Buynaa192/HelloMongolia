@@ -1,13 +1,19 @@
 export const TravelPlanHome = () => {
   return (
     <div className="w-full h-230 relative bg-linear-to-br from-red-500 to-40% to-black">
-      <img
-        src={
-          "https://res.cloudinary.com/df60cobe2/image/upload/v1750322562/nice_hr595q.jpg"
-        }
-        className="w-full h-full border-red-600"
-      />
-      <div className="absolute  inset-0 text-white flex flex-col items-center justify-center w-full h-full ">
+      <video
+        className="absolute  w-[1440px] h-full object-cover z-0"
+        autoPlay
+        muted
+        loop
+        playsInline
+      >
+        <source
+          src="https://res.cloudinary.com/df60cobe2/video/upload/v1750685963/5004222-uhd_3840_2160_24fps_1_qownoj.mp4"
+          type="video/mp4"
+        />
+      </video>
+      <div className="absolute  inset-0 text-white flex flex-col items-center justify-center w-full h-full gap-0 ">
         <div className="text-[80px] " style={{ fontFamily: "Dancing Script" }}>
           BEYOND ROADS
         </div>

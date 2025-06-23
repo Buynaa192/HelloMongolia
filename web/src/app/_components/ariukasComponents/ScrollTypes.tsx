@@ -16,6 +16,7 @@ import { type CarouselApi } from "@/components/ui/carousel";
 const Types = [
   {
     title: "ADVENTURE",
+    type: "Adventure",
     image:
       "https://res.cloudinary.com/df60cobe2/image/upload/v1750321221/adventure_znjzmi.jpg",
     buttonURL: "",
@@ -24,6 +25,8 @@ const Types = [
   },
   {
     title: "FAMILY",
+    type: "Family",
+
     image:
       "https://res.cloudinary.com/df60cobe2/image/upload/v1750321440/family_ult5zm.jpg",
     buttonURL: "",
@@ -32,6 +35,8 @@ const Types = [
   },
   {
     title: "SCENERY",
+    type: "Scenery",
+
     image:
       "https://res.cloudinary.com/df60cobe2/image/upload/v1750322008/uusus2_bkbb6e.jpg",
     buttonURL: "",
@@ -39,15 +44,19 @@ const Types = [
       "Mongolia’s landscapes are as vast as they are varied — from the golden dunes of the Gobi to the alpine beauty of the north. Photographers and nature lovers are drawn to the epic horizons, dramatic skies, and untouched wilderness. Each region offers a distinct visual experience, often with no signs of civilization in sight. Sunrise and sunset here feel like sacred daily rituals in a land without fences.",
   },
   {
-    title: "WILDLIFE",
+    title: "OFF-ROAD",
+    type: "Off-road",
+
     image:
-      "https://res.cloudinary.com/df60cobe2/image/upload/v1750322099/wildlife_nohcau.jpg",
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750681164/photo-1621954927815-38af7e3efd93_otgdsj.jpg",
     buttonURL: "",
     description:
       "Mongolia is home to rare and elusive wildlife, including snow leopards, Argali sheep, and wild Bactrian camels. Travelers can track animals in protected areas like Hustai National Park, where Przewalski's horses roam freely. Birdwatchers will delight in seeing steppe eagles and cranes in their natural habitat. With low human interference, Mongolia’s ecosystems remain one of the last true wild places on Earth.",
   },
   {
     title: "CULTURAL",
+    type: "Cultural",
+
     image:
       "https://res.cloudinary.com/df60cobe2/image/upload/v1750321225/culture_eswjly.jpg",
     buttonURL: "",
@@ -56,6 +65,8 @@ const Types = [
   },
   {
     title: "HISTORICAL",
+    type: "Historical",
+
     image:
       "https://res.cloudinary.com/df60cobe2/image/upload/v1750321223/history_xrhdet.jpg",
     buttonURL: "",
@@ -64,8 +75,20 @@ const Types = [
   },
   {
     title: "SCIENTIFIC",
+    type: "Scientific",
+
     image:
       "https://res.cloudinary.com/df60cobe2/image/upload/v1750322139/science_ud4jio.jpg",
+    buttonURL: "",
+    description:
+      "Mongolia is a treasure trove for scientific exploration, especially in paleontology and geology. The Flaming Cliffs, where dinosaur fossils were first discovered, still yield ancient secrets. Researchers and enthusiasts alike can explore active dig sites and learn about Mongolia’s prehistoric biodiversity. The wide open skies also make Mongolia ideal for astronomy and climate research. It’s a living lab of Earth’s ancient and modern systems.",
+  },
+  {
+    title: "FESTIVAL & EVENTS",
+    type: "Festival & Events",
+
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750681562/music_fesetival_e4da594125_uee4md.jpg",
     buttonURL: "",
     description:
       "Mongolia is a treasure trove for scientific exploration, especially in paleontology and geology. The Flaming Cliffs, where dinosaur fossils were first discovered, still yield ancient secrets. Researchers and enthusiasts alike can explore active dig sites and learn about Mongolia’s prehistoric biodiversity. The wide open skies also make Mongolia ideal for astronomy and climate research. It’s a living lab of Earth’s ancient and modern systems.",
@@ -100,7 +123,7 @@ export const ScrollTypes = () => {
         className="w-full max-w-2xl md:max-w-6xl overflow-hidden"
       >
         <CarouselContent>
-          {Types.map((item, idx) => (
+          {Types.map((typeItem, idx) => (
             <CarouselItem
               key={idx}
               className="basis-[250px] md:basis-[480px] flex flex-col justify-center p-0"
@@ -108,10 +131,11 @@ export const ScrollTypes = () => {
               onFocus={() => api?.scrollTo(idx, false)}
             >
               <TravelTypeCard
-                title={item.title}
-                imageSrc={item.image}
-                buttonURL={item.buttonURL}
+                title={typeItem.title}
+                imageSrc={typeItem.image}
+                buttonURL={typeItem.buttonURL}
                 isFocused={idx === current}
+                type={typeItem.type}
               />
             </CarouselItem>
           ))}
