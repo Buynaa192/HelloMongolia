@@ -26,7 +26,7 @@ export default function PackagePage() {
       try {
         const res = await api.get(`/package?packageId=${id}`);
         setPackage(res.data.packages);
-        console.log(res.data.packages);
+
         const allLocations = res.data.packages.flatMap((pkg: PackageType) =>
           pkg.packageItem.flatMap(
             (item: PackageItemType) => item.destinationId?.location
@@ -34,7 +34,6 @@ export default function PackagePage() {
         );
 
         setLocation(allLocations);
-        console.log("Location", allLocations);
       } catch (err) {
         console.error("Failed to fetch packages", err);
       }
@@ -64,8 +63,6 @@ export default function PackagePage() {
                   } `}
                 >
                   {item.packageItem.slice(0, 5).map((it, index) => {
-                    console.log(item);
-
                     return (
                       <div key={index} className="w-[1440px]">
                         <img
