@@ -19,7 +19,6 @@ export default function Home() {
       <ChooseTravelType />
       <TopRatedPackages />
       <PartnerCompanies />
-      <Footer />
     </div>
   );
 }

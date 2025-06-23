@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
-import { CompanyPackages } from "./_components/companyPackages";
+import { CompanyPackages } from "./companyPackages";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { AddPackageForm } from "./_components/addPackageForm";
+import { AddPackageForm } from "./addPackageForm";
 import { PlusCircle, Camera } from "lucide-react";
 
 export default function CompanyExplore() {

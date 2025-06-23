@@ -1,7 +1,7 @@
-import { PackageItemType} from "@/app/_providers/AuthProvider";
+import { PackageItemType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { useEffect, useState } from "react";
-import { PackageItemCard } from "./_components/packageItemCard";
+import { PackageItemCard } from "./packageItemCard";
 
 export const PackageItemList = ({ packageId }: { packageId: string }) => {
   const [items, setItems] = useState<PackageItemType[]>([]);
@@ -10,7 +10,7 @@ export const PackageItemList = ({ packageId }: { packageId: string }) => {
     setItems(res.data.packageItem);
   };
   useEffect(() => {
- packageItems();
+    packageItems();
   }, [packageId]);
 
   return (

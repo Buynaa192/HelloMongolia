@@ -26,7 +26,7 @@ export const Header = () => {
   ];
 
   return (
-    <div className="max-w-[1440px] w-full flex justify-between absolute top-5 z-10 px-20 items-center lg:gap-60">
+    <div className="max-w-[1440px] w-full flex justify-between absolute top-5 z-15 px-20 items-center lg:gap-60">
       <div className="w-full lg:flex hidden justify-between">
         {headers.map(({ name, url }) => (
           <Link
