@@ -38,6 +38,8 @@ export default function PackagesExplore() {
       try {
         const res = await api.get(`/package`);
         setAllPackages(res.data.packages);
+        console.log("aaa", res.data.packages);
+
         setFilteredPackages(res.data.packages);
       } catch (err) {
         console.error("Failed to fetch packages", err);
