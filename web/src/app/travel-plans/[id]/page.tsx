@@ -51,7 +51,7 @@ export default function PackagePage() {
             key={index}
             className="w-full text-black flex flex-col gap-4 bg-white"
           >
-            <div className="w-full h-180 relative overflow-scroll ">
+            <div className="w-full h-180 relative overflow-hidden ">
               {item.packageItem.length < 5 ? (
                 <img
                   src={item.coverPhoto}
