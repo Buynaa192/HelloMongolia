@@ -1,7 +1,7 @@
 "use client";
 import { RegionType } from "@/app/_providers/AuthProvider";
-import Image from "next/image";
-import { useState } from "react";
+// import Image from "next/image";
+// import { useState } from "react";
 
 type itemType = {
   item: RegionType;
