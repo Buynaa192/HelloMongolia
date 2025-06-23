@@ -90,8 +90,6 @@ export const SearchInMongolia = ({
     e.preventDefault();
   };
 
-  console.log(results, "searchResults");
-
   return (
     <div className="w-full flex flex-col items-center justify-center relative">
       {searchResults && <div className="fixed inset-0 bg-black/80 z-10" />}

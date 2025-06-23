@@ -3,6 +3,7 @@
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DesdinationPackage } from "@/components/buynaasComponents/destinationPackage/desPackage";
+import { DestinationHero } from "@/components/buynaasComponents/destinationPackage/destinationImages";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -39,23 +40,8 @@ export default function Destination() {
   }
 
   return (
-    <div className="w-full min-h-screen bg-white flex flex-col gap-6 pb-10">
-      <div className="w-full h-[500px] relative">
-        <Image
-          src={destination.destinationImages[0]}
-          alt="Hero image"
-          fill
-          className="object-cover"
-          sizes="100vw"
-          priority
-        />
-
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-          <h1 className="text-4xl font-bold text-white drop-shadow-md">
-            {destination.destinationName}
-          </h1>
-        </div>
-      </div>
+    <div className="w-full min-h-screen bg-white  flex flex-col gap-6 pb-10">
+      <DestinationHero destination={destination} />
 
       <div className="ml-6 text-sm text-gray-600 flex gap-1 flex-wrap">
         <Link href="/" className="hover:underline">
@@ -109,7 +95,6 @@ export default function Destination() {
           {destination.description}
         </div>
       </div>
-
       <DesdinationPackage id={id} />
     </div>
   );
