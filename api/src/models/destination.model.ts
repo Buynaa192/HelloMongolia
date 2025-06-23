@@ -4,13 +4,8 @@ const destinationSchema = new Schema({
   destinationName: { type: String, required: true },
   destinationImages: [{ type: String, required: true }],
   region: {
-    type: String,
-    enum: [
-      "Southern-Mongolia",
-      "Northern-Mongolia",
-      "Eastern-Mongolia",
-      "Western-Mongolia",
-    ],
+    type: Schema.Types.ObjectId,
+    ref: "region",
     required: true,
   },
   description: { type: String, required: true },
@@ -19,6 +14,16 @@ const destinationSchema = new Schema({
     lng: { type: Number },
   },
   activities: { type: [Schema.Types.ObjectId], ref: "activity" },
+  weather: [
+    {
+      season: {
+        type: String,
+        enum: ["Spring", "Summer", "Autumn", "Winter"],
+        required: true,
+      },
+      averageTempF: { type: Number, required: true },
+    },
+  ],
   updatedAt: { type: Date, required: true },
   createdAt: { type: Date, required: true },
 });

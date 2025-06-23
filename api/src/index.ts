@@ -9,6 +9,7 @@ import { companyRouter } from "./routes/company.route";
 import { packageRouter } from "./routes/package.route";
 import { packageItemRouter } from "./routes/packageItem.route";
 import { searchRouter } from "./routes/Search.route";
+import { RegionsRouter } from "./routes/Region.route";
 
 config();
 connectToDatabase();
@@ -27,7 +28,8 @@ app
   .use("/auth", authRouter)
   .use("/package", packageRouter)
   .use("/packageItem", packageItemRouter)
-  .use("/search", searchRouter);
+  .use("/search", searchRouter)
+  .use("/regions", RegionsRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
