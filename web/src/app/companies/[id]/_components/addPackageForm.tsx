@@ -21,7 +21,7 @@ import { Textarea } from "./ui/textarea";
 import { Input } from "@/components/ui/input";
 import { CreatePackageFun } from "./createPackageFunction";
 import { PackageType } from "@/app/_providers/AuthProvider";
-import { PackageItemList } from "../addPackageList";
+import { PackageItemList } from "./addPackageList";
 const companyId = "684b7452cf844286f738f2db";
 const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",

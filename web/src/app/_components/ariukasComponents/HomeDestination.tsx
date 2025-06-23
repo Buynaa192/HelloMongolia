@@ -52,8 +52,6 @@ export const ShowRegion = ({
     fetchDestinationsByTheRegion();
   }, []);
 
-  console.log("dest", destinations);
-
   return (
     <div
       className="group relative w-full h-[250px] hover:h-[600px] transition-all duration-700 overflow-hidden shadow-lg"
