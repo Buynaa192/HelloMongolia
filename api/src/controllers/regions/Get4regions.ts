@@ -2,19 +2,24 @@ import { regionModel } from "../../models/Region.Model";
 
 export const GetRegions = async (req, res) => {
   try {
-    const { regionID } = req.query;
+    const regionName = req.query.regionName as string;
 
-    const regions = regionID
-      ? await regionModel.findById(regionID)
-      : await regionModel.find();
+    if (regionName) {
+      const region = await regionModel.findOne({ regionName });
 
-    if (regionID && !regions) {
-      return res.status(404).json({ message: "Region not found" });
+      if (!region) {
+        return res.status(404).json({ message: "Region not found" });
+      }
+
+      return res.status(200).json({ region });
     }
 
-    res.status(200).json({ regions });
+    const regions = await regionModel.find();
+    return res.status(200).json({ regions });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to fetch region(s)", error });
+    console.error("[GetRegions] Error:", error);
+    return res
+      .status(500)
+      .json({ message: "Failed to fetch region(s)", error });
   }
 };
