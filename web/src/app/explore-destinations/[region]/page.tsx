@@ -1,10 +1,9 @@
 "use client";
 import { BackToHomePathButtons } from "@/app/_components/ariukasComponents/BackToHomePagePathButtons";
-import { DestinationType } from "@/app/_providers/AuthProvider";
+import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
-import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
+
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -13,22 +12,19 @@ type paramsType = {
 };
 
 export default function RegionPage() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [videoSource, setVideoSource] = useState();
   const [regionDestinations, setRegionDestination] = useState<
     DestinationType[]
   >([]);
   const region = useParams<paramsType>();
 
-  const GetRegionDestination = async () => {
-    const res = await api.get(`/destination/regions?region=${region.region} `);
-    setRegionDestination(res.data.regionDestination);
-  };
-
   useEffect(() => {
-    GetRegionDestination();
-    setCurrentIndex(0);
-  }, [region.region]);
+    const regionsasdas = async () => {
+      const res = await api.get(`/regions?regionID=${region.region}`);
+      console.log(res.data);
+    };
+    regionsasdas();
+  }, []);
 
   return (
     <div className="w-full h-full text-white flex flex-col gap-4">

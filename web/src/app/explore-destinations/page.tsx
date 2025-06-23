@@ -22,6 +22,7 @@ export default function DestinatioExplore() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [destination, setDestination] = useState<DestinationType[]>([]);
   const [searchDestination, SetsearchDestination] = useState("");
+
   const getDestination = async () => {
     try {
       const res = await api.get(`/destination`);
