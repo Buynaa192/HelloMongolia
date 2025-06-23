@@ -4,90 +4,89 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
-interface Destination {
-  name: string;
-  mediaUrl: string;
-  description: string;
-  activities: string[];
-  weather: Weather[];
-}
-
-interface Weather {
-  season: string;
-  averageTemperature: string;
-}
-
-interface ShowRegionProps {
-  videoSource: string;
-  regionName: string;
-  details: string;
-  destinations: Destination[];
-}
+import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
+import { api } from "@/axios";
 
 export const ShowRegion = ({
-  videoSource: initialVideo,
+  videoUrl,
   regionName,
-  details: regionDetails,
-  destinations,
-}: ShowRegionProps) => {
-  const [videoSource, setVideoSource] = useState(initialVideo);
+  _id,
+  description: regionDetails,
+}: RegionType) => {
+  const [videoSource, setVideoSource] = useState(videoUrl);
+  const [destinations, setDestinations] = useState<DestinationType[]>([]);
+
   const [hoveredDestination, setHoveredDestination] =
-    useState<Destination | null>(null);
+    useState<DestinationType | null>(null);
   const [selectedDestination, setSelectedDestination] =
-    useState<Destination | null>(null);
+    useState<DestinationType | null>(null);
 
   const activeDestination = selectedDestination || hoveredDestination;
 
   useEffect(() => {
     if (selectedDestination) {
-      setVideoSource(selectedDestination.mediaUrl);
+      setVideoSource(selectedDestination.destinationImages[0]);
     } else if (hoveredDestination) {
-      setVideoSource(hoveredDestination.mediaUrl);
+      setVideoSource(hoveredDestination.destinationImages[0]);
     } else {
-      setVideoSource(initialVideo);
+      setVideoSource(videoUrl);
     }
-  }, [selectedDestination, hoveredDestination, initialVideo]);
+  }, [selectedDestination, hoveredDestination, videoUrl]);
 
-  // Handler for when mouse leaves the entire region container
   const handleRegionMouseLeave = () => {
     setSelectedDestination(null);
     setHoveredDestination(null);
-    setVideoSource(initialVideo);
+    setVideoSource(videoUrl);
   };
+
+  useEffect(() => {
+    const fetchDestinationsByTheRegion = async () => {
+      try {
+        const response = await api.get(`/regions/destinations/${_id}`);
+        setDestinations(response.data.regionDestination);
+      } catch (err) {
+        console.error("Failed to fetch destinations by region", err);
+      }
+    };
+
+    fetchDestinationsByTheRegion();
+  }, []);
+
+  console.log("dest", destinations);
 
   return (
     <div
-      className="group relative w-full h-[250px] hover:h-[600px] transition-all duration-700 overflow-hidden rounded-2xl shadow-lg"
+      className="group relative w-full h-[250px] hover:h-[600px] transition-all duration-700 overflow-hidden shadow-lg"
       onMouseLeave={handleRegionMouseLeave}
     >
-      <div className="absolute inset-0 w-full h-full z-0">
-        {videoSource && videoSource.endsWith(".mp4") ? (
-          <video
-            key={videoSource}
-            className="w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            src={videoSource}
-          />
-        ) : videoSource ? (
-          <Image
-            key={videoSource}
-            src={videoSource}
-            alt={activeDestination?.name || regionName}
-            fill
-            className="object-cover"
-          />
-        ) : null}
+      <div className="absolute inset-0 w-full  z-0  h-full ">
+        {videoSource &&
+          (videoSource.endsWith(".mp4") ? (
+            <video
+              key={videoSource}
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              src={videoSource}
+            />
+          ) : (
+            <Image
+              key={videoSource}
+              src={videoSource}
+              alt={activeDestination?.destinationName || regionName}
+              fill
+              className="object-cover"
+            />
+          ))}
       </div>
 
       <div className="absolute inset-0 bg-black/50 z-10 transition-opacity duration-300" />
 
       <div className="absolute inset-0 z-20 flex flex-col group-hover:justify-start justify-center items-center px-4 text-center py-8">
         <p className="text-white text-3xl md:text-4xl font-semibold drop-shadow-lg transition-all duration-500">
-          {activeDestination ? activeDestination.name : regionName}
+          {activeDestination ? activeDestination.destinationName : regionName}
         </p>
         <p className="text-white text-m mt-2 max-w-xl drop-shadow-lg">
           {activeDestination ? activeDestination.description : regionDetails}
@@ -101,7 +100,7 @@ export const ShowRegion = ({
                 {activeDestination.activities.length > 0 ? (
                   <div className="list-disc list-inside italic ">
                     {activeDestination.activities.map((activity, i) => (
-                      <ul key={i}>{activity}</ul>
+                      <ul key={i}>{activity.activityName}</ul>
                     ))}
                   </div>
                 ) : (
@@ -110,12 +109,12 @@ export const ShowRegion = ({
               </div>
               <div>
                 <h3 className="font-semibold mb-2">Weather</h3>
-                {activeDestination.weather.length > 0 ? (
+                {activeDestination.weather ? (
                   <ul className="italic ">
                     {activeDestination.weather.map(
-                      ({ season, averageTemperature }, i) => (
+                      ({ season, averageTempF }, i) => (
                         <li key={i}>
-                          <strong>{season}:</strong> {averageTemperature}
+                          <strong>{season}:</strong> {averageTempF}
                         </li>
                       )
                     )}
@@ -139,19 +138,19 @@ export const ShowRegion = ({
         <p className="font-semibold">Top destinations in {regionName}</p>
 
         <ul className="flex flex-wrap gap-2 justify-center items-center text-white">
-          {destinations.map((dest, idx) => (
-            <React.Fragment key={dest.name}>
+          {destinations?.map((dest, idx) => (
+            <React.Fragment key={dest.destinationName}>
               <li
                 onClick={() => setSelectedDestination(dest)}
                 onMouseEnter={() => setHoveredDestination(dest)}
                 onMouseLeave={() => setHoveredDestination(null)}
                 className={`cursor-pointer transition-colors ${
-                  selectedDestination?.name === dest.name
+                  selectedDestination?.destinationName === dest.destinationName
                     ? "text-blue-600 font-bold"
                     : "hover:text-blue-600"
                 }`}
               >
-                {dest.name}
+                {dest.destinationName}
               </li>
               {idx !== destinations.length - 1 && (
                 <span className="mx-2 select-none text-white">·</span>

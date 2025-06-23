@@ -59,6 +59,7 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
               </div>
             </div>
           ))}
+
           <div className="flex flex-col gap-2">
             <h3 className="font-semibold">Cost</h3>
             <div className="text-lg font-bold">
