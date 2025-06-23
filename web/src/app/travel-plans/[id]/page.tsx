@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  DestinationType,
   LocationType,
   PackageItemType,
   PackageType,
@@ -30,11 +29,7 @@ export default function PackagePage() {
         console.log(res.data.packages);
         const allLocations = res.data.packages.flatMap((pkg: PackageType) =>
           pkg.packageItem.flatMap(
-            (item: PackageItemType) =>
-              item.destinationId?.map((destination: DestinationType) => ({
-                lat: destination.location[0]?.lat || 0,
-                lng: destination.location[0]?.lng || 0,
-              })) || []
+            (item: PackageItemType) => item.destinationId?.location
           )
         );
 
@@ -56,41 +51,39 @@ export default function PackagePage() {
             key={index}
             className="w-full text-black flex flex-col gap-4 bg-white"
           >
-            <div className="w-full h-180 relative overflow-hidden ">
-              <div>
-                {" "}
-                {item.packageItem.length <= 5 ? (
-                  <img
-                    src={item.coverPhoto}
-                    className="w-full h-full object-cover  "
-                  />
-                ) : (
-                  <div
-                    className={`w-fit h-full flex ${
-                      item.packageItem.length <= 5 ? "" : "animate-wiggle"
-                    } relative `}
-                  >
-                    {item.packageItem.map((item, index) => {
-                      return (
-                        <div key={index} className="w-[1440px]">
-                          <img
-                            src={item.image}
-                            key={index}
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.onerror = null;
-                              target.src =
-                                "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
-                            }}
-                            className="w-full h-full object-cover  "
-                          />
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
+            <div className="w-full h-180 relative overflow-scroll ">
+              {item.packageItem.length < 5 ? (
+                <img
+                  src={item.coverPhoto}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div
+                  className={`w-fit h-full flex absolute ${
+                    item.packageItem.length >= 5 ? "animate-wiggle" : ""
+                  } `}
+                >
+                  {item.packageItem.slice(0, 5).map((it, index) => {
+                    console.log(item);
 
+                    return (
+                      <div key={index} className="w-[1440px]">
+                        <img
+                          src={it.image}
+                          key={index}
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.onerror = null;
+                            target.src =
+                              "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
+                          }}
+                          className="w-full h-full object-cover  "
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
               <div className=" w-full h-full  absolute inset-0 flex  items-end justify-between bg-linear-to-tr from-black to-100% ">
                 <div className="w-[60%] h-[60%] flex flex-col items-center p-10 gap-10">
                   <div className="text-white text-[50px] font-bold ">
@@ -138,19 +131,35 @@ export default function PackagePage() {
                   <div className="flex flex-col gap-2">
                     <div>Tour by:</div>
                     <div className="flex w-full h-10 gap-4">
-                      {item.companyId.background == "" ? (
+                      {item.companyId.AvatarImage == "" ||
+                      item.companyId.AvatarImage == null ? (
                         <img
-                          src="https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg"
+                          src={
+                            "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg"
+                          }
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.onerror = null;
+                            target.src =
+                              "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
+                          }}
                           className="w-10 h-full rounded-[40px] object-cover border-1 border-black"
-                          alt="Default background"
+                          alt="Company background"
                         />
                       ) : (
                         <img
-                          src={item.companyId.background}
+                          src={item.companyId.AvatarImage}
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.onerror = null;
+                            target.src =
+                              "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
+                          }}
                           className="w-10 h-full rounded-[40px] object-cover border-1 border-black"
                           alt="Company background"
                         />
                       )}
+
                       <div className="flex flex-col h-full justify-center">
                         <div className="text-[20px] font-bold">
                           {item.companyId.email}
@@ -165,7 +174,11 @@ export default function PackagePage() {
                   <div className="flex flex-col w-full text-[14px] gap-2">
                     <div className="flex gap-4 w-full h-5 items-center">
                       <DurationIcon />
-                      <div>{item.duration} days</div>
+                      <div>
+                        {item.duration.includes("days")
+                          ? `${item.duration}`
+                          : `${item.duration}days`}{" "}
+                      </div>
                     </div>
                     <div className="flex gap-4 w-full h-5">
                       <div className="flex items-center gap-4">
@@ -261,16 +274,31 @@ export default function PackagePage() {
                   About the Company
                 </div>
                 <div className="w-50 flex overflow-hidden items-center">
-                  {item.companyId.background == "" ? (
+                  {item.companyId.AvatarImage == "" ||
+                  item.companyId.AvatarImage == null ? (
                     <img
-                      src="https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg"
-                      className="w-50 h-50  object-cover rounded-[calc(100%/2)] "
-                      alt="Default background"
+                      src={
+                        "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg"
+                      }
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.src =
+                          "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
+                      }}
+                      className="w-full h-full object-cover rounded-2xl "
+                      alt="Company background"
                     />
                   ) : (
                     <img
-                      src={item.companyId.background}
-                      className="w-full h-full  object-cover "
+                      src={item.companyId.AvatarImage}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.src =
+                          "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
+                      }}
+                      className="w-full h-full object-cover rounded-2xl "
                       alt="Company background"
                     />
                   )}
