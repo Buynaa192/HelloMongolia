@@ -157,9 +157,9 @@ export default function PackagesExplore() {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full bg-transparent">
       <TravelPlanHome />
-      <div className="bg-white w-full p-2 gap-2 flex">
+      <div className="bg-transparent w-full h-[10px] p-2 gap-2 text-accent flex">
         <Link href={"/"}> Home</Link> <span>{">"}</span>
         <Link href={"/travel-plans"}> Travel Plans</Link>
       </div>{" "}

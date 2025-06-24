@@ -26,14 +26,14 @@ export const Search: React.FC<SearchProps> = ({
   const [showDates, setShowDates] = useState(false);
 
   return (
-    <div className="w-full h-40 bg-transparent flex items-center justify-center relative z-10">
-      <div className="w-[1000px] h-[60px] border rounded-[30px] flex items-center pl-2 pr-2">
+    <div className="w-full h-25 bg-transparent flex items-center justify-center relative z-10">
+      <div className="w-[1000px] h-[60px] border rounded-[30px] bg-white/10 backdrop-blur-lg flex items-center pl-2 pr-2">
         {/* Keyword Input */}
         <div className="flex-1 h-full rounded-s-[30px] flex gap-2 items-center pl-2">
           <SearchIcon />
           <input
             type="text"
-            className="h-full outline-none border-0"
+            className="h-full outline-none border-0 bg-transparent text-accent text-[14px]"
             placeholder="Any keyword here"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
@@ -67,7 +67,7 @@ export const Search: React.FC<SearchProps> = ({
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="outline-none border-0 text-[14px]"
+                  className="outline-none border-0 text-[14px] text-accent"
                 />
                 <div className="h-2"></div>
               </div>
@@ -78,7 +78,7 @@ export const Search: React.FC<SearchProps> = ({
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="outline-none border-0 text-[14px]"
+                  className="outline-none border-0 text-[14px] text-accent"
                 />
                 <div className="h-2"></div>
               </div>

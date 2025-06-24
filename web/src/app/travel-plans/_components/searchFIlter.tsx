@@ -52,9 +52,11 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
     );
   };
   return (
-    <div className="w-full h-100 bg-white flex-col flex gap-4 items-center relative  z-10">
-      <div className="w-full h-[80px] flex items-center justify-between pl-[40px] pr-[40px]">
-        <div className="text-[24px] font-semibold">All Search Filters</div>
+    <div className="w-full h-fit bg-transparent flex-col flex  items-center relative  z-10">
+      <div className="w-full h-[40px] flex items-center justify-between pl-[40px] pr-[40px]">
+        <div className="text-[24px] font-semibold text-accent">
+          All Search Filters
+        </div>
         <div className="flex gap-2 h-full items-center">
           <button
             onClick={clearAllFilters}
@@ -62,21 +64,14 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
           >
             CLEAR
           </button>
-
-          <button
-            onClick={applyFilters}
-            className="w-[150px] bg-white text-black h-[40px] rounded-[20px] flex items-center justify-center font-semibold hover:bg-black hover:text-white shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] duration-200"
-          >
-            APPLY
-          </button>
         </div>
       </div>
 
-      <div className="flex w-full h-fit">
-        <div className="flex-1 h-full p-5">
+      <div className="flex w-full  text-accent pl-30 pr-30">
+        <div className="flex-1 h-fit p-5">
           <div className="w-full h-full flex flex-col gap-2">
-            <div className="text-[24px] font-semibold">Trip type</div>
-            <div className="columns-2 gap-4 p-3">
+            <div className="text-[24px]  font-semibold">Trip type</div>
+            <div className="columns-2 gap-4 ">
               {tripTypes.map((item, index) => (
                 <label
                   key={index}
@@ -84,6 +79,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                 >
                   <input
                     type="checkbox"
+                    className="text-accent"
                     checked={selectedTripTypes.includes(item)}
                     onChange={() => handleTripTypeChange(item)}
                   />
