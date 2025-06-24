@@ -10,6 +10,7 @@ import { packageRouter } from "./routes/package.route";
 import { packageItemRouter } from "./routes/packageItem.route";
 import { searchRouter } from "./routes/Search.route";
 import { RegionsRouter } from "./routes/Region.route";
+import { AccommodationRouter } from "./routes/Accomodation.route";
 
 config();
 connectToDatabase();
@@ -29,6 +30,7 @@ app
   .use("/package", packageRouter)
   .use("/packageItem", packageItemRouter)
   .use("/search", searchRouter)
+  .use("/accommodations", AccommodationRouter)
   .use("/regions", RegionsRouter);
 
 app.listen(port, () => {
