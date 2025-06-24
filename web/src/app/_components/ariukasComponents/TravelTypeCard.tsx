@@ -1,22 +1,20 @@
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface TravelTypeCardProps {
   title: string;
   imageSrc: string;
   buttonURL: string;
   isFocused?: boolean;
+  type: string;
 }
 
 export const TravelTypeCard = ({
   title,
   imageSrc,
-  buttonURL,
+  type,
   isFocused = false,
 }: TravelTypeCardProps) => {
-  const router = useRouter();
-
   return (
     <div
       className={`transition-all duration-500 ease-in-out transform ${
@@ -45,12 +43,12 @@ export const TravelTypeCard = ({
             <p className="text-white md:text-4xl text-3xl font-bold text-center z-30">
               {title}
             </p>
-            <Button
-              className=" text-black bg-white hover:bg-black hover:text-white"
-              onClick={() => router.push(buttonURL)}
+            <Link
+              href={`/travel-plans?tripType=${type}`}
+              className=" w-30 h-7 flex items-center justify-center rounded-[8px] font-medium text-black bg-white hover:bg-black hover:text-white"
             >
               EXPLORE
-            </Button>
+            </Link>
           </div>
         ) : (
           <>

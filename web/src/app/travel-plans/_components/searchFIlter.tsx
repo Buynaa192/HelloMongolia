@@ -52,20 +52,20 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
     );
   };
   return (
-    <div className="w-full h-100 bg-white flex-col flex gap-4 items-center">
+    <div className="w-full h-100 bg-white flex-col flex gap-4 items-center relative  z-10">
       <div className="w-full h-[80px] flex items-center justify-between pl-[40px] pr-[40px]">
         <div className="text-[24px] font-semibold">All Search Filters</div>
         <div className="flex gap-2 h-full items-center">
           <button
             onClick={clearAllFilters}
-            className="w-[150px] bg-white text-red-600 h-[40px]  rounded-[20px] flex items-center justify-center font-semibold shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:bg-black hover:text-white hover:shadow-lg duration-200"
+            className="w-[150px] bg-white text-black h-[40px]  rounded-[20px] flex items-center justify-center font-semibold shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:bg-black hover:text-white hover:shadow-lg duration-200"
           >
             CLEAR
           </button>
 
           <button
             onClick={applyFilters}
-            className="w-[150px] bg-red-600 text-white h-[40px] rounded-[20px] flex items-center justify-center font-semibold hover:bg-white hover:text-black hover:shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] duration-200"
+            className="w-[150px] bg-white text-black h-[40px] rounded-[20px] flex items-center justify-center font-semibold hover:bg-black hover:text-white shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] duration-200"
           >
             APPLY
           </button>

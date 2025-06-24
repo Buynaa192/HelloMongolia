@@ -12,10 +12,10 @@ type FilteredPackagesProps = {
 export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
   packages,
 }) => {
-  const [visibleCount, setVisibleCount] = useState(3);
+  const [visibleCount, setVisibleCount] = useState(6);
 
   const handleSeeMore = () => setVisibleCount((prev) => prev + 6);
-  const handleSeeLess = () => setVisibleCount((prev) => Math.max(prev - 6, 3));
+  const handleSeeLess = () => setVisibleCount((prev) => Math.max(prev - 6, 6));
 
   return (
     <div className="w-full flex flex-col p-5 bg-white">
@@ -90,12 +90,12 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
         {visibleCount < packages.length && (
           <button
             onClick={handleSeeMore}
-            className="w-[150px] h-[40px] bg-red-600  rounded-[20px] flex items-center justify-center text-[16px] text-white font-semibold hover:bg-white hover:text-black duration-200 hover:shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] "
+            className="w-[150px] h-[40px] bg-white rounded-[20px] flex items-center justify-center text-[16px] text-black font-semibold hover:bg-black hover:text-white duration-200 shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:border-0 "
           >
             SEE MORE
           </button>
         )}
-        {visibleCount > 3 && (
+        {visibleCount > 6 && (
           <button
             onClick={handleSeeLess}
             className="w-[150px] h-[40px] bg-white rounded-[20px] flex items-center justify-center text-[16px] text-black font-semibold hover:bg-black hover:text-white duration-200 shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:border-0 "

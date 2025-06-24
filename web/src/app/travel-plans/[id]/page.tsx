@@ -21,6 +21,7 @@ export default function PackagePage() {
   const { id } = useParams<Params>();
   const [packages, setPackage] = useState<PackageType[]>([]);
   const [location, setLocation] = useState<LocationType[]>([]);
+
   useEffect(() => {
     const fetchPackage = async () => {
       try {
@@ -48,7 +49,7 @@ export default function PackagePage() {
         return (
           <div
             key={index}
-            className="w-full text-black flex flex-col gap-4 bg-white"
+            className="w-full flex flex-col gap-4 bg-transparent "
           >
             <div className="w-full h-180 relative overflow-hidden ">
               {item.packageItem.length < 5 ? (
@@ -116,10 +117,11 @@ export default function PackagePage() {
                 </div>
               </div>
             </div>
-            <div className="bg-white w-full p-2">
-              <Link href={"/"}> Home</Link> |{" "}
-              <Link href={"/travel-plans"}> Explore tour</Link> |{" "}
-              {item.description}{" "}
+            <div className="bg-white w-full p-2 gap-2 flex">
+              <Link href={"/"}> Home</Link> <span>{">"}</span>
+              <Link href={"/travel-plans"}> Explore tour</Link>
+              <span>{">"}</span>
+              {item.title}
             </div>{" "}
             <div className="w-full flex min-h-100 p-3 items-center  ">
               <div className="flex flex-col w-100">
@@ -140,7 +142,7 @@ export default function PackagePage() {
                             target.src =
                               "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
                           }}
-                          className="w-10 h-full rounded-[40px] object-cover border-1 border-black"
+                          className="w-10 h-full rounded-[40px] object-cover border-1 "
                           alt="Company background"
                         />
                       ) : (
@@ -152,7 +154,7 @@ export default function PackagePage() {
                             target.src =
                               "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
                           }}
-                          className="w-10 h-full rounded-[40px] object-cover border-1 border-black"
+                          className="w-10 h-full rounded-[40px] border-1 border-black  bg-gray-500"
                           alt="Company background"
                         />
                       )}
@@ -270,7 +272,7 @@ export default function PackagePage() {
                 >
                   About the Company
                 </div>
-                <div className="w-50 flex overflow-hidden items-center">
+                <div className="w-100 flex overflow-hidden items-center  rounded-2xl">
                   {item.companyId.AvatarImage == "" ||
                   item.companyId.AvatarImage == null ? (
                     <img
@@ -283,7 +285,7 @@ export default function PackagePage() {
                         target.src =
                           "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
                       }}
-                      className="w-full h-full object-cover rounded-2xl "
+                      className="w-full h-100 rounded-2xl  bg-gray-500  "
                       alt="Company background"
                     />
                   ) : (
@@ -295,15 +297,22 @@ export default function PackagePage() {
                         target.src =
                           "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
                       }}
-                      className="w-full h-full object-cover rounded-2xl "
+                      className="w-full h-100 rounded-2xl bg-gray-500 p-2 "
                       alt="Company background"
                     />
                   )}
                 </div>
                 <div className="text-[24px]">{item.companyId.email}</div>
               </div>
-              <div className="flex-1 flex p-5 text-2xl font-light ">
-                {item.companyId.about}
+              <div className="flex-1  flex-col p-5 text-2xl font-light ">
+                <div className="w-full h-[80%] overflow-hidden">
+                  {" "}
+                  {item.companyId.about}
+                </div>
+                <div>...</div>
+                <button className="text-[14px] font-medium flex items-center justify-center rounded-[8px] bg-black text-white w-[100px] h-[50px]">
+                  More about company..
+                </button>
               </div>
               <div className="flex-1 flex flex-col items-center  p-5 text-[24px] gap-5">
                 {item.companyId.since == 0 ||

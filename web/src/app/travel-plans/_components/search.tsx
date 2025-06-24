@@ -26,7 +26,7 @@ export const Search: React.FC<SearchProps> = ({
   const [showDates, setShowDates] = useState(false);
 
   return (
-    <div className="w-full h-40 bg-white flex items-center justify-center">
+    <div className="w-full h-40 bg-transparent flex items-center justify-center relative z-10">
       <div className="w-[1000px] h-[60px] border rounded-[30px] flex items-center pl-2 pr-2">
         {/* Keyword Input */}
         <div className="flex-1 h-full rounded-s-[30px] flex gap-2 items-center pl-2">
