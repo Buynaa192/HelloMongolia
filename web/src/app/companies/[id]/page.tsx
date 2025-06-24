@@ -9,7 +9,6 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 import { api } from "@/axios";
 import { PackageCard } from "@/app/_components/ariukasComponents/PackageCard";
-import Link from "next/link";
 
 export default function CompanyProfile() {
   const params = useParams();
