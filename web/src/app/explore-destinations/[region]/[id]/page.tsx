@@ -6,7 +6,7 @@ import { api } from "@/axios";
 import { DesdinationPackage } from "@/components/buynaasComponents/destinationPackage/desPackage";
 import { DestinationHero } from "@/components/buynaasComponents/destinationPackage/destinationImages";
 import Image from "next/image";
-import Link from "next/link";
+
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
