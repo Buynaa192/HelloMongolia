@@ -15,6 +15,7 @@ export const DesdinationPackage = ({ id }: idType) => {
     const GetPackage = async () => {
       const res = await api.get(`package/destination/${id}`);
       setPackages(res.data.packages);
+      console.log(res.data.packages);
     };
     GetPackage();
   }, []);

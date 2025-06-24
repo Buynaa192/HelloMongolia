@@ -68,7 +68,9 @@ export default function RegionPage() {
         <p className="font-bold text-2xl ml-10">Destinations</p>
         <div className="w-full grid grid-cols-4 gap-4">
           {destination.map((item, indx) => {
-            return <DestinationCard key={indx} item={item} />;
+            return (
+              <DestinationCard key={indx} item={item} region={region.region} />
+            );
           })}
         </div>
       </div>
