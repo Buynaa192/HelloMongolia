@@ -3,6 +3,7 @@ import { companyProfileModel } from "../../models/companyProfile.model";
 
 export const getCompanyById: RequestHandler = async (req, res) => {
   const { companyId } = req.query;
+  console.log(companyId);
 
   try {
     const companies = await companyProfileModel
