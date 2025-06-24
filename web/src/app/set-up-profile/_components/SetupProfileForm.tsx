@@ -88,13 +88,16 @@ export default function SetupProfileForm() {
       let AvatarUrl = company?.AvatarImage || "";
       let bgUrl = company?.background || "";
 
-      if (values.AvatarImageFile && values.AvatarImageFile[0]) {
-        AvatarUrl = await uploadImage(values.AvatarImageFile[0]);
-      }
+      const avatarFile = values.AvatarImageFile?.[0];
+      const bgFile = values.backgroundImageFile?.[0];
 
-      if (values.backgroundImageFile && values.backgroundImageFile[0]) {
-        bgUrl = await uploadImage(values.backgroundImageFile[0]);
-      }
+      const [avatarResult, bgResult] = await Promise.all([
+        avatarFile ? uploadImage(avatarFile) : Promise.resolve(AvatarUrl),
+        bgFile ? uploadImage(bgFile) : Promise.resolve(bgUrl),
+      ]);
+
+      AvatarUrl = avatarResult;
+      bgUrl = bgResult;
 
       const update = {
         phoneNumber: Number(values.phoneNumber),
@@ -237,7 +240,12 @@ export default function SetupProfileForm() {
                         onChange={(e) => {
                           const files = e.target.files;
                           if (files && files[0]) {
-                            setAvatarPreview(URL.createObjectURL(files[0]));
+                            const file = files[0];
+                            if (file.size > 10 * 1024 * 1024) {
+                              alert("Image size must be under 10MB");
+                              return;
+                            }
+                            setAvatarPreview(URL.createObjectURL(file));
                             field.onChange(files);
                           }
                         }}
@@ -260,8 +268,6 @@ export default function SetupProfileForm() {
               </FormItem>
             )}
           />
-
-          {/* Background Image */}
           <FormField
             control={form.control}
             name="backgroundImageFile"
@@ -278,6 +284,10 @@ export default function SetupProfileForm() {
                         onChange={(e) => {
                           const file = e.target.files?.[0];
                           if (file) {
+                            if (file.size > 10 * 1024 * 1024) {
+                              alert("Image size must be under 10MB");
+                              return;
+                            }
                             setBgPreview(URL.createObjectURL(file));
                             field.onChange(e.target.files);
                           }
