@@ -1,8 +1,10 @@
 "use client";
-import Image from "next/image";
+import { RegionType } from "@/app/_providers/AuthProvider";
+// import Image from "next/image";
+// import { useState } from "react";
 
 type itemType = {
-  item: { name: string; image: string };
+  item: RegionType;
 };
 
 export const RegionCard = ({ item }: itemType) => {
@@ -11,13 +13,27 @@ export const RegionCard = ({ item }: itemType) => {
       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
 
       <div className="w-full h-[calc(100%-40px)] relative">
-        <Image
-          src={item.image}
-          alt={item.name}
-          fill
-          className="object-cover rounded-t-lg"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-        />
+        {/* {videoSource &&
+          (videoSource.endsWith(".mp4") ? (
+            <video
+              key={videoSource}
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              src={videoSource}
+            />
+          ) : (
+            <Image
+              key={videoSource}
+              src={videoSource}
+              alt={item.regionName}
+              fill
+              className="object-cover"
+            />
+          ))} */}
+
         <span className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 text-lg font-semibold">
           See more
         </span>
@@ -27,7 +43,7 @@ export const RegionCard = ({ item }: itemType) => {
 
       <div className="h-10 bg-white flex items-center justify-center rounded-b-lg">
         <p className="text-gray-800 font-semibold text-sm md:text-base">
-          {item.name}
+          {item.regionName}
         </p>
       </div>
     </div>
