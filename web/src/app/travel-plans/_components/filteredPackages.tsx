@@ -18,8 +18,8 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
   const handleSeeLess = () => setVisibleCount((prev) => Math.max(prev - 6, 6));
 
   return (
-    <div className="w-full flex flex-col p-5 bg-white">
-      <div className="flex bg-white items-center text-[16px] font-semibold gap-3">
+    <div className="w-full flex flex-col p-5 bg-transparent">
+      <div className="flex items-center text-[16px] font-semibold gap-3 text-accent">
         <FilterIcon />
         <div className="flex items-baseline gap-1">
           {" "}
@@ -27,7 +27,7 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
         </div>
       </div>
 
-      <div className="w-full h-fit bg-white p-10">
+      <div className="w-full h-fit bg-transparent p-10">
         {packages.length == 0 ? (
           <div className="w-full flex justify-center text-[#e4e4e5]">
             There is no package here in your filter
@@ -38,9 +38,9 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
             <Link
               href={`travel-plans/${item._id}`}
               key={index}
-              className="w-full h-100 flex items-center justify-center"
+              className="w-full h-100 flex items-center justify-center  relative text-accent"
             >
-              <div className="flex w-90 h-90 rounded-2xl hover:shadow-2xl flex-col hover:w-95 hover:h-95 duration-200">
+              <div className="flex w-95 h-90 rounded-2xl hover:shadow-2xl flex-col hover:w-100 hover:h-95 duration-200 relative">
                 <img
                   src={
                     item.coverPhoto == null || item.coverPhoto == ""
@@ -53,10 +53,15 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
                     target.src =
                       "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
                   }}
-                  className="w-full min-h-[250px] rounded-2xl object-cover"
+                  className="w-full min-h-[250px] h-full rounded-2xl object-cover"
                 />
-                <div className="w-full h-full flex flex-col justify-between p-3">
-                  <div className="text-[12px] w-fit font-medium text-stone-500">
+                <div className="w-full h-30 flex flex-col p-3 absolute bottom-0 bg-black/10 backdrop-blur-lg rounded-b-2xl">
+                  <div className="text-[12px] w-fit font-medium text-accent flex items-center gap-2">
+                    <img
+                      src={item.companyId.AvatarImage}
+                      className="h-7 rounded-[10px] w-7"
+                    />
+                    {item.tripType}
                     {item.companyId == undefined
                       ? item._id
                       : item.companyId.email}
@@ -65,15 +70,17 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
                     {item.title ? item.title : item.description}
                   </div>
                   <div className="flex w-full justify-between items-center text-[12px] font-medium">
-                    <div className="flex w-[100px] justify-between items-center">
+                    <div className="flex gap-2 justify-between items-center">
+                      <div>{item.tripType}</div>|
                       <div>
                         {item.duration.includes("days")
                           ? item.duration
-                          : `${item.duration} days`}{" "}
+                          : `${item.duration} days`}
                       </div>
+                      |
                       <div className="flex items-center">
                         <StarIcon />
-                        {item.rating}
+                        {item.rating}/5
                       </div>
                     </div>
                     <div className="text-[24px] font-bold text-green-500">
