@@ -254,7 +254,8 @@ export default function PackagePage() {
                           <div className="flex flex-col w-[50%]  h-full">
                             Accomodation
                             <div className="w-full p-3 ">
-                              {item.accomodation}
+                              {item.accommodation.hotelName},
+                              {item.accommodation.address}
                             </div>
                           </div>
                         </div>
