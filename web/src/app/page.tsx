@@ -6,7 +6,6 @@ import { Hero2 } from "./_components/ariukasComponents/Hero2";
 import { TopRatedPackages } from "./_components/ariukasComponents/TopRatedPackages";
 import { TopDestinationsHero } from "./_components/ariukasComponents/TopDestinations";
 import { ChooseTravelType } from "./_components/ariukasComponents/TravelType";
-import { Footer } from "./_components/ariukasComponents/Footer";
 import { PartnerCompanies } from "./_components/ariukasComponents/PartnerCompanies";
 
 export default function Home() {
@@ -19,7 +18,6 @@ export default function Home() {
       <ChooseTravelType />
       <TopRatedPackages />
       <PartnerCompanies />
-      <Footer />
     </div>
   );
 }

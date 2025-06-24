@@ -1,13 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CompanyType } from "../_providers/AuthProvider";
 import { api } from "@/axios";
+import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
+import { CompanyCard } from "../_components/ariukasComponents/CompanyCard";
 
 export default function ExploreCompanies() {
   const [companies, setCompanies] = useState<CompanyType[]>([]);
+  const [animated, setAnimated] = useState(false);
+
+  useEffect(() => {
+    setAnimated(true);
+  }, []);
 
   useEffect(() => {
     const getCompanies = async () => {
@@ -23,64 +29,50 @@ export default function ExploreCompanies() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-black text-white px-6 py-10">
-      <div></div>
-      <h1 className="text-3xl font-bold mb-8 text-center">
-        Explore Tour Operators
-      </h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-        {companies?.map((company) => (
-          <div
-            key={company._id}
-            className="bg-white/10 backdrop-blur-md p-6 rounded-2xl shadow-lg flex gap-4"
-          >
-            <div className="relative w-24 h-24 rounded-full overflow-hidden">
-              <Image
-                src="https://res.cloudinary.com/df60cobe2/image/upload/v1750327943/nteLogo_jthqil.png"
-                alt={company.name}
-                fill
-                className="object-cover"
-              />
+    <div className="min-h-screen w-full bg-black text-white ">
+      <div className="w-full h-[500px] relative">
+        <Image
+          src="https://res.cloudinary.com/df60cobe2/image/upload/v1750683343/f6beaae5087528cc4d696a2d3b514669f17b7dda_m8mgtu.jpg"
+          fill
+          alt="companiescover"
+          className="object-cover"
+        />
+        <div className="bg-black/50 absolute w-full h-full top-0 flex justify-center items-end px-6 py-10 gap-10 ">
+          <h1 className="w-full text-4xl md:text-5xl font-extrabold text-white justify-self-end">
+            Discover
+            <div className="flex">
+              {"Mongolia".split("").map((letter, i) => (
+                <div
+                  key={i}
+                  className={`text-7xl duration-200 ${
+                    animated ? `animate-fadeRed` : ""
+                  }`}
+                  style={{ animationDelay: `${i * 0.2}s` }}
+                >
+                  {letter}
+                </div>
+              ))}
             </div>
-            <div className="flex-1">
-              <h2 className="text-xl font-semibold">{company.name}</h2>
-              <p className="text-sm text-gray-300 mt-1">{company.about}</p>
+            with Trusted Tour Experts
+          </h1>
+          <p className="text-xl md:text-xl text-white/80 max-w-2xl">
+            Browse a curated list of Mongolia’s leading tour operators offering
+            unforgettable journeys across the steppe, desert, and mountains.
+            Find your perfect travel partner today.
+          </p>
+        </div>
+      </div>
+      <BackToHomePathButtons />
+      <div className="w-full px-6 ">
+        <h1 className="text-3xl font-bold mb-8 text-center">
+          Explore Tour Operators
+        </h1>
 
-              <div className="flex items-center gap-1 mt-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-4 h-4 ${
-                      i < Math.round(company.Rating)
-                        ? "text-yellow-400"
-                        : "text-gray-500"
-                    }`}
-                    fill={
-                      i < Math.round(company.Rating)
-                        ? "currentColor"
-                        : "transparent"
-                    }
-                  />
-                ))}
-                <span className="text-sm text-gray-400 ml-1">
-                  {company.Rating.toFixed(1)}
-                </span>
-              </div>
-
-              <div className="flex flex-wrap gap-2 mt-3">
-                {company.availableDestinations?.map((d, index) => (
-                  <span
-                    key={index}
-                    className="px-2 py-1 text-xs bg-white/20 rounded-full"
-                  >
-                    {d.destinationName}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 max-w-5xl mx-auto ">
+          {companies?.map((company, index) => (
+            <CompanyCard key={index} company={company} />
+          ))}
+        </div>
       </div>
     </div>
   );
