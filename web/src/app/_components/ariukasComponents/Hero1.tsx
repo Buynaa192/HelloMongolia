@@ -1,8 +1,10 @@
+import { HeaderRadientDeco } from "./HeaderRadientDeco";
 import { Hero1Text } from "./Hero1Text";
 
 export const Hero1 = () => {
   return (
     <div className="relative h-screen w-full">
+      <HeaderRadientDeco />
       <div className="relative w-full h-screen flex flex-col">
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"

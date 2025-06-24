@@ -7,8 +7,8 @@ import { deletePackageById } from "../controllers/Package/deletePackageById";
 import { addPackageItem } from "../controllers/Package/addPackageItem";
 import { getPackagesByDestinationId } from "../controllers/Package/getPackageDestination";
 import { getPackageById } from "../controllers/Package/getPackageById";
-import { GetTopRatedPackages } from "../controllers/Package/GetTopRatedPackages";
 import { removePackageItem } from "../controllers/Package/removePackageItem";
+import { GetTopRatedPackages } from "../controllers/Package/GetTopRatedPackages";
 export const packageRouter = Router()
   .post("/", createPackageController)
   .get("/", getPackageById)

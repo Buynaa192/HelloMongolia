@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
+    "@lottiefiles/dotlottie-react": "^0.14.1",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-checkbox": "^1.3.2",
     "@radix-ui/react-dialog": "^1.1.14",
@@ -28,6 +29,7 @@
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.18.1",
+    "keen-slider": "^6.8.6",
     "lucide-react": "^0.513.0",
     "motion": "^12.18.1",
     "next": "15.3.3",
@@ -36,7 +38,8 @@
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.57.0",
     "sonner": "^2.0.5",
-    "tailwind-merge": "^3.3.1",
+    "tailwind-merge": "^3.3.0",
+    "vaul": "^1.1.2",
     "zod": "^3.25.63"
   },
   "devDependencies": {

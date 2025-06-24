@@ -9,6 +9,7 @@ import { Regions } from "@/components/buynaasComponents/regionsComponents/region
 import { PopularDestination } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestination";
 import { api } from "@/axios";
 import { DestinationType } from "../_providers/AuthProvider";
+import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
 
 const images = [
   "https://res.cloudinary.com/df60cobe2/image/upload/v1750344900/zvtv2v8ujkwank2sed1x.jpg",
@@ -21,6 +22,7 @@ export default function DestinatioExplore() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [destination, setDestination] = useState<DestinationType[]>([]);
   const [searchDestination, SetsearchDestination] = useState("");
+
   const getDestination = async () => {
     try {
       const res = await api.get(`/destination`);
@@ -105,7 +107,7 @@ export default function DestinatioExplore() {
           )}
         </div>
       </div>
-
+      <BackToHomePathButtons />
       <Regions />
       <PopularDestination destination={destination} />
     </div>

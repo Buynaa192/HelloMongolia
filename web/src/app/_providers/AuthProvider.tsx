@@ -18,7 +18,7 @@ export type PackageItemType = {
   order: number;
   title: string;
   image: string;
-  destinationId: DestinationType[] | null;
+  destinationId: DestinationType | null;
   description: string;
   activity: ActivityType[];
   accomodation: string;
@@ -45,6 +45,26 @@ export type ReviewType = {
   companyId: string;
   message: string;
 };
+
+export type WeatherType = {
+  _id: string;
+  season: "Spring" | "Summer" | "Autumn" | "Winter";
+  averageTempF: number;
+};
+
+export type rgnType =
+  | "Northern-Mongolia"
+  | "Southern-Mongolia"
+  | "Western-Mongolia"
+  | "Eastern-Mongolia";
+
+export type RegionType = {
+  _id: string;
+  regionName: rgnType;
+  description: string;
+  videoUrl: string;
+};
+
 export type DestinationType = {
   _id: string;
   destinationName: string;
@@ -52,7 +72,8 @@ export type DestinationType = {
   region: string;
   description: string;
   activities: ActivityType[];
-  location: LocationType[];
+  location: LocationType;
+  weather: WeatherType[];
 };
 export type LocationType = {
   lat: number;

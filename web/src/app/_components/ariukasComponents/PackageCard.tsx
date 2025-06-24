@@ -1,4 +1,4 @@
-// import Image from "next/image";
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
@@ -9,13 +9,13 @@ import { PackageItemType, PackageType } from "@/app/_providers/AuthProvider";
 export const PackageCard = ({ trip }: { trip: PackageType }) => {
   return (
     <Card className="relative text-white md:h-[400px] h-[400px] w-full max-w-4xl overflow-hidden shadow-xl border-0">
-      {/* <Image
+      <Image
         src={trip.coverPhoto}
         alt="nature photo"
         fill
         className="object-cover"
         priority
-      /> */}
+      />
       <div className="absolute inset-0 bg-black/65" />
       <CardContent className="relative z-10 flex flex-col justify-between h-full text-center md:text-start">
         <div>
@@ -38,39 +38,32 @@ export const PackageCard = ({ trip }: { trip: PackageType }) => {
               <div className="flex flex-col gap-2">
                 <h3 className="font-semibold">Destination</h3>
                 <ul className="hidden md:flex flex-col list-disc ml-4 italic">
-                  <li>
-                    {item.destinationId?.map((item) => {
-                      return <div key={item._id}>{item.destinationName}</div>;
-                    })}
-                  </li>
+                  <li>{item.destinationId?.destinationName}</li>
                 </ul>
                 <div className="flex flex-col md:hidden italic">
-                  <li>
-                    {item.destinationId?.map((item) => {
-                      return <div key={item._id}>{item.destinationName}</div>;
-                    })}
-                  </li>
+                  <li>{item.destinationId?.destinationName}</li>
                 </div>
               </div>
               <div className="flex flex-col gap-2">
                 <h3 className="font-semibold">Activities</h3>
                 <ul className="hidden md:flex flex-col list-disc ml-4 italic">
                   {item.activity?.map((act, i) => (
-                    <li key={i}>{act.name}</li>
+                    <li key={i}>{act.activityName}</li>
                   ))}
                 </ul>
                 <div className="flex flex-col md:hidden italic">
                   {item.activity?.map((act, i) => (
-                    <li key={i}>{act.name}</li>
+                    <li key={i}>{act.activityName}</li>
                   ))}
                 </div>
               </div>
             </div>
           ))}
+
           <div className="flex flex-col gap-2">
             <h3 className="font-semibold">Cost</h3>
             <div className="text-lg font-bold">
-              ${trip.cost} {""}
+              ${trip.cost}
               <div className="hidden md:inline ">
                 <br />
               </div>
