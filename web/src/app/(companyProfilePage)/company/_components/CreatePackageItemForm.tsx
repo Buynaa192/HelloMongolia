@@ -18,7 +18,6 @@ import { useEffect, useState } from "react";
 import { usePackageContext } from "./PackageProvider";
 import {
   ActivityType,
-  DestinationType,
   PackageItemType,
 } from "@/app/_providers/AuthProvider";
 import { Stepper } from "./ui/stepper";

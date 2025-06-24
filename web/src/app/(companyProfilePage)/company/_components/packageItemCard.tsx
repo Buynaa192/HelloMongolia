@@ -1,13 +1,11 @@
 import { ActivityType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import { usePackageContext } from "./PackageProvider";
-import { AlertDial } from "./Aalert";
 type PackageItemCardProps = {
   title: string;
   image: string;
@@ -28,7 +26,6 @@ export const PackageItemCard = ({
   activity,
   packageId,
   packageItemId,
-  packageItems,
   order,
   setOrder,
   setIsOpen,
