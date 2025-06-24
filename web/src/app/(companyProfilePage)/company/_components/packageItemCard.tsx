@@ -5,20 +5,23 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { DeletePackageItem } from "./deletePackageItem";
+
+import { usePackageContext } from "./PackageProvider";
+import { AlertDial } from "./Aalert";
 type PackageItemCardProps = {
-  order: number;
   title: string;
   image: string;
   description: string;
   activity: ActivityType[];
   packageId: string;
   packageItemId: string;
+  order: number;
   packageItems: () => Promise<void>;
+  setOrder: (value: number) => void;
+  setIsOpen: (value: boolean) => void;
 };
 
 export const PackageItemCard = ({
-  order,
   title,
   image,
   description,
@@ -26,17 +29,29 @@ export const PackageItemCard = ({
   packageId,
   packageItemId,
   packageItems,
+  order,
+  setOrder,
+  setIsOpen,
 }: PackageItemCardProps) => {
+  const { newPackage, addItemToPackage } = usePackageContext();
   const [loading, setLoading] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
+  const duration = Number(newPackage?.duration || 1);
   const addToPackage = async () => {
     try {
       setLoading(true);
-      await api.post(`/package/addPackageItem/${packageId}`, {
-        packageItemId,
-      });
+      if (newPackage?._id && packageItemId) {
+        await addItemToPackage(newPackage?._id, packageItemId);
+      }
+
       setIsAdded(true);
       toast.success("Successfully added to package");
+      if (order < duration) {
+        setOrder(order + 1);
+      } else {
+        setIsOpen(true);
+      }
+      setIsAdded(false);
     } catch (error) {
       console.log(error);
       toast.error("Failed to add item to package");
@@ -44,6 +59,7 @@ export const PackageItemCard = ({
       setLoading(false);
     }
   };
+
   const removeFromPackage = async () => {
     try {
       setLoading(true);
@@ -80,7 +96,7 @@ export const PackageItemCard = ({
               <span
                 key={idx}
                 className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">
-                {act.name}
+                {act.activityName}
               </span>
             ))}
           </div>
@@ -102,39 +118,16 @@ export const PackageItemCard = ({
                 "Add to Package"
               )}
             </Button>
-            {isAdded ? (
+            {isAdded && (
               <Button
                 className="bg-red-400 text-white hover:bg-red-500 transition"
                 onClick={removeFromPackage}>
                 {loading ? (
                   <Loader className="animate-spin w-4 h-4" />
                 ) : (
-                  "Remove from package"
+                  `Remove from day ${order}`
                 )}
               </Button>
-            ) : (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    disabled={loading || isAdded}
-                    className={`text-white transition ${
-                      isAdded
-                        ? "bg-red-400 cursor-not-allowed"
-                        : "bg-red-600 hover:bg-red-700"
-                    }`}>
-                    {loading ? (
-                      <Loader className="animate-spin w-4 h-4" />
-                    ) : (
-                      "delete"
-                    )}
-                  </Button>
-                </DialogTrigger>
-                <DeletePackageItem
-                  title={title}
-                  packageItemId={packageItemId}
-                  packageItems={packageItems}
-                />
-              </Dialog>
             )}
           </div>
         </div>

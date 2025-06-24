@@ -1,36 +1,64 @@
 "use client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { CompanyPackages } from "./_components/companyPackages";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { PlusCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePackageContext } from "./_components/PackageProvider";
+import { CreatePackage } from "./_components/createPackage";
+import { CompanyDestinations } from "./_components/companyDestinations";
+import Sidebar from "./_components/SideBar";
 
-export default function CompanyExplore() {
-  const isCompanyLoggedIn = true;
-  const companyId = "684b7452cf844286f738f2db";
-  const router = useRouter();
+export default function TravelDashboard() {
+  const companyId = "6858fa70ead2c5c5e0fc271a";
+  const { view } = usePackageContext();
 
   return (
-    <div className="w-full min-h-screen flex flex-col gap-16 bg-white">
-      <div className="w-full px-6  flex justify-end">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              onClick={() => router.push("./createPackage")}
-              className="flex items-center gap-2 bg-green-600 text-white hover:bg-green-700 shadow-md transition">
-              <PlusCircle size={18} />
-              Create Package
-            </Button>
-          </DialogTrigger>
-        </Dialog>
-      </div>
-      <div className="px-6 ">
-        <CompanyPackages
-          companyId={companyId}
-          isCompanyLoggedIn={isCompanyLoggedIn}
-        />
-      </div>
+    <div className="flex h-screen bg-gradient-to-br from-black-400 to-gray-900 text-gray-800">
+      <Sidebar />
+
+      <main className="flex-1 p-8 overflow-y-auto">
+        {view === "dashboard" && (
+          <>
+            <header className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-xl font-semibold">Hello!</h2>
+                <p className="text-sm text-gray-600">
+                  Welcome back and explore the world.
+                </p>
+              </div>
+              <div className="flex items-center gap-4">
+                <Input placeholder="Search Destination..." className="w-64" />
+                <div className="flex items-center gap-2">
+                  <Image
+                    src="https://res.cloudinary.com/idemo/image/upload/eytykctytgopvpgxfrzk"
+                    alt="Avatar"
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
+                </div>
+              </div>
+            </header>
+
+            <CompanyPackages companyId={companyId} />
+
+            <div className="col-span-1 space-y-4">
+              <CompanyDestinations companyId={companyId} />
+            </div>
+
+            <div className="grid grid-cols-3 gap-6 mt-8">
+              <Card className="col-span-2">
+                <CardHeader>
+                  <CardTitle className="text-base">Best Destination</CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm space-y-2"></CardContent>
+              </Card>
+            </div>
+          </>
+        )}
+
+        {view === "create" && <CreatePackage />}
+      </main>
     </div>
   );
 }

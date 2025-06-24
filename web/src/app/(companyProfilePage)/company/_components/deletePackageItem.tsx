@@ -6,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useState } from "react";
 import { Loader } from "lucide-react";
 import { usePackageContext } from "./PackageProvider";
 type TitlePropsType = {
@@ -19,8 +18,7 @@ export const DeletePackageItem = ({
   packageItemId,
   packageItems,
 }: TitlePropsType) => {
-  const { deletePackageItem } = usePackageContext();
-  const [loading, setLoading] = useState(false);
+  const { deletePackageItem, loading } = usePackageContext();
   return (
     <DialogContent className="bg-white rounded-xl flex flex-col justify-center">
       <DialogHeader>
@@ -40,7 +38,7 @@ export const DeletePackageItem = ({
         <Button
           className="bg-red-600 text-white hover:bg-red-700"
           onClick={async () => {
-            await deletePackageItem(packageItemId, setLoading);
+            await deletePackageItem(packageItemId);
             await packageItems();
           }}>
           {loading ? <Loader className="animate-spin" /> : "delete"}

@@ -1,36 +1,41 @@
+"use client";
+
 import { Star } from "lucide-react";
+import { useEffect, useState } from "react";
+import { api } from "@/axios";
 import { PackageCardSkeleton } from "./packageSkeleton";
-import { Button } from "@/components/ui/button";
-import { PackageType } from "@/app/_providers/AuthProvider";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { UpdatePackageForm } from "./updatePackageForm";
-import { DeletePackage } from "./deletePackage";
+import { PackageType } from "@/app/_providers/AuthProvider";
+import { PackageDialogContent } from "./PackageDialogContent";
+
 type PackageCardProps = {
-  loading: boolean;
-  isCompanyLoggedIn: boolean;
-  packages: PackageType;
-  image: string;
-  title: string;
-  description: string;
-  price: string;
-  duration: string;
-  rating: number;
+  packageId: string;
 };
-export const PackageCard = ({
-  loading,
-  isCompanyLoggedIn,
-  packages,
-  image,
-  title,
-  description,
-  price,
-  duration,
-  rating,
-}: PackageCardProps) => {
-  const companyId = "684b7452cf844286f738f2db";
-  if (loading) return <PackageCardSkeleton />;
-  const ratingStar = (rating: number) => {
-    return Array.from({ length: 5 }).map((_, i) => (
+
+export const PackageCard = ({ packageId }: PackageCardProps) => {
+  const [packageData, setPackageData] = useState<PackageType>();
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const getPackage = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get(`/package?packageId=${packageId}`);
+        const data = response.data.packages?.[0];
+        if (data) {
+          setPackageData(data);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (packageId) getPackage();
+  }, [packageId]);
+
+  const ratingStar = (rating: number) =>
+    Array.from({ length: 5 }).map((_, i) => (
       <Star
         key={i}
         size={18}
@@ -39,71 +44,54 @@ export const PackageCard = ({
         }
       />
     ));
-  };
+
+  if (loading) return <PackageCardSkeleton />;
+  if (!packageData) return null;
 
   return (
-    <div className="w-full flex items-stretch justify-center">
-      <div className="flex w-[90%] min-h-[420px] rounded-2xl shadow-xl hover:shadow-2xl flex-col hover:w-[92%] duration-200 bg-white">
-        {image ? (
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-[250px] rounded-t-2xl object-cover"
-          />
-        ) : (
-          <div className="w-full h-[250px] rounded-t-2xl bg-gray-200 flex items-center justify-center text-gray-500">
-            No Image Available
-          </div>
-        )}
-        <div className="flex flex-col justify-between flex-1 p-4 gap-2">
-          <h2 className="text-[20px] font-bold line-clamp-2">{title}</h2>
-          <p className="text-sm text-gray-600 line-clamp-3">{description}</p>
+    <Dialog>
+      <DialogTrigger asChild>
+        <div className="w-full flex justify-center cursor-pointer">
+          <div className="group w-[90%] min-h-[420px] rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-200 bg-white flex flex-col relative overflow-hidden">
+            {packageData.coverPhoto ? (
+              <img
+                src={packageData.coverPhoto}
+                alt={packageData.title}
+                className="w-full h-[250px] object-cover rounded-t-2xl transition-transform duration-300 group-hover:scale-105"
+              />
+            ) : (
+              <div className="w-full h-[250px] bg-gray-200 flex items-center justify-center text-gray-500 rounded-t-2xl">
+                No Image Available
+              </div>
+            )}
+            <div className="absolute top-0 left-0 w-full h-[250px] bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+            <span className="absolute top-0 left-0 w-full h-[250px] flex items-center justify-center text-white text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+              See more
+            </span>
 
-          <div className="flex justify-between items-center text-[12px] font-medium mt-auto pt-2">
-            <div className="flex items-center gap-4">
-              <span>
-                {duration} {Number(duration) == 1 ? "day" : "days"}{" "}
-              </span>
-              <div className="flex items-center gap-1">
-                {ratingStar(rating)}
+            <div className="flex flex-col flex-1 p-4 gap-2 z-30">
+              <h2 className="text-[20px] font-bold line-clamp-2">
+                {packageData.title}
+              </h2>
+              <p className="text-sm text-gray-600 line-clamp-3">
+                {packageData.description}
+              </p>
+              <div className="flex gap-1">{ratingStar(packageData.rating)}</div>
+              <div className="flex flex-row justify-between gap-4">
+                <span>
+                  {packageData.duration}{" "}
+                  {Number(packageData.duration) === 1 ? "day" : "days"}
+                </span>
+                <span className="text-xl font-bold text-green-500">
+                  ${packageData.cost}
+                </span>
               </div>
             </div>
-            <div className="text-[20px] font-bold text-green-500">${price}</div>
-          </div>
-
-          <div className="flex gap-4 mt-4 ">
-            {!isCompanyLoggedIn ? (
-              <>
-                <Button className="bg-blue-600 text-white hover:bg-blue-700 transition">
-                  See Details
-                </Button>
-                <Button className="bg-green-600 text-white hover:bg-green-700 transition">
-                  Book
-                </Button>
-              </>
-            ) : (
-              <>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button className="bg-yellow-500 text-white hover:bg-yellow-600 transition">
-                      Update
-                    </Button>
-                  </DialogTrigger>
-                  <UpdatePackageForm packageData={packages} />
-                </Dialog>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button className="bg-red-600 text-white hover:bg-red-700 transition">
-                      Delete
-                    </Button>
-                  </DialogTrigger>
-                  <DeletePackage title={title} packageId={packages._id} />
-                </Dialog>
-              </>
-            )}
           </div>
         </div>
-      </div>
-    </div>
+      </DialogTrigger>
+
+      {packageData && <PackageDialogContent packageData={packageData} />}
+    </Dialog>
   );
 };
