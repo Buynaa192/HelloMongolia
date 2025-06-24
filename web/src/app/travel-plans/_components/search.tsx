@@ -62,23 +62,23 @@ export const Search: React.FC<SearchProps> = ({
           ) : (
             <div className="flex gap-2 items-center">
               <div className="flex flex-col gap-0 justify-between">
-                <div className="text-[8px]">From:</div>
+                <div className="text-[8px] text-accent">From:</div>
                 <input
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="outline-none border-0 text-[14px] text-accent"
+                  className="outline-none border-0 text-[14px] text-accent bg-linear-to-l from-white to-20% rounded-r-2xl cursor-pointer"
                 />
                 <div className="h-2"></div>
               </div>
               <span>-</span>
               <div className="flex flex-col gap-0 justify-between">
-                <div className="text-[8px]">Until:</div>
+                <div className="text-[8px] text-accent">Until:</div>
                 <input
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="outline-none border-0 text-[14px] text-accent"
+                  className="outline-none border-0 text-[14px] text-accent  bg-linear-to-l from-white to-20% rounded-r-2xl cursor-pointer"
                 />
                 <div className="h-2"></div>
               </div>
