@@ -16,7 +16,7 @@ type SearchFilterProps = {
 export const SearchFilter: React.FC<SearchFilterProps> = ({
   selectedTripTypes,
   setSelectedTripTypes,
-  applyFilters,
+
   selectedCosts,
   setSelectedCosts,
   clearAllFilters,
