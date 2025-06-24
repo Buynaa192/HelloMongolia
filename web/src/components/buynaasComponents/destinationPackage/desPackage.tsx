@@ -15,12 +15,13 @@ export const DesdinationPackage = ({ id }: idType) => {
     const GetPackage = async () => {
       const res = await api.get(`package/destination/${id}`);
       setPackages(res.data.packages);
+      console.log(res.data.packages);
     };
     GetPackage();
   }, []);
 
   return (
-    <div className="w-full grid grid-cols-5  h-100 gap-4 p-4 ">
+    <div className="w-full grid grid-cols-5  h-100 gap-4 p-4 text-white ">
       {packages.map((item, indx) => {
         return (
           <Link key={indx} href={`/travel-plans/${item._id}`}>

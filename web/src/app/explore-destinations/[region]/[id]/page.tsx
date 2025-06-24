@@ -1,11 +1,12 @@
 "use client";
 
+import { BackToHomePathButtons } from "@/app/_components/ariukasComponents/BackToHomePagePathButtons";
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DesdinationPackage } from "@/components/buynaasComponents/destinationPackage/desPackage";
 import { DestinationHero } from "@/components/buynaasComponents/destinationPackage/destinationImages";
 import Image from "next/image";
-import Link from "next/link";
+
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -38,29 +39,12 @@ export default function Destination() {
       </div>
     );
   }
+  console.log(destination);
 
   return (
-    <div className="w-full min-h-screen bg-white  flex flex-col gap-6 pb-10">
+    <div className="w-full min-h-screen  flex flex-col gap-6 pb-10">
       <DestinationHero destination={destination} />
-
-      <div className="ml-6 text-sm text-gray-600 flex gap-1 flex-wrap">
-        <Link href="/" className="hover:underline">
-          Home
-        </Link>{" "}
-        <span>{`>`}</span>
-        <Link href="/explore-destinations" className="hover:underline">
-          Explore-destinations
-        </Link>{" "}
-        <span>{`>`}</span>
-        <Link
-          href={`/explore-destinations/${destination.region}`}
-          className="hover:underline"
-        >
-          {destination.region}
-        </Link>
-        <span>{`>`}</span>
-        <span className="font-medium">{destination.destinationName}</span>
-      </div>
+      <BackToHomePathButtons />
 
       <div className="grid md:grid-cols-2 gap-6 px-6">
         <div className="text-gray-700 text-base leading-relaxed border border-gray-200 rounded-lg p-4 bg-gray-50 shadow-sm">

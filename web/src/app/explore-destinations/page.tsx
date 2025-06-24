@@ -1,27 +1,29 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
 import { Regions } from "@/components/buynaasComponents/regionsComponents/regions";
 import { PopularDestination } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestination";
 import { api } from "@/axios";
-import { DestinationType } from "../_providers/AuthProvider";
+import { DestinationType, RegionType } from "../_providers/AuthProvider";
 import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
 
-const images = [
-  "https://res.cloudinary.com/df60cobe2/image/upload/v1750344900/zvtv2v8ujkwank2sed1x.jpg",
-  "https://res.cloudinary.com/df60cobe2/image/upload/v1750344684/bmuknygaru47y1us260s.jpg",
-  "https://res.cloudinary.com/df60cobe2/image/upload/v1750344552/gftoyhpqzhc1kitmwezb.jpg",
-  "https://res.cloudinary.com/df60cobe2/image/upload/v1750344336/image_1920_rsbpbh.jpg",
-];
-
 export default function DestinatioExplore() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [destination, setDestination] = useState<DestinationType[]>([]);
   const [searchDestination, SetsearchDestination] = useState("");
+  const [regions, setRegions] = useState<RegionType[]>([]);
+  const getRegions = async () => {
+    try {
+      const response = await api.get("/regions");
+      setRegions(response.data.regions);
+      console.log(response.data.regions);
+    } catch (err) {
+      console.error("failed to fetch packages", err);
+    }
+  };
 
   const getDestination = async () => {
     try {
@@ -31,16 +33,12 @@ export default function DestinatioExplore() {
       console.error("Failed to fetch destinations:", error);
     }
   };
-  useEffect(() => {
-    getDestination();
-  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 4000);
-    return () => clearInterval(interval);
+    getDestination();
+    getRegions();
   }, []);
+
   const filteredDestinations = destination.filter((dest) =>
     dest.destinationName.toLowerCase().includes(searchDestination.toLowerCase())
   );
@@ -50,23 +48,14 @@ export default function DestinatioExplore() {
   return (
     <div className="w-full h-full  text-white flex flex-col gap-4">
       <div className="relative w-full h-[800px] overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.8 }}
-            className="absolute top-0 left-0 w-full h-full"
-          >
-            <Image
-              src={images[currentIndex]}
-              alt={`Slide ${currentIndex + 1}`}
-              fill
-              className="object-cover"
-            />
-          </motion.div>
-        </AnimatePresence>
+        <video
+          className="w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          src="https://res.cloudinary.com/df60cobe2/video/upload/v1750321530/hangaivideo_ys3x25.mp4"
+        />
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-white bg-black/30  px-4 text-center">
           <p className="font-bold text-[60px]">Wander far. Discover more.</p>
           <p className="max-w-4xl">
@@ -83,13 +72,10 @@ export default function DestinatioExplore() {
             />
           </div>
           {searchDestination.length > 0 && (
-            <div className="border-2 border-red-400 max-h-96 overflow-auto">
+            <div className=" max-h-full overflow-auto rounded-lg w-150 gap-2 flex flex-col">
               <p>Destinations</p>
               {filteredDestinations.map((item) => (
-                <div
-                  className="border-2 flex items-end  gap-2 p-2"
-                  key={item._id}
-                >
+                <div className=" flex   gap-2 p-2" key={item._id}>
                   <Image
                     src={
                       item.destinationImages[0] ||
@@ -98,9 +84,12 @@ export default function DestinatioExplore() {
                     width={200}
                     height={100}
                     alt={item.destinationName}
-                    className="rounded"
+                    className="rounded-lg w-50 h-50  "
                   />
-                  <p className="absolute">{item.destinationName}</p>
+                  <div>
+                    <p className="text-3xl">{item.destinationName}</p>
+                    <p>{item.description}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -108,8 +97,8 @@ export default function DestinatioExplore() {
         </div>
       </div>
       <BackToHomePathButtons />
-      <Regions />
-      <PopularDestination destination={destination} />
+      <Regions regions={regions} />
+      <PopularDestination destination={destination} regions={regions} />
     </div>
   );
 }

@@ -1,16 +1,19 @@
 "use client";
 
-import { DestinationType } from "@/app/_providers/AuthProvider";
+import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
 import Image from "next/image";
 import Link from "next/link";
 
 type itemType = {
   item: DestinationType;
+  regions: RegionType[];
 };
 
-export const PopularDestinationCard = ({ item }: itemType) => {
+export const PopularDestinationCard = ({ item, regions }: itemType) => {
+  const region = regions.find((r) => r._id === item.region);
+
   return (
-    <Link href={`/explore-destinations/${item.region}/${item._id}`}>
+    <Link href={`/explore-destinations/${region?.regionName}/${item._id}`}>
       <div className="w-full aspect-[4/5] relative group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-white/10">
         <Image
           src={
