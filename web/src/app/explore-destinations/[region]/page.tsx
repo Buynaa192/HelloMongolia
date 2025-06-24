@@ -1,11 +1,11 @@
 "use client";
 import { BackToHomePathButtons } from "@/app/_components/ariukasComponents/BackToHomePagePathButtons";
-import { DestinationType } from "@/app/_providers/AuthProvider";
+// import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
-import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
+// import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
 
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 type paramsType = {
   region: string;
