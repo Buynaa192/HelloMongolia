@@ -14,6 +14,7 @@ type paramsType = {
 export default function RegionPage() {
   const region = useParams<paramsType>();
   const [regn, setRegn] = useState<RegionType>();
+  const [destination, setDestination] = useState<DestinationType[]>([]);
   const getRegions = async () => {
     const res = await api.get(`/regions?regionName=${region.region}`);
     setRegn(res.data.region);
@@ -21,8 +22,10 @@ export default function RegionPage() {
   console.log(regn);
 
   const getDestination = async () => {
-    const res = await api.get(`/regions/destinations/68592416611c9aae4411aaa2`);
-    console.log(res.data);
+    const res = await api.get(
+      `/regions/destinations/${regn?._id || "68592416611c9aae4411aaa2"}`
+    );
+    setDestination(res.data.regionDestination);
   };
   useEffect(() => {
     getRegions();
@@ -64,7 +67,9 @@ export default function RegionPage() {
       <div className="flex flex-col gap-3 m-4">
         <p className="font-bold text-2xl ml-10">Destinations</p>
         <div className="w-full grid grid-cols-4 gap-4">
-          {/* <DestinationCard /> */}
+          {destination.map((item, indx) => {
+            return <DestinationCard key={indx} item={item} />;
+          })}
         </div>
       </div>
       <div className="flex flex-col gap-3 m-4">
