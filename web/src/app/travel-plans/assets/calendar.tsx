@@ -1,7 +1,7 @@
 export const CalendarIcon = () => {
   return (
     <svg
-      className="w-6 h-6 text-gray-800 dark:text-black"
+      className="w-6 h-6 text-accent"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       width="24"
