@@ -21,7 +21,7 @@ export type PackageItemType = {
   destinationId: DestinationType | null;
   description: string;
   activity: ActivityType[];
-  accomodation: string;
+  accommodation: AccommodationType;
 };
 export type PackageType = {
   _id: string;
@@ -79,6 +79,12 @@ export type LocationType = {
   lat: number;
   lng: number;
 };
+export type AccommodationType = {
+  _id: string;
+  hotelName: string;
+  address: string;
+};
+
 export type CompanyType = {
   _id: string;
   email: string;
