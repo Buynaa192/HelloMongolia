@@ -13,7 +13,7 @@ import { api } from "@/axios";
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 type Params = {
   id: string;
 };
@@ -24,14 +24,23 @@ export default function PackagePage() {
   const [location, setLocation] = useState<
     { name: string; location: LocationType; photoUrl?: string }[]
   >([]);
+  const itineraryRef = useRef<HTMLDivElement>(null);
 
-  console.log("package hevlej bna", packages);
+  const scrollToSection = (index: number) => {
+    const container = itineraryRef.current;
+    if (container) {
+      const section = container.children[index] as HTMLElement;
+      container.scrollTo({
+        top: section.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
   useEffect(() => {
     const fetchPackage = async () => {
       try {
         const res = await api.get(`/package?packageId=${id}`);
         setPackage(res.data.packages);
-
         const allLocations = res.data.packages.flatMap(
           (pkg: PackageType) =>
             pkg.packageItem
@@ -65,7 +74,7 @@ export default function PackagePage() {
 
     fetchPackage();
   }, []);
-  console.log("loc", location);
+
   return (
     <>
       {packages.map((item, index) => {
@@ -161,19 +170,22 @@ export default function PackagePage() {
                   <div className="w-full h-15 bg-[#000000] flex rounded-t-[8px]">
                     {item.packageItem.map((_, index) => {
                       return (
-                        <a
+                        <button
                           key={index}
-                          href={`#section${index + 1}`}
-                          className="flex-1 h-full  flex items-center justify-center text-[24px] text-white font-bold hover:bg-[#ffffff] hover:text-black rounded-t-[7px] duration-300 "
+                          onClick={() => scrollToSection(index)}
+                          className="flex-1 h-full flex items-center justify-center text-[24px] text-white font-bold hover:bg-[#ffffff] hover:text-black rounded-t-[7px] duration-300"
                         >
                           Day {index + 1}
-                        </a>
+                        </button>
                       );
                     })}
                   </div>
                 </div>
 
-                <div className="w-full h-[500px] overflow-scroll scroll-smooth rounded-[8px]  ">
+                <div
+                  ref={itineraryRef}
+                  className="w-full h-[500px] overflow-scroll scroll-smooth rounded-[8px]  "
+                >
                   {item.packageItem.map((it, index) => (
                     <div key={index} className={`w-[100%] h-[500px] relative `}>
                       <img
@@ -354,7 +366,7 @@ export default function PackagePage() {
                     <div>Destinations:</div>
 
                     <div className="flex gap-2">
-                      {item.companyId.availableDestinations?.length}
+                      {item.companyId.availableDestinations.length}
                       <p>
                         {item.companyId.availableDestinations.length == 0 ||
                         item.companyId.availableDestinations.length == 1
