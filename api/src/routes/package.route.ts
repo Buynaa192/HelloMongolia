@@ -1,6 +1,5 @@
 import { Router } from "express";
 
-import { GetAllPackages } from "../controllers/Package/GetAllPackages";
 import { createPackageController } from "../controllers/Package/create-package";
 import { getPackageById } from "../controllers/Package/getPackageById";
 import { GetTopRatedPackages } from "../controllers/Package/GetTopRatedPackages";
@@ -13,7 +12,7 @@ import { removePackageItem } from "../controllers/Package/removePackageItem";
 
 export const packageRouter = Router()
   .post("/", createPackageController)
-  .get("/", GetAllPackages)
+
   .get("/", getPackageById)
   .get("/topRatedPackages", GetTopRatedPackages)
   .get("/:companyId", getPackageByCompanyId)

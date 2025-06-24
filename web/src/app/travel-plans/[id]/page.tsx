@@ -290,8 +290,8 @@ export default function PackagePage() {
                 Tour by:
               </div>
               <div className="w-50 border-1 border-[#e4e4e5]"></div>
-              <div className="flex-1  flex p-5 text-2xl font-light gap-5 ">
-                <div className="flex-1 h-100 flex flex-col  items-center gap-2">
+              <div className=" h-fit  flex p-5 text-2xl font-light gap-5 ">
+                <div className="flex-1 h-fit flex flex-col  items-center gap-2">
                   <div className="w-50 flex overflow-hidden items-center  rounded-2xl">
                     {item.companyId.AvatarImage == "" ||
                     item.companyId.AvatarImage == null ? (
@@ -354,7 +354,7 @@ export default function PackagePage() {
                     <div>Destinations:</div>
 
                     <div className="flex gap-2">
-                      {item.companyId.availableDestinations.length}
+                      {item.companyId.availableDestinations?.length}
                       <p>
                         {item.companyId.availableDestinations.length == 0 ||
                         item.companyId.availableDestinations.length == 1
@@ -380,20 +380,24 @@ export default function PackagePage() {
                     <div>{item.companyId.email}</div>
                   </div>
                 </div>
-                <div className="">
-                  {" "}
+                <div>
                   <div className="w-full h-[80%] overflow-hidden">
-                    {" "}
                     {item.companyId.about}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="h-10"></div>
           </div>
         );
       })}
+
       <div>
+        <div
+          className="text-accent text-4xl font-extrabold"
+          style={{ fontFamily: "Dancing script" }}
+        >
+          Destinations in MAP
+        </div>
         <BasicGoogleMapWithDirections markers={location} />
       </div>
     </>

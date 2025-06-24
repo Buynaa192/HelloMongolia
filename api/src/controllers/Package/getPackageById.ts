@@ -6,7 +6,7 @@ export const getPackageById: RequestHandler = async (req, res) => {
 
   try {
     const packages = await packageModel
-      .findById({ _id: packageId })
+      .find(packageId ? { _id: packageId } : {})
       .populate({
         path: "packageItem",
         populate: [
