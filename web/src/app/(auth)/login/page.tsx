@@ -50,7 +50,7 @@ export default function LoginPage() {
         !!company?.name?.trim();
 
       setTimeout(() => {
-        router.push(hasProfile ? "/companies/company" : "/set-up-profile");
+        router.push(hasProfile ? "/company" : "/set-up-profile");
       }, 1000);
     } catch (err) {
       console.error(err);
@@ -106,8 +106,7 @@ export default function LoginPage() {
                 Dont have an account ?
                 <Link
                   href={"/sign-up"}
-                  className="text-blue-500 underline underline-offset-1"
-                >
+                  className="text-blue-500 underline underline-offset-1">
                   Sign up
                 </Link>
               </p>
@@ -115,8 +114,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               className="w-full bg-black text-white"
-              disabled={form.formState.isSubmitting}
-            >
+              disabled={form.formState.isSubmitting}>
               {form.formState.isSubmitting ? "Logging in..." : "Login"}
             </Button>
           </form>

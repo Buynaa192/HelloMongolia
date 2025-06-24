@@ -90,10 +90,7 @@ export const PackageCard = ({
                       Update
                     </Button>
                   </DialogTrigger>
-                  <UpdatePackageForm
-                    packageData={packages}
-                    getPackages={getPackages}
-                  />
+                  <UpdatePackageForm packageData={packages} />
                 </Dialog>
                 <Dialog>
                   <DialogTrigger asChild>
