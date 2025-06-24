@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface TravelTypeCardProps {
   title: string;
@@ -17,8 +15,6 @@ export const TravelTypeCard = ({
   type,
   isFocused = false,
 }: TravelTypeCardProps) => {
-  const router = useRouter();
-
   return (
     <div
       className={`transition-all duration-500 ease-in-out transform ${
