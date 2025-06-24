@@ -49,7 +49,7 @@ export default function PackagePage() {
         return (
           <div
             key={index}
-            className="w-full text-black flex flex-col gap-4 bg-white"
+            className="w-full flex flex-col gap-4 bg-transparent "
           >
             <div className="w-full h-180 relative overflow-hidden ">
               {item.packageItem.length < 5 ? (
