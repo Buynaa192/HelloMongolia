@@ -1,12 +1,10 @@
 import { RequestHandler } from "express";
 import { packageModel } from "../../models/package.model";
 
-export const getPackageById: RequestHandler = async (req, res) => {
-  const { packageId } = req.query;
-
+export const GetAllPackages: RequestHandler = async (req, res) => {
   try {
     const packages = await packageModel
-      .findById({ _id: packageId })
+      .find({})
       .populate({
         path: "packageItem",
         populate: [
@@ -20,7 +18,10 @@ export const getPackageById: RequestHandler = async (req, res) => {
           },
         ],
       })
-      .populate("companyId");
+      .populate({
+        path: "companyId",
+        select: "name AvatarImage",
+      });
 
     res.status(200).json({ packages });
   } catch (error) {

@@ -8,9 +8,11 @@ import { addPackageItem } from "../controllers/package/addPackageItem";
 import { deletePackageById } from "../controllers/package/deletePackageById";
 import { getPackagesByDestinationId } from "../controllers/package/getPackageDestination";
 import { removePackageItem } from "../controllers/package/removePackageItem";
+import { GetAllPackages } from "../controllers/package/GetAllPackages";
 
 export const packageRouter = Router()
   .post("/", createPackageController)
+  .get("/", GetAllPackages)
   .get("/", getPackageById)
   .get("/topRatedPackages", GetTopRatedPackages)
   .get("/:companyId", getPackageByCompanyId)
