@@ -25,6 +25,7 @@ export default function PackagePage() {
     { name: string; location: LocationType; photoUrl?: string }[]
   >([]);
 
+  console.log("package hevlej bna", packages);
   useEffect(() => {
     const fetchPackage = async () => {
       try {
