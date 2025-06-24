@@ -5,9 +5,10 @@ import {
   Marker,
   InfoWindow,
   useJsApiLoader,
-  DirectionsRenderer,
 } from "@react-google-maps/api";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
+
+const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
 
 const containerStyle = {
   width: "100%",
@@ -19,99 +20,64 @@ const defaultCenter = {
   lng: 106.9176,
 };
 
-type MarkerWithName = {
-  lat: number;
-  lng: number;
+type MarkerWithPhoto = {
   name: string;
+  location: google.maps.LatLngLiteral;
+  photoUrl?: string;
 };
 
 type Props = {
-  markers: MarkerWithName[];
+  markers: MarkerWithPhoto[];
 };
 
-export default function BasicGoogleMapWithDirections({ markers }: Props) {
-  const apiKey = process.env.GOOGLE_MAPS_API_KEY || "";
-  const { isLoaded, loadError } = useJsApiLoader({ googleMapsApiKey: apiKey });
+export default function PackageGoogleMap({ markers }: Props) {
+  const { isLoaded, loadError } = useJsApiLoader({ googleMapsApiKey: API_KEY });
 
-  const parsedMarkers = useMemo(
-    () => markers.map((m) => ({ lat: m.lat, lng: m.lng })),
-    [markers]
-  );
-
-  const [directions, setDirections] =
-    useState<google.maps.DirectionsResult | null>(null);
   const [activeMarkerIndex, setActiveMarkerIndex] = useState<number | null>(
     null
   );
-
-  useEffect(() => {
-    if (parsedMarkers.length < 2) {
-      setDirections(null);
-      return;
-    }
-
-    const origin = parsedMarkers[0];
-    const destination = parsedMarkers[parsedMarkers.length - 1];
-    const waypoints = parsedMarkers.slice(1, -1).map((m) => ({
-      location: m,
-      stopover: true,
-    }));
-
-    const service = new google.maps.DirectionsService();
-    service.route(
-      {
-        origin,
-        destination,
-        waypoints,
-        travelMode: google.maps.TravelMode.DRIVING,
-        optimizeWaypoints: false,
-      },
-      (result, status) => {
-        if (status === "OK" && result) {
-          setDirections(result);
-        } else {
-          console.error("Failed to fetch directions:", status);
-        }
-      }
-    );
-  }, [parsedMarkers]);
 
   if (loadError) return <div>Error loading map</div>;
   if (!isLoaded) return <div>Loading map...</div>;
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-10">
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={parsedMarkers[0] || defaultCenter}
-        zoom={6}
+        center={markers.length > 0 ? markers[0].location : defaultCenter}
+        zoom={5}
       >
         {markers.map((marker, idx) => (
           <Marker
             key={idx}
-            position={{ lat: marker.lat, lng: marker.lng }}
+            position={marker.location}
             onMouseOver={() => setActiveMarkerIndex(idx)}
             onMouseOut={() => setActiveMarkerIndex(null)}
           >
             {activeMarkerIndex === idx && (
               <InfoWindow
-                position={{ lat: marker.lat, lng: marker.lng }}
-                options={{ disableAutoPan: true }}
+                position={marker.location}
+                onCloseClick={() => setActiveMarkerIndex(null)}
               >
-                <div style={{ fontSize: "14px", padding: 0 }}>
-                  {marker.name}
+                <div
+                  className="flex flex-col items-center gap-2"
+                  style={{ width: 200 }}
+                >
+                  <div className="text-sm font-semibold">{marker.name}</div>
+                  {marker.photoUrl ? (
+                    <img
+                      src={marker.photoUrl}
+                      alt={marker.name}
+                      className="w-full h-auto rounded-md"
+                    />
+                  ) : (
+                    <div>No image available</div>
+                  )}
                 </div>
               </InfoWindow>
             )}
           </Marker>
         ))}
-
-        {directions && (
-          <DirectionsRenderer
-            directions={directions}
-            options={{ suppressMarkers: true }}
-          />
-        )}
       </GoogleMap>
     </div>
   );
