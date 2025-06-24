@@ -21,7 +21,7 @@ export const DesdinationPackage = ({ id }: idType) => {
   }, []);
 
   return (
-    <div className="w-full grid grid-cols-5  h-100 gap-4 p-4 ">
+    <div className="w-full grid grid-cols-5  h-100 gap-4 p-4 text-white ">
       {packages.map((item, indx) => {
         return (
           <Link key={indx} href={`/travel-plans/${item._id}`}>

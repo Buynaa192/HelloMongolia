@@ -44,25 +44,6 @@ export default function Destination() {
   return (
     <div className="w-full min-h-screen  flex flex-col gap-6 pb-10">
       <DestinationHero destination={destination} />
-
-      {/* <div className="ml-6 text-sm text-gray-600 flex gap-1 flex-wrap">
-        <Link href="/" className="hover:underline">
-          Home
-        </Link>{" "}
-        <span>{`>`}</span>
-        <Link href="/explore-destinations" className="hover:underline">
-          Explore-destinations
-        </Link>
-        <span>{`>`}</span>
-        <Link
-          href={`/explore-destinations/${destination.region}`}
-          className="hover:underline"
-        >
-          {destination.region}
-        </Link>
-        <span>{`>`}</span>
-        <span className="font-medium">{destination.destinationName}</span>
-      </div> */}
       <BackToHomePathButtons />
 
       <div className="grid md:grid-cols-2 gap-6 px-6">
