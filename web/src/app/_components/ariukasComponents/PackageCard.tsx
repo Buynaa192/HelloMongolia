@@ -7,9 +7,8 @@ import Link from "next/link";
 import { PackageItemType, PackageType } from "@/app/_providers/AuthProvider";
 
 export const PackageCard = ({ trip }: { trip: PackageType }) => {
-  console.log("trip", trip);
   return (
-    <Card className="relative text-white md:h-[400px] h-[400px] w-full max-w-4xl overflow-hidden shadow-xl border-0">
+    <Card className="relative text-white h-full max-h-3xl min-w-[200px] min-h-[150px] w-full max-w-4xl overflow-hidden shadow-xl border-0">
       <Image
         src={trip.coverPhoto}
         alt="nature photo"

@@ -22,6 +22,7 @@ export default function PackagePage() {
   const [packages, setPackage] = useState<PackageType[]>([]);
   const [location, setLocation] = useState<LocationType[]>([]);
 
+  console.log("package hevlej bna", packages);
   useEffect(() => {
     const fetchPackage = async () => {
       try {
