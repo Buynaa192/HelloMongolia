@@ -51,11 +51,8 @@ export default function PackagesExplore() {
       try {
         const res = await api.get("/package");
         setAllPackages(res.data.packages);
-<<<<<<< HEAD
 
         setFilteredPackages(res.data.packages);
-=======
->>>>>>> 0612182 (p)
       } catch (err) {
         console.error("Failed to fetch packages", err);
       }
@@ -162,7 +159,7 @@ export default function PackagesExplore() {
   return (
     <div className="w-full h-full">
       <TravelPlanHome />
-      <div className="bg-transparent w-full p-2 gap-2 flex text-transparent">
+      <div className="bg-white w-full p-2 gap-2 flex">
         <Link href={"/"}> Home</Link> <span>{">"}</span>
         <Link href={"/travel-plans"}> Travel Plans</Link>
       </div>{" "}
