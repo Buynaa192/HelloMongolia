@@ -63,7 +63,7 @@ export function NewDestinationForm({
       try {
         const { data } = await api.get("/activity/me");
         setActivities(data.activities);
-      } catch (error) {
+      } catch {
         toast.error("Failed to fetch activities.");
       }
     };
