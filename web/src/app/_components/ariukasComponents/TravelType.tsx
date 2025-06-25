@@ -38,7 +38,7 @@ export const ChooseTravelType = () => {
           whileInView={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
           viewport={{ once: true }}
-          className="w-full h-full z-20 flex items-center justify-center"
+          className="w-full h-full z-10 flex items-center justify-center"
         >
           <ScrollTypes />
         </motion.div>

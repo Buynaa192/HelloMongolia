@@ -10,7 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { LogOut, MenuIcon } from "lucide-react";
+import { LayoutDashboardIcon, LogOut, MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { Drawer } from "./HeaderMenuDrawer";
 
@@ -26,13 +26,13 @@ export const Header = () => {
   ];
 
   return (
-    <div className="max-w-[1440px] w-full flex justify-between absolute top-5 z-15 px-20 items-center lg:gap-60">
-      <div className="w-full lg:flex hidden justify-between">
+    <div className="fixed w-full flex justify-between py-2 z-15 px-20 items-center lg:gap-60 bg-white/black backdrop-blur-lg text-lg">
+      <div className="w-[80%] lg:flex hidden justify-between">
         {headers.map(({ name, url }) => (
           <Link
             key={name}
             href={url}
-            className="text-white cursor-pointer text-sm"
+            className="text-white cursor-pointer text-m"
           >
             {name}
           </Link>
@@ -67,24 +67,34 @@ export const Header = () => {
                 className="rounded-full object-cover"
               />
             </PopoverTrigger>
-            <PopoverContent className="flex items-center gap-2 text-sm cursor-pointer">
-              <p>Log out</p>
-              <LogOut size={16} />
+            <PopoverContent className="flex items-center gap-4  cursor-pointer">
+              <Link href="/dashboard" passHref>
+                <a className="flex items-center gap-2 hover:text-blue-600">
+                  <LayoutDashboardIcon size={16} />
+                  <p>Dashboard</p>
+                </a>
+              </Link>
+
+              {/* Log out Button */}
+              <div className="flex items-center gap-2 hover:text-red-600 cursor-pointer">
+                <p>Log out</p>
+                <LogOut size={16} />
+              </div>
             </PopoverContent>
           </Popover>
         </div>
       ) : (
-        <div className="flex lg:flex gap-2 justify-end">
+        <div className="flex lg:flex gap-2 justify-end text-lg">
           <Button
             variant="ghost"
-            className="text-white hover:bg-blue-500 "
+            className="text-white hover:bg-blue-500 hover:text-white text-lg"
             onClick={() => router.push("/login")}
           >
             Log in
           </Button>
           <Button
             variant="ghost"
-            className="text-white hover:bg-white hover:text-black"
+            className="text-white hover:bg-white hover:text-black text-lg"
             onClick={() => router.push("/sign-up")}
           >
             Sign up

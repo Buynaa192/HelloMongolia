@@ -7,7 +7,7 @@ export const HeaderRadientDeco = () => {
       src="https://lottie.host/6f1a500e-c942-4416-8299-1dd279e755d3/cN1oj8b1ef.lottie"
       loop
       autoplay
-      className="w-full absolute top-[-180] z-10 opacity-80"
+      className="w-full absolute top-[-160] lg:top-[-200] 2xl:top-[-300] 3xl:top-[-350] z-10 opacity-80"
     />
   );
 };

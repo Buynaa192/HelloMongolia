@@ -9,7 +9,6 @@ import {
   DestinationType,
   PackageType,
 } from "@/app/_providers/AuthProvider";
-
 const animatedWords = ["DISCOVER", "EXPLORE", "EXPERIENCE", "FEEL"];
 
 export type SearchResultsType = {
@@ -26,7 +25,11 @@ const emptyResults: SearchResultsType = {
   packages: [],
 };
 
-export const Hero1Text = () => {
+export const Hero1Text = ({
+  setRadient,
+}: {
+  setRadient: (radient: "white" | "black") => void;
+}) => {
   const [index, setIndex] = useState(0);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,6 +48,14 @@ export const Hero1Text = () => {
       results.activities?.length > 0 ||
       results.companies?.length > 0 ||
       results.packages?.length > 0);
+
+  useEffect(() => {
+    if (query && searchResults) {
+      setRadient("black");
+    } else {
+      setRadient("white");
+    }
+  }, [query, loading, searchResults]);
 
   return (
     <div className="absolute flex flex-col gap-8 items-center justify-center w-full h-full">
