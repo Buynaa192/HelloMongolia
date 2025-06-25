@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { Header } from "./_components/ariukasComponents/Header";
+import { Footer } from "./_components/ariukasComponents/Footer";
 
 export default function RootLayout({
   children,
@@ -14,6 +15,7 @@ export default function RootLayout({
         <div className="w-full flex flex-col items-center">
           <Header />
           <div className="w-full flex flex-col items-center"> {children}</div>
+          <Footer />
         </div>
       </Suspense>
     </div>
