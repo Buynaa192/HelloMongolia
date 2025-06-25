@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { CompanyType, useAuth } from "@/app/_providers/AuthProvider";
-import { useRouter } from "next/navigation";
 import { api } from "@/axios";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
