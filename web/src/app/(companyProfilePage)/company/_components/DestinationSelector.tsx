@@ -62,7 +62,8 @@ export const DestinationSelector = ({
                 selectedId === dest._id
                   ? "border-blue-600 ring-2 ring-blue-500"
                   : "border-gray-200"
-              }`}>
+              }`}
+            >
               <img
                 src={dest.destinationImages[0]}
                 alt={dest.destinationName}
@@ -77,19 +78,22 @@ export const DestinationSelector = ({
             <button
               type="button"
               onClick={() => setExpanded(!expanded)}
-              className="text-blue-600 underline text-sm">
+              className="text-blue-600 underline text-sm"
+            >
               {expanded ? "See less" : "See more"}
             </button>
           </div>
         )}
 
         <div className="mt-4 text-center">
-          <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+          <Dialog open={modalOpen} modal={false}>
             <DialogTrigger asChild>
               <Button
+                onClick={() => setModalOpen(true)}
                 type="button"
                 variant="outline"
-                className="bg-green-400 hover:bg-green-500">
+                className="bg-green-400 hover:bg-green-500"
+              >
                 + Create New Destination
               </Button>
             </DialogTrigger>

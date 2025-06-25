@@ -98,7 +98,8 @@ export const CreatePackageItemForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="bg-white px-6 md:px-12 py-10 shadow-xl rounded-2xl space-y-8 w-full">
+          className="bg-white px-6 md:px-12 py-10 shadow-xl rounded-2xl space-y-8 w-full"
+        >
           <FormField
             control={form.control}
             name="title"
@@ -205,7 +206,8 @@ export const CreatePackageItemForm = () => {
                           field.value.includes(act._id)
                             ? "bg-blue-100 border-blue-500"
                             : "border-gray-300"
-                        }`}>
+                        }`}
+                      >
                         <input
                           type="checkbox"
                           checked={field.value.includes(act._id)}
@@ -239,7 +241,8 @@ export const CreatePackageItemForm = () => {
             className={`w-full md:w-auto flex justify-center items-center gap-2 px-6 py-3 rounded-md text-white ${
               loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"
             }`}
-            disabled={loading}>
+            disabled={loading}
+          >
             {loading ? (
               <>
                 <Loader className="animate-spin" size={18} />
