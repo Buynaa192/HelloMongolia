@@ -25,13 +25,15 @@ export default function PackagePage() {
     { name: string; location: LocationType; photoUrl?: string }[]
   >([]);
   const itineraryRef = useRef<HTMLDivElement>(null);
-
   const scrollToSection = (index: number) => {
     const container = itineraryRef.current;
     if (container) {
       const section = container.children[index] as HTMLElement;
+      const headerHeight = 60; // Adjust this if your header is taller
+      const scrollToPosition = section.offsetTop - headerHeight;
+
       container.scrollTo({
-        top: section.offsetTop,
+        top: scrollToPosition,
         behavior: "smooth",
       });
     }
