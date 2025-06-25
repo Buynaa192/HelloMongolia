@@ -9,19 +9,19 @@ export const TravelPlanHome = () => {
         playsInline
       >
         <source
-          src="https://res.cloudinary.com/df60cobe2/video/upload/v1750685963/5004222-uhd_3840_2160_24fps_1_qownoj.mp4"
+          src="https://res.cloudinary.com/df60cobe2/video/upload/v1750768843/ScreenRecording_06-24-2025_21_ran277.mov"
           type="video/mp4"
         />
       </video>
-      <div className="absolute  inset-0 text-white flex flex-col items-center justify-center w-full h-full gap-0 ">
+      <div className="absolute  inset-0 text-white flex flex-col items-center justify-center w-full h-full gap-0  bg-linear-to-t from-black to-100%  ">
         <div className="text-[80px] " style={{ fontFamily: "Dancing Script" }}>
           BEYOND ROADS
         </div>
         <div className="text-[80px]" style={{ fontFamily: "Dancing Script" }}>
           INTO
         </div>
-        <div className="text-[200px] font-bold flex  ">
-          {"WONDER".split("").map((letter, i) => (
+        <div className="text-[180px] font-bold flex  ">
+          {"MONGOLIA".split("").map((letter, i) => (
             <div key={i} className="hover:text-red-500 duration-200">
               {letter}
             </div>
