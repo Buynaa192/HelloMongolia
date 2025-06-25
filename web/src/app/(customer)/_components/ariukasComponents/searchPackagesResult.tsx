@@ -1,6 +1,6 @@
 import { PackageType } from "@/app/_providers/AuthProvider";
-import { StarIcon } from "@/app/travel-plans/assets/star";
 import Link from "next/link";
+import { StarIcon } from "../../travel-plans/assets/star";
 type SearchSectionType = {
   packages: PackageType[];
 };

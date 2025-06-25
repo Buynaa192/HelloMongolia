@@ -4,12 +4,36 @@ import Image from "next/image";
 import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
 
 const teamMembers = [
-  { name: "Member One", image: "" },
-  { name: "Member Two", image: "" },
-  { name: "Member Three", image: "" },
-  { name: "Member Four", image: "" },
-  { name: "Member Five", image: "" },
-  { name: "Member Six", image: "" },
+  {
+    name: "Member One",
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
+  },
+  {
+    name: "Member Two",
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
+  },
+  {
+    name: "Member Three",
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
+  },
+  {
+    name: "Member Four",
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
+  },
+  {
+    name: "Member Five",
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
+  },
+  {
+    name: "Member Six",
+    image:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
+  },
 ];
 
 export default function AboutPage() {
@@ -17,7 +41,7 @@ export default function AboutPage() {
     <div className="w-full min-h-screen bg-black text-white">
       <div className="relative w-full h-[70vh] overflow-hidden">
         <Image
-          src=""
+          src="https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg"
           alt="Hiking in Mongolia"
           fill
           className="object-cover object-center"

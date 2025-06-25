@@ -1,8 +1,8 @@
 "use cleint";
 
+import { Hero1and2Props } from "../../page";
 import { HeaderRadientDeco } from "./HeaderRadientDeco";
 import { Hero1Text } from "./Hero1Text";
-import { Hero1and2Props } from "@/app/page";
 
 export const Hero1 = ({ radient, setRadient }: Hero1and2Props) => {
   return (

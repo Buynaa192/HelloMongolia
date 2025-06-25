@@ -4,7 +4,6 @@ import { TopRatedPackages } from "./_components/ariukasComponents/TopRatedPackag
 import { TopDestinationsHero } from "./_components/ariukasComponents/TopDestinations";
 import { ChooseTravelType } from "./_components/ariukasComponents/TravelType";
 import { PartnerCompanies } from "./_components/ariukasComponents/PartnerCompanies";
-import { Header } from "./_components/ariukasComponents/Header";
 import { Hero1 } from "./_components/ariukasComponents/Hero1";
 import { Hero2 } from "./_components/ariukasComponents/Hero2";
 import { useState } from "react";
@@ -18,7 +17,6 @@ export default function Home() {
 
   return (
     <div className="w-full flex flex-col">
-      <Header />
       <Hero1 radient={radient} setRadient={setRadient} />
       <Hero2 radient={radient} />
       <TopDestinationsHero />

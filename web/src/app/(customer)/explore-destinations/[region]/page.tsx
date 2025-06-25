@@ -1,9 +1,7 @@
 "use client";
-import { BackToHomePathButtons } from "@/app/_components/ariukasComponents/BackToHomePagePathButtons";
 import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
-
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -50,20 +48,8 @@ export default function RegionPage() {
         </div>
       </div>
 
-      <BackToHomePathButtons />
       <p className="m-4">{regn?.description}</p>
-      <div className="w-full flex justify-center mb-20">
-        {/* <div className="w-full max-w-4xl aspect-video">
-          <iframe
-            className="w-full h-full rounded-lg"
-            src={regn?.videoUrl}
-            title="Sample Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div> */}
-      </div>
+
       <div className="flex flex-col gap-3 m-4">
         <p className="font-bold text-2xl ml-10">Destinations</p>
         <div className="w-full grid grid-cols-4 gap-4">
