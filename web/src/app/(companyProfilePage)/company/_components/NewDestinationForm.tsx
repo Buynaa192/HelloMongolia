@@ -14,14 +14,12 @@ import {
   Marker,
   useJsApiLoader,
   Autocomplete,
-  DirectionsRenderer,
 } from "@react-google-maps/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/axios";
 import { toast } from "sonner";
-import { LocationMap } from "./LoacationMap";
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
 type NewDestinationFormProps = {
   onCreate: (newDestId: string) => void;
