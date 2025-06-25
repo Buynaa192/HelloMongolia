@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SearchInMongolia } from "./SearchMongolia";
 import {
   ActivityType,
-  CompanyType,
   DestinationType,
   PackageType,
 } from "@/app/_providers/AuthProvider";
@@ -14,14 +13,14 @@ const animatedWords = ["DISCOVER", "EXPLORE", "EXPERIENCE", "FEEL"];
 export type SearchResultsType = {
   destinations: DestinationType[];
   activities: ActivityType[];
-  companies: CompanyType[];
+
   packages: PackageType[];
 };
 
 const emptyResults: SearchResultsType = {
   destinations: [],
   activities: [],
-  companies: [],
+
   packages: [],
 };
 
@@ -39,6 +38,7 @@ export const Hero1Text = ({
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % animatedWords.length);
     }, 2600);
+
     return () => clearInterval(timer);
   }, []);
 
@@ -46,7 +46,6 @@ export const Hero1Text = ({
     results &&
     (results.destinations?.length > 0 ||
       results.activities?.length > 0 ||
-      results.companies?.length > 0 ||
       results.packages?.length > 0);
 
   useEffect(() => {

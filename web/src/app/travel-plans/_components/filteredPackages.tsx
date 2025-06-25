@@ -58,7 +58,16 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
                 <div className="w-full h-30 flex flex-col p-3 absolute bottom-0 bg-black/10 backdrop-blur-lg rounded-b-2xl">
                   <div className="text-[12px] w-fit font-medium text-accent flex items-center gap-2">
                     <img
-                      src={item.companyId.AvatarImage}
+                      src={
+                        item.companyId?.AvatarImage ||
+                        "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png"
+                      }
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.src =
+                          "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
+                      }}
                       className="h-7 rounded-[10px] w-7"
                     />
                     {item.tripType}
