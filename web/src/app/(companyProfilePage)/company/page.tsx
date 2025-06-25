@@ -8,6 +8,7 @@ import { CreatePackage } from "./_components/createPackage";
 import { CompanyDestinations } from "./_components/companyDestinations";
 import Sidebar from "./_components/SideBar";
 import { useAuth } from "@/app/_providers/AuthProvider";
+import AccountSettingsForm from "./_components/AccountSettings";
 
 export default function TravelDashboard() {
   const { view } = usePackageContext();
@@ -58,6 +59,7 @@ export default function TravelDashboard() {
         )}
 
         {view === "create" && <CreatePackage />}
+        {view === "settings" && <AccountSettingsForm />}
       </main>
     </div>
   );

@@ -150,6 +150,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     if (!token) return;
     setAuthToken(token);
     getCompany();
+    console.log(token);
   }, []);
 
   return (
