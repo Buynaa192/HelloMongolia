@@ -1,7 +1,7 @@
 "use client";
 
 import { DestinationType } from "@/app/_providers/AuthProvider";
-import { Bookmark, Share2 } from "lucide-react";
+
 import Image from "next/image";
 import {
   Dialog,
