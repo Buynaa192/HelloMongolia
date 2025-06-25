@@ -5,11 +5,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { LayoutDashboardIcon, LogOut, MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { Drawer } from "./HeaderMenuDrawer";
@@ -17,8 +13,9 @@ import { Drawer } from "./HeaderMenuDrawer";
 export const Header = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const { company } = useAuth();
+  const { company, signOut } = useAuth();
   const headers = [
+    { name: "Home", url: "/" },
     { name: "Destinations", url: "/explore-destinations" },
     { name: "Travel Plans", url: "/travel-plans" },
     { name: "About", url: "/about-us" },
@@ -29,11 +26,7 @@ export const Header = () => {
     <div className="fixed w-full flex justify-between py-2 z-15 px-20 items-center lg:gap-60 bg-white/black backdrop-blur-lg text-lg">
       <div className="w-[80%] lg:flex hidden justify-between">
         {headers.map(({ name, url }) => (
-          <Link
-            key={name}
-            href={url}
-            className="text-white cursor-pointer text-m"
-          >
+          <Link key={name} href={url} className="text-white cursor-pointer text-m">
             {name}
           </Link>
         ))}
@@ -59,24 +52,17 @@ export const Header = () => {
         <div>
           <Popover>
             <PopoverTrigger className="rounded-full overflow-hidden w-10 h-10">
-              <Image
-                src={company.AvatarImage}
-                alt="Company Avatar"
-                width={40}
-                height={40}
-                className="rounded-full object-cover"
-              />
+              <Image src={company.AvatarImage} alt="Company Avatar" width={40} height={40} className="rounded-full object-cover" />
             </PopoverTrigger>
             <PopoverContent className="flex items-center gap-4  cursor-pointer">
-              <Link href="/dashboard" passHref>
-                <a className="flex items-center gap-2 hover:text-blue-600">
+              <Link href={"/company"}>
+                <div className="flex items-center gap-2 hover:text-blue-600">
                   <LayoutDashboardIcon size={16} />
                   <p>Dashboard</p>
-                </a>
+                </div>
               </Link>
 
-              {/* Log out Button */}
-              <div className="flex items-center gap-2 hover:text-red-600 cursor-pointer">
+              <div onClick={signOut} className="flex items-center gap-2 hover:text-red-600 cursor-pointer">
                 <p>Log out</p>
                 <LogOut size={16} />
               </div>
@@ -85,18 +71,10 @@ export const Header = () => {
         </div>
       ) : (
         <div className="flex lg:flex gap-2 justify-end text-lg">
-          <Button
-            variant="ghost"
-            className="text-white hover:bg-blue-500 hover:text-white text-lg"
-            onClick={() => router.push("/login")}
-          >
+          <Button variant="ghost" className="text-white hover:bg-blue-500 hover:text-white text-lg" onClick={() => router.push("/login")}>
             Log in
           </Button>
-          <Button
-            variant="ghost"
-            className="text-white hover:bg-white hover:text-black text-lg"
-            onClick={() => router.push("/sign-up")}
-          >
+          <Button variant="ghost" className="text-white hover:bg-white hover:text-black text-lg" onClick={() => router.push("/sign-up")}>
             Sign up
           </Button>
         </div>
