@@ -268,7 +268,7 @@ export function NewDestinationForm({
             )}
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <div className="flex flex-wrap gap-3">
             {activities.map((act) => (
               <label
                 key={act._id}
