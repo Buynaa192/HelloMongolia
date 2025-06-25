@@ -1,7 +1,6 @@
 import { Hero2Text } from "./Hero2Text";
 
 export const Hero2 = ({ radient }: { radient: "white" | "black" }) => {
-  console.log(radient);
   return (
     <div className="relative h-screen w-full">
       <div

@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -43,11 +44,13 @@ export const TravelTypeCard = ({
             <p className="text-white md:text-4xl text-3xl font-bold text-center z-30">
               {title}
             </p>
-            <Link
-              href={`/travel-plans?tripType=${type}`}
-              className=" w-30 h-7 flex items-center justify-center rounded-[8px] font-medium text-black bg-white hover:bg-black hover:text-white"
-            >
-              EXPLORE
+            <Link href={`/travel-plans?tripType=${type}`}>
+              <Button
+                variant="secondary"
+                className="h-12 w-[200px] cursor-pointer shadow-lg mb-4 text-lg"
+              >
+                EXPLORE
+              </Button>
             </Link>
           </div>
         ) : (
