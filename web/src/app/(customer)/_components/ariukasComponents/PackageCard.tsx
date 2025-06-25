@@ -1,95 +1,64 @@
-import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
+import { PackageType } from "@/app/_providers/AuthProvider";
+import { FaRegClock, FaGlobe, FaStar } from "react-icons/fa";
 
-import Link from "next/link";
-import { PackageItemType, PackageType } from "@/app/_providers/AuthProvider";
+type Props = {
+  pkg: PackageType;
+};
 
-export const PackageCardForCompany = ({ trip }: { trip: PackageType }) => {
+export const PackageCardForCompany: React.FC<Props> = ({ pkg }) => {
   return (
-    <Card className="relative text-white h-full max-h-3xl min-w-[200px] min-h-[150px] w-full max-w-4xl overflow-hidden shadow-xl border-0">
-      <Image
-        src={trip.coverPhoto}
-        alt="nature photo"
-        fill
-        className="object-cover"
-        priority
-      />
-      <div className="absolute inset-0 bg-black/65" />
-      <CardContent className="relative z-10 flex flex-col justify-between h-full text-center md:text-start">
-        <div>
-          <h2 className="w-full text-center lg:text-4xl text-3xl font-bold mb-2">
-            {trip.title}
-          </h2>
-          <div className="flex items-center mb-4 justify-center">
-            {Array.from({ length: trip.rating }).map((_, i) => (
-              <Star
-                key={i}
-                className="text-yellow-400 w-5 h-5 fill-yellow-400 mr-1"
-              />
-            ))}
-          </div>
-          {trip.packageItem.map((item: PackageItemType, index) => (
-            <div
-              key={index}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4 md:text-sm text-gray-200"
-            >
-              <div className="flex flex-col gap-2">
-                <h3 className="font-semibold">Destination</h3>
-                <ul className="hidden md:flex flex-col list-disc ml-4 italic">
-                  <li>{item.destinationId?.destinationName}</li>
-                </ul>
-                <div className="flex flex-col md:hidden italic">
-                  <li>{item.destinationId?.destinationName}</li>
-                </div>
-              </div>
-              <div className="flex flex-col gap-2">
-                <h3 className="font-semibold">Activities</h3>
-                <ul className="hidden md:flex flex-col list-disc ml-4 italic">
-                  {item.activity?.map((act, i) => (
-                    <li key={i}>{act.activityName}</li>
-                  ))}
-                </ul>
-                <div className="flex flex-col md:hidden italic">
-                  {item.activity?.map((act, i) => (
-                    <li key={i}>{act.activityName}</li>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
+    <div className="w-80 h-fit relative max-w-sm rounded-xl overflow-hidden shadow-lg bg-white/10 backdrop-blur hover:shadow-2xl transition-shadow duration-300 group">
+      <div className="relative">
+        <img
+          src={pkg.coverPhoto}
+          alt={pkg.title}
+          className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-115"
+        />
+        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50  group-hover:scale-115 transition-transform duration-300" />
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 ">
+          <button className="px-4 py-2 bg-white text-black font-semibold rounded-md shadow hover:bg-gray-100">
+            View Details
+          </button>
+        </div>
+        <h2 className="absolute bottom-2 left-4 text-white text-xl font-bold drop-shadow-md z-10">
+          {pkg.title}
+        </h2>
+      </div>
 
-          <div className="flex flex-col gap-2">
-            <h3 className="font-semibold">Cost</h3>
-            <div className="text-lg font-bold">
-              ${trip.cost}
-              <div className="hidden md:inline ">
-                <br />
-              </div>
-              <span className="text-sm font-normal italic">per person</span>
-            </div>
+      <div className="p-5">
+        <p className="text-sm line-clamp-3 mb-3 h-10">{pkg.description}</p>
+
+        <div className="flex items-center text-sm space-x-4 mb-2">
+          <span className="flex items-center gap-1">
+            <FaRegClock className="text-primary" color="white" /> {pkg.duration}
+          </span>
+          <span className="flex items-center gap-1">
+            <FaGlobe className="text-primary" color="white" /> {pkg.tripType}
+          </span>
+        </div>
+
+        <div className="flex items-center justify-between mt-4">
+          <div className="font-bold text-lg text-white">${pkg.cost}</div>
+          <div className="flex items-center text-yellow-500 text-sm">
+            <FaStar className="mr-1" /> {pkg.rating.toFixed(1)}
           </div>
         </div>
-        <div className="flex items-center justify-between mt-6">
-          <Button
-            asChild
-            variant="link"
-            className="text-black bg-white hover:bg-black hover:text-white"
-          >
-            <Link href={`/packages/${trip._id}`}>View details</Link>
-          </Button>
-          <p className="text-xs text-gray-300">
-            Tour Operator:{" "}
-            <Link
-              href={`/operators/${trip.companyId._id}`}
-              className="hover:underline hover:text-white transition-colors flex flex-nowrap"
-            >
-              {trip.companyId.name}
-            </Link>
-          </p>
-        </div>
-      </CardContent>
-    </Card>
+
+        <p className="text-xs text-gray-400 mt-3">
+          <span className="font-medium">Available:</span>{" "}
+          {new Date(pkg.availableFrom).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          })}{" "}
+          →{" "}
+          {new Date(pkg.availableUntil).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          })}
+        </p>
+      </div>
+    </div>
   );
 };

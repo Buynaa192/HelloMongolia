@@ -101,6 +101,7 @@ export type CompanyType = {
   reviews: number;
   Rating: number;
 };
+
 type AuthContextType = {
   company?: CompanyType;
   signIn: (email: string, password: string) => Promise<CompanyType>;
