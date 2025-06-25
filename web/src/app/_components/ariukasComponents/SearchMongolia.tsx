@@ -1,16 +1,9 @@
 "use client";
 
 import { api } from "@/axios";
-import React, { useEffect, useRef } from "react";
-import { SectionTitle } from "./SectionTitle";
+import { memo, useEffect, useRef } from "react";
 import { MyLoader } from "./Loader";
 import { SearchResultsType } from "./Hero1Text";
-import {
-  ActivityType,
-  CompanyType,
-  DestinationType,
-  PackageType,
-} from "@/app/_providers/AuthProvider";
 
 interface SearchInMongoliaProps {
   query: string;
@@ -22,11 +15,12 @@ interface SearchInMongoliaProps {
   searchResults: boolean;
 }
 
-import clsx from "clsx";
-import { SearchSection } from "./SearchResultsSections";
-const cn = clsx;
+import { SearchDestination } from "./SearchDestinationResult";
+import { SearchActivities } from "./SearchActivitiesResult";
+import { SearchPackage } from "./searchPackagesResult";
+import { cn } from "@/lib/utils";
 
-export const SearchInMongolia = ({
+const SearchInMongoliaComponent = ({
   query,
   setQuery,
   loading,
@@ -40,7 +34,6 @@ export const SearchInMongolia = ({
   const emptyResults: SearchResultsType = {
     destinations: [],
     activities: [],
-    companies: [],
     packages: [],
   };
 
@@ -50,22 +43,25 @@ export const SearchInMongolia = ({
         containerRef.current &&
         !containerRef.current.contains(event.target as Node)
       ) {
+        console.log("Click outside detected!");
         setQuery("");
         setResults(emptyResults);
         setLoading(false);
       }
     };
 
+    // Add the event listener for mouse click outside
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
+    return () => {
+      // Remove the event listener when the component unmounts
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   useEffect(() => {
     const trimmed = query.trim();
 
-    if (trimmed.length < 1) {
-      return;
-    }
+    if (trimmed.length < 1) return;
 
     setLoading(true);
 
@@ -89,7 +85,7 @@ export const SearchInMongolia = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   };
-
+  console.log(results);
   return (
     <div className="w-full flex flex-col items-center justify-center relative">
       {searchResults && <div className="fixed inset-0 bg-black/80 z-20" />}
@@ -117,7 +113,7 @@ export const SearchInMongolia = ({
       {query.trim().length >= 1 && (
         <div
           ref={containerRef}
-          className="relative z-50 mt-4 w-fit max-w-[1040px] mx-auto"
+          className="relative z-50 mt-4 w-full mx-auto pl-2 pr-2 h-120"
         >
           {loading ? (
             <div className="w-full flex justify-center">
@@ -126,71 +122,22 @@ export const SearchInMongolia = ({
           ) : searchResults ? (
             <div
               className={cn(
-                "grid gap-4 text-white rounded-md",
+                "grid gap-4 text-white rounded-md h-full ",
                 Object.values(results).filter((r) => r?.length > 0).length === 1
                   ? "grid-cols-1 w-100 justify-self-center"
-                  : "w-full grid-cols-1 md:grid-cols-2"
+                  : `w-full grid-cols-3 md:grid-cols-4}`
               )}
             >
               {results.destinations?.length > 0 && (
-                <SearchSection<DestinationType>
-                  title={
-                    <SectionTitle
-                      title="🏔️ Must See Destinations"
-                      count={results.destinations.length}
-                    />
-                  }
-                  items={results.destinations}
-                  field="destinationName"
-                  emptyLabel="destinations"
-                  urlPrefix="/explore-destinations"
-                  backgroundImage="https://res.cloudinary.com/df60cobe2/image/upload/v1750420141/photo-1589654615616-6756a5653100_slupkt.jpg"
-                />
+                <SearchDestination destinations={results.destinations} />
               )}
+
               {results.activities?.length > 0 && (
-                <SearchSection<ActivityType>
-                  title={
-                    <SectionTitle
-                      title="🎯 To do's in Mongolia"
-                      count={results.activities.length}
-                    />
-                  }
-                  items={results.activities}
-                  field="activityName"
-                  emptyLabel="activities"
-                  urlPrefix="/experiences"
-                  backgroundImage="https://res.cloudinary.com/df60cobe2/image/upload/v1750413882/ogguf1sxqs3wlcz451ml.png"
-                />
+                <SearchActivities activities={results.activities} />
               )}
-              {results.companies?.length > 0 && (
-                <SearchSection<CompanyType>
-                  title={
-                    <SectionTitle
-                      title="🏢 Local Tour Operators"
-                      count={results.companies.length}
-                    />
-                  }
-                  items={results.companies}
-                  field="name"
-                  emptyLabel="companies"
-                  urlPrefix="/comapanies"
-                  backgroundImage="https://res.cloudinary.com/df60cobe2/image/upload/v1750321227/MotoInDesert_qclalo.jpg"
-                />
-              )}
+
               {results.packages?.length > 0 && (
-                <SearchSection<PackageType>
-                  title={
-                    <SectionTitle
-                      title="📦 Travel Plans"
-                      count={results.packages.length}
-                    />
-                  }
-                  items={results.packages}
-                  field="title"
-                  emptyLabel="packages"
-                  urlPrefix="/travel-plans"
-                  backgroundImage="https://res.cloudinary.com/df60cobe2/image/upload/v1750322562/nice_hr595q.jpg"
-                />
+                <SearchPackage packages={results.packages} />
               )}
             </div>
           ) : (
@@ -203,3 +150,5 @@ export const SearchInMongolia = ({
     </div>
   );
 };
+
+export const SearchInMongolia = memo(SearchInMongoliaComponent);

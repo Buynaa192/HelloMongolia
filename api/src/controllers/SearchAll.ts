@@ -21,7 +21,7 @@ export const unifiedSearch = async (req, res) => {
       destinationModel.find({ destinationName: containsRegex }),
       activityModel.find({ activityName: containsRegex }),
       companyProfileModel.find({ companyName: containsRegex }),
-      packageModel.find({ title: containsRegex }),
+      packageModel.find({ title: containsRegex }).populate("companyId"),
     ]);
 
     const sortByStartsWith = (arr, field) =>

@@ -91,13 +91,13 @@ export default function PackagePage() {
                 />
               ) : (
                 <div
-                  className={`w-fit h-full flex absolute ${
+                  className={`w-[500%] h-full flex absolute ${
                     item.packageItem.length >= 5 ? "animate-wiggle" : ""
                   } `}
                 >
                   {item.packageItem.slice(0, 5).map((it, index) => {
                     return (
-                      <div key={index} className="w-[1440px]">
+                      <div key={index} className="w-[20%]">
                         <img
                           src={it.image}
                           key={index}
@@ -130,24 +130,6 @@ export default function PackagePage() {
                   <div className="text-[20px] font-semibold">
                     {item.description}
                   </div>
-                </div>
-                <div className="w-50 h-full flex flex-col items-center justify-around ">
-                  {item.packageItem.map((it, ind) => {
-                    return (
-                      <div key={ind} className="w-full  h-[calc(100%/5)] p-3">
-                        <img
-                          src={it.image}
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.onerror = null;
-                            target.src =
-                              "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
-                          }}
-                          className="w-full h-full object-cover rounded-[10px]"
-                        />
-                      </div>
-                    );
-                  })}
                 </div>
               </div>
             </div>
