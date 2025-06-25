@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import { api } from "@/axios";
-import { PackageCard } from "@/app/_components/ariukasComponents/PackageCard";
+import "swiper/css";
+import "swiper/css/navigation";
+import { PackageCarousel } from "@/app/_components/ariukasComponents/PackageCarousel";
 
 export default function CompanyProfile() {
   const params = useParams();
@@ -33,7 +35,6 @@ export default function CompanyProfile() {
     getCompany();
   }, [companyID]);
 
-  console.log("companyInfo", companyInfo);
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="relative w-full h-[300px] md:h-[400px]">
@@ -86,7 +87,6 @@ export default function CompanyProfile() {
                     {companyInfo.about}
                   </p>
 
-                  {/* Rating */}
                   <div className="flex items-center gap-1 mt-4">
                     {[...Array(5)].map((_, i) => (
                       <Star
@@ -152,7 +152,7 @@ export default function CompanyProfile() {
         </div>
       </div>
 
-      <div className="mt-12 max-w-5xl mx-auto px-6">
+      <div className="mt-12 max-w-[1440px] mx-auto px-6">
         <h2 className="text-xl md:text-2xl font-semibold mb-4">
           Company Overview
         </h2>
@@ -163,16 +163,13 @@ export default function CompanyProfile() {
         )}
       </div>
 
-      <div className="mt-12 w-full px-6 pb-20">
-        <h2 className="text-xl md:text-2xl font-semibold mb-4 text-center lg:text-left lg:max-w-5xl mx-auto">
+      <div className="mt-12 w-full mx-auto px-6 pb-2 ">
+        <h2 className="text-xl  max-w-[1440px]  md:text-2xl font-semibold mb-4  lg:max-w-5xl">
           Our travel-plans
         </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto h-100">
-          {companyInfo?.packages.map((pack, index) => (
-            <PackageCard key={index} trip={pack} />
-          ))}
-        </div>
+        {companyInfo?.packages && (
+          <PackageCarousel packages={companyInfo?.packages} />
+        )}
       </div>
     </div>
   );
