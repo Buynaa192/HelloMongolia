@@ -9,13 +9,20 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
+import {
+  GoogleMap,
+  Marker,
+  useJsApiLoader,
+  Autocomplete,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/axios";
 import { toast } from "sonner";
 import { LocationMap } from "./LoacationMap";
-
+const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
 type NewDestinationFormProps = {
   onCreate: (newDestId: string) => void;
   onClose: () => void;
@@ -31,13 +38,28 @@ export function NewDestinationForm({
   const [images, setImages] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  // const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
-  //   null
-  // );
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
+    null
+  );
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [autocomplete, setAutocomplete] =
+    useState<google.maps.places.Autocomplete | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const defaultCenter = {
+    lat: 47.9184,
+    lng: 106.9176,
+  };
+
   const handleRemoveImage = (indexToRemove: number) => {
     setImages((prev) => prev.filter((_, i) => i !== indexToRemove));
     setPreviewUrls((prev) => prev.filter((_, i) => i !== indexToRemove));
   };
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: API_KEY,
+    libraries: ["places"],
+  });
+
   const handleImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
@@ -53,24 +75,19 @@ export function NewDestinationForm({
       toast.error("Please fill all fields including location");
       return;
     }
-
     setLoading(true);
     try {
       const uploadedImageUrls: string[] = [];
 
       if (images.length > 0) {
-        // for (const file of images) {
-        //   const url = await uploadImage(file);
-        //   uploadedImageUrls.push(url);
-        // }
       }
 
-      const response = await api.post("/destination", {
+      const response = await api.post("/destination/post", {
         destinationName: name,
-        region,
-        description,
+        region: region,
+        description: description,
         destinationImages: uploadedImageUrls,
-        location,
+        location: location,
       });
 
       toast.success("Destination created successfully!");
@@ -112,26 +129,72 @@ export function NewDestinationForm({
           Please fill the details for the new destination.
         </DialogDescription>
       </DialogHeader>
+
       <div className="grid gap-4 py-4">
-        <Input
-          placeholder="Destination Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        {isLoaded ? (
+          <>
+            <Autocomplete
+              onLoad={(autocompleteInstance) => {
+                autocompleteInstance.setComponentRestrictions({
+                  country: "mn",
+                });
+                setAutocomplete(autocompleteInstance);
+              }}
+              onPlaceChanged={() => {
+                if (!autocomplete) return;
+                const place = autocomplete.getPlace();
+                if (!place.geometry?.location) return;
+
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+
+                setLocation({ lat, lng });
+                map?.panTo({ lat, lng });
+
+                const nameFromPlace =
+                  place.formatted_address || place.name || "";
+                setName(nameFromPlace);
+              }}
+            >
+              <Input
+                ref={inputRef}
+                placeholder="Search Destination Name..."
+                className="w-full"
+              />
+            </Autocomplete>
+
+            <div className="w-full h-[400px] rounded overflow-hidden border">
+              <GoogleMap
+                mapContainerStyle={{ width: "100%", height: "100%" }}
+                center={location || defaultCenter}
+                zoom={6}
+                onLoad={(mapInstance) => setMap(mapInstance)}
+              >
+                {location && <Marker position={location} />}
+              </GoogleMap>
+            </div>
+          </>
+        ) : (
+          <div>Loading map...</div>
+        )}
+
         <select
           className="border rounded-md p-2"
           value={region}
-          onChange={(e) => setRegion(e.target.value)}>
+          onChange={(e) => setRegion(e.target.value)}
+        >
           <option value="Southern-Mongolia">Southern Mongolia</option>
           <option value="Northern-Mongolia">Northern Mongolia</option>
           <option value="Eastern-Mongolia">Eastern Mongolia</option>
           <option value="Western-Mongolia">Western Mongolia</option>
         </select>
+
         <Textarea
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+
         <div>
           <label className="block mb-2 font-medium text-gray-700">
             Destination Images
@@ -140,7 +203,8 @@ export function NewDestinationForm({
             onDragOver={handleDragOver}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className="border border-dashed border-gray-400 rounded-md p-6 cursor-pointer text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 transition-colors">
+            className="border border-dashed border-gray-400 rounded-md p-6 cursor-pointer text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 transition-colors"
+          >
             Click or drag images here to upload
           </div>
           <input
@@ -157,7 +221,8 @@ export function NewDestinationForm({
               {previewUrls.map((url, index) => (
                 <div
                   key={index}
-                  className="relative border rounded-lg overflow-hidden shadow-sm">
+                  className="relative border rounded-lg overflow-hidden shadow-sm"
+                >
                   <img
                     src={url}
                     alt={`Preview ${index + 1}`}
@@ -168,7 +233,8 @@ export function NewDestinationForm({
                     type="button"
                     onClick={() => handleRemoveImage(index)}
                     className="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded opacity-100 hover:bg-red-700 transition-colors"
-                    aria-label="Remove image">
+                    aria-label="Remove image"
+                  >
                     ✕
                   </button>
                 </div>
@@ -176,9 +242,8 @@ export function NewDestinationForm({
             </div>
           )}
         </div>
-
-        <LocationMap />
       </div>
+
       <DialogFooter className="flex gap-2 justify-end">
         <Button disabled={loading} onClick={handleSubmit}>
           {loading ? "Creating..." : "Create"}

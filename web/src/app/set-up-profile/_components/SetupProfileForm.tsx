@@ -126,7 +126,7 @@ export default function SetupProfileForm() {
         Rating: company.Rating,
       } as CompanyType);
 
-      router.push("/companies/company");
+      router.push(`/company`);
     } catch {
       alert("Update failed.");
     } finally {
@@ -143,8 +143,6 @@ export default function SetupProfileForm() {
       </h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-          {/* form fields here same as your original code */}
-          {/* Phone Number */}
           <FormField
             control={form.control}
             name="phoneNumber"
@@ -159,7 +157,6 @@ export default function SetupProfileForm() {
             )}
           />
 
-          {/* Company Name */}
           <FormField
             control={form.control}
             name="name"
@@ -174,7 +171,6 @@ export default function SetupProfileForm() {
             )}
           />
 
-          {/* Since */}
           <FormField
             control={form.control}
             name="since"
@@ -189,7 +185,6 @@ export default function SetupProfileForm() {
             )}
           />
 
-          {/* Website URL */}
           <FormField
             control={form.control}
             name="websiteURL"
@@ -204,7 +199,6 @@ export default function SetupProfileForm() {
             )}
           />
 
-          {/* About */}
           <FormField
             control={form.control}
             name="about"
@@ -223,7 +217,6 @@ export default function SetupProfileForm() {
             )}
           />
 
-          {/* Avatar Image */}
           <FormField
             control={form.control}
             name="AvatarImageFile"
