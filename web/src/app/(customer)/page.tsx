@@ -18,7 +18,6 @@ export default function Home() {
 
   return (
     <div className="w-full flex flex-col">
-      <Header />
       <Hero1 radient={radient} setRadient={setRadient} />
       <Hero2 radient={radient} />
       <TopDestinationsHero />

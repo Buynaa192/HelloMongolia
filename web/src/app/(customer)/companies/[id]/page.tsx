@@ -8,9 +8,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import { api } from "@/axios";
-import "swiper/css";
-import "swiper/css/navigation";
-import { PackageCarousel } from "@/app/_components/ariukasComponents/PackageCarousel";
+import { PackageCardForCompany } from "../../_components/ariukasComponents/PackageCard";
 
 export default function CompanyProfile() {
   const params = useParams();
@@ -167,9 +165,12 @@ export default function CompanyProfile() {
         <h2 className="text-xl  max-w-[1440px]  md:text-2xl font-semibold mb-4  lg:max-w-5xl">
           Our travel-plans
         </h2>
-        {companyInfo?.packages && (
-          <PackageCarousel packages={companyInfo?.packages} />
-        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto h-100">
+          {companyInfo?.packages.map((pack, index) => (
+            <PackageCardForCompany key={index} trip={pack} />
+          ))}
+        </div>
       </div>
     </div>
   );

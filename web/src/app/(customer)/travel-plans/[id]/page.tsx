@@ -6,14 +6,15 @@ import {
   PackageType,
 } from "@/app/_providers/AuthProvider";
 import BasicGoogleMapWithDirections from "@/app/maptest/_component/PackageGoogleMap";
-import { CashIcon } from "@/app/travel-plans/assets/cash";
-import { DurationIcon } from "@/app/travel-plans/assets/durationIcon";
-import { StarIcon } from "@/app/travel-plans/assets/star";
+
 import { api } from "@/axios";
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { DurationIcon } from "../assets/durationIcon";
+import { StarIcon } from "lucide-react";
+import { CashIcon } from "../assets/cash";
 type Params = {
   id: string;
 };

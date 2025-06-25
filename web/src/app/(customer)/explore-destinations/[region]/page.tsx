@@ -1,5 +1,5 @@
 "use client";
-import { BackToHomePathButtons } from "@/app/_components/ariukasComponents/BackToHomePagePathButtons";
+import { BackToHomePathButtons } from "@/app/(customer)/ariukasComponents/BackToHomePagePathButtons";
 import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
