@@ -14,7 +14,10 @@ export default function RootLayout({
       <Suspense fallback={<div>Loading travel plans...</div>}>
         <div className="w-full flex flex-col items-center">
           <Header />
-          <div className="w-full flex flex-col items-center"> {children}</div>
+          <div className="w-full flex flex-col items-center mb-10">
+            {" "}
+            {children}
+          </div>
           <Footer />
         </div>
       </Suspense>

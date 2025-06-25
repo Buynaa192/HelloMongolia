@@ -13,7 +13,6 @@ import { PackageCardForCompany } from "../../_components/ariukasComponents/Packa
 export default function CompanyProfile() {
   const params = useParams();
   const companyID = params.id;
-
   const [loading, setLoading] = useState(false);
   const [companyInfo, setCompanyInfo] = useState<CompanyType | null>(null);
 
@@ -34,10 +33,10 @@ export default function CompanyProfile() {
   }, [companyID]);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="w-full min-h-screen bg-black text-white">
       <div className="relative w-full h-[300px] md:h-[400px]">
         {loading || !companyInfo?.background ? (
-          <Skeleton className="w-full h-full absolute" />
+          <Skeleton className="w-full h-full absolute animate-pulse rounded-lg" />
         ) : (
           <Image
             src={companyInfo.background}
@@ -50,11 +49,11 @@ export default function CompanyProfile() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 -mt-24 relative z-10">
-        <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/10">
+        <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/10 animate-fade-in">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="relative w-28 h-28 rounded-full overflow-hidden border-4 border-white/20 shadow-md">
               {loading || !companyInfo?.AvatarImage ? (
-                <Skeleton className="w-full h-full rounded-full" />
+                <Skeleton className="w-full h-full rounded-full animate-pulse" />
               ) : (
                 <Image
                   src={companyInfo.AvatarImage}
@@ -66,12 +65,12 @@ export default function CompanyProfile() {
             </div>
 
             <div className="flex-1 w-full">
-              {loading || !companyInfo ? (
+              {!companyInfo ? (
                 <>
-                  <Skeleton className="h-6 w-48 mb-2" />
-                  <Skeleton className="h-4 w-64 mb-3" />
-                  <Skeleton className="h-4 w-32 mb-3" />
-                  <Skeleton className="h-10 w-32 mt-4" />
+                  <Skeleton className="h-6 w-48 mb-2 animate-pulse" />
+                  <Skeleton className="h-4 w-64 mb-3 animate-pulse" />
+                  <Skeleton className="h-4 w-32 mb-3 animate-pulse" />
+                  <Skeleton className="h-10 w-32 mt-4 animate-pulse" />
                 </>
               ) : (
                 <>
@@ -85,6 +84,7 @@ export default function CompanyProfile() {
                     {companyInfo.about}
                   </p>
 
+                  {/* Rating */}
                   <div className="flex items-center gap-1 mt-4">
                     {[...Array(5)].map((_, i) => (
                       <Star
@@ -107,6 +107,7 @@ export default function CompanyProfile() {
                     </span>
                   </div>
 
+                  {/* Destinations */}
                   <div className="flex flex-wrap gap-2 mt-4">
                     {companyInfo.availableDestinations?.map((d, i) => (
                       <span
@@ -118,6 +119,7 @@ export default function CompanyProfile() {
                     ))}
                   </div>
 
+                  {/* Buttons */}
                   <div className="mt-6 flex flex-wrap gap-3">
                     {companyInfo.phoneNumber && (
                       <Button className="bg-white text-black hover:bg-white/80 transition">
@@ -150,26 +152,36 @@ export default function CompanyProfile() {
         </div>
       </div>
 
-      <div className="mt-12 max-w-[1440px] mx-auto px-6">
-        <h2 className="text-xl md:text-2xl font-semibold mb-4">
-          Company Overview
-        </h2>
-        {loading || !companyInfo ? (
-          <Skeleton className="h-24 w-full" />
-        ) : (
-          <p className="text-gray-300 leading-relaxed">{companyInfo.about}</p>
-        )}
-      </div>
-
-      <div className="mt-12 w-full mx-auto px-6 pb-2 ">
-        <h2 className="text-xl  max-w-[1440px]  md:text-2xl font-semibold mb-4  lg:max-w-5xl">
-          Our travel-plans
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto h-100">
-          {companyInfo?.packages.map((pack, index) => (
-            <PackageCardForCompany key={index} trip={pack} />
-          ))}
+      <div className="mt-12 max-w-[1440px] mx-auto px-6 flex flex-col gap-10">
+        <div className="w-full">
+          <h2 className="text-xl md:text-2xl font-semibold mb-4">
+            Company Overview
+          </h2>
+          {loading || !companyInfo ? (
+            <Skeleton className="h-24 w-full animate-pulse" />
+          ) : (
+            <p className="text-gray-300 leading-relaxed animate-fade-in">
+              {companyInfo.about}
+            </p>
+          )}
+        </div>
+        <div className="w-full">
+          <h2 className="text-xl max-w-[1440px] md:text-2xl font-semibold mb-4 lg:max-w-5xl ">
+            Our travel-plans
+          </h2>
+          {companyInfo && companyInfo.packages.length > 0 ? (
+            <div className="w-full flex overflow-x-scroll">
+              <div className="flex gap-4">
+                {companyInfo?.packages.map((pack, index) => (
+                  <PackageCardForCompany key={index} pkg={pack} />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500 italic">
+              {companyInfo?.name} hasn`&apos;`t posted packages yet.
+            </p>
+          )}
         </div>
       </div>
     </div>
