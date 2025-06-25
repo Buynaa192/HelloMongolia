@@ -179,7 +179,7 @@ export default function CompanyProfile() {
             </div>
           ) : (
             <p className="text-sm text-gray-500 italic">
-              {companyInfo?.name} hasn't posted packages yet.
+              {companyInfo?.name} hasn`&apos;`t posted packages yet.
             </p>
           )}
         </div>
