@@ -2,7 +2,7 @@ export const TravelPlanHome = () => {
   return (
     <div className="w-full h-230 relative bg-linear-to-br from-red-500 to-40% to-black">
       <video
-        className="absolute  w-[1440px] h-full object-cover z-0"
+        className="absolute  w-full h-full object-cover z-0"
         autoPlay
         muted
         loop
