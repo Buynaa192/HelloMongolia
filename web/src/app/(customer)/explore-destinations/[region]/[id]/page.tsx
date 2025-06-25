@@ -1,6 +1,5 @@
 "use client";
 
-import { BackToHomePathButtons } from "@/app/(customer)/ariukasComponents/BackToHomePagePathButtons";
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DesdinationPackage } from "@/components/buynaasComponents/destinationPackage/desPackage";
@@ -42,7 +41,6 @@ export default function Destination() {
   return (
     <div className="w-full min-h-screen  flex flex-col gap-6 pb-10">
       <DestinationHero destination={destination} />
-      <BackToHomePathButtons />
 
       <section className="flex flex-col lg:flex-row p-6 gap-6 w-full">
         <div className="space-y-6 bg-white rounded-2xl p-8 shadow-lg w-full">

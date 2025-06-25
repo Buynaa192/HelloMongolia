@@ -4,6 +4,10 @@ import { api } from "@/axios";
 import { memo, useEffect, useRef } from "react";
 import { MyLoader } from "./Loader";
 import { SearchResultsType } from "./Hero1Text";
+import { cn } from "@/lib/utils";
+import { SearchDestination } from "./SearchDestinationResult";
+import { SearchActivities } from "./SearchActivitiesResult";
+import { SearchPackage } from "./searchPackagesResult";
 
 interface SearchInMongoliaProps {
   query: string;
@@ -14,11 +18,6 @@ interface SearchInMongoliaProps {
   setResults: React.Dispatch<React.SetStateAction<SearchResultsType>>;
   searchResults: boolean;
 }
-
-import { SearchDestination } from "./SearchDestinationResult";
-import { SearchActivities } from "./SearchActivitiesResult";
-import { SearchPackage } from "./searchPackagesResult";
-import { cn } from "@/lib/utils";
 
 const SearchInMongoliaComponent = ({
   query,
@@ -50,11 +49,9 @@ const SearchInMongoliaComponent = ({
       }
     };
 
-    // Add the event listener for mouse click outside
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      // Remove the event listener when the component unmounts
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);

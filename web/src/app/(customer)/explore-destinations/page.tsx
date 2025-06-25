@@ -8,8 +8,7 @@ import { SearchIcon } from "lucide-react";
 import { Regions } from "@/components/buynaasComponents/regionsComponents/regions";
 import { PopularDestination } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestination";
 import { api } from "@/axios";
-import { DestinationType, RegionType } from "../_providers/AuthProvider";
-import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
+import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
 
 export default function DestinatioExplore() {
   const [destination, setDestination] = useState<DestinationType[]>([]);
@@ -96,7 +95,6 @@ export default function DestinatioExplore() {
           )}
         </div>
       </div>
-      <BackToHomePathButtons />
       <Regions regions={regions} />
       <PopularDestination destination={destination} regions={regions} />
     </div>

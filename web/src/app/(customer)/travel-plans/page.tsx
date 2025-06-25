@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { api } from "@/axios";
 
-import { PackageType } from "../_providers/AuthProvider";
 import { FilteredPackages } from "./_components/filteredPackages";
 import { Search } from "./_components/search";
 import { SearchFilter } from "./_components/searchFIlter";
 import { TravelPlanHome } from "./_components/travelPLanHome";
 import Link from "next/link";
+import { PackageType } from "@/app/_providers/AuthProvider";
 
 export type TripType =
   | "Scenery"
