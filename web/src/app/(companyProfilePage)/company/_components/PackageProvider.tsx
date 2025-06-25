@@ -13,7 +13,7 @@ type CreatePackageItemInput = {
   image?: File | string;
   destinationId: string;
   description: string;
-  accomodation: string;
+  accommodation: string;
   activity: string[];
 };
 type PackageContextProps = {
@@ -172,7 +172,7 @@ export function PackageProvider({ children }: { children: ReactNode }) {
         destinationId: itemData.destinationId,
         description: itemData.description,
         activity: itemData.activity,
-        accomodation: itemData.accomodation,
+        accommodation: itemData.accommodation,
       });
 
       toast.success("Package Item created successfully!");
@@ -180,6 +180,7 @@ export function PackageProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error("addPackageItem error:", error);
       toast.error("Failed to create package item");
+      return undefined;
     } finally {
       setLoading(false);
     }

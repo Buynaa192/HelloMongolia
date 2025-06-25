@@ -13,6 +13,7 @@ import AccountSettingsForm from "./_components/AccountSettings";
 export default function TravelDashboard() {
   const { view } = usePackageContext();
   const { company } = useAuth();
+  console.log(company?._id);
   return (
     <div className="flex h-screen bg-gradient-to-br from-black-400 to-gray-900 text-gray-800">
       <Sidebar />

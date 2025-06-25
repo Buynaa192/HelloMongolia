@@ -17,7 +17,7 @@ export const CompanyPackages = ({ companyId }: CompanyPackagesProps) => {
     if (companyId) {
       getPackages(companyId);
     }
-  }, [companyId]);
+  }, []);
 
   const toggleExpanded = () => {
     setIsExpanded((prev) => !prev);
@@ -49,8 +49,8 @@ export const CompanyPackages = ({ companyId }: CompanyPackagesProps) => {
         className={`grid grid-cols-3 gap-6 transition-all duration-300 ${
           isExpanded ? "max-h-[600px] overflow-y-scroll pr-2" : ""
         }`}>
-        {displayedPackages.map((item) => (
-          <PackageCard key={item._id} packageId={item._id} />
+        {displayedPackages.map((item, index) => (
+          <PackageCard key={`${item._id}-${index}`} packageId={item._id} />
         ))}
       </div>
 

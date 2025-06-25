@@ -111,8 +111,7 @@ export const CreatePackage = () => {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="bg-white px-6 md:px-12 py-10 shadow-xl rounded-2xl space-y-8 w-full"
-            >
+              className="bg-white px-6 md:px-12 py-10 shadow-xl rounded-2xl space-y-8 w-full">
               <FormField
                 control={form.control}
                 name="coverPhoto"
@@ -224,20 +223,17 @@ export const CreatePackage = () => {
                       <FormControl>
                         <select
                           {...field}
-                          className="w-full border rounded p-2"
-                        >
-                          <option value="Sightseeing">Sightseeing</option>
+                          className="w-full border rounded p-2">
                           <option value="Adventure">Adventure</option>
-                          <option value="Culture & history">
-                            Culture & History
-                          </option>
-                          <option value="Family vacations">
-                            Family Vacations
-                          </option>
+                          <option value="Scenery">Scenery</option>
+                          <option value="Cultural">Cultural</option>
+                          <option value="Historical">Historical</option>
+                          <option value="Family">Family</option>
                           <option value="Scientific">Scientific</option>
                           <option value="Festival & Events">
                             Festival & Events
                           </option>
+                          <option value="Off-road">Off-road</option>
                         </select>
                       </FormControl>
                       <FormMessage />
@@ -322,8 +318,7 @@ export const CreatePackage = () => {
                   className={`w-full md:w-auto flex justify-center items-center gap-2 px-6 py-3 rounded-md text-white ${
                     loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"
                   }`}
-                  disabled={loading}
-                >
+                  disabled={loading}>
                   {loading ? (
                     <>
                       <Loader className="animate-spin" size={18} />
@@ -343,14 +338,12 @@ export const CreatePackage = () => {
           <div className="flex gap-4 mb-4">
             <Button
               variant={viewMode === "create" ? "default" : "outline"}
-              onClick={() => setViewMode("create")}
-            >
+              onClick={() => setViewMode("create")}>
               ➕ Create New Itinerary
             </Button>
             <Button
               variant={viewMode === "list" ? "default" : "outline"}
-              onClick={() => setViewMode("list")}
-            >
+              onClick={() => setViewMode("list")}>
               📋 View All Itineraries
             </Button>
           </div>

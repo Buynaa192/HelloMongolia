@@ -30,7 +30,7 @@ export const PackageDialogContent = ({ packageData }: Props) => {
   const ratingStar = (rating: number) =>
     Array.from({ length: 5 }).map((_, i) => (
       <Star
-        key={i}
+        key={`rating-${packageData._id}-${i}`}
         size={18}
         className={
           i <= rating - 1 ? "text-yellow-400 fill-yellow-400" : "text-gray-300"

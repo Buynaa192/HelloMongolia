@@ -23,6 +23,8 @@ import { api } from "@/axios";
 import { DestinationSelector } from "./DestinationSelector";
 import { AlertDial } from "./Alert";
 import { Stepper } from "./ui/Stepper";
+import { AccommodationSelector } from "./AccommodationSelector";
+import { toast } from "sonner";
 export type createPackageItemType = {
   message: string;
   package: PackageItemType;
@@ -36,7 +38,7 @@ const itemSchema = z.object({
       message: "Only .jpg, .jpeg, .png and .webp formats are supported.",
     }),
   destinationId: z.string().min(1),
-  accomodation: z.string().min(1),
+  accommodation: z.string().min(1),
   activity: z.array(z.string()).min(1),
 });
 
@@ -56,7 +58,7 @@ export const CreatePackageItemForm = () => {
       title: "",
       description: "",
       destinationId: "",
-      accomodation: "",
+      accommodation: "",
       activity: [],
     },
   });
@@ -74,10 +76,14 @@ export const CreatePackageItemForm = () => {
   }, []);
 
   const onSubmit = async (data: ItemFormType) => {
+    console.log(data);
     const itemWithOrder = { ...data, order };
-    const itemData: createPackageItemType = await createPackageItemFun(
-      itemWithOrder
-    );
+    const itemData: createPackageItemType | undefined =
+      await createPackageItemFun(itemWithOrder);
+    if (!itemData) {
+      toast.error("Item үүсгэх үед алдаа гарлаа.");
+      return;
+    }
     if (newPackage?._id && itemData.package._id) {
       await addItemToPackage(newPackage?._id, itemData.package._id);
     }
@@ -179,15 +185,12 @@ export const CreatePackageItemForm = () => {
           />
           <FormField
             control={form.control}
-            name="accomodation"
+            name="accommodation"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Accommodation</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+              <AccommodationSelector
+                value={field.value}
+                onChange={field.onChange}
+              />
             )}
           />
 

@@ -7,7 +7,7 @@ import { getAllAccommodations } from "../controllers/accomodation/GetAllAccomoda
 
 export const AccommodationRouter = Router()
   .get("/", getAllAccommodations)
-  .get("/:accommodationID", getAccommodationByID)
+  // .get("/:accommodationID", getAccommodationByID)
   .post("/post", createAccommodation)
   .put("/update", updateAccommodation)
   .delete("/delete", deleteAccommodation);
