@@ -198,7 +198,7 @@ export const CreatePackageItemForm = () => {
               <FormItem>
                 <FormLabel>Activities</FormLabel>
                 <FormControl>
-                  <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
+                  <div className="flex flex-wrap md:grid-cols-4 gap-4">
                     {activity?.map((act) => (
                       <label
                         key={act._id}
