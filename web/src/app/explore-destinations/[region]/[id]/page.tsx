@@ -6,6 +6,7 @@ import { api } from "@/axios";
 import { DesdinationPackage } from "@/components/buynaasComponents/destinationPackage/desPackage";
 import { DestinationHero } from "@/components/buynaasComponents/destinationPackage/destinationImages";
 import Image from "next/image";
+import Link from "next/link";
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -39,47 +40,42 @@ export default function Destination() {
       </div>
     );
   }
-  console.log(destination);
+
 
   return (
     <div className="w-full min-h-screen  flex flex-col gap-6 pb-10">
       <DestinationHero destination={destination} />
       <BackToHomePathButtons />
+     
+  <section className="flex flex-col lg:flex-row p-6 gap-6 w-full">
+  <div className="space-y-6 bg-white rounded-2xl p-8 shadow-lg w-full">
+    <h1 className="text-4xl font-bold text-gray-900">
+      {destination.destinationName}
+    </h1>
 
-      <div className="grid md:grid-cols-2 gap-6 px-6">
-        <div className="text-gray-700 text-base leading-relaxed border border-gray-200 rounded-lg p-4 bg-gray-50 shadow-sm">
-          {destination.description}
-        </div>
-        <div className="relative h-80 border border-gray-200 rounded-lg overflow-hidden">
-          {destination.destinationImages?.[1] && (
-            <Image
-              src={destination.destinationImages[1]}
-              alt={`${destination.destinationName} image`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          )}
-        </div>
-      </div>
+    <p className="text-gray-600 leading-relaxed">
+      {destination.description}
+    </p>
 
-      <div className="grid md:grid-cols-2 gap-6 px-6">
-        <div className="relative h-80 border border-gray-200 rounded-lg overflow-hidden">
-          {destination.destinationImages?.[0] && (
-            <Image
-              src={destination.destinationImages[0]}
-              alt={`${destination.destinationName} image`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          )}
-        </div>
-        <div className="text-gray-700 text-base leading-relaxed border border-gray-200 rounded-lg p-4 bg-gray-50 shadow-sm">
-          {destination.description}
-        </div>
+    <div className="border rounded-xl p-4 bg-gray-50">
+      <h2 className="font-semibold text-xl mb-3 text-gray-800">Activities</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-gray-700">
+        {destination.activities.map((item, indx) => (
+          <div
+            key={indx}
+            className="flex items-center gap-2 bg-white p-2 rounded-md shadow-sm border"
+          >
+            <span className="text-lg">{item.emoji}</span>
+            <span>{item.activityName}</span>
+          </div>
+        ))}
       </div>
+    </div>
+  </div>
+</section>
+     
       <DesdinationPackage id={id} />
+      
     </div>
   );
 }

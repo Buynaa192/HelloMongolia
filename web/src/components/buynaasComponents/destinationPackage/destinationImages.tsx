@@ -33,16 +33,7 @@ export const DestinationHero = ({ destination }: Props) => {
           </h1>
         </div>
 
-        <div className="flex space-x-2 mt-4 md:mt-0">
-          <button className="flex items-center border rounded-lg px-3 py-1.5 text-sm hover:bg-gray-100">
-            <Share2 size={16} className="mr-1" />
-            Share
-          </button>
-          <button className="flex items-center border rounded-lg px-3 py-1.5 text-sm hover:bg-gray-100">
-            <Bookmark size={16} className="mr-1" />
-            Save
-          </button>
-        </div>
+        
       </div>
 
       <div className="grid grid-cols-4 grid-rows-2 gap-2 h-[400px] overflow-hidden rounded-xl">
@@ -110,5 +101,6 @@ export const DestinationHero = ({ destination }: Props) => {
         </div>
       </div>
     </section>
+   
   );
 };

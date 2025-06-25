@@ -15,7 +15,7 @@ export const DesdinationPackage = ({ id }: idType) => {
     const GetPackage = async () => {
       const res = await api.get(`package/destination/${id}`);
       setPackages(res.data.packages);
-      console.log(res.data.packages);
+   
     };
     GetPackage();
   }, []);
@@ -24,10 +24,10 @@ export const DesdinationPackage = ({ id }: idType) => {
     <div className="w-full grid grid-cols-5  h-100 gap-4 p-4 text-white ">
       {packages.map((item, indx) => {
         return (
-          <Link key={indx} href={`/travel-plans/${item._id}`}>
+          <Link className=" rounded-lg" key={indx} href={`/travel-plans/${item._id}`}>
             <div className="w-full h-full rounded-lg ">
               <Image
-                className="w-full h-[calc(100%-50px)]"
+                className="w-full h-[calc(100%-50px)] rounded-lg"
                 alt={item.coverPhoto}
                 src={item.coverPhoto}
                 width={500}
