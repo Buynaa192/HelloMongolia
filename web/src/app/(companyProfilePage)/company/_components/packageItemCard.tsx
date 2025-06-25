@@ -1,6 +1,5 @@
 import { ActivityType } from "@/app/_providers/AuthProvider";
 import { Button } from "@/components/ui/button";
-import { Loader } from "lucide-react";
 import { useState } from "react";
 
 type PackageItemCardProps = {
@@ -8,7 +7,6 @@ type PackageItemCardProps = {
   image: string;
   description: string;
   activity: ActivityType[];
-  packageId: string;
   packageItemId: string;
   packageItems: () => Promise<void>;
   setSelectedItemId: (value: string) => void;
@@ -19,11 +17,9 @@ export const PackageItemCard = ({
   image,
   description,
   activity,
-  packageId,
   packageItemId,
   setSelectedItemId,
 }: PackageItemCardProps) => {
-  const [loading, setLoading] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
 
   // const removeFromPackage = async () => {

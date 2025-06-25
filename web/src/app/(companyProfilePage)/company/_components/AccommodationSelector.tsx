@@ -2,9 +2,15 @@
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { api } from "@/axios";
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 
 type Accommodation = {
   _id: string;
@@ -100,8 +106,15 @@ export const AccommodationSelector = ({ value, onChange }: Props) => {
             ➕ Create New Accommodation
           </Button>
         </DialogTrigger>
+
         <DialogContent className="space-y-4">
-          <h3 className="text-lg font-semibold">New Accommodation</h3>
+          <DialogHeader>
+            <DialogTitle>Create New Destination</DialogTitle>
+            <DialogDescription>
+              Please fill the details for the new destination.
+            </DialogDescription>
+          </DialogHeader>
+
           <Input
             placeholder="Hotel Name"
             value={newHotelName}

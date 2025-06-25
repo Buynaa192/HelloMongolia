@@ -8,6 +8,7 @@ import { usePackageContext } from "./PackageProvider";
 import { Stepper } from "./ui/Stepper";
 import { AlertDial } from "./Alert";
 import { toast } from "sonner";
+import { Loader } from "lucide-react";
 export const PackageItemList = ({ packageId }: { packageId: string }) => {
   const { newPackage, addItemToPackage } = usePackageContext();
   const [items, setItems] = useState<PackageItemType[]>([]);
@@ -59,7 +60,6 @@ export const PackageItemList = ({ packageId }: { packageId: string }) => {
             image={item.image}
             description={item.description}
             activity={item.activity}
-            packageId={packageId}
             packageItemId={item._id}
             packageItems={packageItems}
             setSelectedItemId={setSelectedItemId}
@@ -76,7 +76,7 @@ export const PackageItemList = ({ packageId }: { packageId: string }) => {
         <button
           onClick={addToPackage}
           className="bg-blue-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-blue-700 transition">
-          Submit Itinerary
+          {loading ? <Loader className="animate-spin" /> : "Submit Itinerary"}
         </button>
       </div>
     </div>

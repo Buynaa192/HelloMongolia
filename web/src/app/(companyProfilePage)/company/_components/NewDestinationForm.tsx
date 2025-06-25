@@ -177,62 +177,91 @@ export function NewDestinationForm({
                   setLocation({ lat, lng });
                   map?.panTo({ lat, lng });
 
-                  setSearchLocation(
-                    place.formatted_address || place.name || ""
-                  );
-                }}
-              >
-                <Input
-                  ref={inputRef}
-                  placeholder="Search location on map"
-                  value={searchLocation}
-                  onChange={(e) => setSearchLocation(e.target.value)}
-                />
-              </Autocomplete>
+                setLocation({ lat, lng });
+                map?.panTo({ lat, lng });
 
-              <div className="w-full h-[400px] rounded overflow-hidden border">
-                <GoogleMap
-                  mapContainerStyle={{ width: "100%", height: "100%" }}
-                  center={location || defaultCenter}
-                  zoom={6}
-                  onLoad={(mapInstance) => setMap(mapInstance)}
-                >
-                  {location && <Marker position={location} />}
-                </GoogleMap>
-              </div>
-            </>
-          ) : (
-            <p>Loading map...</p>
-          )}
+                const nameFromPlace =
+                  place.formatted_address || place.name || "";
+                setName(nameFromPlace);
+              }}>
+              <Input
+                ref={inputRef}
+                placeholder="Search Destination Name..."
+                className="w-full"
+              />
+            </Autocomplete>
 
-          <select
-            className="border rounded-md p-2"
-            value={region}
-            onChange={(e) => setRegion(e.target.value)}
-          >
-            <option value="6859247b611c9aae4411aaa4">Southern Mongolia</option>
-            <option value="68592416611c9aae4411aaa2">Northern Mongolia</option>
-            <option value="685924ef611c9aae4411aaa7">Eastern Mongolia</option>
-            <option value="68592534611c9aae4411aaaa">Western Mongolia</option>
-          </select>
+            <div className="w-full h-[400px] rounded overflow-hidden border">
+              <GoogleMap
+                mapContainerStyle={{ width: "100%", height: "100%" }}
+                center={location || defaultCenter}
+                zoom={6}
+                onLoad={(mapInstance) => setMap(mapInstance)}>
+                {location && <Marker position={location} />}
+              </GoogleMap>
+            </div>
+          </>
+        ) : (
+          <div>Loading map...</div>
+        )}
 
-          <Textarea
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+        <select
+          className="border rounded-md p-2"
+          value={region}
+          onChange={(e) => setRegion(e.target.value)}>
+          <option value="Southern-Mongolia">Southern Mongolia</option>
+          <option value="Northern-Mongolia">Northern Mongolia</option>
+          <option value="Eastern-Mongolia">Eastern Mongolia</option>
+          <option value="Western-Mongolia">Western Mongolia</option>
+        </select>
+
+        <Textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+
+        <div>
+          <label className="block mb-2 font-medium text-gray-700">
+            Destination Images
+          </label>
+          <div
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            onClick={() => fileInputRef.current?.click()}
+            className="border border-dashed border-gray-400 rounded-md p-6 cursor-pointer text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 transition-colors">
+            Click or drag images here to upload
+          </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleImagesChange}
+            className="hidden"
           />
 
-          <div>
-            <label className="block mb-2 font-medium text-gray-700">
-              Destination Images
-            </label>
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={handleDrop}
-              className="border border-dashed border-gray-400 rounded-md p-6 text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 cursor-pointer"
-            >
-              Click or drag images here to upload
+          {previewUrls.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+              {previewUrls.map((url, index) => (
+                <div
+                  key={index}
+                  className="relative border rounded-lg overflow-hidden shadow-sm">
+                  <img
+                    src={url}
+                    alt={`Preview ${index + 1}`}
+                    className="w-full h-32 object-cover"
+                    onClick={() => window.open(url, "_blank")}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(index)}
+                    className="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded opacity-100 hover:bg-red-700 transition-colors"
+                    aria-label="Remove image">
+                    ✕
+                  </button>
+                </div>
+              ))}
             </div>
             <input
               ref={fileInputRef}

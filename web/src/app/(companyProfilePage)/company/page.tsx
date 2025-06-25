@@ -1,5 +1,4 @@
 "use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { CompanyPackages } from "./_components/companyPackages";
@@ -46,15 +45,6 @@ export default function TravelDashboard() {
 
             <div className="col-span-1 space-y-4">
               {company?._id && <CompanyDestinations companyId={company?._id} />}
-            </div>
-
-            <div className="grid grid-cols-3 gap-6 mt-8">
-              <Card className="col-span-2">
-                <CardHeader>
-                  <CardTitle className="text-base">Best Destination</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm space-y-2"></CardContent>
-              </Card>
             </div>
           </>
         )}

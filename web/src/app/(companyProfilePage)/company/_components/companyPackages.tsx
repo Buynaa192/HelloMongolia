@@ -37,7 +37,7 @@ export const CompanyPackages = ({ companyId }: CompanyPackagesProps) => {
     return <div>No packages available.</div>;
   }
 
-  const displayedPackages = isExpanded ? packages : packages.slice(0, 4);
+  const displayedPackages = isExpanded ? packages : packages.slice(0, 6);
 
   return (
     <section className="bg-white p-6 rounded-xl shadow-md mb-8">
@@ -54,7 +54,7 @@ export const CompanyPackages = ({ companyId }: CompanyPackagesProps) => {
         ))}
       </div>
 
-      {packages.length > 4 && (
+      {packages.length > 6 && (
         <div className="mt-6 flex justify-center">
           <Button onClick={toggleExpanded}>
             {isExpanded ? "See Less" : "See More"}

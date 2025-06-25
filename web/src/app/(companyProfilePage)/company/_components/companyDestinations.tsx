@@ -65,7 +65,7 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
 
   const displayedDestinaton = isExpanded
     ? destinations
-    : destinations?.slice(0, 4);
+    : destinations?.slice(0, 6);
 
   return (
     <section className="bg-white p-6 rounded-xl shadow-md mb-8">
@@ -74,7 +74,7 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
       </h3>
 
       <div
-        className={`grid grid-cols-4 gap-6 transition-all duration-300 ${
+        className={`grid grid-cols-3 gap-6 transition-all duration-300 ${
           isExpanded ? "max-h-[600px] overflow-y-scroll pr-2" : ""
         }`}>
         {displayedDestinaton?.map((item) => (
@@ -82,7 +82,7 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
         ))}
       </div>
 
-      {Array.isArray(destinations) && destinations.length > 4 && (
+      {Array.isArray(destinations) && destinations.length > 6 && (
         <div className="mt-6 flex justify-center">
           <Button onClick={toggleExpanded}>
             {isExpanded ? "See Less" : "See More"}

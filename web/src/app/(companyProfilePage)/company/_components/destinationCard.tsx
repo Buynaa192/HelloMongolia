@@ -54,7 +54,9 @@ export const DestinationCard = ({ destinationId }: DestinationCardProps) => {
         <p className="text-white text-lg font-bold">
           {destination?.destinationName}
         </p>
-        <p className="text-white text-sm opacity-80">{destination?.region}</p>
+        <p className="text-sm text-white line-clamp-3">
+          {destination?.description}
+        </p>
       </div>
       <div className="absolute bottom-3 left-3 right-3 z-30 flex justify-between opacity-0 group-hover:opacity-100 transition-opacity">
         <Button
