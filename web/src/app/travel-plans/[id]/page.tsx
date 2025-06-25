@@ -387,7 +387,7 @@ export default function PackagePage() {
         );
       })}
 
-      <div>
+      <div className="w-full">
         <div
           className="text-accent text-4xl font-extrabold"
           style={{ fontFamily: "Dancing script" }}
