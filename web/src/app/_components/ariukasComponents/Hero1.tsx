@@ -1,7 +1,10 @@
+"use cleint";
+
 import { HeaderRadientDeco } from "./HeaderRadientDeco";
 import { Hero1Text } from "./Hero1Text";
+import { Hero1and2Props } from "@/app/page";
 
-export const Hero1 = () => {
+export const Hero1 = ({ radient, setRadient }: Hero1and2Props) => {
   return (
     <div className="relative h-screen w-full">
       <HeaderRadientDeco />
@@ -18,13 +21,13 @@ export const Hero1 = () => {
             type="video/mp4"
           />
         </video>
-        <Hero1Text />
+        <Hero1Text setRadient={setRadient} />
       </div>
 
       <div
-        className="absolute bottom-0 left-0 w-full h-130 pointer-events-none"
+        className="absolute bottom-0 left-0 w-full h-130 pointer-events-none "
         style={{
-          background: "linear-gradient(to bottom, transparent, white)",
+          background: `linear-gradient(to bottom, transparent, ${radient})`,
         }}
       />
     </div>

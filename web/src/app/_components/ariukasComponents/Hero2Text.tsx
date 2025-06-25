@@ -13,9 +13,9 @@ export const Hero2Text = () => {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 1, ease: "easeOut" }}
       viewport={{ once: true }}
-      className="absolute inset-0 z-20 flex items-center justify-center text-white"
+      className="absolute inset-0 z-10 flex items-center justify-center text-white"
     >
-      <div className="absolute top-0 w-full  text-black py-8 px-8 md:px-16 flex flex-col z-10 items-center gap-12 z">
+      <div className="absolute top-0 w-full  text-black py-8 px-8 md:px-16 flex flex-col z-10 items-center gap-12">
         <div className="flex w-full justify-between md:flex-row md:flex flex-col gap-8 items-center">
           <div className="md:text-left text-center">
             <h1 className="lg:text-6xl text-5xl font-extrabold leading-tight ">

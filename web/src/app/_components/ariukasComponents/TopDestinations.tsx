@@ -31,7 +31,7 @@ export const TopDestinationsHero = () => {
     <div className="w-full h-fit relative flex flex-col">
       <HomePageTitle title="TOP DESTINATIONS" />
 
-      <div className="w-full h-full flex flex-col relative z-20">
+      <div className="w-full h-full flex flex-col relative z-10">
         {regions?.map((region, index) => (
           <motion.div
             key={index}

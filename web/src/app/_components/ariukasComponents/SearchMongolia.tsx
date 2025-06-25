@@ -92,7 +92,7 @@ export const SearchInMongolia = ({
 
   return (
     <div className="w-full flex flex-col items-center justify-center relative">
-      {searchResults && <div className="fixed inset-0 bg-black/80 z-10" />}
+      {searchResults && <div className="fixed inset-0 bg-black/80 z-20" />}
 
       <form
         onSubmit={handleSubmit}
