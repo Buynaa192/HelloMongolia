@@ -1,7 +1,7 @@
 "use client";
 
 import { api } from "@/axios";
-import { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { MyLoader } from "./Loader";
 import { SearchResultsType } from "./Hero1Text";
 import { cn } from "@/lib/utils";
@@ -19,7 +19,16 @@ interface SearchInMongoliaProps {
   searchResults: boolean;
 }
 
-const SearchInMongoliaComponent = ({ query, setQuery, loading, setLoading, results, setResults, searchResults }: SearchInMongoliaProps) => {
+const SearchInMongoliaComponent = ({
+  query,
+  setQuery,
+  loading,
+  setLoading,
+  results,
+  setResults,
+  searchResults,
+}: SearchInMongoliaProps) => {
+  const [isFocused, setIsFocused] = useState<Boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const emptyResults: SearchResultsType = {
@@ -30,7 +39,10 @@ const SearchInMongoliaComponent = ({ query, setQuery, loading, setLoading, resul
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setQuery("");
         setResults(emptyResults);
         setLoading(false);
@@ -72,11 +84,21 @@ const SearchInMongoliaComponent = ({ query, setQuery, loading, setLoading, resul
   };
 
   return (
-    <div className="w-full flex flex-col items-center justify-center relative">
-      {searchResults && <div className="fixed inset-0 bg-black/80 z-20" />}
+    <div
+      className={`w-full flex flex-col items-center justify-center z-1000 ${
+        isFocused ? "fixed" : "relative"
+      }`}
+    >
+      {isFocused ? (
+        <div className="fixed inset-0 bg-black/80 z-20 h-1000 border" />
+      ) : (
+        ""
+      )}
 
       <form
         onSubmit={handleSubmit}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         className="z-50 relative w-[300px] flex items-center border-2 border-white rounded-md overflow-hidden transition-all duration-500 ease-in-out focus-within:w-[400px]"
       >
         <input
@@ -87,13 +109,23 @@ const SearchInMongoliaComponent = ({ query, setQuery, loading, setLoading, resul
           onChange={(e) => setQuery(e.target.value)}
           autoComplete="off"
         />
-        <button type="submit" className="px-4 py-3 text-lg text-black bg-gray-100 transition">
+        <button
+          type="submit"
+          className="px-4 py-3 text-lg text-black bg-gray-100 transition"
+        >
           🔍
         </button>
       </form>
-
+      {isFocused ? (
+        <div className="relative z-50 mt-4 w-[1440px] mx-auto pl-2 pr-2 h-120"></div>
+      ) : (
+        ""
+      )}
       {query.trim().length >= 1 && (
-        <div ref={containerRef} className="relative z-50 mt-4 w-full mx-auto pl-2 pr-2 h-120">
+        <div
+          ref={containerRef}
+          className="absolute top-25 z-50 mt-4 w-[1440px] mx-auto pl-2 pr-2 h-120"
+        >
           {loading ? (
             <div className="w-full flex justify-center">
               <MyLoader />
@@ -107,14 +139,22 @@ const SearchInMongoliaComponent = ({ query, setQuery, loading, setLoading, resul
                   : `w-full grid-cols-3 md:grid-cols-4}`
               )}
             >
-              {results.destinations?.length > 0 && <SearchDestination destinations={results.destinations} />}
+              {results.destinations?.length > 0 && (
+                <SearchDestination destinations={results.destinations} />
+              )}
 
-              {results.activities?.length > 0 && <SearchActivities activities={results.activities} />}
+              {results.activities?.length > 0 && (
+                <SearchActivities activities={results.activities} />
+              )}
 
-              {results.packages?.length > 0 && <SearchPackage packages={results.packages} />}
+              {results.packages?.length > 0 && (
+                <SearchPackage packages={results.packages} />
+              )}
             </div>
           ) : (
-            <p className="text-sm text-black col-span-2 text-center">No results found.</p>
+            <p className="text-sm text-black col-span-2 text-center">
+              No results found.
+            </p>
           )}
         </div>
       )}
