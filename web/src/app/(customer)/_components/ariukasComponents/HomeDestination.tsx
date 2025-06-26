@@ -7,19 +7,12 @@ import { Button } from "@/components/ui/button";
 import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 
-export const ShowRegion = ({
-  videoUrl,
-  regionName,
-  _id,
-  description: regionDetails,
-}: RegionType) => {
+export const ShowRegion = ({ videoUrl, regionName, _id, description: regionDetails }: RegionType) => {
   const [videoSource, setVideoSource] = useState(videoUrl);
   const [destinations, setDestinations] = useState<DestinationType[]>([]);
 
-  const [hoveredDestination, setHoveredDestination] =
-    useState<DestinationType | null>(null);
-  const [selectedDestination, setSelectedDestination] =
-    useState<DestinationType | null>(null);
+  const [hoveredDestination, setHoveredDestination] = useState<DestinationType | null>(null);
+  const [selectedDestination, setSelectedDestination] = useState<DestinationType | null>(null);
 
   const activeDestination = selectedDestination || hoveredDestination;
 
@@ -43,6 +36,7 @@ export const ShowRegion = ({
     const fetchDestinationsByTheRegion = async () => {
       try {
         const response = await api.get(`/regions/destinations/${_id}`);
+
         setDestinations(response.data.regionDestination);
       } catch (err) {
         console.error("Failed to fetch destinations by region", err);
@@ -60,23 +54,9 @@ export const ShowRegion = ({
       <div className="absolute inset-0 w-full  z-0  h-full ">
         {videoSource &&
           (videoSource.endsWith(".mp4") ? (
-            <video
-              key={videoSource}
-              className="w-full h-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              src={videoSource}
-            />
+            <video key={videoSource} className="w-full h-full object-cover" autoPlay muted loop playsInline src={videoSource} />
           ) : (
-            <Image
-              key={videoSource}
-              src={videoSource}
-              alt={activeDestination?.destinationName || regionName}
-              fill
-              className="object-cover"
-            />
+            <Image key={videoSource} src={videoSource} alt={activeDestination?.destinationName || regionName} fill className="object-cover" />
           ))}
       </div>
 
@@ -86,9 +66,7 @@ export const ShowRegion = ({
         <p className="text-white text-3xl md:text-4xl font-semibold drop-shadow-lg transition-all duration-500">
           {activeDestination ? activeDestination.destinationName : regionName}
         </p>
-        <p className="text-white text-m mt-2 max-w-xl drop-shadow-lg">
-          {activeDestination ? activeDestination.description : regionDetails}
-        </p>
+        <p className="text-white text-m mt-2 max-w-xl drop-shadow-lg">{activeDestination ? activeDestination.description : regionDetails}</p>
 
         {activeDestination && (
           <div className="flex flex-col gap-6 mt-6 text-gray-200 text-lg max-w-4xl items-center">
@@ -109,24 +87,19 @@ export const ShowRegion = ({
                 <h3 className="font-semibold mb-2">Weather</h3>
                 {activeDestination.weather ? (
                   <ul className="italic ">
-                    {activeDestination.weather.map(
-                      ({ season, averageTempF }, i) => (
-                        <li key={i}>
-                          <strong>{season}:</strong> {averageTempF}
-                        </li>
-                      )
-                    )}
+                    {activeDestination.weather.map(({ season, averageTempF }, i) => (
+                      <li key={i}>
+                        <strong>{season}:</strong> {averageTempF}
+                      </li>
+                    ))}
                   </ul>
                 ) : (
                   <p className="italic">No weather data available.</p>
                 )}
               </div>
             </div>
-            <Button
-              asChild
-              className="text-black bg-white hover:bg-black hover:text-white mt-6 w-fit"
-            >
-              <Link href={""}>Take me there!</Link>
+            <Button asChild className="text-black bg-white hover:bg-black hover:text-white mt-6 w-fit ">
+              <Link href={`/explore-destinations/${regionName}/${activeDestination._id}`}>Take me there!</Link>
             </Button>
           </div>
         )}
@@ -143,16 +116,12 @@ export const ShowRegion = ({
                 onMouseEnter={() => setHoveredDestination(dest)}
                 onMouseLeave={() => setHoveredDestination(null)}
                 className={`cursor-pointer transition-colors ${
-                  selectedDestination?.destinationName === dest.destinationName
-                    ? "text-blue-600 font-bold"
-                    : "hover:text-blue-600"
+                  selectedDestination?.destinationName === dest.destinationName ? "text-blue-600 font-bold" : "hover:text-blue-600"
                 }`}
               >
                 {dest.destinationName}
               </li>
-              {idx !== destinations.length - 1 && (
-                <span className="mx-2 select-none text-white">·</span>
-              )}
+              {idx !== destinations.length - 1 && <span className="mx-2 select-none text-white">·</span>}
             </React.Fragment>
           ))}
         </ul>
