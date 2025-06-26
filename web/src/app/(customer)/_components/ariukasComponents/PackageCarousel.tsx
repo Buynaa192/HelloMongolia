@@ -1,4 +1,4 @@
-import { PackageCardForCompany } from "./PackageCardForCompany";
+import { FinalPackageCard } from "./PackageCardForCompany";
 import { PackageType } from "@/app/_providers/AuthProvider";
 import {
   Carousel,
@@ -17,7 +17,7 @@ export const PackageCarousel = ({ packages }: { packages: PackageType[] }) => {
             key={i}
             className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2"
           >
-            <PackageCardForCompany pkg={pack} />
+            <FinalPackageCard pkg={pack} />
           </CarouselItem>
         ))}
       </CarouselContent>

@@ -9,7 +9,7 @@ import { Search } from "./_components/search";
 import { SearchFilter } from "./_components/searchFIlter";
 import { TravelPlanHome } from "./_components/travelPLanHome";
 import Link from "next/link";
-import { PackageType } from "@/app/_providers/AuthProvider";
+import { ActivityType, PackageType } from "@/app/_providers/AuthProvider";
 
 export type TripType =
   | "Scenery"
@@ -40,11 +40,18 @@ export default function PackagesExplore() {
   const [filteredPackages, setFilteredPackages] = useState<PackageType[]>([]);
 
   const [keyword, setKeyword] = useState("");
+
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
   const [selectedCosts, setSelectedCosts] = useState<string[]>([]);
+
   const [selectedDurations, setSelectedDurations] = useState<string[]>([]);
+
   const [selectedTripTypes, setSelectedTripTypes] = useState<TripType[]>([]);
+
+  const [allActivities, setAllActivities] = useState<ActivityType[]>([]);
+  const [selectedActivity, setSelectedActivity] = useState<ActivityType[]>([]);
 
   useEffect(() => {
     const fetchPackages = async () => {
@@ -52,10 +59,21 @@ export default function PackagesExplore() {
         const res = await api.get("/package");
         setAllPackages(res.data.packages);
         setFilteredPackages(res.data.packages);
+        console.log(res.data.packages);
       } catch (err) {
         console.error("Failed to fetch packages", err);
       }
     };
+    const fetchActiviy = async () => {
+      try {
+        const res = await api.get("/activity/me");
+        console.log(res.data);
+        setAllActivities(res.data.activities);
+      } catch (err) {
+        console.error("Failed to fetch packages", err);
+      }
+    };
+    fetchActiviy();
     fetchPackages();
   }, []);
 
@@ -93,6 +111,13 @@ export default function PackagesExplore() {
                 return true;
             }
           });
+        const matchesActivity =
+          selectedActivity.length === 0 ||
+          selectedActivity.some((selectedAct) =>
+            pkg.packageItem.some((item) =>
+              item.activity.some((act) => act._id === selectedAct._id)
+            )
+          );
 
         const pkgDuration = parseInt(pkg.duration);
         const matchesDuration =
@@ -128,7 +153,8 @@ export default function PackagesExplore() {
           matchesTripType &&
           matchesCost &&
           matchesDuration &&
-          matchesDate
+          matchesDate &&
+          matchesActivity
         );
       });
 
@@ -142,6 +168,7 @@ export default function PackagesExplore() {
     selectedTripTypes,
     selectedCosts,
     selectedDurations,
+    selectedActivity,
     startDate,
     endDate,
   ]);
@@ -153,6 +180,7 @@ export default function PackagesExplore() {
     setSelectedCosts([]);
     setSelectedTripTypes([]);
     setSelectedDurations([]);
+    setSelectedActivity([]);
   };
 
   return (
@@ -171,17 +199,22 @@ export default function PackagesExplore() {
         endDate={endDate}
         setEndDate={setEndDate}
       />
-      <SearchFilter
-        selectedTripTypes={selectedTripTypes}
-        setSelectedTripTypes={setSelectedTripTypes}
-        applyFilters={() => {}} // no-op
-        clearAllFilters={clearAllFilters}
-        selectedCosts={selectedCosts}
-        setSelectedCosts={setSelectedCosts}
-        selectedDurations={selectedDurations}
-        setSelectedDurations={setSelectedDurations}
-      />
-      <FilteredPackages packages={filteredPackages} />
+      <div className="flex">
+        <SearchFilter
+          selectedTripTypes={selectedTripTypes}
+          setSelectedTripTypes={setSelectedTripTypes}
+          applyFilters={() => {}} // no-op
+          clearAllFilters={clearAllFilters}
+          selectedCosts={selectedCosts}
+          setSelectedCosts={setSelectedCosts}
+          selectedDurations={selectedDurations}
+          setSelectedDurations={setSelectedDurations}
+          allActivities={allActivities}
+          selectedActivities={selectedActivity}
+          setSelectedActivities={setSelectedActivity}
+        />
+        <FilteredPackages packages={filteredPackages} />
+      </div>
     </div>
   );
 }

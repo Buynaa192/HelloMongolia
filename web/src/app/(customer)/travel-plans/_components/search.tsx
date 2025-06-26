@@ -10,6 +10,7 @@ type SearchProps = {
   startDate: string;
   setStartDate: (value: string) => void;
   endDate: string;
+
   setEndDate: (value: string) => void;
   applyFilters: () => void;
 };
@@ -18,10 +19,10 @@ export const Search: React.FC<SearchProps> = ({
   keyword,
   setKeyword,
   startDate,
+
   setStartDate,
   endDate,
   setEndDate,
-  applyFilters,
 }) => {
   const [showDates, setShowDates] = useState(false);
 
@@ -84,14 +85,6 @@ export const Search: React.FC<SearchProps> = ({
               </div>
             </div>
           )}
-        </div>
-
-        {/* Search button */}
-        <div
-          onClick={applyFilters}
-          className="flex-1 flex items-center justify-center text-[24px] font-semibold text-black shadow-2xl bg-white rounded-[25px] h-[50px] hover:bg-black hover:text-white duration-200 cursor-pointer"
-        >
-          Search
         </div>
       </div>
     </div>

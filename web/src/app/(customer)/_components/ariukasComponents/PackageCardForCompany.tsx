@@ -1,64 +1,90 @@
 import { PackageType } from "@/app/_providers/AuthProvider";
-import { FaRegClock, FaGlobe, FaStar } from "react-icons/fa";
+import Link from "next/link";
+import { FaGlobe, FaStar } from "react-icons/fa";
 
 type Props = {
   pkg: PackageType;
 };
 
-export const PackageCardForCompany: React.FC<Props> = ({ pkg }) => {
+export const FinalPackageCard: React.FC<Props> = ({ pkg }) => {
   return (
-    <div className="h-fit relative max-w-sm rounded-xl overflow-hidden shadow-lg bg-white/10 backdrop-blur hover:shadow-2xl transition-shadow duration-300 group">
-      <div className="relative">
+    <Link
+      href={`travel-plans/${pkg._id}`}
+      className="w-full h-100 flex items-center justify-center  relative text-accent"
+    >
+      <div className="flex w-95 h-90 rounded-2xl hover:shadow-2xl flex-col hover:w-100 hover:h-95 duration-200 relative">
         <img
-          src={pkg.coverPhoto}
-          alt={pkg.title}
-          className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-115"
+          src={
+            pkg.coverPhoto == null || pkg.coverPhoto == ""
+              ? "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png"
+              : pkg.coverPhoto
+          }
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.onerror = null;
+            target.src =
+              "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
+          }}
+          className="w-full min-h-[250px] h-full rounded-2xl object-cover"
         />
-        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50  group-hover:scale-115 transition-transform duration-300" />
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 ">
-          <button className="px-4 py-2 bg-white text-black font-semibold rounded-md shadow hover:bg-gray-100">
-            View Details
-          </button>
-        </div>
-        <h2 className="absolute bottom-2 left-4 text-white text-xl font-bold drop-shadow-md z-10">
-          {pkg.title}
-        </h2>
-      </div>
+        <div className="w-full h-40 flex flex-col p-3 absolute bottom-0 bg-black/10 backdrop-blur-lg rounded-b-2xl">
+          <div className="text-[12px] w-fit font-medium text-accent flex items-center gap-2">
+            <img
+              src={
+                pkg.companyId?.AvatarImage ||
+                "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png"
+              }
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src =
+                  "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
+              }}
+              className="h-7 rounded-[10px] w-7"
+            />
 
-      <div className="p-5">
-        <p className="text-sm line-clamp-3 mb-3 h-10">{pkg.description}</p>
-
-        <div className="flex items-center text-sm space-x-4 mb-2">
-          <span className="flex items-center gap-1">
-            <FaRegClock className="text-primary" color="white" /> {pkg.duration}
-          </span>
-          <span className="flex items-center gap-1">
-            <FaGlobe className="text-primary" color="white" /> {pkg.tripType}
-          </span>
-        </div>
-
-        <div className="flex items-center justify-between mt-4">
-          <div className="font-bold text-lg text-white">${pkg.cost}</div>
-          <div className="flex items-center text-yellow-500 text-sm">
-            <FaStar className="mr-1" /> {pkg.rating.toFixed(1)}
+            {pkg.companyId == undefined ? pkg._id : pkg.companyId.email}
           </div>
+          <div className="text-[24px] font-bold truncate ">
+            {pkg.title ? pkg.title : pkg.description}
+          </div>
+          <div className="flex w-full justify-between items-center text-[12px] font-medium">
+            <div className="flex gap-2 justify-between items-center">
+              <div className="flex items-center gap-1">
+                <FaGlobe className="text-primary" color="white" />
+                {pkg.tripType}
+              </div>
+              |
+              <div>
+                {pkg.duration.includes("days")
+                  ? pkg.duration
+                  : `${pkg.duration} days`}
+              </div>
+              |
+              <div className="flex items-center">
+                <FaStar className="mr-1" /> {pkg.rating.toFixed(1)}
+              </div>
+            </div>
+            <div className="text-[24px] font-bold text-green-500">
+              ${pkg.cost}
+            </div>
+          </div>
+          <p className="text-xs text-gray-400 ">
+            <span className="font-medium">Available:</span>{" "}
+            {new Date(pkg.availableFrom).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}{" "}
+            →{" "}
+            {new Date(pkg.availableUntil).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
+          </p>
         </div>
-
-        <p className="text-xs text-gray-400 mt-3">
-          <span className="font-medium">Available:</span>{" "}
-          {new Date(pkg.availableFrom).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })}{" "}
-          →{" "}
-          {new Date(pkg.availableUntil).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })}
-        </p>
       </div>
-    </div>
+    </Link>
   );
 };
