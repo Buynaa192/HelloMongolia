@@ -84,7 +84,7 @@ export default function PackagePage() {
         return (
           <div
             key={index}
-            className="w-full flex flex-col gap-4 bg-transparent text-accent "
+            className="w-full flex items-center flex-col gap-4 bg-transparent text-accent "
           >
             <div className="w-full h-180 relative overflow-hidden ">
               {item.packageItem.length < 5 ? (
@@ -142,244 +142,249 @@ export default function PackagePage() {
               <span>{">"}</span>
               {item.title}
             </div>{" "}
-            <div
-              className="text-[50px] font-bold"
-              style={{ fontFamily: "Dancing Script" }}
-            >
-              Itinerary
-            </div>
-            <div className="w-full border-1 border-[#e4e4e5]"></div>
-            <div className="w-full flex min-h-100 p-3 items-center  ">
-              <div className="flex-1 pl-2 pr-2 flex flex-col relative ">
-                <div className="w-full  ">
-                  <div className="w-full h-15 bg-[#000000] flex rounded-t-[8px]">
-                    {item.packageItem.map((_, index) => {
-                      return (
-                        <button
-                          key={index}
-                          onClick={() => scrollToSection(index)}
-                          className="flex-1 h-full flex items-center justify-center text-[24px] text-white font-bold hover:bg-[#ffffff] hover:text-black rounded-t-[7px] duration-300"
-                        >
-                          Day {index + 1}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div
-                  ref={itineraryRef}
-                  className="w-full h-[500px] overflow-scroll scroll-smooth rounded-[8px]  "
-                >
-                  {item.packageItem.map((it, index) => (
-                    <div key={index} className={`w-[100%] h-[500px] relative `}>
-                      <img
-                        src={it.image}
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.onerror = null;
-                          target.src =
-                            "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
-                        }}
-                        alt="Image"
-                        id={`section${index + 1}`}
-                        className="w-full h-full object-cover object-left"
-                      />
-                      <div className="absolute w-[50%] h-full bg-linear-to-r from-[#000000b8] to-100%  to-[#00000028] inset-0 p-4 flex flex-col items-center  gap-4 ">
-                        <div
-                          className="text-[50px] text-white font-bold"
-                          style={{ fontFamily: "Dancing Script" }}
-                        >
-                          {it.title} Day{index + 1}
-                        </div>
-                        <div
-                          className="text-center text-white text-2xl"
-                          style={{ fontFamily: "Dancing script" }}
-                        >
-                          {it.description}
-                        </div>
-                        <div className=" w-full text-white flex gap-10 justify-center">
-                          <div className="flex flex-col w-50  h-full ">
-                            Activity:
-                            <div className="w-full p-3">
-                              {it.activity.map((item, index) => {
-                                return (
-                                  <div key={index} className="flex ">
-                                    {item.emoji}
-                                    {item.activityName}
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-                          <div className="flex flex-col w-50  h-full ">
-                            Accomodation
-                            <div className="w-full p-3 ">
-                              {it.accommodation.hotelName},
-                              {it.accommodation.address}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col flex-1">
-              <div className="flex flex-col w-full ">
-                <div
-                  className="text-[50px] font-bold  pl-5"
-                  style={{ fontFamily: "Dancing Script" }}
-                >
-                  Trip Overview:
-                </div>
-                <div className="w-full border-1 border-[#e4e4e5]"></div>
-                <div className="w-full flex gap-4 justify-center">
-                  <div className="p-2  text-[24px] flex-2">
-                    {item.description}
-                  </div>
-                  <div className="flex flex-col  flex-1 text-[14px] gap-2 font-bold pr-6 pt-2">
-                    <div className="flex gap-4 w-full h-5 items-center flex-1 text-2xl justify-between">
-                      <div className="flex items-center gap-2">
-                        {" "}
-                        Duration
-                        <DurationIcon />:
-                      </div>
-
-                      <div>
-                        {item.duration.includes("days")
-                          ? `${item.duration}`
-                          : `${item.duration}days`}{" "}
-                      </div>
-                    </div>
-                    <div className="flex gap-4 w-full  flex-1 text-2xl justify-between">
-                      <div className="flex items-center gap-2">
-                        {" "}
-                        Rating
-                        <StarIcon />:
-                      </div>
-                      <div>{item.rating}</div>
-                    </div>
-                    <div className="flex gap-2 h-5 w-full  items-center text-2xl font-bold justify-between flex-1">
-                      <div className="flex items-center gap-2">
-                        Cost
-                        <CashIcon />
-                        {":"}
-                      </div>
-                      <div className="flex items-baseline text-green-500 gap-2">
-                        <p className="text-[10px] h-full flex items-end text-accent">
-                          (cost per person)
-                        </p>
-                        ${item.cost}
-                      </div>
-                    </div>
-                    <div className="flex gap-2 h-5 w-full  items-center text-2xl font-bold  flex-1 justify-between">
-                      TripType:<div>{item.tripType}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="w-[1440px] flex flex-col gap-4">
               <div
-                className="text-[40px] font-bold  pl-5"
+                className="text-[50px] font-bold"
                 style={{ fontFamily: "Dancing Script" }}
               >
-                Tour by:
+                Itinerary
               </div>
-              <div className="w-50 border-1 border-[#e4e4e5]"></div>
-              <div className=" h-fit  flex p-5 text-2xl font-light gap-5 ">
-                <div className="flex-1 h-fit flex flex-col  items-center gap-2">
-                  <div className="w-50 flex overflow-hidden items-center  rounded-2xl">
-                    {item.companyId.AvatarImage == "" ||
-                    item.companyId.AvatarImage == null ? (
-                      <img
-                        src={
-                          "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg"
-                        }
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.onerror = null;
-                          target.src =
-                            "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
-                        }}
-                        className="w-full h-45 rounded-2xl  bg-gray-500  "
-                        alt="Company background"
-                      />
-                    ) : (
-                      <img
-                        src={item.companyId.AvatarImage}
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.onerror = null;
-                          target.src =
-                            "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
-                        }}
-                        className="w-full h-45 rounded-2xl bg-gray-500  "
-                        alt="Company background"
-                      />
+              <div className="w-full border-1 border-[#e4e4e5]"></div>
+              <div className="w-full flex min-h-100 p-3 items-center  ">
+                <div className="flex-1 pl-2 pr-2 flex flex-col relative ">
+                  <div className="w-full  ">
+                    <div className="w-full h-15 bg-[#000000] flex rounded-t-[8px]">
+                      {item.packageItem.map((_, index) => {
+                        return (
+                          <button
+                            key={index}
+                            onClick={() => scrollToSection(index)}
+                            className="flex-1 h-full flex items-center justify-center text-[24px] text-white font-bold hover:bg-[#ffffff] hover:text-black rounded-t-[7px] duration-300"
+                          >
+                            Day {index + 1}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div
+                    ref={itineraryRef}
+                    className="w-full h-[500px] overflow-scroll scroll-smooth rounded-[8px]  "
+                  >
+                    {item.packageItem.map((it, index) => (
+                      <div
+                        key={index}
+                        className={`w-[100%] h-[500px] relative `}
+                      >
+                        <img
+                          src={it.image}
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.onerror = null;
+                            target.src =
+                              "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
+                          }}
+                          alt="Image"
+                          id={`section${index + 1}`}
+                          className="w-full h-full object-cover object-left"
+                        />
+                        <div className="absolute w-[50%] h-full bg-linear-to-r from-[#000000b8] to-100%  to-[#00000028] inset-0 p-4 flex flex-col items-center  gap-4 ">
+                          <div
+                            className="text-[50px] text-white font-bold"
+                            style={{ fontFamily: "Dancing Script" }}
+                          >
+                            {it.title} Day{index + 1}
+                          </div>
+                          <div
+                            className="text-center text-white text-2xl"
+                            style={{ fontFamily: "Dancing script" }}
+                          >
+                            {it.description}
+                          </div>
+                          <div className=" w-full text-white flex gap-10 justify-center">
+                            <div className="flex flex-col w-50  h-full ">
+                              Activity:
+                              <div className="w-full p-3">
+                                {it.activity.map((item, index) => {
+                                  return (
+                                    <div key={index} className="flex ">
+                                      {item.emoji}
+                                      {item.activityName}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                            <div className="flex flex-col w-50  h-full ">
+                              Accomodation
+                              <div className="w-full p-3 ">
+                                {it.accommodation.hotelName},
+                                {it.accommodation.address}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col flex-1">
+                <div className="flex flex-col w-full ">
+                  <div
+                    className="text-[50px] font-bold  pl-5"
+                    style={{ fontFamily: "Dancing Script" }}
+                  >
+                    Trip Overview:
+                  </div>
+                  <div className="w-full border-1 border-[#e4e4e5]"></div>
+                  <div className="w-full flex gap-4 justify-center">
+                    <div className="p-2  text-[24px] flex-2">
+                      {item.description}
+                    </div>
+                    <div className="flex flex-col  flex-1 text-[14px] gap-2 font-bold pr-6 pt-2">
+                      <div className="flex gap-4 w-full h-5 items-center flex-1 text-2xl justify-between">
+                        <div className="flex items-center gap-2">
+                          {" "}
+                          Duration
+                          <DurationIcon />:
+                        </div>
+
+                        <div>
+                          {item.duration.includes("days")
+                            ? `${item.duration}`
+                            : `${item.duration}days`}{" "}
+                        </div>
+                      </div>
+                      <div className="flex gap-4 w-full  flex-1 text-2xl justify-between">
+                        <div className="flex items-center gap-2">
+                          {" "}
+                          Rating
+                          <StarIcon />:
+                        </div>
+                        <div>{item.rating}</div>
+                      </div>
+                      <div className="flex gap-2 h-5 w-full  items-center text-2xl font-bold justify-between flex-1">
+                        <div className="flex items-center gap-2">
+                          Cost
+                          <CashIcon />
+                          {":"}
+                        </div>
+                        <div className="flex items-baseline text-green-500 gap-2">
+                          <p className="text-[10px] h-full flex items-end text-accent">
+                            (cost per person)
+                          </p>
+                          ${item.cost}
+                        </div>
+                      </div>
+                      <div className="flex gap-2 h-5 w-full  items-center text-2xl font-bold  flex-1 justify-between">
+                        TripType:<div>{item.tripType}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="text-[40px] font-bold  pl-5"
+                  style={{ fontFamily: "Dancing Script" }}
+                >
+                  Tour by:
+                </div>
+                <div className="w-50 border-1 border-[#e4e4e5]"></div>
+                <div className=" h-fit  flex p-5 text-2xl font-light gap-5 ">
+                  <div className="flex-1 h-fit flex flex-col  items-center gap-2">
+                    <div className="w-50 flex overflow-hidden items-center  rounded-2xl">
+                      {item.companyId.AvatarImage == "" ||
+                      item.companyId.AvatarImage == null ? (
+                        <img
+                          src={
+                            "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg"
+                          }
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.onerror = null;
+                            target.src =
+                              "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
+                          }}
+                          className="w-full h-45 rounded-2xl  bg-gray-500  "
+                          alt="Company background"
+                        />
+                      ) : (
+                        <img
+                          src={item.companyId.AvatarImage}
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.onerror = null;
+                            target.src =
+                              "https://res.cloudinary.com/df60cobe2/image/upload/v1750318055/NoImage_q3vugq.jpg";
+                          }}
+                          className="w-full h-45 rounded-2xl bg-gray-500  "
+                          alt="Company background"
+                        />
+                      )}
+                    </div>
+                    <div className="text-[18px] font-bold">
+                      {item.companyId.name}
+                    </div>
+                  </div>
+
+                  <div className=" w-300 flex flex-col  text-[18px] gap-3 font-medium ">
+                    {item.companyId.since == 0 ||
+                    item.companyId.since == null ? null : (
+                      <div className="w-full flex items-center justify-between ">
+                        <div>Since:</div>
+                        <div>{item.companyId.since}</div>
+                      </div>
                     )}
-                  </div>
-                  <div className="text-[18px] font-bold">
-                    {item.companyId.name}
-                  </div>
-                </div>
-
-                <div className=" w-300 flex flex-col  text-[18px] gap-3 font-medium ">
-                  {item.companyId.since == 0 ||
-                  item.companyId.since == null ? null : (
                     <div className="w-full flex items-center justify-between ">
-                      <div>Since:</div>
-                      <div>{item.companyId.since}</div>
-                    </div>
-                  )}
-                  <div className="w-full flex items-center justify-between ">
-                    <div>Rating:</div>
-                    <div className="flex gap-1 items-center">
-                      <StarIcon />
-                      {item.companyId.Rating}
-                    </div>
-                  </div>{" "}
-                  <div className="w-full flex items-center justify-between ">
-                    <div>Experience:</div>
-                    <div className="flex gap-2">
-                      {item.companyId.reviews}
+                      <div>Rating:</div>
+                      <div className="flex gap-1 items-center">
+                        <StarIcon />
+                        {item.companyId.Rating}
+                      </div>
+                    </div>{" "}
+                    <div className="w-full flex items-center justify-between ">
+                      <div>Experience:</div>
+                      <div className="flex gap-2">
+                        {item.companyId.reviews}
 
-                      <p>travellers</p>
-                    </div>
-                  </div>{" "}
-                  <div className="w-full flex items-center justify-between ">
-                    <div>Destinations:</div>
+                        <p>travellers</p>
+                      </div>
+                    </div>{" "}
+                    <div className="w-full flex items-center justify-between ">
+                      <div>Destinations:</div>
 
-                    <div className="flex gap-2">
-                      {item.companyId.availableDestinations.length}
-                      <p>
-                        {item.companyId.availableDestinations.length == 0 ||
-                        item.companyId.availableDestinations.length == 1
-                          ? "destination"
-                          : "destinations"}
-                      </p>
+                      <div className="flex gap-2">
+                        {item.companyId.availableDestinations.length}
+                        <p>
+                          {item.companyId.availableDestinations.length == 0 ||
+                          item.companyId.availableDestinations.length == 1
+                            ? "destination"
+                            : "destinations"}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="w-full flex items-center justify-between ">
+                      <div className="w-25">Social URL:</div>
+                      <div>
+                        {item.companyId.websiteURL == ""
+                          ? item.companyId.email
+                          : item.companyId.websiteURL}
+                      </div>
+                    </div>
+                    <div className="w-full flex items-center justify-between gap-2">
+                      <div>Phonenumber:</div>
+                      <div>{item.companyId.phoneNumber}</div>
+                    </div>
+                    <div className="w-full flex items-center justify-between gap-2">
+                      <div>Email:</div>
+                      <div>{item.companyId.email}</div>
                     </div>
                   </div>
-                  <div className="w-full flex items-center justify-between ">
-                    <div className="w-25">Social URL:</div>
-                    <div>
-                      {item.companyId.websiteURL == ""
-                        ? item.companyId.email
-                        : item.companyId.websiteURL}
+                  <div>
+                    <div className="w-full h-[80%] overflow-hidden">
+                      {item.companyId.about}
                     </div>
-                  </div>
-                  <div className="w-full flex items-center justify-between gap-2">
-                    <div>Phonenumber:</div>
-                    <div>{item.companyId.phoneNumber}</div>
-                  </div>
-                  <div className="w-full flex items-center justify-between gap-2">
-                    <div>Email:</div>
-                    <div>{item.companyId.email}</div>
-                  </div>
-                </div>
-                <div>
-                  <div className="w-full h-[80%] overflow-hidden">
-                    {item.companyId.about}
                   </div>
                 </div>
               </div>
@@ -388,7 +393,7 @@ export default function PackagePage() {
         );
       })}
 
-      <div className="w-full">
+      <div className="w-[1440px]">
         <div
           className="text-accent text-4xl font-extrabold"
           style={{ fontFamily: "Dancing script" }}
