@@ -42,7 +42,7 @@ const packageSchema = new Schema({
   },
   itinerary: {
     type: String,
-    required: true,
+    required: false,
   },
   tripType: {
     type: String,
