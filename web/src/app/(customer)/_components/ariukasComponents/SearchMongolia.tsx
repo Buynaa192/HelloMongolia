@@ -28,7 +28,7 @@ const SearchInMongoliaComponent = ({
   setResults,
   searchResults,
 }: SearchInMongoliaProps) => {
-  const [isFocused, setIsFocused] = useState<Boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const emptyResults: SearchResultsType = {
