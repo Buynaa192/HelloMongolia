@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   DialogContent,
@@ -13,40 +15,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Camera, Loader, PlusCircle } from "lucide-react";
+import { Camera, Loader } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Textarea } from "./ui/textarea";
 import { Input } from "@/components/ui/input";
-import { CreatePackageFun } from "./createPackageFunction";
+import { Textarea } from "@/components/ui/textarea";
+
 import { PackageType } from "@/app/_providers/AuthProvider";
-import { PackageItemList } from "./addPackageList";
-const companyId = "684b7452cf844286f738f2db";
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
-type createPackageType = {
-  message: string;
-  package: PackageType;
-};
+import { usePackageContext } from "./PackageProvider";
+
 const schema = z.object({
-  coverPhoto: z
-    .any()
-    .refine((file) => file && ACCEPTED_IMAGE_TYPES.includes(file.type), {
-      message: "Only .jpg, .jpeg, .png and .webp formats are supported.",
-    }),
+  coverPhoto: z.any().optional(),
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
   duration: z.string().min(1),
-  cost: z.number(),
+  cost: z.number().min(1),
   tripType: z.string().min(1),
-  itinerary: z.any().refine((file) => file && file.type === "application/pdf", {
-    message: "Please upload a valid PDF file",
-  }),
+  itinerary: z.any().optional(),
   availableFrom: z.string(),
   availableUntil: z.string(),
   rating: z.number().min(0).max(5),
@@ -54,60 +40,62 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export const AddPackageForm = () => {
-  const [packageId, setPackageId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [prevProfileImage, setPrevProfileImage] = useState("");
+export type Props = {
+  packageData: PackageType;
+  onSuccess?: () => void;
+};
+
+export const UpdatePackageForm = ({ packageData, onSuccess }: Props) => {
+  const [prevProfileImage, setPrevProfileImage] = useState(
+    packageData.coverPhoto
+  );
+  const { updatePackage, loading } = usePackageContext();
+
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
-      name: "",
-      description: "",
-      duration: "",
-      tripType: "",
-      availableFrom: "",
-      availableUntil: "",
-      coverPhoto: undefined,
-      itinerary: undefined,
+      coverPhoto: packageData.coverPhoto,
+      name: packageData.title ?? "",
+      description: packageData.description ?? "",
+      duration: packageData.duration ?? "",
+      cost: packageData.cost ?? 0,
+      tripType: packageData.tripType ?? "",
+      itinerary: packageData.itinerary ?? "",
+      availableFrom:
+        new Date(packageData.availableFrom).toISOString().split("T")[0] ?? "",
+      availableUntil:
+        new Date(packageData.availableUntil).toISOString().split("T")[0] ?? "",
+      rating: Number(packageData.rating) ?? 0,
     },
   });
-  const onSubmit = async (data: FormData) => {
-    const createdPackage: createPackageType = await CreatePackageFun({
-      companyId,
-      data,
-      setLoading,
-    });
 
-    if (createdPackage) {
-      setPackageId(createdPackage.package._id);
-    }
+  const onSubmit = async (data: FormData) => {
+    await updatePackage(packageData._id, data);
+    if (onSuccess) onSuccess();
   };
+
   return (
     <DialogContent className="w-full bg-white max-h-screen overflow-y-auto rounded-xl">
-      <DialogHeader className="flex justify-center">
-        <DialogTitle className="text-center">
-          {packageId ? "add PackageItem" : "Add Package"}
-        </DialogTitle>
-      </DialogHeader>
-      {!packageId ? (
+      <DialogHeader>
+        <DialogTitle>Update Package</DialogTitle>
+
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6 bg-white p-6 rounded-xl shadow-lg w-full  "
-          >
+            className="space-y-6 bg-white p-6 rounded-xl shadow-lg w-full">
             <FormField
               control={form.control}
               name="coverPhoto"
-              render={({}) => (
+              render={() => (
                 <FormItem>
                   <FormLabel>Cover Photo</FormLabel>
                   <FormControl>
-                    <div className="relative w-full  h-40 border border-dashed  overflow-hidden rounded-xl">
+                    <div className="relative w-full h-40 border border-dashed overflow-hidden rounded-xl">
                       {prevProfileImage && (
                         <img
                           src={prevProfileImage}
-                          className="object-cover w-full h-full "
+                          className="object-cover w-full h-full"
                         />
                       )}
                       <label className="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/10 hover:bg-black/20 transition">
@@ -145,6 +133,7 @@ export const AddPackageForm = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="description"
@@ -158,6 +147,7 @@ export const AddPackageForm = () => {
                 </FormItem>
               )}
             />
+
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -166,7 +156,7 @@ export const AddPackageForm = () => {
                   <FormItem>
                     <FormLabel>Duration</FormLabel>
                     <FormControl>
-                      <Input placeholder=" 3 days" {...field} />
+                      <Input placeholder="3 days" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -179,11 +169,7 @@ export const AddPackageForm = () => {
                   <FormItem>
                     <FormLabel>Cost ($)</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        value={field.value ?? ""}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
-                      />
+                      <Input type="number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -242,7 +228,7 @@ export const AddPackageForm = () => {
               <FormField
                 control={form.control}
                 name="itinerary"
-                render={({}) => (
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel>Itinerary PDF</FormLabel>
                     <FormControl>
@@ -252,7 +238,7 @@ export const AddPackageForm = () => {
                         onChange={(e) => {
                           const file = e.target.files?.[0];
                           if (file) {
-                            form.setValue("itinerary", file);
+                            field.onChange(file);
                           }
                         }}
                         className="w-full"
@@ -283,31 +269,23 @@ export const AddPackageForm = () => {
                 )}
               />
             </div>
-            <div className="flex justify-end">
+
+            <div className="flex justify-between">
               <Button
                 type="submit"
-                className={` text-white px-4 py-2 rounded hover:bg-green-700 transition ${
-                  loading ? "bg-green-200" : "bg-green-500"
-                } text-white`}
-              >
+                className={`text-white px-4 py-2 rounded hover:bg-yellow-700 transition ${
+                  loading ? "bg-yellow-200" : "bg-yellow-500"
+                }`}>
                 {loading ? (
                   <Loader className="animate-spin" />
                 ) : (
-                  "Create Package"
+                  "Update Package"
                 )}
               </Button>
             </div>
           </form>
         </Form>
-      ) : (
-        <div className="flex flex-col gap4">
-          <Button className="flex items-center gap-2 bg-green-600 text-white hover:bg-green-700 shadow-md transition">
-            <PlusCircle size={18} />
-            Create Package Item
-          </Button>
-          <PackageItemList packageId={packageId} />
-        </div>
-      )}
+      </DialogHeader>
     </DialogContent>
   );
 };

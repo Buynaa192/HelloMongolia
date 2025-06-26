@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   LayoutDashboard,
   PlusSquare,
-  MapPin,
   Settings,
   LogOut,
   ChevronLeft,
@@ -21,7 +20,6 @@ export default function Sidebar() {
   const navItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
     { id: "create", label: "Create Package", icon: PlusSquare },
-    { id: "destination", label: "Destinations", icon: MapPin },
     { id: "settings", label: "Settings", icon: Settings },
   ];
 
@@ -29,8 +27,7 @@ export default function Sidebar() {
     <aside
       className={`${
         collapsed ? "w-20" : "w-64"
-      } transition-all duration-300 bg-gray-950 text-gray-100 p-4 flex flex-col justify-between rounded-r-2xl shadow-xl border-r border-gray-800`}
-    >
+      } transition-all duration-300 bg-gray-950 text-gray-100 p-4 flex flex-col  rounded-r-2xl shadow-xl border-r border-gray-800`}>
       <div>
         <div className="flex items-center justify-between mb-6">
           {!collapsed && (
@@ -40,8 +37,7 @@ export default function Sidebar() {
           )}
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="text-gray-400 hover:text-white transition"
-          >
+            className="text-gray-400 hover:text-white transition">
             {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
           </button>
         </div>
@@ -56,8 +52,7 @@ export default function Sidebar() {
                   ? "bg-emerald-600 text-white"
                   : "text-gray-300 hover:bg-gray-800 hover:text-white"
               }`}
-              onClick={() => setView(item.id)}
-            >
+              onClick={() => setView(item.id)}>
               <item.icon size={18} />
               {!collapsed && item.label}
             </Button>
@@ -68,8 +63,7 @@ export default function Sidebar() {
       <Button
         onClick={() => signOut()}
         variant="ghost"
-        className="w-full justify-start px-3 py-2 text-gray-300 hover:bg-gray-800 hover:text-white mt-6"
-      >
+        className="w-full justify-start px-3 py-2 text-gray-300 hover:bg-gray-800 hover:text-white mt-6">
         <LogOut size={18} className="mr-2" />
         {!collapsed && "Log Out"}
       </Button>

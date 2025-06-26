@@ -180,8 +180,7 @@ export function NewDestinationForm({
                   setSearchLocation(
                     place.formatted_address || place.name || ""
                   );
-                }}
-              >
+                }}>
                 <Input
                   ref={inputRef}
                   placeholder="Search location on map"
@@ -195,8 +194,7 @@ export function NewDestinationForm({
                   mapContainerStyle={{ width: "100%", height: "100%" }}
                   center={location || defaultCenter}
                   zoom={6}
-                  onLoad={(mapInstance) => setMap(mapInstance)}
-                >
+                  onLoad={(mapInstance) => setMap(mapInstance)}>
                   {location && <Marker position={location} />}
                 </GoogleMap>
               </div>
@@ -208,8 +206,7 @@ export function NewDestinationForm({
           <select
             className="border rounded-md p-2"
             value={region}
-            onChange={(e) => setRegion(e.target.value)}
-          >
+            onChange={(e) => setRegion(e.target.value)}>
             <option value="6859247b611c9aae4411aaa4">Southern Mongolia</option>
             <option value="68592416611c9aae4411aaa2">Northern Mongolia</option>
             <option value="685924ef611c9aae4411aaa7">Eastern Mongolia</option>
@@ -230,8 +227,7 @@ export function NewDestinationForm({
               onClick={() => fileInputRef.current?.click()}
               onDragOver={(e) => e.preventDefault()}
               onDrop={handleDrop}
-              className="border border-dashed border-gray-400 rounded-md p-6 text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 cursor-pointer"
-            >
+              className="border border-dashed border-gray-400 rounded-md p-6 text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 cursor-pointer">
               Click or drag images here to upload
             </div>
             <input
@@ -247,8 +243,7 @@ export function NewDestinationForm({
                 {previewUrls.map((url, index) => (
                   <div
                     key={index}
-                    className="relative border rounded-lg overflow-hidden shadow"
-                  >
+                    className="relative border rounded-lg overflow-hidden shadow">
                     <img
                       src={url}
                       alt={`Preview ${index + 1}`}
@@ -258,8 +253,7 @@ export function NewDestinationForm({
                     <button
                       type="button"
                       onClick={() => handleRemoveImage(index)}
-                      className="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded hover:bg-red-700"
-                    >
+                      className="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded hover:bg-red-700">
                       ✕
                     </button>
                   </div>
@@ -276,8 +270,7 @@ export function NewDestinationForm({
                   selectedActivityIds.includes(act._id)
                     ? "bg-blue-100 border-blue-500"
                     : "border-gray-300"
-                }`}
-              >
+                }`}>
                 <input
                   type="checkbox"
                   checked={selectedActivityIds.includes(act._id)}

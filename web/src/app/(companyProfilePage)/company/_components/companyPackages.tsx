@@ -12,7 +12,7 @@ type CompanyPackagesProps = {
 export const CompanyPackages = ({ companyId }: CompanyPackagesProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { getPackages, packages, loading } = usePackageContext();
-
+  const [searchPackage, setSearchPackage] = useState("");
   useEffect(() => {
     if (companyId) {
       getPackages(companyId);
@@ -22,7 +22,9 @@ export const CompanyPackages = ({ companyId }: CompanyPackagesProps) => {
   const toggleExpanded = () => {
     setIsExpanded((prev) => !prev);
   };
-
+  const filteredPackages = packages.filter((pkg) =>
+    pkg.title.toLowerCase().includes(searchPackage.toLowerCase())
+  );
   if (loading) {
     return (
       <div className="grid grid-cols-3 gap-4">
@@ -33,17 +35,26 @@ export const CompanyPackages = ({ companyId }: CompanyPackagesProps) => {
     );
   }
 
-  if (packages.length === 0) {
-    return <div>No packages available.</div>;
+  if (filteredPackages.length === 0) {
+    return <div>No packages found.</div>;
   }
 
-  const displayedPackages = isExpanded ? packages : packages.slice(0, 4);
+  const displayedPackages = isExpanded
+    ? filteredPackages
+    : filteredPackages.slice(0, 6);
 
   return (
     <section className="bg-white p-6 rounded-xl shadow-md mb-8">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">
         All active travel packages
       </h3>
+      <input
+        type="text"
+        placeholder="Search packages..."
+        className="mb-4 p-2 border border-gray-300 rounded w-full"
+        value={searchPackage}
+        onChange={(e) => setSearchPackage(e.target.value)}
+      />
 
       <div
         className={`grid grid-cols-3 gap-6 transition-all duration-300 ${
@@ -54,7 +65,7 @@ export const CompanyPackages = ({ companyId }: CompanyPackagesProps) => {
         ))}
       </div>
 
-      {packages.length > 4 && (
+      {filteredPackages.length > 6 && (
         <div className="mt-6 flex justify-center">
           <Button onClick={toggleExpanded}>
             {isExpanded ? "See Less" : "See More"}

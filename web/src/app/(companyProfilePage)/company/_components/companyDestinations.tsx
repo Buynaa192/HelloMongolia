@@ -15,7 +15,7 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [destinations, setDestinations] = useState<DestinationType[]>();
   const [loading, setLoading] = useState(false);
-
+  const [searchDestination, setSearchDestination] = useState("");
   useEffect(() => {
     const getDestination = async (companyId: string) => {
       setLoading(true);
@@ -63,26 +63,38 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
     return <div>No destinations found</div>;
   }
 
-  const displayedDestinaton = isExpanded
-    ? destinations
-    : destinations?.slice(0, 4);
+  const filteredDestinations =
+    destinations?.filter((dest) =>
+      dest.destinationName
+        .toLowerCase()
+        .includes(searchDestination.toLowerCase())
+    ) || [];
 
+  const displayedDestination = isExpanded
+    ? filteredDestinations
+    : filteredDestinations?.slice(0, 4);
   return (
     <section className="bg-white p-6 rounded-xl shadow-md mb-8">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">
         All active travel destinations
       </h3>
-
+      <input
+        type="text"
+        placeholder="Search destinations..."
+        className="mb-4 p-2 border border-gray-300 rounded w-full"
+        value={searchDestination}
+        onChange={(e) => setSearchDestination(e.target.value)}
+      />
       <div
         className={`grid grid-cols-4 gap-6 transition-all duration-300 ${
           isExpanded ? "max-h-[600px] overflow-y-scroll pr-2" : ""
         }`}>
-        {displayedDestinaton?.map((item) => (
+        {displayedDestination?.map((item) => (
           <DestinationCard key={item._id} destinationId={item._id} />
         ))}
       </div>
 
-      {Array.isArray(destinations) && destinations.length > 4 && (
+      {filteredDestinations.length > 4 && (
         <div className="mt-6 flex justify-center">
           <Button onClick={toggleExpanded}>
             {isExpanded ? "See Less" : "See More"}

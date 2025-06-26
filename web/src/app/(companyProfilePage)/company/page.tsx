@@ -1,22 +1,19 @@
 "use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { CompanyPackages } from "./_components/companyPackages";
 import { usePackageContext } from "./_components/PackageProvider";
 import { CreatePackage } from "./_components/createPackage";
 import { CompanyDestinations } from "./_components/companyDestinations";
-import Sidebar from "./_components/SideBar";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import AccountSettingsForm from "./_components/AccountSettings";
 
 export default function TravelDashboard() {
   const { view } = usePackageContext();
   const { company } = useAuth();
+  console.log(company?._id);
   return (
     <div className="flex h-screen bg-gradient-to-br from-black-400 to-gray-900 text-gray-800">
-      <Sidebar />
-
       <main className="flex-1 p-8 overflow-y-auto">
         {view === "dashboard" && (
           <>
@@ -45,15 +42,6 @@ export default function TravelDashboard() {
 
             <div className="col-span-1 space-y-4">
               {company?._id && <CompanyDestinations companyId={company?._id} />}
-            </div>
-
-            <div className="grid grid-cols-3 gap-6 mt-8">
-              <Card className="col-span-2">
-                <CardHeader>
-                  <CardTitle className="text-base">Best Destination</CardTitle>
-                </CardHeader>
-                <CardContent className="text-sm space-y-2"></CardContent>
-              </Card>
             </div>
           </>
         )}

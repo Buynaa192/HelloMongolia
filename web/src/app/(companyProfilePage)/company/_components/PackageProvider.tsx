@@ -27,18 +27,14 @@ type PackageContextProps = {
     data: DataType,
     setLoading: (loading: boolean) => void
   ) => Promise<createPackageType>;
-  updatePackage: (
-    packageId: string,
-    data: DataType,
-    setLoading: (loading: boolean) => void
-  ) => Promise<void>;
+  updatePackage: (packageId: string, data: DataType) => Promise<void>;
   deletePackage: (
     packageId: string,
     setLoading: (loading: boolean) => void
   ) => Promise<void>;
   deletePackageItem: (packageItemId: string) => Promise<void>;
   newPackage: PackageType | null;
-  setNewPackage: (value: PackageType) => void;
+  setNewPackage: (value: PackageType | null) => void;
   createPackageItemFun: (
     itemData: CreatePackageItemInput
   ) => Promise<createPackageItemType>;
@@ -64,7 +60,7 @@ const PackageContext = createContext({} as PackageContextProps);
 const UPLOAD_PRESET = "HelloMongolia";
 const CLOUD_NAME = "df60cobe2";
 
-const uploadImage = async (file: File): Promise<string> => {
+export const uploadImage = async (file: File): Promise<string> => {
   if (!(file instanceof File)) {
     throw new Error("Invalid file for upload");
   }
@@ -198,11 +194,7 @@ export function PackageProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     }
   };
-  const updatePackage = async (
-    packageId: string,
-    data: DataType,
-    setLoading: (loading: boolean) => void
-  ) => {
+  const updatePackage = async (packageId: string, data: DataType) => {
     try {
       setLoading(true);
 
