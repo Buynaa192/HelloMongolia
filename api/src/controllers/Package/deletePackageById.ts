@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { packageModel } from "../../models/package.model";
-import { companyProfileModel } from "../../models/companyProfile.model";
+import { companyProfileModel } from "../../models/user.models.by.role/companyProfile.model";
 export const deletePackageById: RequestHandler = async (req, res) => {
   const { packageId } = req.params;
 

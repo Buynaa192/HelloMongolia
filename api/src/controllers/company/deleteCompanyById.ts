@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
-import { companyProfileModel } from "../../models/companyProfile.model";
-export const deleteCompanyById: RequestHandler = async (req, res) => {
+import { companyProfileModel } from "../../models/user.models.by.role/companyProfile.model";
+export const deleteCompanyProfile: RequestHandler = async (req, res) => {
   const { companyId } = req.params;
 
   try {

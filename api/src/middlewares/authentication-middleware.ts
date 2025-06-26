@@ -4,27 +4,38 @@ import jwt from "jsonwebtoken";
 declare global {
   namespace Express {
     interface Request {
-      companyId?: string;
+      userId?: string;
+      role?: "company" | "guide" | "customer";
     }
   }
 }
 
 export const authenticationMiddleware: RequestHandler = (req, res, next) => {
-  const token = req.headers.authorization;
-  if (!token) {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
     res.status(401).json({ message: "Unauthenticated" });
-    return;
   }
 
+  const token = authHeader.split(" ")[1];
+
   try {
-    const { companyId } = jwt.verify(token, process.env.JWT_SECRET) as {
-      companyId: string;
+    const payload = jwt.verify(
+      token,
+      process.env.JWT_SECRET || "your_jwt_secret"
+    ) as {
+      userId: string;
+      role: "company" | "guide" | "customer";
+      iat: number;
+      exp: number;
     };
 
-    req.companyId = companyId;
+    req.userId = payload.userId;
+    req.role = payload.role;
 
     next();
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.error("Authentication error:", error);
+    res.status(401).json({ message: "Invalid or expired token" });
   }
 };

@@ -1,13 +1,11 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 const companyProfileSchema = new Schema({
-  email: {
-    type: String,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
-  },
-  password: {
-    type: String,
-    required: true,
+    unique: true,
   },
   phoneNumber: {
     type: String,
@@ -19,15 +17,18 @@ const companyProfileSchema = new Schema({
   },
   background: {
     type: String,
-    default: "",
+    default:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750929525/Screen_Shot_2025-06-26_at_5.18.20_PM_vdrnva.png",
   },
   AvatarImage: {
     type: String,
-    default: "",
+    default:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750928857/company_xlzzhn.jpg",
   },
   since: {
-    type: String,
-    default: "",
+    type: Number,
+    default: 0,
+    required: true,
   },
   websiteURL: {
     type: String,
@@ -36,6 +37,7 @@ const companyProfileSchema = new Schema({
   about: {
     type: String,
     default: "",
+    required: true,
   },
   packages: {
     type: [Schema.Types.ObjectId],
@@ -69,3 +71,5 @@ export const companyProfileModel = model(
   "companyProfile",
   companyProfileSchema
 );
+
+export { companyProfileSchema };

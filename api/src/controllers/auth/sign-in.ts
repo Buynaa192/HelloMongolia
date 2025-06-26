@@ -1,32 +1,34 @@
 import { RequestHandler } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { companyProfileModel } from "../../models/companyProfile.model";
+import { UserModel } from "../../models/UserSchema";
 
 export const signIn: RequestHandler = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const company = await companyProfileModel.findOne({ email });
-
-    if (!company) {
-      res.status(404).json({ message: "Email is not registered" });
-      return;
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      res.status(400).json({ message: "Invalid email or password" });
     }
 
-    const isPasswordMatch = await bcrypt.compare(password, company.password);
-    if (!isPasswordMatch) {
-      res.status(401).json({ message: "Incorrect password" });
-      return;
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      res.status(400).json({ message: "Invalid email or password" });
     }
 
-    const { password: _, ...companyWithoutPassword } = company.toObject();
+    const userObj = user.toObject();
+    delete userObj.password;
 
-    const token = jwt.sign({ companyId: company._id }, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET || "your_jwt_secret",
+      { expiresIn: "1d" }
+    );
 
-    res.status(200).json({ user: companyWithoutPassword, token });
+    res.status(200).json({ user: userObj, token });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error", error });
+    console.error("SignIn error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

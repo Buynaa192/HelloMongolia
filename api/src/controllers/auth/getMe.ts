@@ -1,27 +1,42 @@
 import { RequestHandler } from "express";
-import { companyProfileModel } from "../../models/companyProfile.model";
+import { companyProfileModel } from "../../models/user.models.by.role/companyProfile.model";
+import { customerProfileModel } from "../../models/user.models.by.role/Customer.model";
+import { guideProfileModel } from "../../models/user.models.by.role/GuideProfile.model";
 
 export const getMe: RequestHandler = async (req, res) => {
   try {
-    const companyId = req.companyId;
+    const userId = req.userId;
+    const role = req.role;
 
-    if (!companyId) {
+    if (!userId || !role) {
       res.status(401).json({ message: "Unauthorized" });
-      return;
     }
 
-    const company = await companyProfileModel
-      .findById(companyId)
-      .select("-password");
+    let userProfile;
 
-    if (!company) {
-      res.status(404).json({ message: "User not found" });
-      return;
+    if (role === "company") {
+      userProfile = await companyProfileModel
+        .findOne({ userId })
+        .select("-password");
+    } else if (role === "guide") {
+      userProfile = await guideProfileModel
+        .findOne({ userId })
+        .select("-password");
+    } else if (role === "customer") {
+      userProfile = await customerProfileModel
+        .findOne({ userId })
+        .select("-password");
+    } else {
+      res.status(400).json({ message: "Invalid user role" });
     }
 
-    res.status(200).json(company);
+    if (!userProfile) {
+      res.status(404).json({ message: "User profile not found" });
+    }
+
+    res.status(200).json(userProfile);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error", error });
+    console.error("getMe error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
