@@ -40,9 +40,19 @@ const schema = z.object({
   duration: z.string().min(1),
   cost: z.number(),
   tripType: z.string().min(1),
-  itinerary: z.any().refine((file) => file && file.type === "application/pdf", {
-    message: "Please upload a valid PDF file",
-  }),
+  itinerary: z
+    .any()
+    .optional()
+    .refine(
+      (file) => {
+        if (!file) return true;
+        return file.type === "application/pdf";
+      },
+      {
+        message: "Please upload a valid PDF file",
+      }
+    ),
+
   availableFrom: z.string(),
   availableUntil: z.string(),
   rating: z.number().min(0).max(5),
