@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import { Loader } from "lucide-react";
 import { usePackageContext } from "./PackageProvider";
+import { useRouter } from "next/navigation";
 type TitlePropsType = {
   title: string;
   packageId: string;
@@ -16,6 +17,7 @@ type TitlePropsType = {
 export const DeletePackage = ({ title, packageId }: TitlePropsType) => {
   const { deletePackage } = usePackageContext();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   return (
     <DialogContent className="bg-white rounded-xl flex flex-col justify-center">
       <DialogHeader>
@@ -36,6 +38,7 @@ export const DeletePackage = ({ title, packageId }: TitlePropsType) => {
           className="bg-red-600 text-white hover:bg-red-700"
           onClick={async () => {
             await deletePackage(packageId, setLoading);
+            router.push("/company");
           }}>
           {loading ? <Loader className="animate-spin" /> : "delete"}
         </Button>

@@ -52,7 +52,7 @@ type FormData = z.infer<typeof schema>;
 
 export const CreatePackage = () => {
   const { company } = useAuth();
-  const { addPackage, setNewPackage } = usePackageContext();
+  const { addPackage, newPackage, setNewPackage } = usePackageContext();
   const [viewMode, setViewMode] = useState<"create" | "list">("create");
   const [loading, setLoading] = useState(false);
   const [prevProfileImage, setPrevProfileImage] = useState("");
@@ -70,23 +70,7 @@ export const CreatePackage = () => {
       itinerary: undefined,
     },
   });
-  const newPackage = {
-    _id: "685b655be0373398961791bd",
-    companyId: "6858fa70ead2c5c5e0fc271a",
-    title: "Terelj NP & Tsonjin boldog complex",
-    coverPhoto:
-      "https://res.cloudinary.com/df60cobe2/image/upload/v1750820185/larszis7…",
-    description: "Terelj NP & Tsonjin boldog complex",
-    packageItem: [],
-    duration: "3",
-    availableFrom: "2025-06-24T00:00:00.000+00:00",
-    availableUntil: "2025-06-27T00:00:00.000+00:00",
-    cost: 422,
-    itinerary:
-      "https://res.cloudinary.com/df60cobe2/image/upload/v1750820186/g1qonfr1…",
-    tripType: "Adventure",
-    rating: 4,
-  };
+
   const onSubmit = async (data: FormData) => {
     if (!company?._id) {
       console.error("Company ID not available");
@@ -111,8 +95,7 @@ export const CreatePackage = () => {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="bg-white px-6 md:px-12 py-10 shadow-xl rounded-2xl space-y-8 w-full"
-            >
+              className="bg-white px-6 md:px-12 py-10 shadow-xl rounded-2xl space-y-8 w-full">
               <FormField
                 control={form.control}
                 name="coverPhoto"
@@ -224,8 +207,7 @@ export const CreatePackage = () => {
                       <FormControl>
                         <select
                           {...field}
-                          className="w-full border rounded p-2"
-                        >
+                          className="w-full border rounded p-2">
                           <option value="Sightseeing">Sightseeing</option>
                           <option value="Adventure">Adventure</option>
                           <option value="Culture & history">
@@ -322,8 +304,7 @@ export const CreatePackage = () => {
                   className={`w-full md:w-auto flex justify-center items-center gap-2 px-6 py-3 rounded-md text-white ${
                     loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"
                   }`}
-                  disabled={loading}
-                >
+                  disabled={loading}>
                   {loading ? (
                     <>
                       <Loader className="animate-spin" size={18} />
@@ -343,14 +324,12 @@ export const CreatePackage = () => {
           <div className="flex gap-4 mb-4">
             <Button
               variant={viewMode === "create" ? "default" : "outline"}
-              onClick={() => setViewMode("create")}
-            >
+              onClick={() => setViewMode("create")}>
               ➕ Create New Itinerary
             </Button>
             <Button
               variant={viewMode === "list" ? "default" : "outline"}
-              onClick={() => setViewMode("list")}
-            >
+              onClick={() => setViewMode("list")}>
               📋 View All Itineraries
             </Button>
           </div>

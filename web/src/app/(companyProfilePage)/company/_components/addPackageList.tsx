@@ -1,32 +1,58 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { api } from "@/axios";
-import { PackageItemCard } from "./packageItemCard";
 import { PackageItemType } from "@/app/_providers/AuthProvider";
 import { usePackageContext } from "./PackageProvider";
 import { Stepper } from "./ui/Stepper";
 import { AlertDial } from "./Alert";
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
+import { PackageItemCard } from "./packageItemCard";
+
 export const PackageItemList = ({ packageId }: { packageId: string }) => {
-  const { newPackage } = usePackageContext();
+  const { newPackage, addItemToPackage } = usePackageContext();
   const [items, setItems] = useState<PackageItemType[]>([]);
   const [order, setOrder] = useState(1);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState<null | string>(null);
 
-  const packageItems = async () => {
-    const res = await api.get("/packageItem");
-    setItems(res.data.packageItem);
-  };
+  const duration = Number(newPackage?.duration) || 1;
 
   useEffect(() => {
-    packageItems();
+    const fetchItems = async () => {
+      try {
+        const res = await api.get("/packageItem");
+        setItems(res.data.packageItem);
+      } catch (err) {
+        console.log("err", err);
+        toast.error("Failed to load items");
+      }
+    };
+    fetchItems();
   }, [packageId]);
 
-  const dur = Number(newPackage?.duration) || 1;
-  const steps = Array.from({ length: dur }, (_, i) => `Day ${i + 1}`);
+  const steps = Array.from({ length: duration }, (_, i) => `Day ${i + 1}`);
 
-  const handleSubmit = () => {
-    console.log("Submit clicked!");
+  const handleNext = async () => {
+    if (!selectedItemId) {
+      toast.error("Please select an item first");
+      return;
+    }
+    setLoading(true);
+    try {
+      await addItemToPackage(newPackage!._id, selectedItemId);
+      toast.success(`Day ${order} added`);
+      if (order < duration) {
+        setOrder(order + 1);
+        setSelectedItemId(null);
+      } else {
+        setIsComplete(true);
+      }
+    } catch {
+      toast.error("Failed to add itinerary day");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,24 +69,29 @@ export const PackageItemList = ({ packageId }: { packageId: string }) => {
             activity={item.activity}
             packageId={packageId}
             packageItemId={item._id}
-            packageItems={packageItems}
-            order={order}
-            setOrder={setOrder}
-            setIsOpen={setIsOpen}
+            setSelectedItemId={setSelectedItemId}
           />
         ))}
       </div>
 
       <AlertDial
         title="All itinerary days have been successfully created!"
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
+        isOpen={isComplete}
+        setIsOpen={setIsComplete}
       />
+
       <div className="fixed bottom-4 left-0 w-full flex justify-center z-50">
         <button
-          onClick={handleSubmit}
-          className="bg-blue-600 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-blue-700 transition">
-          Submit Itinerary
+          onClick={handleNext}
+          disabled={loading}
+          className={`px-6 py-3 rounded-xl shadow-lg transition flex items-center gap-2 \${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'}`}>
+          {loading ? (
+            <Loader className="animate-spin" />
+          ) : order < duration ? (
+            `Add Day ${order}`
+          ) : (
+            "Finish Itinerary"
+          )}
         </button>
       </div>
     </div>

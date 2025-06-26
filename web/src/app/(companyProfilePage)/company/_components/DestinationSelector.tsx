@@ -1,8 +1,6 @@
-"use client";
-
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { FormItem, FormLabel } from "@/components/ui/form";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { api } from "@/axios";
 import { NewDestinationForm } from "./NewDestinationForm";
@@ -25,6 +23,7 @@ export const DestinationSelector = ({
   const [destinations, setDestinations] = useState<DestinationType[]>([]);
   const [expanded, setExpanded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const loadDestinations = async () => {
     try {
@@ -39,9 +38,24 @@ export const DestinationSelector = ({
     loadDestinations();
   }, []);
 
+  const sortedDestinations = useMemo(() => {
+    if (!selectedId) return destinations;
+    const idx = destinations.findIndex((d) => d._id === selectedId);
+    if (idx === -1) return destinations;
+    const copy = [...destinations];
+    const [newest] = copy.splice(idx, 1);
+    return [newest, ...copy];
+  }, [destinations, selectedId]);
+  const filteredDestinations = useMemo(() => {
+    if (!searchTerm) return sortedDestinations;
+    return sortedDestinations.filter((d) =>
+      d.destinationName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [sortedDestinations, searchTerm]);
+
   const visibleDestinations = expanded
-    ? destinations
-    : destinations.slice(0, 3);
+    ? filteredDestinations
+    : filteredDestinations.slice(0, 3);
 
   const handleCreateSuccess = (newId: string) => {
     setDestinationId(newId);
@@ -52,60 +66,64 @@ export const DestinationSelector = ({
   return (
     <>
       <FormItem>
-        <FormLabel>Choose Destination</FormLabel>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {visibleDestinations.map((dest) => (
-            <div
-              key={dest._id}
-              onClick={() => setDestinationId(dest._id)}
-              className={`cursor-pointer rounded-xl border p-3 shadow hover:ring-2 hover:ring-primary transition ${
-                selectedId === dest._id
-                  ? "border-blue-600 ring-2 ring-blue-500"
-                  : "border-gray-200"
-              }`}
-            >
-              <img
-                src={dest.destinationImages[0]}
-                alt={dest.destinationName}
-                className="w-full h-32 object-cover rounded-md mb-2"
-              />
-              <p className="text-center font-medium">{dest.destinationName}</p>
-            </div>
-          ))}
-        </div>
-        {destinations.length > 3 && (
-          <div className="text-center mt-4">
-            <button
-              type="button"
-              onClick={() => setExpanded(!expanded)}
-              className="text-blue-600 underline text-sm"
-            >
-              {expanded ? "See less" : "See more"}
-            </button>
-          </div>
-        )}
-
-        <div className="mt-4 text-center">
-          <Dialog open={modalOpen} modal={false}>
-            <DialogTrigger asChild>
-              <Button
-                onClick={() => setModalOpen(true)}
-                type="button"
-                variant="outline"
-                className="bg-green-400 hover:bg-green-500"
-              >
-                + Create New Destination
-              </Button>
-            </DialogTrigger>
-            <NewDestinationForm
-              onCreate={handleCreateSuccess}
-              onClose={() => setModalOpen(false)}
-            />
-          </Dialog>
-        </div>
-
-        <FormMessage />
+        <FormLabel>Search destinations by name</FormLabel>
+        <input
+          type="text"
+          placeholder="Search destinations..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full mb-4 p-2 border rounded"
+        />
       </FormItem>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {visibleDestinations.map((dest) => (
+          <div
+            key={dest._id}
+            onClick={() => setDestinationId(dest._id)}
+            className={`cursor-pointer rounded-xl border p-3 shadow hover:ring-2 hover:ring-primary transition ${
+              selectedId === dest._id
+                ? "border-blue-600 ring-2 ring-blue-500"
+                : "border-gray-200"
+            }`}>
+            <img
+              src={dest.destinationImages[0]}
+              alt={dest.destinationName}
+              className="w-full h-32 object-cover rounded-md mb-2"
+            />
+            <p className="text-center font-medium">{dest.destinationName}</p>
+          </div>
+        ))}
+      </div>
+
+      {filteredDestinations.length > 3 && (
+        <div className="text-center mt-4">
+          <button
+            type="button"
+            onClick={() => setExpanded(!expanded)}
+            className="text-blue-600 underline text-sm">
+            {expanded ? "See less" : "See more"}
+          </button>
+        </div>
+      )}
+
+      <div className="mt-4 text-center">
+        <Dialog open={modalOpen} modal={false}>
+          <DialogTrigger asChild>
+            <Button
+              onClick={() => setModalOpen(true)}
+              type="button"
+              variant="outline"
+              className="bg-green-400 hover:bg-green-500">
+              +Create a new destination
+            </Button>
+          </DialogTrigger>
+          <NewDestinationForm
+            onCreate={handleCreateSuccess}
+            onClose={() => setModalOpen(false)}
+          />
+        </Dialog>
+      </div>
     </>
   );
 };

@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { DeletePackage } from "./deletePackage";
 import { useState } from "react";
 import { usePackageContext } from "./PackageProvider";
-import { UpdatePackageForm } from "@/app/(customer)/companies/[id]/_components/updatePackageForm";
+import { UpdatePackageForm } from "./updatePackageForm";
 
 type Props = {
   packageData: PackageType;
@@ -30,7 +30,7 @@ export const PackageDialogContent = ({ packageData }: Props) => {
   const ratingStar = (rating: number) =>
     Array.from({ length: 5 }).map((_, i) => (
       <Star
-        key={i}
+        key={`rating-${packageData._id}-${i}`}
         size={18}
         className={
           i <= rating - 1 ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
@@ -111,12 +111,10 @@ export const PackageDialogContent = ({ packageData }: Props) => {
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundBlendMode: "overlay",
-              }}
-            >
+              }}>
               <button
                 className="w-full px-4 py-3 flex justify-between items-center text-left font-semibold text-white hover:bg-black/10 transition"
-                onClick={() => toggleDay(item.order)}
-              >
+                onClick={() => toggleDay(item.order)}>
                 <span className="drop-shadow-sm text-white">{`Day ${item.order}: ${item.title}`}</span>
                 <span className="text-white drop-shadow-sm">
                   {expandedDay === item.order ? "▲" : "▼"}
@@ -130,8 +128,7 @@ export const PackageDialogContent = ({ packageData }: Props) => {
                     {item.activity.map((act) => (
                       <div
                         key={act._id}
-                        className="flex gap-4 p-2 bg-white/90 rounded-lg items-center shadow-sm border border-gray-200"
-                      >
+                        className="flex gap-4 p-2 bg-white/90 rounded-lg items-center shadow-sm border border-gray-200">
                         <div className="flex flex-row gap-2 items-center">
                           <span className="text-xl">{act.emoji}</span>
                           <h5 className="font-medium text-gray-700">
@@ -146,8 +143,7 @@ export const PackageDialogContent = ({ packageData }: Props) => {
                       <DialogTrigger asChild>
                         <Button
                           size="sm"
-                          className="bg-yellow-500 hover:bg-yellow-600 text-white shadow-md"
-                        >
+                          className="bg-yellow-500 hover:bg-yellow-600 text-white shadow-md">
                           Edit
                         </Button>
                       </DialogTrigger>
@@ -157,9 +153,8 @@ export const PackageDialogContent = ({ packageData }: Props) => {
                       size="sm"
                       variant="destructive"
                       className="shadow-md"
-                      onClick={() => deletePackageItem(item._id)}
-                    >
-                      Delete
+                      onClick={() => deletePackageItem(item._id)}>
+                      Remove
                     </Button>
                   </div>
                 </div>
