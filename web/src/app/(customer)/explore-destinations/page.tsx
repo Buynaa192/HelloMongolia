@@ -18,7 +18,6 @@ export default function DestinatioExplore() {
     try {
       const response = await api.get("/regions");
       setRegions(response.data.regions);
-      console.log(response.data.regions);
     } catch (err) {
       console.error("failed to fetch packages", err);
     }
@@ -38,9 +37,7 @@ export default function DestinatioExplore() {
     getRegions();
   }, []);
 
-  const filteredDestinations = destination.filter((dest) =>
-    dest.destinationName.toLowerCase().includes(searchDestination.toLowerCase())
-  );
+  const filteredDestinations = destination.filter((dest) => dest.destinationName.toLowerCase().includes(searchDestination.toLowerCase()));
 
   if (destination.length === 0) return null;
 
@@ -57,10 +54,7 @@ export default function DestinatioExplore() {
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-white bg-black/30  px-4 text-center">
           <p className="font-bold text-[60px]">Wander far. Discover more.</p>
-          <p className="max-w-4xl">
-            Discover over 30 handpicked destinations—each capturing the untamed
-            spirit and soul of Mongolia.
-          </p>
+          <p className="max-w-4xl">Discover over 30 handpicked destinations—each capturing the untamed spirit and soul of Mongolia.</p>
           <div className="flex gap-2 items-center bg-white rounded-md px-4 py-2 max-w-md w-full mx-auto">
             <SearchIcon className="text-black" />
             <p className="text-2xl">🇲🇳</p>
@@ -76,10 +70,7 @@ export default function DestinatioExplore() {
               {filteredDestinations.map((item) => (
                 <div className=" flex   gap-2 p-2" key={item._id}>
                   <Image
-                    src={
-                      item.destinationImages[0] ||
-                      "https://res.cloudinary.com/df60cobe2/image/upload/v1750344622/ly7zekpo5tegc4zmzxcy.jpg"
-                    }
+                    src={item.destinationImages[0] || "https://res.cloudinary.com/df60cobe2/image/upload/v1750344622/ly7zekpo5tegc4zmzxcy.jpg"}
                     width={200}
                     height={100}
                     alt={item.destinationName}

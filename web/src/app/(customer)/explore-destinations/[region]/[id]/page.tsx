@@ -31,37 +31,24 @@ export default function Destination() {
   }, [id]);
 
   if (!destination) {
-    return (
-      <div className="w-full min-h-screen flex items-center justify-center text-xl">
-        Loading destination...
-      </div>
-    );
+    return <div className="w-full min-h-screen flex items-center justify-center text-xl">Loading destination...</div>;
   }
 
   return (
-    <div className="w-full min-h-screen  flex flex-col gap-6 pb-10">
+    <div className="w-full   flex flex-col gap-6 pb-10 ">
       <DestinationHero destination={destination} />
 
       <section className="flex flex-col lg:flex-row p-6 gap-6 w-full">
         <div className="space-y-6 bg-white rounded-2xl p-8 shadow-lg w-full">
-          <h1 className="text-4xl font-bold text-gray-900">
-            {destination.destinationName}
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-900">{destination.destinationName}</h1>
 
-          <p className="text-gray-600 leading-relaxed">
-            {destination.description}
-          </p>
+          <p className="text-gray-600 leading-relaxed">{destination.description}</p>
 
           <div className="border rounded-xl p-4 bg-gray-50">
-            <h2 className="font-semibold text-xl mb-3 text-gray-800">
-              Activities
-            </h2>
+            <h2 className="font-semibold text-xl mb-3 text-gray-800">Activities</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-gray-700">
               {destination.activities.map((item, indx) => (
-                <div
-                  key={indx}
-                  className="flex items-center gap-2 bg-white p-2 rounded-md shadow-sm border"
-                >
+                <div key={indx} className="flex items-center gap-2 bg-white p-2 rounded-md shadow-sm border">
                   <span className="text-lg">{item.emoji}</span>
                   <span>{item.activityName}</span>
                 </div>
