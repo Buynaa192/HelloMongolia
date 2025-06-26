@@ -90,7 +90,7 @@ const SearchInMongoliaComponent = ({
       }`}
     >
       {isFocused ? (
-        <div className="fixed inset-0 bg-black/80 z-20 h-1000 border" />
+        <div className="fixed inset-0 bg-black/80 z-20 h-1000 " />
       ) : (
         ""
       )}
