@@ -2,6 +2,8 @@
 
 import React from "react";
 import { TripType } from "../page";
+import { ActivityType } from "@/app/_providers/AuthProvider";
+
 type SearchFilterProps = {
   selectedTripTypes: TripType[];
   setSelectedTripTypes: React.Dispatch<React.SetStateAction<TripType[]>>;
@@ -11,17 +13,22 @@ type SearchFilterProps = {
   setSelectedCosts: React.Dispatch<React.SetStateAction<string[]>>;
   selectedDurations: string[];
   setSelectedDurations: React.Dispatch<React.SetStateAction<string[]>>;
+  allActivities: ActivityType[];
+  selectedActivities: ActivityType[];
+  setSelectedActivities: React.Dispatch<React.SetStateAction<ActivityType[]>>;
 };
 
 export const SearchFilter: React.FC<SearchFilterProps> = ({
   selectedTripTypes,
   setSelectedTripTypes,
-
   selectedCosts,
   setSelectedCosts,
   clearAllFilters,
   selectedDurations,
   setSelectedDurations,
+  allActivities,
+  selectedActivities,
+  setSelectedActivities,
 }) => {
   const tripTypes: TripType[] = [
     "Scenery",
@@ -41,91 +48,166 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
     );
   };
+
   const handleCostChange = (range: string) => {
     setSelectedCosts((prev) =>
       prev.includes(range) ? prev.filter((c) => c !== range) : [...prev, range]
     );
   };
+
   const handleDurationChange = (range: string) => {
     setSelectedDurations((prev) =>
       prev.includes(range) ? prev.filter((d) => d !== range) : [...prev, range]
     );
   };
+
+  const handleActivityChange = (activity: ActivityType) => {
+    setSelectedActivities((prev) =>
+      prev.some((a) => a._id === activity._id)
+        ? prev.filter((a) => a._id !== activity._id)
+        : [...prev, activity]
+    );
+  };
+
   return (
-    <div className="w-full h-fit bg-transparent flex-col flex  items-center relative  z-10">
-      <div className="w-full h-[40px] flex items-center justify-between pl-[40px] pr-[40px]">
-        <div className="text-[24px] font-semibold text-accent">
+    <div className="w-200 h-fit bg-transparent flex-col flex items-center relative z-10 pl-20 ">
+      <div className="w-full h-[40px] flex items-center justify-between  ">
+        <div
+          className="text-[24px] font-semibold text-accent w-70 max-2xl:text-[18px]"
+          style={{ fontFamily: "Lexend Giga" }}
+        >
           All Search Filters
         </div>
-        <div className="flex gap-2 h-full items-center">
+        <div className="flex h-10  items-center justify-end p-4">
           <button
             onClick={clearAllFilters}
-            className="w-[150px] bg-white text-black h-[40px]  rounded-[20px] flex items-center justify-center font-semibold shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:bg-black hover:text-white hover:shadow-lg duration-200"
+            style={{ fontFamily: "Lexend Giga" }}
+            className="w-[150px] text-white h-[40px] border-2 max-2xl:text-[18px]  flex items-center justify-center font-semibold shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:bg-white hover:text-black hover:shadow-lg duration-200"
           >
             CLEAR
           </button>
         </div>
       </div>
 
-      <div className="flex w-full  text-accent pl-30 pr-30">
-        <div className="flex-1 h-fit p-5">
-          <div className="w-full h-full flex flex-col gap-2">
-            <div className="text-[24px]  font-semibold">Trip type</div>
-            <div className="columns-2 gap-4 ">
-              {tripTypes.map((item, index) => (
-                <label
-                  key={index}
-                  className="text-[16px] flex gap-2 font-medium h-fit items-baseline cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    className="text-accent"
-                    checked={selectedTripTypes.includes(item)}
-                    onChange={() => handleTripTypeChange(item)}
-                  />
-                  {item}
-                </label>
-              ))}
+      <div
+        className="flex flex-col w-fit text-accent gap-4 "
+        style={{ fontFamily: "Lexend Giga" }}
+      >
+        <div className="flex-1 h-fit pr-5 pl-5 ">
+          <div className="flex flex-col gap-3">
+            <div className="text-[24px] font-semibold max-2xl:text-[18px] ">
+              Trip type
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {tripTypes.map((type) => {
+                const selected = selectedTripTypes.includes(type);
+                return (
+                  <div
+                    key={type}
+                    onClick={() => handleTripTypeChange(type)}
+                    className={`px-2 py-1 border cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                      selected ? "bg-white/40 text-white" : "border-accent"
+                    }`}
+                    style={{ fontFamily: "Lexend Giga" }}
+                  >
+                    {type}
+                    <div
+                      className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300 ${
+                        selected ? "w-full border-white" : ""
+                      }`}
+                    ></div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
-        <div className="flex-1 h-full p-5">
-          <div className="w-full h-full flex flex-col gap-2">
-            <div className="text-[24px] font-semibold">Cost</div>
-            <div className="columns-2 gap-4 p-3">
-              {cost.map((item, index) => (
-                <label
-                  key={index}
-                  className="text-[16px] flex gap-2 font-medium h-fit items-baseline cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedCosts.includes(item)}
-                    onChange={() => handleCostChange(item)}
-                  />
-                  {item}
-                </label>
-              ))}
+        <div className="flex-1 h-fit pr-5 pl-5 ">
+          <div className="flex flex-col gap-3">
+            <div className="text-[24px] font-semibold max-2xl:text-[18px] ">
+              Cost
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {cost.map((range) => {
+                const selected = selectedCosts.includes(range);
+                return (
+                  <div
+                    key={range}
+                    onClick={() => handleCostChange(range)}
+                    className={`px-2 py-1 border cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                      selected ? "bg-white/40 text-white" : "border-accent"
+                    }`}
+                    style={{ fontFamily: "Lexend Giga" }}
+                  >
+                    {range}
+                    <div
+                      className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300  ${
+                        selected ? "w-full border-white" : ""
+                      }`}
+                    ></div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
-        <div className="flex-1 h-full p-5">
-          <div className="w-full h-full flex flex-col gap-2">
-            <div className="text-[24px] font-semibold">Duration</div>
-            <div className="columns-2 gap-4 p-3">
-              {duration.map((item, index) => (
-                <label
-                  key={index}
-                  className="text-[16px] flex gap-2 font-medium h-fit items-baseline cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedDurations.includes(item)}
-                    onChange={() => handleDurationChange(item)}
-                  />
-                  {item}
-                </label>
-              ))}
+        <div className="flex-1 h-fit pr-5 pl-5">
+          <div className="flex flex-col gap-3">
+            <div className="text-[24px] font-semibold max-2xl:text-[18px] ">
+              Duration
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {duration.map((range) => {
+                const selected = selectedDurations.includes(range);
+                return (
+                  <div
+                    key={range}
+                    onClick={() => handleDurationChange(range)}
+                    className={`px-2 py-1 border cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                      selected ? "bg-white/40 text-white" : "border-accent"
+                    }`}
+                    style={{ fontFamily: "Lexend Giga" }}
+                  >
+                    {range}
+                    <div
+                      className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300 ${
+                        selected ? "w-full border-white" : ""
+                      }`}
+                    ></div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 h-fit pr-5 pl-5">
+          <div className="flex flex-col gap-3">
+            <div className="text-[24px] font-semibold max-2xl:text-[14px] ">
+              Activities
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {allActivities.map((activity) => {
+                const selected = selectedActivities.some(
+                  (a) => a._id === activity._id
+                );
+                return (
+                  <div
+                    key={activity._id}
+                    onClick={() => handleActivityChange(activity)}
+                    className={`px-2 py-1 border cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                      selected ? "bg-white/40 text-white" : "border-accent"
+                    }`}
+                    style={{ fontFamily: "Lexend Giga" }}
+                  >
+                    {activity.emoji} {activity.activityName}
+                    <div
+                      className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300 ${
+                        selected ? "w-full border-white" : ""
+                      }`}
+                    ></div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
