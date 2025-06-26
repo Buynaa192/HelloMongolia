@@ -1,12 +1,13 @@
 "use client";
 
+import { LocationType, PackageType } from "@/app/_providers/AuthProvider";
 import {
   GoogleMap,
   Marker,
   InfoWindow,
   useJsApiLoader,
 } from "@react-google-maps/api";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
 
@@ -20,22 +21,39 @@ const defaultCenter = {
   lng: 106.9176,
 };
 
-type MarkerWithPhoto = {
+type Location = {
   name: string;
-  location: google.maps.LatLngLiteral;
+  location: LocationType;
   photoUrl?: string;
 };
 
-type Props = {
-  markers: MarkerWithPhoto[];
+type PackageGoogleMapProps = {
+  packageDetail: PackageType;
 };
 
-export default function PackageGoogleMap({ markers }: Props) {
+export default function PackageGoogleMap({
+  packageDetail,
+}: PackageGoogleMapProps) {
   const { isLoaded, loadError } = useJsApiLoader({ googleMapsApiKey: API_KEY });
-
   const [activeMarkerIndex, setActiveMarkerIndex] = useState<number | null>(
     null
   );
+
+  const locations: Location[] = useMemo(() => {
+    return packageDetail.packageItem
+      .filter((item) => !!item.destinationId)
+      .map((item) => {
+        const { destinationId } = item;
+
+        const { destinationName, location, destinationImages } = destinationId!;
+
+        return {
+          location,
+          name: destinationName,
+          photoUrl: destinationImages[0] ?? "",
+        };
+      });
+  }, []);
 
   if (loadError) return <div>Error loading map</div>;
   if (!isLoaded) return <div>Loading map...</div>;
@@ -44,10 +62,10 @@ export default function PackageGoogleMap({ markers }: Props) {
     <div className="w-full mt-10">
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={markers.length > 0 ? markers[0].location : defaultCenter}
+        center={defaultCenter}
         zoom={5}
       >
-        {markers.map((marker, idx) => (
+        {locations.map((marker, idx) => (
           <Marker
             key={idx}
             position={marker.location}
