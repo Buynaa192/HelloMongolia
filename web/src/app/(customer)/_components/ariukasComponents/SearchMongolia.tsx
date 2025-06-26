@@ -19,15 +19,7 @@ interface SearchInMongoliaProps {
   searchResults: boolean;
 }
 
-const SearchInMongoliaComponent = ({
-  query,
-  setQuery,
-  loading,
-  setLoading,
-  results,
-  setResults,
-  searchResults,
-}: SearchInMongoliaProps) => {
+const SearchInMongoliaComponent = ({ query, setQuery, loading, setLoading, results, setResults, searchResults }: SearchInMongoliaProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const emptyResults: SearchResultsType = {
@@ -38,11 +30,7 @@ const SearchInMongoliaComponent = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
-        console.log("Click outside detected!");
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setQuery("");
         setResults(emptyResults);
         setLoading(false);
@@ -82,7 +70,7 @@ const SearchInMongoliaComponent = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   };
-  console.log(results);
+
   return (
     <div className="w-full flex flex-col items-center justify-center relative">
       {searchResults && <div className="fixed inset-0 bg-black/80 z-20" />}
@@ -99,19 +87,13 @@ const SearchInMongoliaComponent = ({
           onChange={(e) => setQuery(e.target.value)}
           autoComplete="off"
         />
-        <button
-          type="submit"
-          className="px-4 py-3 text-lg text-black bg-gray-100 transition"
-        >
+        <button type="submit" className="px-4 py-3 text-lg text-black bg-gray-100 transition">
           🔍
         </button>
       </form>
 
       {query.trim().length >= 1 && (
-        <div
-          ref={containerRef}
-          className="relative z-50 mt-4 w-full mx-auto pl-2 pr-2 h-120"
-        >
+        <div ref={containerRef} className="relative z-50 mt-4 w-full mx-auto pl-2 pr-2 h-120">
           {loading ? (
             <div className="w-full flex justify-center">
               <MyLoader />
@@ -125,22 +107,14 @@ const SearchInMongoliaComponent = ({
                   : `w-full grid-cols-3 md:grid-cols-4}`
               )}
             >
-              {results.destinations?.length > 0 && (
-                <SearchDestination destinations={results.destinations} />
-              )}
+              {results.destinations?.length > 0 && <SearchDestination destinations={results.destinations} />}
 
-              {results.activities?.length > 0 && (
-                <SearchActivities activities={results.activities} />
-              )}
+              {results.activities?.length > 0 && <SearchActivities activities={results.activities} />}
 
-              {results.packages?.length > 0 && (
-                <SearchPackage packages={results.packages} />
-              )}
+              {results.packages?.length > 0 && <SearchPackage packages={results.packages} />}
             </div>
           ) : (
-            <p className="text-sm text-black col-span-2 text-center">
-              No results found.
-            </p>
+            <p className="text-sm text-black col-span-2 text-center">No results found.</p>
           )}
         </div>
       )}
