@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,21 +15,18 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
-import { PackageType, useAuth } from "@/app/_providers/AuthProvider";
+import { useAuth } from "@/app/_providers/AuthProvider";
 import { Textarea } from "@/components/ui/textarea";
 import { usePackageContext } from "./PackageProvider";
-import { CreatePackageItemForm } from "./CreatePackageItemForm";
-import { PackageItemList } from "./addPackageList";
+import { CreatePackageItinerary } from "./CreatePackageItinerary";
+
 export const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
   "image/jpg",
   "image/png",
   "image/webp",
 ];
-export type createPackageType = {
-  message: string;
-  package: PackageType;
-};
+
 const schema = z.object({
   coverPhoto: z
     .any()
@@ -63,7 +61,6 @@ type FormData = z.infer<typeof schema>;
 export const CreatePackage = () => {
   const { company } = useAuth();
   const { addPackage, newPackage, setNewPackage } = usePackageContext();
-  const [viewMode, setViewMode] = useState<"create" | "list">("create");
   const [loading, setLoading] = useState(false);
   const [prevProfileImage, setPrevProfileImage] = useState("");
   const form = useForm<FormData>({
@@ -73,7 +70,7 @@ export const CreatePackage = () => {
       name: "",
       description: "",
       duration: "",
-      tripType: "",
+      tripType: "Adventure",
       availableFrom: "",
       availableUntil: "",
       coverPhoto: undefined,
@@ -93,6 +90,7 @@ export const CreatePackage = () => {
       setNewPackage(createdPackage.package);
     }
   };
+
   return (
     <div>
       {!newPackage && (
@@ -218,24 +216,23 @@ export const CreatePackage = () => {
                         <select
                           {...field}
                           className="w-full border rounded p-2">
-                          <option value="Sightseeing">Sightseeing</option>
                           <option value="Adventure">Adventure</option>
-                          <option value="Culture & history">
-                            Culture & History
-                          </option>
-                          <option value="Family vacations">
-                            Family Vacations
-                          </option>
+                          <option value="Scenery">Scenery</option>
+                          <option value="Cultural">Cultural</option>
+                          <option value="Historical">Historical</option>
+                          <option value="Family">Family</option>
                           <option value="Scientific">Scientific</option>
                           <option value="Festival & Events">
                             Festival & Events
                           </option>
+                          <option value="Off-road">Off-road</option>
                         </select>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="availableFrom"
@@ -329,28 +326,10 @@ export const CreatePackage = () => {
           </Form>
         </div>
       )}
-      {newPackage && (
-        <div className="w-full max-w-screen-lg mx-auto px-4 py-6 space-y-6">
-          <div className="flex gap-4 mb-4">
-            <Button
-              variant={viewMode === "create" ? "default" : "outline"}
-              onClick={() => setViewMode("create")}>
-              ➕ Create New Itinerary
-            </Button>
-            <Button
-              variant={viewMode === "list" ? "default" : "outline"}
-              onClick={() => setViewMode("list")}>
-              📋 View All Itineraries
-            </Button>
-          </div>
 
-          {viewMode === "create" ? (
-            <CreatePackageItemForm />
-          ) : (
-            <PackageItemList packageId={newPackage._id} />
-          )}
-        </div>
-      )}
+      {newPackage && <CreatePackageItinerary />}
     </div>
   );
 };
+
+export default CreatePackage;
