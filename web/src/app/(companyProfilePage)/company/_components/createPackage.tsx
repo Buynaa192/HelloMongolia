@@ -326,3 +326,5 @@ export const CreatePackage = () => {
     </div>
   );
 };
+
+export default CreatePackage;

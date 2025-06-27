@@ -13,7 +13,7 @@ type Props = {
   router: ReturnType<typeof useRouter>;
 };
 
-export function PackageSummary({ packageData }: Props) {
+export function PackageSummary({ packageData, router }: Props) {
   const ratingStar = (rating: number) =>
     Array.from({ length: 5 }).map((_, i) => (
       <Star
