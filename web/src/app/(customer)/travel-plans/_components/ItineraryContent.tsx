@@ -11,6 +11,7 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
   const itineraryRef = useRef<HTMLDivElement>(null);
   const [selectedDay, setSelectedDay] = useState(0);
 
+  // Scroll to selected day whenever selectedDay changes
   useEffect(() => {
     const container = itineraryRef.current;
     if (!container) return;
@@ -20,13 +21,14 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
       section.scrollIntoView({
         behavior: "smooth",
         inline: "start",
-        block: "nearest",
+        block: "nearest", // <-- prevents vertical scrolling
       });
     }
   }, [selectedDay]);
 
   return (
     <div className="w-full flex flex-col  p-4  ">
+      {/* Tabs */}
       <div className="w-full bg-black flex overflow-x-auto rounded-t-md">
         {packageDetail.packageItem.map((_, index) => (
           <button
@@ -44,6 +46,7 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
         ))}
       </div>
 
+      {/* Itinerary Sections */}
       <div
         ref={itineraryRef}
         className="w-full h-[600px] overflow-x-hidden scroll-smooth whitespace-nowrap flex rounded-b-md"
@@ -53,6 +56,7 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
             key={index}
             className="min-w-full h-full relative inline-block pointer-events-auto scroll-snap-align-start"
           >
+            {/* Background Image */}
             <img
               src={packageItem.image}
               onError={(e) => {
@@ -65,16 +69,20 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
               className="w-full h-full object-cover"
             />
 
+            {/* Overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/20 p-6 flex flex-col justify-center items-center gap-6 text-white">
+              {/* Title */}
               <h2 className="text-4xl font-bold text-center">
                 {packageItem.title} – Day {index + 1}
               </h2>
 
+              {/* Description */}
               <div className=" p-4 rounded-md max-w-2xl text-xl leading-relaxed text-center whitespace-pre-line overflow-auto max-h-[150px] ">
                 {packageItem.description}
               </div>
 
               <div className="w-full max-w-5xl flex flex-wrap gap-8 justify-center mt-4">
+                {/* Activities */}
                 <div className="flex flex-col  bg-black/30 rounded-md p-4">
                   <h3 className="text-xl font-bold mb-2">Activities:</h3>
                   <div className="flex gap-2">
