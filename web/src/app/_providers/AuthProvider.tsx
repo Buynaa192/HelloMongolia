@@ -15,7 +15,7 @@ export type PackageItemType = {
   destinationId: DestinationType | null;
   description: string;
   activity: ActivityType[];
-  accommodation: AccommodationType;
+  accommodation?: AccommodationType;
 };
 export type PackageType = {
   _id: string;

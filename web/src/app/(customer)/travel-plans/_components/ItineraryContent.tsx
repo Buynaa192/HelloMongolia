@@ -1,6 +1,7 @@
 "use client";
 import { PackageType } from "@/app/_providers/AuthProvider";
-import { useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useRef, useState, useEffect } from "react";
 
 type ItineraryContentProps = {
   packageDetail: PackageType;
@@ -10,99 +11,90 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
   const itineraryRef = useRef<HTMLDivElement>(null);
   const [selectedDay, setSelectedDay] = useState(0);
 
-  const scrollToSection = (index: number) => {
+  // Scroll to selected day whenever selectedDay changes
+  useEffect(() => {
     const container = itineraryRef.current;
-    if (container) {
-      const section = container.children[index] as HTMLElement;
-      const scrollToPosition = section.offsetLeft;
+    if (!container) return;
 
-      container.scrollTo({
-        left: scrollToPosition,
+    const section = container.children[selectedDay] as HTMLElement;
+    if (section) {
+      section.scrollIntoView({
         behavior: "smooth",
+        inline: "start",
+        block: "nearest", // <-- prevents vertical scrolling
       });
-      setSelectedDay(index);
     }
-  };
+  }, [selectedDay]);
 
   return (
-    <div className="w-full flex min-h-100 p-3 items-center">
-      <div className="flex-1"></div>
-      <div className="flex-2 px-2 flex flex-col relative">
-        <div className="w-full">
-          <div className="w-full h-15 bg-[#000000] flex rounded-t-[8px] overflow-x-auto">
-            {packageDetail.packageItem.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => scrollToSection(index)}
-                className={`flex-1 h-full px-4 flex items-center justify-center text-[18px] font-bold rounded-t-[7px] duration-300
-                  ${
-                    selectedDay === index
-                      ? "bg-white text-black"
-                      : "text-white hover:bg-gray-400 hover:text-black"
-                  }`}
-              >
-                Day {index + 1}
-              </button>
-            ))}
-          </div>
-        </div>
-        <div
-          ref={itineraryRef}
-          className="w-full h-[500px] overflow-hidden scroll-smooth whitespace-nowrap rounded-[8px] flex pointer-events-none"
-        >
-          {packageDetail.packageItem.map((packageItem, index) => (
-            <div
-              key={index}
-              className="w-full min-w-full h-[500px] ml-2 relative inline-block pointer-events-auto"
-            >
-              <img
-                src={packageItem.image}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.onerror = null;
-                  target.src =
-                    "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
-                }}
-                alt="Image"
-                className="w-full h-full object-cover object-left"
-              />
-              <div className="absolute w-full h-full bg-gradient-to-r from-[#000000b8] to-[#00000028] inset-0 p-4 flex flex-col items-center gap-4">
-                <div
-                  className="text-[50px] text-white font-bold"
-                  style={{ fontFamily: "Dancing Script" }}
-                >
-                  {packageItem.title} Day {index + 1}
-                </div>
-                <div
-                  className="text-center text-white text-2xl"
-                  style={{ fontFamily: "Dancing Script" }}
-                >
-                  {packageItem.description}
-                </div>
-                <div className="w-full text-white flex gap-10 justify-center">
-                  <div className="flex flex-col w-50 h-full">
-                    Activity:
-                    <div className="w-full p-3">
-                      {packageItem.activity.map((item, index) => (
-                        <div key={index} className="flex">
-                          {item.emoji}
-                          {item.activityName}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex flex-col w-50 h-full">
-                    Accommodation
-                    <div className="w-full p-3">
-                      {packageItem.accommodation.hotelName},{" "}
-                      {packageItem.accommodation.address}
-                    </div>
+    <div className="w-full flex flex-col  p-4  ">
+      {/* Tabs */}
+      <div className="w-full bg-black flex overflow-x-auto rounded-t-md">
+        {packageDetail.packageItem.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setSelectedDay(index)}
+            className={`flex-1 min-w-[120px] px-4 py-2 text-lg font-semibold transition rounded-t-md
+              ${selectedDay === index ? "bg-white text-black" : "text-white hover:bg-gray-600"}`}
+          >
+            Day {index + 1}
+          </button>
+        ))}
+      </div>
+
+      {/* Itinerary Sections */}
+      <div ref={itineraryRef} className="w-full h-[600px] overflow-x-hidden scroll-smooth whitespace-nowrap flex rounded-b-md">
+        {packageDetail.packageItem.map((packageItem, index) => (
+          <div key={index} className="min-w-full h-full relative inline-block pointer-events-auto scroll-snap-align-start">
+            {/* Background Image */}
+            <img
+              src={packageItem.image}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src = "https://res.cloudinary.com/df60cobe2/image/upload/v1750665598/BwZffaCuXymfwk81JeptqEwnRzkQPEXF1Wrv3rbY_520_350_bovkis.jpg";
+              }}
+              alt="Itinerary Image"
+              className="w-full h-full object-cover"
+            />
+
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/20 p-6 flex flex-col justify-center items-center gap-6 text-white">
+              {/* Title */}
+              <h2 className="text-4xl font-bold text-center">
+                {packageItem.title} – Day {index + 1}
+              </h2>
+
+              {/* Description */}
+              <div className=" p-4 rounded-md max-w-2xl text-xl leading-relaxed text-center whitespace-pre-line overflow-auto max-h-[150px] ">
+                {packageItem.description}
+              </div>
+
+              <div className="w-full max-w-5xl flex flex-wrap gap-8 justify-center mt-4">
+                {/* Activities */}
+                <div className="flex flex-col  bg-black/30 rounded-md p-4">
+                  <h3 className="text-xl font-bold mb-2">Activities:</h3>
+                  <div className="flex gap-2">
+                    {packageItem.activity.map((item, idx) => (
+                      <Button key={idx} className="flex items-center gap-2 text-white/90">
+                        <span>{item.emoji}</span>
+                        <span>{item.activityName}</span>
+                      </Button>
+                    ))}
                   </div>
                 </div>
+
+                {packageItem.accommodation?.address && (
+                  <div className="flex flex-col w-[250px] bg-black/30 rounded-md p-4">
+                    <h3 className="text-xl font-bold mb-2">Accommodation</h3>
+                    <p className="font-semibold">{packageItem.accommodation.hotelName}</p>
+                    <p className="text-sm text-white/70">{packageItem.accommodation.address}</p>
+                  </div>
+                )}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );
