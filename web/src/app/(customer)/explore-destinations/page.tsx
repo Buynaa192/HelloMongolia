@@ -97,15 +97,15 @@ export default function DestinatioExplore() {
             <div className=" max-h-full overflow-auto rounded-lg w-150 gap-2 flex flex-col">
               <p>Destinations</p>
               {filteredDestinations.map((item) => (
-                <div className=" flex   gap-2 p-2" key={item._id}>
+                <div className=" flex   gap-2 p-2 border-b-1" key={item._id}>
                   <Image
-                    src={item.destinationImages[0] || "https://res.cloudinary.com/df60cobe2/image/upload/v1750344622/ly7zekpo5tegc4zmzxcy.jpg"}
+                    src={item.destinationImages[0] || item.destinationImages[1]}
                     width={200}
                     height={100}
                     alt={item.destinationName}
                     className="rounded-lg w-50 h-50  "
                   />
-                  <div>
+                  <div className="">
                     <p className="text-3xl">{item.destinationName}</p>
                     <p>{item.description}</p>
                   </div>
@@ -116,7 +116,7 @@ export default function DestinatioExplore() {
         </div>
       </div>
       <Regions regions={regions} />
-      <PopularDestination destination={destination} regions={regions} />
+      <PopularDestination destination={destination} />
     </div>
   );
 }
