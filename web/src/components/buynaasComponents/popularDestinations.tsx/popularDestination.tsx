@@ -1,6 +1,6 @@
 "use client";
 
-import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
+import { DestinationType } from "@/app/_providers/AuthProvider";
 import { PopularDestinationCard } from "./popularDestinationCard";
 
 type destinationType = {
