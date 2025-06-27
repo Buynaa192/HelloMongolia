@@ -33,22 +33,30 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
             key={index}
             onClick={() => setSelectedDay(index)}
             className={`flex-1 min-w-[120px] px-4 py-2 text-lg font-semibold transition rounded-t-md
-              ${selectedDay === index ? "bg-white text-black" : "text-white hover:bg-gray-600"}`}
-          >
+              ${
+                selectedDay === index
+                  ? "bg-white text-black"
+                  : "text-white hover:bg-gray-600"
+              }`}>
             Day {index + 1}
           </button>
         ))}
       </div>
 
-      <div ref={itineraryRef} className="w-full h-[600px] overflow-x-hidden scroll-smooth whitespace-nowrap flex rounded-b-md">
+      <div
+        ref={itineraryRef}
+        className="w-full h-[600px] overflow-x-hidden scroll-smooth whitespace-nowrap flex rounded-b-md">
         {packageDetail.packageItem.map((packageItem, index) => (
-          <div key={index} className="min-w-full h-full relative inline-block pointer-events-auto scroll-snap-align-start">
+          <div
+            key={index}
+            className="min-w-full h-full relative inline-block pointer-events-auto scroll-snap-align-start">
             <img
               src={packageItem.image}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.onerror = null;
-                target.src = "https://res.cloudinary.com/df60cobe2/image/upload/v1750665598/BwZffaCuXymfwk81JeptqEwnRzkQPEXF1Wrv3rbY_520_350_bovkis.jpg";
+                target.src =
+                  "https://res.cloudinary.com/df60cobe2/image/upload/v1750665598/BwZffaCuXymfwk81JeptqEwnRzkQPEXF1Wrv3rbY_520_350_bovkis.jpg";
               }}
               alt="Itinerary Image"
               className="w-full h-full object-cover"
@@ -68,7 +76,9 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
                   <h3 className="text-xl font-bold mb-2">Activities:</h3>
                   <div className="flex gap-2">
                     {packageItem.activity.map((item, idx) => (
-                      <Button key={idx} className="flex items-center gap-2 text-white/90">
+                      <Button
+                        key={idx}
+                        className="flex items-center gap-2 text-white/90">
                         <span>{item.emoji}</span>
                         <span>{item.activityName}</span>
                       </Button>
@@ -79,8 +89,12 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
                 {packageItem.accommodation?.address && (
                   <div className="flex flex-col w-[250px] bg-black/30 rounded-md p-4">
                     <h3 className="text-xl font-bold mb-2">Accommodation</h3>
-                    <p className="font-semibold">{packageItem.accommodation.hotelName}</p>
-                    <p className="text-sm text-white/70">{packageItem.accommodation.address}</p>
+                    <p className="font-semibold">
+                      {packageItem.accommodation.hotelName}
+                    </p>
+                    <p className="text-sm text-white/70">
+                      {packageItem.accommodation.address}
+                    </p>
                   </div>
                 )}
               </div>
