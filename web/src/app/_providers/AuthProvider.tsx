@@ -1,7 +1,4 @@
 "use client";
-<<<<<<< HEAD
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
-=======
 import {
   createContext,
   PropsWithChildren,
@@ -10,7 +7,6 @@ import {
   useEffect,
   useState,
 } from "react";
->>>>>>> 5ce132d (ariuka 5 dahad hisen:company user guide 3 turluur amjilttai signup hideg bolson)
 import { useRouter } from "next/navigation";
 import { api, setAuthToken } from "@/axios";
 export type ActivityType = {
@@ -57,7 +53,11 @@ export type WeatherType = {
   averageTempF: number;
 };
 
-export type rgnType = "Northern-Mongolia" | "Southern-Mongolia" | "Western-Mongolia" | "Eastern-Mongolia";
+export type rgnType =
+  | "Northern-Mongolia"
+  | "Southern-Mongolia"
+  | "Western-Mongolia"
+  | "Eastern-Mongolia";
 
 export type RegionType = {
   _id: string;
