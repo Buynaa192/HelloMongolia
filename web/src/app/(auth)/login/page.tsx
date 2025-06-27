@@ -15,9 +15,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/app/_providers/AuthProvider";
 import Link from "next/link";
 import Image from "next/image";
+import { useContext } from "react";
+import AuthContext from "@/app/_providers/AuthProvider";
 
 const loginSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -27,7 +28,7 @@ const loginSchema = z.object({
 type LoginInput = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-  const { signIn } = useAuth();
+  const { signIn } = useContext(AuthContext);
   const router = useRouter();
 
   const form = useForm<LoginInput>({
@@ -40,17 +41,18 @@ export default function LoginPage() {
 
   const onSubmit = async (values: LoginInput) => {
     try {
-      const company = await signIn(values.email, values.password);
+      const user = await signIn(values.email, values.password);
       toast.success("Logged in successfully!");
-
-      const hasProfile =
-        !!company?.phoneNumber ||
-        !!company?.AvatarImage?.trim() ||
-        !!company?.background?.trim() ||
-        !!company?.name?.trim();
+      //Ariuka: odo end user.role=oor ni ylgamar bna oks
+      // const hasProfile =
+      //   !!company?.phoneNumber ||
+      //   !!company?.AvatarImage?.trim() ||
+      //   !!company?.background?.trim() ||
+      //   !!company?.name?.trim();
 
       setTimeout(() => {
-        router.push(hasProfile ? "/company" : "/set-up-profile");
+        // router.push(hasProfile ? "/company" : "/set-up-profile");
+        router.push("/");
       }, 1000);
     } catch (err) {
       console.error(err);
@@ -106,7 +108,8 @@ export default function LoginPage() {
                 Dont have an account ?
                 <Link
                   href={"/sign-up"}
-                  className="text-blue-500 underline underline-offset-1">
+                  className="text-blue-500 underline underline-offset-1"
+                >
                   Sign up
                 </Link>
               </p>
@@ -114,7 +117,8 @@ export default function LoginPage() {
             <Button
               type="submit"
               className="w-full bg-black text-white"
-              disabled={form.formState.isSubmitting}>
+              disabled={form.formState.isSubmitting}
+            >
               {form.formState.isSubmitting ? "Logging in..." : "Login"}
             </Button>
           </form>

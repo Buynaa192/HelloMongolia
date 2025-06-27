@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 
-const companyProfileSchema = new Schema({
+const CompanyProfileSchema = new Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -10,10 +10,12 @@ const companyProfileSchema = new Schema({
   phoneNumber: {
     type: String,
     default: "",
+    required: true,
   },
-  name: {
+  companyName: {
     type: String,
     default: "",
+    required: true,
   },
   background: {
     type: String,
@@ -37,7 +39,6 @@ const companyProfileSchema = new Schema({
   about: {
     type: String,
     default: "",
-    required: true,
   },
   packages: {
     type: [Schema.Types.ObjectId],
@@ -48,6 +49,7 @@ const companyProfileSchema = new Schema({
     type: [Schema.Types.ObjectId],
     ref: "destination",
     default: [],
+    required: true,
   },
   reviews: {
     type: Number,
@@ -57,19 +59,11 @@ const companyProfileSchema = new Schema({
     type: Number,
     default: 0,
   },
-  createdAt: {
-    type: Date,
-    required: true,
-  },
-  updatedAt: {
-    type: Date,
-    required: true,
-  },
 });
 
 export const companyProfileModel = model(
-  "companyProfile",
-  companyProfileSchema
+  "CompanyProfile",
+  CompanyProfileSchema
 );
 
-export { companyProfileSchema };
+export { CompanyProfileSchema };

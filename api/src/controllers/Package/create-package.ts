@@ -1,4 +1,4 @@
-import { companyProfileModel } from "../../models/user.models.by.role/companyProfile.model";
+import { companyProfileModel } from "../../models/user.models.by.role/CompanyProfile.model";
 import { packageModel } from "../../models/package.model";
 export const createPackageController = async (req, res) => {
   try {

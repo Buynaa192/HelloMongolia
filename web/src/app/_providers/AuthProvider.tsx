@@ -1,5 +1,16 @@
 "use client";
+<<<<<<< HEAD
 import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
+=======
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+>>>>>>> 5ce132d (ariuka 5 dahad hisen:company user guide 3 turluur amjilttai signup hideg bolson)
 import { useRouter } from "next/navigation";
 import { api, setAuthToken } from "@/axios";
 export type ActivityType = {
@@ -77,73 +88,142 @@ export type AccommodationType = {
 
 export type CompanyType = {
   _id: string;
-  email: string;
-  password: string;
-  name: string;
+  companyName: string;
+  phoneNumber: number;
+  since: number;
+  websiteURL: string | null;
+  about: string;
   background: string;
   AvatarImage: string;
-  since: number;
-  phoneNumber: number | null;
-  websiteURL: string;
-  about: string;
-  packages: PackageType[];
-  availableDestinations: DestinationType[];
+  packages: PackageType[] | null;
+  availableDestinations: DestinationType[] | null;
   reviews: number;
   Rating: number;
 };
+export type GuideStatus =
+  | "Open for new bookings!"
+  | "Booked and busy on the run!";
 
-type AuthContextType = {
-  company?: CompanyType;
-  signIn: (email: string, password: string) => Promise<CompanyType>;
-  signOut: () => Promise<void>;
-  setCompany: (company?: CompanyType) => void;
-  getCompany: () => Promise<void>;
+export type GuideType = {
+  _id: string;
+  name: string;
+  phoneNumber: number;
+  bio: string;
+  status: GuideStatus;
+  background: string;
+  avatarImage: string;
+  instagramURL: {
+    type: String;
+    default: "";
+  };
+  facebookURL: {
+    type: String;
+    default: "";
+  };
+  experienceYears?: number;
+  experiencedDestinations?: string[];
+  spokenLanguages: string[];
 };
+
+export type CustomerType = {
+  _id: string;
+  name: string;
+  phoneNumber: number;
+  avatarImage: string;
+  nationality: string;
+  travelExperience?: number;
+};
+
+export type UserProfile = CompanyType | GuideType | CustomerType;
+
+export type UserRole = "company" | "guide" | "customer";
+
+export interface AuthenticatedUser {
+  _id: string;
+  email: string;
+  role: UserRole;
+  companyDetails?: CompanyType;
+  guideDetails?: GuideType;
+  customerDetails?: CustomerType;
+}
+
+export type AuthContextType = {
+  user?: AuthenticatedUser;
+  signIn: (email: string, password: string) => Promise<AuthenticatedUser>;
+  signOut: () => Promise<void>;
+  setUser: (user?: AuthenticatedUser) => void;
+  getUser: () => Promise<void>;
+  isAuthenticated: boolean;
+  loading: boolean;
+};
+
 const AuthContext = createContext({} as AuthContextType);
+
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-  const [company, setCompany] = useState<CompanyType>();
+  const [user, setUser] = useState<AuthenticatedUser>();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+
   const signIn = async (email: string, password: string) => {
     try {
-      const { data } = await api.post(`/auth/signin`, {
-        email,
-        password,
-      });
+      const { data } = await api.post("/auth/signin", { email, password });
       localStorage.setItem("token", data.token);
-      setCompany(data.user);
+
+      setAuthToken(data.token);
+
+      setUser(data.user);
+
       return data.user;
-    } catch {
-      throw new Error("error");
+    } catch (error: any) {
+      const message =
+        error.response?.data?.message || "Failed to sign in. Please try again.";
+      throw new Error(message);
     }
   };
 
   const signOut = async () => {
     setAuthToken(null);
     localStorage.removeItem("token");
-    setCompany(undefined);
+    setUser(undefined);
     router.push("/");
   };
-  const getCompany = async () => {
+
+  const getUser = useCallback(async () => {
     setLoading(true);
     try {
       const { data } = await api.get("/auth/me");
-      setCompany(data);
+      setUser(data);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to fetch user:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
     setAuthToken(token);
-    getCompany();
-  }, []);
+    getUser();
+  }, [getUser]);
 
-  return <AuthContext.Provider value={{ company, signIn, signOut, setCompany, getCompany }}>{!loading && children}</AuthContext.Provider>;
+  const isAuthenticated = !!user;
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        signIn,
+        signOut,
+        setUser,
+        getUser,
+        isAuthenticated,
+        loading,
+      }}
+    >
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export default AuthContext;

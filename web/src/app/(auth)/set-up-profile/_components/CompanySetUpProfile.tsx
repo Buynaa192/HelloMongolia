@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { CompanyType, useAuth } from "@/app/_providers/AuthProvider";
+import { useState, useEffect, useContext } from "react";
+import AuthContext, { CompanyType } from "@/app/_providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import { api } from "@/axios";
 import { useForm } from "react-hook-form";
@@ -56,16 +56,15 @@ async function uploadImage(file: File) {
   return data.secure_url;
 }
 
-export default function SetupProfileForm() {
-  const { company, setCompany } = useAuth();
+export default function CompanySetUpProfileForm() {
+  const { user, setUser } = useContext(AuthContext);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
   const [AvatarPreview, setAvatarPreview] = useState("");
   const [bgPreview, setBgPreview] = useState("");
 
   useEffect(() => {
-    if (company) {
+    if (user) {
       setAvatarPreview(company.AvatarImage || "");
       setBgPreview(company.background || "");
     }

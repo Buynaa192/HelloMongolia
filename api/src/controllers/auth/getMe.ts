@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { companyProfileModel } from "../../models/user.models.by.role/companyProfile.model";
+import { companyProfileModel } from "../../models/user.models.by.role/CompanyProfile.model";
 import { customerProfileModel } from "../../models/user.models.by.role/Customer.model";
 import { guideProfileModel } from "../../models/user.models.by.role/GuideProfile.model";
 

@@ -1,13 +1,8 @@
 import { Router } from "express";
 
-import { getCompanyByID } from "../controllers/company/getCompanyById";
-import { updateCompanyProfile } from "../controllers/company/updateCompanyById";
-import { deleteCompanyProfile } from "../controllers/company/deleteCompanyById";
-import { authenticationMiddleware } from "../middlewares/authentication-middleware";
-import { createCompanyProfle } from "../controllers/company/ CreateCompanyProfile";
+import { updateCompanyProfile } from "../controllers/company/updateCompany";
+import { getCompany } from "../controllers/company/getCompany";
 
-export const companyRouter = Router()
-  .post("/", authenticationMiddleware, createCompanyProfle)
-  .get("/", getCompanyByID)
-  .put("/:companyId", updateCompanyProfile)
-  .delete("/:companyId", deleteCompanyProfile);
+export const CompanyRouter = Router()
+  .get("/", getCompany)
+  .put("/:userId", updateCompanyProfile);

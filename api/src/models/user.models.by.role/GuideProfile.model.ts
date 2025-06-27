@@ -7,31 +7,37 @@ const GuideProfileSchema = new Schema({
     required: true,
     unique: true,
   },
-  phoneNumber: {
-    type: String,
-    default: "",
-  },
   name: {
     type: String,
     required: true,
   },
+  phoneNumber: {
+    type: String,
+    default: "",
+  },
   bio: {
     type: String,
-    required: true,
+    default: "",
   },
   avatarImage: {
     type: String,
-    required: true,
+    default:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750928857/company_xlzzhn.jpg",
+  },
+  background: {
+    type: String,
+    default:
+      "https://res.cloudinary.com/df60cobe2/image/upload/v1750929525/Screen_Shot_2025-06-26_at_5.18.20_PM_vdrnva.png",
   },
   status: {
     type: String,
     enum: ["Open for new bookings!", "Booked and busy on the run!"],
     required: true,
   },
-  experience: {
+  experienceYears: {
     type: Number,
-    required: true,
     default: 0,
+    required: true,
   },
   instagramURL: {
     type: String,
@@ -42,21 +48,13 @@ const GuideProfileSchema = new Schema({
     default: "",
   },
   spokenLanguages: {
-    type: [Schema.Types.ObjectId],
+    type: [String],
     required: true,
     default: [],
   },
   experiencedDestinations: {
     type: [{ type: Schema.Types.ObjectId, ref: "destination" }],
     default: [],
-  },
-  createdAt: {
-    type: Date,
-    required: true,
-  },
-  updatedAt: {
-    type: Date,
-    required: true,
   },
 });
 

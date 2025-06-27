@@ -1,19 +1,23 @@
 "use client";
 
-import { useAuth } from "@/app/_providers/AuthProvider";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { LayoutDashboardIcon, LogOut, MenuIcon } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Drawer } from "./HeaderMenuDrawer";
+import AuthContext from "@/app/_providers/AuthProvider";
 
 export const Header = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const { company, signOut } = useAuth();
+  const { user, signOut } = useContext(AuthContext);
   const headers = [
     { name: "Home", url: "/" },
     { name: "Destinations", url: "/explore-destinations" },
@@ -26,7 +30,11 @@ export const Header = () => {
     <div className="fixed w-full flex justify-between py-2 z-15 px-20 items-center lg:gap-60 bg-white/black backdrop-blur-lg text-lg">
       <div className="w-[80%] lg:flex hidden justify-between">
         {headers.map(({ name, url }) => (
-          <Link key={name} href={url} className="text-white cursor-pointer text-m">
+          <Link
+            key={name}
+            href={url}
+            className="text-white cursor-pointer text-m"
+          >
             {name}
           </Link>
         ))}
@@ -48,11 +56,22 @@ export const Header = () => {
         </Drawer>
       </div>
 
-      {company ? (
+      {user ? (
         <div>
           <Popover>
             <PopoverTrigger className="rounded-full overflow-hidden w-10 h-10">
-              <Image src={company.AvatarImage} alt="Company Avatar" width={40} height={40} className="rounded-full object-cover" />
+              <Image
+                src={
+                  user.companyDetails?.AvatarImage ||
+                  user.customerDetails?.avatarImage ||
+                  user.guideDetails?.avatarImage ||
+                  ""
+                }
+                alt="Company Avatar"
+                width={40}
+                height={40}
+                className="rounded-full object-cover"
+              />
             </PopoverTrigger>
             <PopoverContent className="flex items-center gap-4  cursor-pointer">
               <Link href={"/company"}>
@@ -62,7 +81,10 @@ export const Header = () => {
                 </div>
               </Link>
 
-              <div onClick={signOut} className="flex items-center gap-2 hover:text-red-600 cursor-pointer">
+              <div
+                onClick={signOut}
+                className="flex items-center gap-2 hover:text-red-600 cursor-pointer"
+              >
                 <p>Log out</p>
                 <LogOut size={16} />
               </div>
@@ -71,10 +93,18 @@ export const Header = () => {
         </div>
       ) : (
         <div className="flex lg:flex gap-2 justify-end text-lg">
-          <Button variant="ghost" className="text-white hover:bg-blue-500 hover:text-white text-lg" onClick={() => router.push("/login")}>
+          <Button
+            variant="ghost"
+            className="text-white hover:bg-blue-500 hover:text-white text-lg"
+            onClick={() => router.push("/login")}
+          >
             Log in
           </Button>
-          <Button variant="ghost" className="text-white hover:bg-white hover:text-black text-lg" onClick={() => router.push("/sign-up")}>
+          <Button
+            variant="ghost"
+            className="text-white hover:bg-white hover:text-black text-lg"
+            onClick={() => router.push("/sign-up")}
+          >
             Sign up
           </Button>
         </div>

@@ -1,5 +1,5 @@
 import { activityModel } from "../models/activity.model";
-import { companyProfileModel } from "../models/user.models.by.role/companyProfile.model";
+import { companyProfileModel } from "../models/user.models.by.role/CompanyProfile.model";
 import { destinationModel } from "../models/destination.model";
 import { packageModel } from "../models/package.model";
 

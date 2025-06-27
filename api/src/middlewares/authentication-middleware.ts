@@ -20,10 +20,7 @@ export const authenticationMiddleware: RequestHandler = (req, res, next) => {
   const token = authHeader.split(" ")[1];
 
   try {
-    const payload = jwt.verify(
-      token,
-      process.env.JWT_SECRET || "your_jwt_secret"
-    ) as {
+    const payload = jwt.verify(token, process.env.JWT_SECRET) as {
       userId: string;
       role: "company" | "guide" | "customer";
       iat: number;

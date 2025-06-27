@@ -3,62 +3,67 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../../models/UserSchema";
 import { Schema } from "mongoose";
+import { companyProfileModel } from "../../models/user.models.by.role/CompanyProfile.model";
+import { guideProfileModel } from "../../models/user.models.by.role/GuideProfile.model";
+import { customerProfileModel } from "../../models/user.models.by.role/Customer.model";
 
-interface CompanyDetails {
+export interface CompanyDetails {
   userId: Schema.Types.ObjectId;
-  phoneNumber?: string;
-  name?: string;
-  background?: string;
-  AvatarImage?: string;
+  phoneNumber: string;
+  companyName: string;
   since: number;
   websiteURL?: string;
   about: string;
-  packages?: Schema.Types.ObjectId[];
-  availableDestinations?: Schema.Types.ObjectId[];
-  reviews?: number;
-  Rating?: number;
   createdAt: Date;
   updatedAt: Date;
 }
 type GuideStatus = "Open for new bookings!" | "Booked and busy on the run!";
 
-interface GuideDetails {
+export interface GuideDetails {
   userId: Schema.Types.ObjectId;
-  phoneNumber?: string;
   name: string;
-  bio: string;
-  avatarImage: string;
   status: GuideStatus;
-  experience: number;
-  instagramURL?: string;
-  facebookURL?: string;
-  spokenLanguages: Schema.Types.ObjectId[];
-  experiencedDestinations?: Schema.Types.ObjectId[];
+  experience?: number;
+  spokenLanguages: string[];
   createdAt: Date;
   updatedAt: Date;
 }
-interface CustomerDetails {
+export interface CustomerDetails {
   userId: Schema.Types.ObjectId;
-  avatarImage?: string;
   name: string;
   nationality?: Schema.Types.ObjectId;
-  phoneNumber?: string;
-  travelExperience?: number;
   createdAt: Date;
   updatedAt: Date;
 }
 
-type UserDetails = CompanyDetails | GuideDetails | CustomerDetails;
-
-export type NewUserData = {
-  email: string;
-  password: string;
-  role: "company" | "guide" | "customer";
-  userDetails: UserDetails;
-};
+type NewUserData =
+  | {
+      email: string;
+      password: string;
+      role: "company";
+      userDetails: CompanyDetails;
+      createdAt: Date;
+      updatedAt: Date;
+    }
+  | {
+      email: string;
+      password: string;
+      role: "guide";
+      userDetails: GuideDetails;
+      createdAt: Date;
+      updatedAt: Date;
+    }
+  | {
+      email: string;
+      password: string;
+      role: "customer";
+      userDetails: CustomerDetails;
+      createdAt: Date;
+      updatedAt: Date;
+    };
 
 export const signUp: RequestHandler = async (req, res) => {
-  const { email, password, role, userDetails } = req.body;
+  const { email, password, role, userDetails } = req.body as NewUserData;
 
   if (!["company", "guide", "customer"].includes(role)) {
     res.status(400).json({ message: "Invalid role" });
@@ -76,14 +81,37 @@ export const signUp: RequestHandler = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUserData: NewUserData = {
+    const newUser = new UserModel({
       email,
       password: hashedPassword,
       role,
-      userDetails,
-    };
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    await newUser.save();
 
-    const newUser = new UserModel(newUserData);
+    let profile;
+
+    if (role === "company") {
+      profile = await companyProfileModel.create({
+        ...userDetails,
+        userId: newUser._id,
+      });
+      newUser.companyDetails = profile._id;
+    } else if (role === "guide") {
+      profile = await guideProfileModel.create({
+        ...userDetails,
+        userId: newUser._id,
+      });
+      newUser.guideDetails = profile._id;
+    } else if (role === "customer") {
+      profile = await customerProfileModel.create({
+        ...userDetails,
+        userId: newUser._id,
+      });
+      newUser.customerDetails = profile._id;
+    }
+
     await newUser.save();
 
     const userObj = newUser.toObject();

@@ -5,12 +5,14 @@ import { config } from "dotenv";
 import { connectToDatabase } from "./database/connect-to-db";
 import { activityRouter } from "./routes/activity.route";
 import { authRouter } from "./routes/auth.route";
-import { companyRouter } from "./routes/company.route";
 import { packageRouter } from "./routes/package.route";
 import { packageItemRouter } from "./routes/packageItem.route";
 import { searchRouter } from "./routes/Search.route";
 import { RegionsRouter } from "./routes/Region.route";
 import { AccommodationRouter } from "./routes/Accomodation.route";
+import { CompanyRouter } from "./routes/company.route";
+import { GuideRouter } from "./routes/Guide.route";
+import { CustomerRouter } from "./routes/Customer.route";
 
 config();
 connectToDatabase();
@@ -25,7 +27,9 @@ app
   })
   .use("/destination", destination)
   .use("/activity", activityRouter)
-  .use("/company", companyRouter)
+  .use("/company", CompanyRouter)
+  .use("/guide", GuideRouter)
+  .use("/user", CustomerRouter)
   .use("/auth", authRouter)
   .use("/package", packageRouter)
   .use("/packageItem", packageItemRouter)

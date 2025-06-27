@@ -7,17 +7,18 @@ const CustomerProfileSchema = new Schema({
     required: true,
     unique: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
   avatarImage: {
     type: String,
     default:
       "https://res.cloudinary.com/df60cobe2/image/upload/v1750926783/user_nu7gr4.png",
   },
-  name: {
+  nationality: {
     type: String,
     required: true,
-  },
-  nationality: {
-    type: Schema.Types.ObjectId,
   },
   phoneNumber: {
     type: String,
@@ -27,18 +28,10 @@ const CustomerProfileSchema = new Schema({
     type: Number,
     default: 0,
   },
-  createdAt: {
-    type: Date,
-    required: true,
-  },
-  updatedAt: {
-    type: Date,
-    required: true,
-  },
 });
 
 export const customerProfileModel = model(
-  "customerProfile",
+  "CustomerProfile",
   CustomerProfileSchema
 );
 

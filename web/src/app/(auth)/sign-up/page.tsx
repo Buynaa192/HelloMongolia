@@ -1,125 +1,126 @@
 "use client";
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ChooseRolePage } from "./_components/ChooseRolePage";
+import SetUpCompanyProfilePage from "./_components/SetUpCompanyProfile";
+import SetUpGuideProfilePage from "./_components/SetUpGuideProfile";
+import SetUpCostumerProfilePage from "./_components/SetUpCostumerProfile";
+import { GuideStatus } from "@/app/_providers/AuthProvider";
 
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormControl,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { api } from "@/axios";
-import Link from "next/link";
-import { AxiosError } from "axios";
-import Image from "next/image";
+export type CompanySetUpDetails = {
+  companyName: string;
+  phoneNumber: string;
+  since: number;
+  websiteURL?: string;
+  about: string;
+};
 
-const signUpSchema = z.object({
-  email: z.string().email("Enter a valid email"),
-  password: z.string().min(4, "Password must be at least 4 characters"),
-});
+export type GuideSetUpDetails = {
+  name: string;
+  status: GuideStatus;
+  experienceYears?: number;
+  spokenLanguages: string[];
+};
 
-type SignUpInput = z.infer<typeof signUpSchema>;
+export type CustomerSetUpDetails = {
+  name: string;
+  nationality: string;
+};
 
-export default function SignUpPage() {
+export type CompanySignUp = {
+  email: string;
+  password: string;
+  role: "company";
+  userDetails: CompanySetUpDetails;
+};
+export type GuideSignUp = {
+  email: string;
+  password: string;
+  role: "guide";
+  userDetails: GuideSetUpDetails;
+};
+export type CustomerSignUp = {
+  email: string;
+  password: string;
+  role: "customer";
+  userDetails: CustomerSetUpDetails;
+};
+
+export type RoleType = "customer" | "company" | "guide" | "";
+
+export type SignUpFormData = CustomerSignUp | CompanySignUp | GuideSignUp;
+
+export default function SignUp() {
   const router = useRouter();
-
-  const form = useForm<SignUpInput>({
-    resolver: zodResolver(signUpSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  const onSubmit = async (values: SignUpInput) => {
-    try {
-      const response = await api.post("/auth/signup", values);
-      localStorage.setItem("token", response.data.token);
-      toast.success("Account created successfully!");
-      setTimeout(() => {
-        router.push("/login");
-      }, 1000);
-    } catch (err) {
-      console.error(err);
-
-      toast.error(
-        (err as AxiosError<{ message: string }>).response?.data.message ||
-          "Signup failed. Please try again."
-      );
-    }
-  };
+  const [step, setStep] = useState<number>(1);
+  const [formData, setFormData] = useState<Partial<SignUpFormData>>({});
+  const [chosenRole, setChosenRole] = useState<RoleType>("");
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
-      <div className="w-150 p-6 border rounded-lg shadow bg-white flex flex-col gap-8">
-        <div className="w-full flex justify-center">
-          <Image
-            width={200}
-            height={200}
-            src="https://res.cloudinary.com/df60cobe2/image/upload/v1750323871/Screenshot_2025-06-19_at_5.04.10_PM_xxqsgx.png"
-            className="w-40"
-            alt=""
+    <div className="w-full h-screen flex justify-center items-center bg-black">
+      <div className="bg-white text-black w-full max-w-md p-8 rounded-lg shadow-lg">
+        {step === 1 && (
+          <ChooseRolePage
+            chosenRole={chosenRole}
+            setChosenRole={setChosenRole}
+            nextStep={() => setStep(2)}
+            setFormData={setFormData}
           />
-        </div>
-        <h2 className="text-2xl font-semibold ">Sign Up</h2>
+        )}
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="mb-3">Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="you@example.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        {step === 2 && chosenRole === "customer" && (
+          <SetUpCostumerProfilePage
+            formData={formData as CustomerSignUp}
+            setFormData={
+              setFormData as React.Dispatch<
+                React.SetStateAction<CustomerSignUp>
+              >
+            }
+            goBack={() => setStep(1)}
+            onComplete={() => {
+              console.log("Complete data", {
+                ...formData,
+                role: chosenRole,
+              });
+              router.push("/");
+            }}
+          />
+        )}
 
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="mb-3">Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="********" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div>
-              <p>
-                Already have an account ?{" "}
-                <Link
-                  href="/login"
-                  className="text-blue-500 underline underline-offset-1"
-                >
-                  click here
-                </Link>
-              </p>
-            </div>
-            <Button
-              type="submit"
-              className="w-full bg-black text-white "
-              disabled={form.formState.isSubmitting}
-            >
-              {form.formState.isSubmitting ? "Signing up..." : "Sign Up"}
-            </Button>
-          </form>
-        </Form>
+        {step === 2 && chosenRole === "guide" && (
+          <SetUpGuideProfilePage
+            formData={formData as GuideSignUp}
+            setFormData={
+              setFormData as React.Dispatch<React.SetStateAction<GuideSignUp>>
+            }
+            goBack={() => setStep(1)}
+            onComplete={() => {
+              console.log("Complete data", {
+                ...formData,
+                role: chosenRole,
+              });
+              router.push("/set-up-profile/guide");
+            }}
+          />
+        )}
+
+        {step === 2 && chosenRole === "company" && (
+          <SetUpCompanyProfilePage
+            formData={formData as CompanySignUp}
+            setFormData={
+              setFormData as React.Dispatch<React.SetStateAction<CompanySignUp>>
+            }
+            goBack={() => setStep(1)}
+            onComplete={() => {
+              console.log("Complete data", {
+                ...formData,
+                role: chosenRole,
+              });
+              router.push("/set-up-profile/company");
+            }}
+          />
+        )}
       </div>
     </div>
   );
