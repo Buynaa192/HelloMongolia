@@ -3,6 +3,8 @@
 import React from "react";
 import { TripType } from "../page";
 import { ActivityType } from "@/app/_providers/AuthProvider";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 type SearchFilterProps = {
   selectedTripTypes: TripType[];
@@ -79,13 +81,12 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
           All Search Filters
         </div>
         <div className="flex h-10  items-center justify-end p-4">
-          <button
+          <Button
             onClick={clearAllFilters}
-            style={{ fontFamily: "Lexend Giga" }}
-            className="w-[150px] text-white h-[40px] border-2 max-2xl:text-[18px]  flex items-center justify-center font-semibold shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:bg-white hover:text-black hover:shadow-lg duration-200"
+            className="w-[150px] text-white h-[40px] border-2 max-2xl:text-[18px] rounded-3xl flex items-center justify-center font-semibold shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:bg-white hover:text-black hover:shadow-lg duration-200"
           >
             CLEAR
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -102,10 +103,10 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
               {tripTypes.map((type) => {
                 const selected = selectedTripTypes.includes(type);
                 return (
-                  <div
+                  <Badge
                     key={type}
                     onClick={() => handleTripTypeChange(type)}
-                    className={`px-2 py-1 border cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                    className={`pt-2 px-4 border-none cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
                       selected ? "bg-white/40 text-white" : "border-accent"
                     }`}
                     style={{ fontFamily: "Lexend Giga" }}
@@ -116,7 +117,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                         selected ? "w-full border-white" : ""
                       }`}
                     ></div>
-                  </div>
+                  </Badge>
                 );
               })}
             </div>
@@ -131,10 +132,10 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
               {cost.map((range) => {
                 const selected = selectedCosts.includes(range);
                 return (
-                  <div
+                  <Badge
                     key={range}
                     onClick={() => handleCostChange(range)}
-                    className={`px-2 py-1 border cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                    className={`pt-2 px-4 border-none cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
                       selected ? "bg-white/40 text-white" : "border-accent"
                     }`}
                     style={{ fontFamily: "Lexend Giga" }}
@@ -145,7 +146,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                         selected ? "w-full border-white" : ""
                       }`}
                     ></div>
-                  </div>
+                  </Badge>
                 );
               })}
             </div>
@@ -160,10 +161,10 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
               {duration.map((range) => {
                 const selected = selectedDurations.includes(range);
                 return (
-                  <div
+                  <Badge
                     key={range}
                     onClick={() => handleDurationChange(range)}
-                    className={`px-2 py-1 border cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                    className={`pt-2 px-4 border-0 cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
                       selected ? "bg-white/40 text-white" : "border-accent"
                     }`}
                     style={{ fontFamily: "Lexend Giga" }}
@@ -174,7 +175,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                         selected ? "w-full border-white" : ""
                       }`}
                     ></div>
-                  </div>
+                  </Badge>
                 );
               })}
             </div>
@@ -191,10 +192,10 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                   (a) => a._id === activity._id
                 );
                 return (
-                  <div
+                  <Badge
                     key={activity._id}
                     onClick={() => handleActivityChange(activity)}
-                    className={`px-2 py-1 border cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                    className={`pt-2 px-4 border-0 cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
                       selected ? "bg-white/40 text-white" : "border-accent"
                     }`}
                     style={{ fontFamily: "Lexend Giga" }}
@@ -205,7 +206,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                         selected ? "w-full border-white" : ""
                       }`}
                     ></div>
-                  </div>
+                  </Badge>
                 );
               })}
             </div>
