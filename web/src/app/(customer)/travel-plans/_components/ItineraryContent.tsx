@@ -37,7 +37,8 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
                 selectedDay === index
                   ? "bg-white text-black"
                   : "text-white hover:bg-gray-600"
-              }`}>
+              }`}
+          >
             Day {index + 1}
           </button>
         ))}
@@ -45,11 +46,13 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
 
       <div
         ref={itineraryRef}
-        className="w-full h-[600px] overflow-x-hidden scroll-smooth whitespace-nowrap flex rounded-b-md">
+        className="w-full h-[600px] overflow-x-hidden scroll-smooth whitespace-nowrap flex rounded-b-md"
+      >
         {packageDetail.packageItem.map((packageItem, index) => (
           <div
             key={index}
-            className="min-w-full h-full relative inline-block pointer-events-auto scroll-snap-align-start">
+            className="min-w-full h-full relative inline-block pointer-events-auto scroll-snap-align-start"
+          >
             <img
               src={packageItem.image}
               onError={(e) => {
@@ -78,7 +81,8 @@ export const ItineraryContent = ({ packageDetail }: ItineraryContentProps) => {
                     {packageItem.activity.map((item, idx) => (
                       <Button
                         key={idx}
-                        className="flex items-center gap-2 text-white/90">
+                        className="flex items-center gap-2 text-white/90"
+                      >
                         <span>{item.emoji}</span>
                         <span>{item.activityName}</span>
                       </Button>
