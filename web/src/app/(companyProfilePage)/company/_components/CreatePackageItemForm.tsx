@@ -48,7 +48,6 @@ export const CreatePackageItemForm = () => {
     };
     getActivities();
   }, []);
-
   const onSubmit = async (data: ItemFormType) => {
     const itemWithOrder = { ...data, order };
     const itemData: createPackageItemType = await createPackageItemFun(
@@ -57,13 +56,16 @@ export const CreatePackageItemForm = () => {
     if (newPackage?._id && itemData.package._id) {
       await addItemToPackage(newPackage._id, itemData.package._id);
     }
-    if (order < duration) {
-      setOrder(order + 1);
+
+    const nextOrder = order + 1;
+
+    if (nextOrder > duration) {
+      setIsOpen(true);
+      setNewPackage(null);
+    } else {
+      setOrder(nextOrder);
       form.reset();
       setPrevProfileImage("");
-    } else {
-      setNewPackage(null);
-      setIsOpen(true);
     }
   };
 

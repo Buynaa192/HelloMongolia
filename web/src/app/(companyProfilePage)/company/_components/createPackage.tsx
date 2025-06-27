@@ -63,6 +63,7 @@ export const CreatePackage = () => {
   const { addPackage, newPackage, setNewPackage } = usePackageContext();
   const [loading, setLoading] = useState(false);
   const [prevProfileImage, setPrevProfileImage] = useState("");
+  console.log(newPackage);
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
@@ -95,11 +96,6 @@ export const CreatePackage = () => {
     <div>
       {!newPackage && (
         <div className="w-full max-w-screen-lg mx-auto flex flex-col gap-6 px-4 ">
-          <div className="flex justify-start">
-            <Button variant="outline" className="mb-4">
-              ← Back
-            </Button>
-          </div>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -331,5 +327,3 @@ export const CreatePackage = () => {
     </div>
   );
 };
-
-export default CreatePackage;
