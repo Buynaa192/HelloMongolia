@@ -5,7 +5,8 @@ export const GetDestinations = async (req, res) => {
 
     const destinations = await destinationModel
       .find(destinationId ? { _id: destinationId } : {})
-      .populate("activities");
+      .populate("activities")
+      .populate("region");
 
     res.status(200).json({ destinations });
   } catch (error) {
