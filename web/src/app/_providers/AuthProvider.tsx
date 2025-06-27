@@ -1,11 +1,5 @@
 "use client";
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, setAuthToken } from "@/axios";
 export type ActivityType = {
@@ -52,11 +46,7 @@ export type WeatherType = {
   averageTempF: number;
 };
 
-export type rgnType =
-  | "Northern-Mongolia"
-  | "Southern-Mongolia"
-  | "Western-Mongolia"
-  | "Eastern-Mongolia";
+export type rgnType = "Northern-Mongolia" | "Southern-Mongolia" | "Western-Mongolia" | "Eastern-Mongolia";
 
 export type RegionType = {
   _id: string;
@@ -69,7 +59,7 @@ export type DestinationType = {
   _id: string;
   destinationName: string;
   destinationImages: string[];
-  region: string;
+  region: RegionType;
   description: string;
   activities: ActivityType[];
   location: LocationType;
@@ -153,13 +143,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     getCompany();
   }, []);
 
-  return (
-    <AuthContext.Provider
-      value={{ company, signIn, signOut, setCompany, getCompany }}
-    >
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ company, signIn, signOut, setCompany, getCompany }}>{!loading && children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);

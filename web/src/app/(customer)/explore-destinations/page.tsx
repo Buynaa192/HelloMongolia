@@ -9,6 +9,7 @@ import { Regions } from "@/components/buynaasComponents/regionsComponents/region
 import { PopularDestination } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestination";
 import { api } from "@/axios";
 import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DestinatioExplore() {
   const [destination, setDestination] = useState<DestinationType[]>([]);
@@ -39,7 +40,35 @@ export default function DestinatioExplore() {
 
   const filteredDestinations = destination.filter((dest) => dest.destinationName.toLowerCase().includes(searchDestination.toLowerCase()));
 
-  if (destination.length === 0) return null;
+  if (destination.length === 0 || regions.length === 0) {
+    return (
+      <div className="w-full h-full flex flex-col gap-4 animate-pulse">
+        <div className="relative w-full h-[800px] overflow-hidden">
+          <Skeleton className="w-full h-full rounded-none" />
+          <div className="absolute inset-0 bg-black/30 flex flex-col gap-4 items-center justify-center">
+            <Skeleton className="h-10 w-96" />
+            <Skeleton className="h-4 w-80" />
+            <div className="flex items-center gap-2 bg-white p-2 rounded-md w-[300px]">
+              <Skeleton className="h-6 w-6 rounded-full" />
+              <Skeleton className="h-6 w-full" />
+            </div>
+          </div>
+        </div>
+
+        <div className="px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
+          {[...Array(4)].map((_, i) => (
+            <Skeleton key={i} className="h-48 w-full rounded-xl" />
+          ))}
+        </div>
+
+        <div className="px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6">
+          {[...Array(4)].map((_, i) => (
+            <Skeleton key={i} className="h-72 w-full rounded-xl" />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-full  text-white flex flex-col gap-4">
