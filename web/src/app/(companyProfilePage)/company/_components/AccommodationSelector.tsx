@@ -2,7 +2,12 @@
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { api } from "@/axios";
 
@@ -53,6 +58,7 @@ export const AccommodationSelector = ({ value, onChange }: Props) => {
       setShowCreateDialog(false);
       setNewHotelName("");
       setNewAddress("");
+      setSearch("");
     } catch (err) {
       console.error("Failed to create accommodation", err);
     }
@@ -98,7 +104,7 @@ export const AccommodationSelector = ({ value, onChange }: Props) => {
           </Button>
         </DialogTrigger>
         <DialogContent className="space-y-4">
-          <h3 className="text-lg font-semibold">New Accommodation</h3>
+          <DialogTitle>New Accommodation</DialogTitle>
           <Input
             placeholder="Hotel Name"
             value={newHotelName}

@@ -9,8 +9,6 @@ import { PackageHeader } from "./_components/PackageHeader";
 import { PackageSummary } from "./_components/PackageSummary";
 import { PackageItinerary } from "./_components/PackageItinerary";
 import { Button } from "@/components/ui/button";
-import { MoveLeftIcon } from "lucide-react";
-
 export default function PackageDetailPage() {
   const { packageId } = useParams();
   const [packageData, setPackageData] = useState<PackageType | null>(null);
