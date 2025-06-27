@@ -13,7 +13,10 @@ export const PopularDestinationCard = ({ item }: itemType) => {
     <Link href={`/explore-destinations/${item.region?.regionName}/${item._id}`}>
       <div className="w-full aspect-[4/5] relative group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-white/10">
         <Image
-          src={item.destinationImages[0] || item.destinationImages[1]}
+          src={
+            item.destinationImages[0] ||
+            "https://res.cloudinary.com/df60cobe2/image/upload/v1750344590/h4chrkja9f1lyoxohfia.jpg"
+          }
           alt={item.destinationName}
           fill
           className="object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
