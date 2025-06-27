@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { ACCEPTED_IMAGE_TYPES } from "./createPackage";
+import { PackageType } from "@/app/_providers/AuthProvider";
+
 export const itemSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
@@ -17,5 +19,5 @@ export type ItemFormType = z.infer<typeof itemSchema>;
 
 export type createPackageItemType = {
   message: string;
-  package: any;
+  package: PackageType;
 };
