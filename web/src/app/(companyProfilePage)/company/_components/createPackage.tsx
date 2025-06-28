@@ -63,7 +63,6 @@ export const CreatePackage = () => {
   const { addPackage, newPackage, setNewPackage } = usePackageContext();
   const [loading, setLoading] = useState(false);
   const [prevProfileImage, setPrevProfileImage] = useState("");
-  console.log(newPackage);
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: "onChange",
