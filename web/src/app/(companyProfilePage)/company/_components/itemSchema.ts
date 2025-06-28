@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { ACCEPTED_IMAGE_TYPES } from "./createPackage";
-import { PackageItemType, PackageType } from "@/app/_providers/AuthProvider";
-
+import { PackageType } from "@/app/_providers/AuthProvider";
 export const itemSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
