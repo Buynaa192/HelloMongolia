@@ -98,7 +98,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                   <Badge
                     key={type}
                     onClick={() => handleTripTypeChange(type)}
-                    className={`pt-2 px-4 border-none cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                    className={`pt-2 px-4 border-none cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
                       selected ? "bg-white/40 text-white" : "border-accent"
                     }`}
                   >
@@ -124,7 +124,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                   <Badge
                     key={range}
                     onClick={() => handleCostChange(range)}
-                    className={`pt-2 px-4 border-none cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                    className={`pt-2 px-4 border-none cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
                       selected ? "bg-white/40 text-white" : "border-accent"
                     }`}
                   >
@@ -150,7 +150,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                   <Badge
                     key={range}
                     onClick={() => handleDurationChange(range)}
-                    className={`pt-2 px-4 border-0 cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                    className={`pt-2 px-4 border-0 cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
                       selected ? "bg-white/40 text-white" : "border-accent"
                     }`}
                   >
@@ -178,7 +178,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                   <Badge
                     key={activity._id}
                     onClick={() => handleActivityChange(activity)}
-                    className={`pt-2 px-4 border-0 cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center max-2xl:text-[12px] ${
+                    className={`pt-2 px-4 border-0 cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
                       selected ? "bg-white/40 text-white" : "border-accent"
                     }`}
                   >
