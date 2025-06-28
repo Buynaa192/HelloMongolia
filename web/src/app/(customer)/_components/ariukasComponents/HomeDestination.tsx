@@ -83,20 +83,22 @@ export const ShowRegion = ({ videoUrl, regionName, _id, description: regionDetai
                   <p className="italic">No activities listed.</p>
                 )}
               </div>
-              <div>
-                <h3 className="font-semibold mb-2">Weather</h3>
-                {activeDestination.weather ? (
-                  <ul className="italic ">
-                    {activeDestination.weather.map(({ season, averageTempF }, i) => (
-                      <li key={i}>
-                        <strong>{season}:</strong> {averageTempF}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="italic">No weather data available.</p>
-                )}
-              </div>
+              {activeDestination.weather.length > 0 && (
+                <div className="">
+                  <h3 className="font-semibold mb-2">Weather</h3>
+                  {activeDestination.weather ? (
+                    <ul className="italic ">
+                      {activeDestination.weather.map(({ season, averageTempF }, i) => (
+                        <li key={i}>
+                          <strong>{season}:</strong> {averageTempF}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="italic">No weather data available.</p>
+                  )}
+                </div>
+              )}
             </div>
             <Button asChild className="text-black bg-white hover:bg-black hover:text-white mt-6 w-fit ">
               <Link href={`/explore-destinations/${regionName}/${activeDestination._id}`}>Take me there!</Link>
