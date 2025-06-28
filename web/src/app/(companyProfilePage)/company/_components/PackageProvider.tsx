@@ -5,8 +5,7 @@ import { api } from "@/axios";
 import axios from "axios";
 import { createContext, useContext, useState, ReactNode } from "react";
 import { toast } from "sonner";
-import { createPackageType } from "./createPackage";
-import { createPackageItemType } from "./CreatePackageItemForm";
+import { createPackageItemType } from "./itemSchema";
 type CreatePackageItemInput = {
   order: number;
   title: string;
@@ -26,7 +25,7 @@ type PackageContextProps = {
     companyId: string,
     data: DataType,
     setLoading: (loading: boolean) => void
-  ) => Promise<createPackageType>;
+  ) => Promise<createPackageItemType>;
   updatePackage: (packageId: string, data: DataType) => Promise<void>;
   deletePackage: (
     packageId: string,

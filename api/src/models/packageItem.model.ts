@@ -27,7 +27,7 @@ const packageItemSchema = new Schema({
     default: [],
     required: true,
   },
-  accommodation: {
+  accomodation: {
     type: Schema.Types.ObjectId,
     ref: "accomodation",
     required: true,

@@ -13,10 +13,10 @@ type AlertType = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 };
-export const AlertDial = ({ title, isOpen }: AlertType) => {
+export const AlertDial = ({ title, isOpen, setIsOpen }: AlertType) => {
   const { setView } = usePackageContext();
   return (
-    <AlertDialog open={isOpen}>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>

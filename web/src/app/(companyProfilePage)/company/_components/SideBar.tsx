@@ -2,27 +2,22 @@
 
 import { useState } from "react";
 import {
-  LayoutDashboard,
-  PlusSquare,
-  Settings,
   LogOut,
   ChevronLeft,
   ChevronRight,
+  LayoutDashboardIcon,
+  PlusSquareIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import { usePackageContext } from "./PackageProvider";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
   const { company, signOut } = useAuth();
   const { view, setView } = usePackageContext();
   const [collapsed, setCollapsed] = useState(false);
-  const navItems = [
-    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { id: "create", label: "Create Package", icon: PlusSquare },
-    { id: "settings", label: "Settings", icon: Settings },
-  ];
-
+  const router = useRouter();
   return (
     <aside
       className={`${
@@ -43,20 +38,48 @@ export default function Sidebar() {
         </div>
 
         <nav className="flex flex-col space-y-2">
-          {navItems.map((item) => (
-            <Button
-              key={item.id}
-              variant="ghost"
-              className={`justify-start px-3 py-2 flex items-center gap-3 rounded-md transition text-sm ${
-                view === item.id
-                  ? "bg-emerald-600 text-white"
-                  : "text-gray-300 hover:bg-gray-800 hover:text-white"
-              }`}
-              onClick={() => setView(item.id)}>
-              <item.icon size={18} />
-              {!collapsed && item.label}
-            </Button>
-          ))}
+          <Button
+            variant="ghost"
+            className={`justify-start px-3 py-2 flex items-center gap-3 rounded-md transition text-sm ${
+              view === "Dashboard"
+                ? "bg-emerald-600 text-white"
+                : "text-gray-300 hover:bg-gray-800 hover:text-white"
+            }`}
+            onClick={() => {
+              setView("Dashboard");
+              router.push("/company");
+            }}>
+            <LayoutDashboardIcon size={18} />
+            Dashboard
+          </Button>
+          <Button
+            variant="ghost"
+            className={`justify-start px-3 py-2 flex items-center gap-3 rounded-md transition text-sm ${
+              view === "Create Package"
+                ? "bg-emerald-600 text-white"
+                : "text-gray-300 hover:bg-gray-800 hover:text-white"
+            }`}
+            onClick={() => {
+              setView("Create Package");
+              router.push("/company/CreatePackagePage");
+            }}>
+            <PlusSquareIcon size={18} />
+            Create Package
+          </Button>
+          <Button
+            variant="ghost"
+            className={`justify-start px-3 py-2 flex items-center gap-3 rounded-md transition text-sm ${
+              view === "Account settings"
+                ? "bg-emerald-600 text-white"
+                : "text-gray-300 hover:bg-gray-800 hover:text-white"
+            }`}
+            onClick={() => {
+              setView("Account settings");
+              router.push("/company/AccountSettings");
+            }}>
+            <PlusSquareIcon size={18} />
+            Account settings
+          </Button>
         </nav>
       </div>
 
