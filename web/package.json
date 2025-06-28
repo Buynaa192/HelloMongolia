@@ -31,6 +31,7 @@
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.18.1",
     "keen-slider": "^6.8.6",
+    "lightningcss": "^1.30.1",
     "lucide-react": "^0.513.0",
     "motion": "^12.18.1",
     "next": "15.3.3",
