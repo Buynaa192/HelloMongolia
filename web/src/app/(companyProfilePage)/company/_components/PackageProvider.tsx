@@ -80,7 +80,7 @@ export function PackageProvider({ children }: { children: ReactNode }) {
   const [newPackage, setNewPackage] = useState<PackageType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [view, setView] = useState("dashboard");
+  const [view, setView] = useState("Dashboard");
   const getPackages = async (companyId: string) => {
     setLoading(true);
     setError(null);
@@ -286,7 +286,8 @@ export function PackageProvider({ children }: { children: ReactNode }) {
         deletePackageItem,
         createPackageItemFun,
         addItemToPackage,
-      }}>
+      }}
+    >
       {children}
     </PackageContext.Provider>
   );

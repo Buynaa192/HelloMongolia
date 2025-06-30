@@ -1,6 +1,6 @@
 "use client";
 
-import { Star } from "lucide-react";
+import { Clock, Edit, MapPin, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api } from "@/axios";
 import { PackageCardSkeleton } from "./packageSkeleton";
@@ -9,6 +9,7 @@ import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { UpdatePackageForm } from "./updatePackageForm";
 import { Button } from "@/components/ui/button";
 import { DeletePackage } from "./deletePackage";
+import Link from "next/link";
 
 type PackageCardProps = {
   packageId: string;
@@ -36,77 +37,77 @@ export const PackageCard = ({ packageId }: PackageCardProps) => {
     if (packageId) getPackage();
   }, [packageId]);
 
-  const ratingStar = (rating: number) =>
-    Array.from({ length: 5 }).map((_, i) => (
-      <Star
-        key={i}
-        size={18}
-        className={
-          i <= rating - 1 ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
-        }
-      />
-    ));
-
   if (loading) return <PackageCardSkeleton />;
   if (!packageData) return null;
 
   return (
-    <div className="w-full flex justify-center cursor-pointer">
-      <div className="group w-[90%] min-h-[420px] rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-200 bg-white flex flex-col relative overflow-hidden">
-        {packageData.coverPhoto ? (
-          <img
-            src={packageData.coverPhoto}
-            alt={packageData.title}
-            className="w-full h-[250px] object-cover rounded-t-2xl transition-transform duration-300 group-hover:scale-105"
-          />
-        ) : (
-          <div className="w-full h-[250px] bg-gray-200 flex items-center justify-center text-gray-500 rounded-t-2xl">
-            No Image Available
-          </div>
-        )}
-        <div className="absolute top-0 left-0 w-full h-[250px] bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
-        <span className="absolute top-0 left-0 w-full h-[250px] flex items-center justify-center text-white text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-          See more
-        </span>
+    <div className="w-full flex justify-center ">
+      <div className="group w-full min-h-[420px] rounded-[10px] shadow-xl hover:shadow-2xl border-[1px] border-[#27272a] transition-all duration-200 bg-white flex flex-col relative overflow-hidden">
+        <Link href={`/travel-plans/${packageData._id}`}>
+          {packageData.coverPhoto ? (
+            <img
+              src={packageData.coverPhoto}
+              alt={packageData.title}
+              className="w-full h-[250px] object-cover rounded-t-[10px] transition-transform duration-300 "
+            />
+          ) : (
+            <div className="w-full h-[250px] bg-gray-200 flex items-center justify-center text-gray-500 rounded-t-2xl">
+              No Image Available
+            </div>
+          )}
+        </Link>
 
-        <div className="flex flex-col flex-1 p-4 gap-2 z-30">
-          <h2 className="text-[20px] font-bold line-clamp-2">
-            {packageData.title}
-          </h2>
-          <p className="text-sm text-gray-600 line-clamp-3">
+        <div className="flex flex-col text-white bg-black flex-1 p-4 gap-2 z-30">
+          <div className="flex justify-between">
+            <h2 className="text-[20px] font-bold line-clamp-2">
+              {packageData.title}
+            </h2>
+            <div className="text-[12px] flex items-center rounded-2xl px-3 font-bold bg-[#27272a] text-white">
+              ${packageData.cost}
+            </div>
+          </div>
+          <p className="text-sm text-[#a1a1aa] line-clamp-3">
             {packageData.description}
           </p>
-          <div className="flex gap-1">{ratingStar(packageData.rating)}</div>
           <div className="flex flex-row justify-between gap-4">
-            <span>
+            <span className="text-sm text-[#a1a1aa] flex items-center gap-2">
+              <Clock size={18} />
               {packageData.duration}{" "}
               {Number(packageData.duration) === 1 ? "day" : "days"}
             </span>
-            <span className="text-xl font-bold text-green-500">
-              ${packageData.cost}
-            </span>
           </div>
+          {packageData.packageItem.map((item) => (
+            <div className="flex items-center gap-2" key={item._id}>
+              <MapPin size={14} color="gray" />
+              Day {item.order}: {item.title}
+            </div>
+          ))}
           <div className="mt-6 flex flex-col justify-between sm:flex-row sm:flex-wrap gap-4 w-full">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="bg-yellow-500 text-white hover:bg-yellow-600 shadow-md flex-1 sm:flex-none">
-                  Update
-                </Button>
-              </DialogTrigger>
-              <UpdatePackageForm packageData={packageData} />
-            </Dialog>
-
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="bg-red-600 text-white hover:bg-red-700 shadow-md flex-1 sm:flex-none">
-                  Delete
-                </Button>
-              </DialogTrigger>
-              <DeletePackage
-                title={packageData.title}
-                packageId={packageData._id}
-              />
-            </Dialog>
+            <div className="flex flex-1">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="bg-black border border-[#27272a] shadow-md w-full sm:flex-none">
+                    <Edit />
+                    Edit
+                  </Button>
+                </DialogTrigger>
+                <UpdatePackageForm packageData={packageData} />
+              </Dialog>
+            </div>
+            <div className="flex flex-1">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="bg-black border border-[#27272a] text-white shadow-md flex-1 w-full sm:flex-none">
+                    <Trash2 />
+                    Delete
+                  </Button>
+                </DialogTrigger>
+                <DeletePackage
+                  title={packageData.title}
+                  packageId={packageData._id}
+                />
+              </Dialog>
+            </div>
           </div>
         </div>
       </div>
