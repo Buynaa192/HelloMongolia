@@ -15,11 +15,15 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
   const [currentImage, setCurrentImage] = useState(0);
 
   const packageItem = packageDetail.packageItem[selectedDay];
-  const images = packageItem.destinationId?.destinationImages || [];
+  const images = packageItem.destinationId?.destinationImages || [
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750665598/BwZffaCuXymfwk81JeptqEwnRzkQPEXF1Wrv3rbY_520_350_bovkis.jpg",
+    "https://res.cloudinary.com/df60cobe2/image/upload/v1750665589/VIQtCstVCthMbWBgT9rqVdd8De4wpbaJyWfGqCCB_520_350_kuxh88.jpg",
+  ];
 
   const handleNextImage = () => setCurrentImage((prev) => (prev + 1) % images.length);
   const handlePrevImage = () => setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
-  console.log("asdasd", packageDetail);
+  console.log("Package Detail:", packageDetail);
+
   return (
     <div className="w-full flex flex-col items-center p-6 ">
       <h1 className="text-3xl font-bold mb-2">{packageDetail.title}</h1>
@@ -66,15 +70,14 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
           <p className="text-gray-600 font-semibold text-2xl">{packageItem.destinationId?.destinationName} </p>
           <p className="text-sm">{packageItem.description}</p>
 
-          <div>
-            <h3 className="font-semibold mb-2">Activities:</h3>
-            <div className="flex flex-col gap-1">
-              {packageItem.activity.map((act, i) => (
-                <div key={i} className="flex justify-between items-center bg-green-50 text-green-800 px-3 py-1 rounded-md">
-                  <span className="flex items-center gap-2">
-                    {act.emoji} {act.activityName}
-                  </span>
-                </div>
+          <div className="">
+            <h2 className="font-semibold text-xl mb-3 ">Activities</h2>
+            <div className="flex flex-wrap sm:grid-cols-3 gap-3 text-gray-700 ">
+              {packageItem.activity.map((item, indx) => (
+                <Button key={indx} className="flex  items-center gap-2 bg-black/60 hover:bg-white hover:text-black text-white p-2 rounded-md shadow-sm ">
+                  <span className="text-lg">{item.emoji}</span>
+                  <span>{item.activityName}</span>
+                </Button>
               ))}
             </div>
           </div>
