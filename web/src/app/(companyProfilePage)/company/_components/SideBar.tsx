@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import { usePackageContext } from "./PackageProvider";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Sidebar() {
   const { company, signOut } = useAuth();
@@ -22,7 +23,7 @@ export default function Sidebar() {
     <aside
       className={`${
         collapsed ? "w-20" : "w-64"
-      } transition-all duration-300 bg-gray-950 text-gray-100 p-4 flex flex-col  rounded-r-2xl shadow-xl border-r border-gray-800`}>
+      } transition-all duration-300 bg-gray-950 text-gray-100 p-4 flex flex-col justify-between rounded-r-2xl shadow-xl border-r border-gray-800`}>
       <div>
         <div className="flex items-center justify-between mb-6">
           {!collapsed && (
@@ -61,10 +62,10 @@ export default function Sidebar() {
             }`}
             onClick={() => {
               setView("Create Package");
-              router.push("/company/CreatePackagePage");
+              router.push("/company/AllPackages");
             }}>
             <PlusSquareIcon size={18} />
-            Create Package
+            Packages
           </Button>
           <Button
             variant="ghost"
@@ -82,14 +83,22 @@ export default function Sidebar() {
           </Button>
         </nav>
       </div>
-
-      <Button
-        onClick={() => signOut()}
-        variant="ghost"
-        className="w-full justify-start px-3 py-2 text-gray-300 hover:bg-gray-800 hover:text-white mt-6">
-        <LogOut size={18} className="mr-2" />
-        {!collapsed && "Log Out"}
-      </Button>
+      <div className="relative group">
+        <Image
+          src="https://res.cloudinary.com/idemo/image/upload/eytykctytgopvpgxfrzk"
+          alt="Avatar"
+          width={40}
+          height={40}
+          className="rounded-full"
+        />
+        <Button
+          onClick={() => signOut()}
+          variant="ghost"
+          className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full justify-start px-3 py-2 text-gray-300 hover:bg-gray-800 hover:text-white mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <LogOut size={18} className="mr-2" />
+          {!collapsed && "Log Out"}
+        </Button>
+      </div>
     </aside>
   );
 }
