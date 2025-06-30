@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import { api } from "@/axios";
-import { PackageCardForCompany } from "../../_components/ariukasComponents/PackageCard";
+import { FinalPackageCard } from "../../_components/ariukasComponents/PackageCardForCompany";
 
 export default function CompanyProfile() {
   const params = useParams();
@@ -173,13 +173,13 @@ export default function CompanyProfile() {
             <div className="w-full flex overflow-x-scroll">
               <div className="flex gap-4">
                 {companyInfo?.packages.map((pack, index) => (
-                  <PackageCardForCompany key={index} pkg={pack} />
+                  <FinalPackageCard key={index} pkg={pack} />
                 ))}
               </div>
             </div>
           ) : (
             <p className="text-sm text-gray-500 italic">
-              {companyInfo?.name} hasn`&apos;`t posted packages yet.
+              {companyInfo?.name} hasn{"'"}t posted packages yet.
             </p>
           )}
         </div>
