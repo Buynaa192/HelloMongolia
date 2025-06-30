@@ -32,7 +32,7 @@ export const CreatePackageItemForm = () => {
       title: "",
       description: "",
       destinationId: "",
-      accomodation: "",
+      accommodation: "",
       activity: [],
     },
   });

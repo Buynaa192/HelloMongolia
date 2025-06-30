@@ -12,7 +12,7 @@ type CreatePackageItemInput = {
   image?: File | string;
   destinationId: string;
   description: string;
-  accomodation: string;
+  accommodation: string;
   activity: string[];
 };
 type PackageContextProps = {
@@ -167,7 +167,7 @@ export function PackageProvider({ children }: { children: ReactNode }) {
         destinationId: itemData.destinationId,
         description: itemData.description,
         activity: itemData.activity,
-        accomodation: itemData.accomodation,
+        accommodation: itemData.accommodation,
       });
 
       toast.success("Package Item created successfully!");

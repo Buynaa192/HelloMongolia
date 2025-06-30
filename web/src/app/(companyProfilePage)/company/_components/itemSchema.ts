@@ -10,7 +10,7 @@ export const itemSchema = z.object({
       message: "Only .jpg, .jpeg, .png and .webp formats are supported.",
     }),
   destinationId: z.string().min(1),
-  accomodation: z.string().min(1),
+  accommodation: z.string().min(1),
   activity: z.array(z.string()).min(1),
 });
 

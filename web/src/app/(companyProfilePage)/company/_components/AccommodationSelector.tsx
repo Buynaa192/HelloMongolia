@@ -40,6 +40,7 @@ export const AccommodationSelector = ({ value, onChange }: Props) => {
     };
 
     fetchAccommodations();
+    console.log("ac", accommodations);
   }, []);
 
   const filtered = accommodations.filter((a) =>

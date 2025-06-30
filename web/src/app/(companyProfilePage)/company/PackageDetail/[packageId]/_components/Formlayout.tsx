@@ -1,4 +1,3 @@
-// FormLayout.tsx
 import {
   Form,
   FormField,
@@ -11,20 +10,19 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Loader, Camera } from "lucide-react";
-import { DestinationSelector } from "./DestinationSelector";
 import { ActivityType } from "@/app/_providers/AuthProvider";
-import { ItemFormType } from "./itemSchema";
-import { AccommodationSelector } from "./AccommodationSelector";
-import { useRouter } from "next/navigation";
 import { UseFormReturn } from "react-hook-form";
+import { ItemFormType } from "../../../_components/itemSchema";
+import { DestinationSelector } from "../../../_components/DestinationSelector";
+import { AccommodationSelector } from "../../../_components/AccommodationSelector";
 
 type Props = {
   form: UseFormReturn<ItemFormType>;
-  onSubmit: (data: ItemFormType) => Promise<void>;
+  onSubmit: (data: ItemFormType) => void;
   prevProfileImage: string;
   setPrevProfileImage: (url: string) => void;
   activityList?: ActivityType[];
-  order: number;
+  order?: number;
   loading: boolean;
 };
 
@@ -37,17 +35,11 @@ export const FormLayout = ({
   order,
   loading,
 }: Props) => {
-  const router = useRouter();
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="bg-white px-6 md:px-12 py-10 shadow-xl rounded-2xl space-y-8 w-full">
-        <div className="mb-4">
-          <Button type="button" variant="outline" onClick={() => router.back()}>
-            ← Back
-          </Button>
-        </div>
         <FormField
           control={form.control}
           name="title"
@@ -128,7 +120,7 @@ export const FormLayout = ({
 
         <FormField
           control={form.control}
-          name="accommodation"
+          name="accomodation"
           render={({ field }) => (
             <AccommodationSelector
               value={field.value}
@@ -185,10 +177,12 @@ export const FormLayout = ({
           {loading ? (
             <>
               <Loader className="animate-spin" size={18} />
-              <span>Adding...</span>
+              <span>{order ? "Adding..." : "Updating..."}</span>
             </>
+          ) : order ? (
+            `Add day${order}`
           ) : (
-            `update day ${order}`
+            "Update"
           )}
         </Button>
       </form>

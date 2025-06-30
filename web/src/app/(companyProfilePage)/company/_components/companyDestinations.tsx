@@ -72,7 +72,7 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
 
   const displayedDestination = isExpanded
     ? filteredDestinations
-    : filteredDestinations?.slice(0, 4);
+    : filteredDestinations?.slice(0, 6);
   return (
     <section className="bg-white p-6 rounded-xl shadow-md mb-8">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">
@@ -86,7 +86,7 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
         onChange={(e) => setSearchDestination(e.target.value)}
       />
       <div
-        className={`grid grid-cols-4 gap-6 transition-all duration-300 ${
+        className={`grid grid-cols-3 gap-6 items-stretch transition-all duration-300 ${
           isExpanded ? "max-h-[600px] overflow-y-scroll pr-2" : ""
         }`}>
         {displayedDestination?.map((item) => (
@@ -94,7 +94,7 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
         ))}
       </div>
 
-      {filteredDestinations.length > 4 && (
+      {filteredDestinations.length > 6 && (
         <div className="mt-6 flex justify-center">
           <Button onClick={toggleExpanded}>
             {isExpanded ? "See Less" : "See More"}
