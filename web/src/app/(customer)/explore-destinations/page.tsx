@@ -10,6 +10,8 @@ import { PopularDestination } from "@/components/buynaasComponents/popularDestin
 import { api } from "@/axios";
 import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function DestinatioExplore() {
   const [destination, setDestination] = useState<DestinationType[]>([]);
@@ -94,22 +96,44 @@ export default function DestinatioExplore() {
             />
           </div>
           {searchDestination.length > 0 && (
-            <div className=" max-h-full overflow-auto rounded-lg w-150 gap-2 flex flex-col">
+            <div className="max-h-[calc(100vh-200px)] overflow-y-auto overflow-x-hidden rounded-lg w-160 gap-2 flex flex-col">
               <p>Destinations</p>
               {filteredDestinations.map((item) => (
-                <div className=" flex   gap-2 p-2 border-b-1" key={item._id}>
-                  <Image
-                    src={item.destinationImages[0] || item.destinationImages[1]}
-                    width={200}
-                    height={100}
-                    alt={item.destinationName}
-                    className="rounded-lg w-50 h-50  "
-                  />
-                  <div className="">
-                    <p className="text-3xl">{item.destinationName}</p>
-                    <p>{item.description}</p>
+                <Link key={item._id} href={`/explore-destinations/${item.region.regionName}/${item._id}`}>
+                  <div className=" flex   gap-2 p-2 border-b-1 items-center">
+                    <Image
+                      src={item.destinationImages[0] || item.destinationImages[1]}
+                      width={200}
+                      height={100}
+                      alt={item.destinationName}
+                      className="rounded-lg w-50 h-50  "
+                    />
+
+                    <div className="flex flex-col gap-2">
+                      <p className="text-3xl font-semibold">{item.destinationName}</p>
+                      <p>{item.description}</p>
+                      <div className="flex gap-2 w-full flex-wrap">
+                        {item.activities.map((item, idx) => (
+                          <Button key={idx} className="flex items-center gap-2 text-white/90">
+                            <span>{item.emoji}</span>
+                            <span>{item.activityName}</span>
+                          </Button>
+                        ))}
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+                        {item.weather.map((item, indx) => (
+                          <div
+                            key={indx}
+                            className="flex flex-col items-start justify-between bg-gradient-to-r from-blue-100 to-blue-50 p-4 rounded-xl shadow hover:shadow-md transition-shadow"
+                          >
+                            <div className="text-gray-600 font-medium text-sm uppercase tracking-wide">{item.season}</div>
+                            <div className="text-3xl font-bold text-blue-700">{item.averageTempF}°F</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}
