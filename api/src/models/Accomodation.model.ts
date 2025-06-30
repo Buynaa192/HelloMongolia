@@ -7,4 +7,4 @@ const AccommodationSchema = new Schema({
   createdAt: { type: Date, required: true },
 });
 
-export const accommodationModel = model("accomodation", AccommodationSchema);
+export const accommodationModel = model("accommodation", AccommodationSchema);

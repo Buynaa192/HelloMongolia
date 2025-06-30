@@ -8,7 +8,7 @@ export const createPackageItemController = async (req, res) => {
       destinationId,
       description,
       activity,
-      accomodation,
+      accommodation,
     } = req.body;
     const newPackageItem = await packageItemModel.create({
       order: Number(order),
@@ -17,7 +17,7 @@ export const createPackageItemController = async (req, res) => {
       destinationId,
       description,
       activity,
-      accomodation,
+      accommodation,
       createdAt: new Date(),
       updatedAt: new Date(),
     });

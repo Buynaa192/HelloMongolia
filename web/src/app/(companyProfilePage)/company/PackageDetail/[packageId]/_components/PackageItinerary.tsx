@@ -2,7 +2,7 @@
 
 import { PackageItemType } from "@/app/_providers/AuthProvider";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import Link from "next/link";
 
 type Props = {
   packageItems?: PackageItemType[];
@@ -66,14 +66,13 @@ export function PackageItinerary({ packageItems }: Props) {
               </div>
 
               <div className="mt-4">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button className="bg-yellow-500 hover:bg-yellow-600 text-white shadow">
-                      Update This Day
-                    </Button>
-                  </DialogTrigger>
-                  <div className="p-6"></div>
-                </Dialog>
+                <Link
+                  key={item._id}
+                  href={`/company/UpdatePackageItem/${item._id}`}>
+                  <Button className="bg-yellow-500 text-white hover:bg-yellow-600 shadow-md flex-1 sm:flex-none">
+                    Update itinerary
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
