@@ -1,5 +1,6 @@
 "use client";
 
+import { FinalPackageCard } from "@/app/(customer)/_components/ariukasComponents/PackageCardForCompany";
 import { PackageType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import Image from "next/image";
@@ -22,14 +23,7 @@ export const DesdinationPackage = ({ id }: idType) => {
   return (
     <div className="w-full grid grid-cols-5  gap-4 p-4 text-white">
       {packages.map((item, indx) => {
-        return (
-          <Link className=" rounded-lg" key={indx} href={`/travel-plans/${item._id}`}>
-            <div className="w-full h-full rounded-lg ">
-              <Image className="w-full h-[calc(100%-50px)] rounded-lg" alt={item.coverPhoto} src={item.coverPhoto} width={500} height={100}></Image>
-              <p>{item.title}</p>
-            </div>
-          </Link>
-        );
+        return <FinalPackageCard key={indx} pkg={item} />;
       })}
     </div>
   );
