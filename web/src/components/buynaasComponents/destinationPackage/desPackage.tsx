@@ -3,8 +3,7 @@
 import { FinalPackageCard } from "@/app/(customer)/_components/ariukasComponents/PackageCardForCompany";
 import { PackageType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
-import Image from "next/image";
-import Link from "next/link";
+
 import { useEffect, useState } from "react";
 type idType = {
   id: string;
