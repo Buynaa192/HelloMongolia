@@ -42,7 +42,6 @@ export default function PackagesExplore() {
         const res = await api.get("/package");
         setAllPackages(res.data.packages);
         setFilteredPackages(res.data.packages);
-        console.log(res.data.packages);
       } catch (err) {
         console.error("Failed to fetch packages", err);
       }
@@ -50,7 +49,6 @@ export default function PackagesExplore() {
     const fetchActiviy = async () => {
       try {
         const res = await api.get("/activity/me");
-        console.log(res.data);
         setAllActivities(res.data.activities);
       } catch (err) {
         console.error("Failed to fetch packages", err);
@@ -157,7 +155,7 @@ export default function PackagesExplore() {
         <SearchFilter
           selectedTripTypes={selectedTripTypes}
           setSelectedTripTypes={setSelectedTripTypes}
-          applyFilters={() => {}} // no-op
+          applyFilters={() => {}}
           clearAllFilters={clearAllFilters}
           selectedCosts={selectedCosts}
           setSelectedCosts={setSelectedCosts}
