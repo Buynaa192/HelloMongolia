@@ -8,12 +8,29 @@ import { FilteredPackages } from "./_components/filteredPackages";
 import { Search } from "./_components/search";
 import { SearchFilter } from "./_components/searchFIlter";
 import { TravelPlanHome } from "./_components/travelPLanHome";
-
+import Link from "next/link";
 import { ActivityType, PackageType } from "@/app/_providers/AuthProvider";
 
-export type TripType = "Scenery" | "Adventure" | "Cultural" | "Historical" | "Family" | "Scientific" | "Festival & Events" | "Off-road";
+export type TripType =
+  | "Scenery"
+  | "Adventure"
+  | "Cultural"
+  | "Historical"
+  | "Family"
+  | "Scientific"
+  | "Festival & Events"
+  | "Off-road";
 
-const VALID_TRIP_TYPES: TripType[] = ["Scenery", "Adventure", "Cultural", "Historical", "Family", "Scientific", "Festival & Events", "Off-road"];
+const VALID_TRIP_TYPES: TripType[] = [
+  "Scenery",
+  "Adventure",
+  "Cultural",
+  "Historical",
+  "Family",
+  "Scientific",
+  "Festival & Events",
+  "Off-road",
+];
 
 export default function PackagesExplore() {
   const searchParams = useSearchParams();
@@ -42,7 +59,6 @@ export default function PackagesExplore() {
         const res = await api.get("/package");
         setAllPackages(res.data.packages);
         setFilteredPackages(res.data.packages);
-        console.log(res.data.packages);
       } catch (err) {
         console.error("Failed to fetch packages", err);
       }
@@ -50,7 +66,6 @@ export default function PackagesExplore() {
     const fetchActiviy = async () => {
       try {
         const res = await api.get("/activity/me");
-        console.log(res.data);
         setAllActivities(res.data.activities);
       } catch (err) {
         console.error("Failed to fetch packages", err);
@@ -69,9 +84,13 @@ export default function PackagesExplore() {
   useEffect(() => {
     const filter = () => {
       const filtered = allPackages.filter((pkg) => {
-        const matchesKeyword = !keyword || pkg.description.toLowerCase().includes(keyword.toLowerCase());
+        const matchesKeyword =
+          !keyword ||
+          pkg.description.toLowerCase().includes(keyword.toLowerCase());
 
-        const matchesTripType = selectedTripTypes.length === 0 || selectedTripTypes.includes(pkg.tripType as TripType);
+        const matchesTripType =
+          selectedTripTypes.length === 0 ||
+          selectedTripTypes.includes(pkg.tripType as TripType);
 
         const matchesCost =
           selectedCosts.length === 0 ||
@@ -92,7 +111,11 @@ export default function PackagesExplore() {
           });
         const matchesActivity =
           selectedActivity.length === 0 ||
-          selectedActivity.some((selectedAct) => pkg.packageItem.some((item) => item.activity.some((act) => act._id === selectedAct._id)));
+          selectedActivity.some((selectedAct) =>
+            pkg.packageItem.some((item) =>
+              item.activity.some((act) => act._id === selectedAct._id)
+            )
+          );
 
         const pkgDuration = parseInt(pkg.duration);
         const matchesDuration =
@@ -119,16 +142,34 @@ export default function PackagesExplore() {
         const filterStart = startDate ? new Date(startDate) : null;
         const filterEnd = endDate ? new Date(endDate) : null;
 
-        const matchesDate = (!filterStart || availableUntil >= filterStart) && (!filterEnd || availableFrom <= filterEnd);
+        const matchesDate =
+          (!filterStart || availableUntil >= filterStart) &&
+          (!filterEnd || availableFrom <= filterEnd);
 
-        return matchesKeyword && matchesTripType && matchesCost && matchesDuration && matchesDate && matchesActivity;
+        return (
+          matchesKeyword &&
+          matchesTripType &&
+          matchesCost &&
+          matchesDuration &&
+          matchesDate &&
+          matchesActivity
+        );
       });
 
       setFilteredPackages(filtered);
     };
 
     filter();
-  }, [allPackages, keyword, selectedTripTypes, selectedCosts, selectedDurations, selectedActivity, startDate, endDate]);
+  }, [
+    allPackages,
+    keyword,
+    selectedTripTypes,
+    selectedCosts,
+    selectedDurations,
+    selectedActivity,
+    startDate,
+    endDate,
+  ]);
 
   const clearAllFilters = () => {
     setKeyword("");
@@ -143,7 +184,10 @@ export default function PackagesExplore() {
   return (
     <div className="w-full h-full bg-transparent">
       <TravelPlanHome />
-
+      <div className="bg-transparent w-full h-[10px] p-2 gap-2 text-accent flex">
+        <Link href={"/"}> Home</Link> <span>{">"}</span>
+        <Link href={"/travel-plans"}> Travel Plans</Link>
+      </div>{" "}
       <Search
         keyword={keyword}
         setKeyword={setKeyword}
@@ -157,7 +201,7 @@ export default function PackagesExplore() {
         <SearchFilter
           selectedTripTypes={selectedTripTypes}
           setSelectedTripTypes={setSelectedTripTypes}
-          applyFilters={() => {}} // no-op
+          applyFilters={() => {}}
           clearAllFilters={clearAllFilters}
           selectedCosts={selectedCosts}
           setSelectedCosts={setSelectedCosts}
