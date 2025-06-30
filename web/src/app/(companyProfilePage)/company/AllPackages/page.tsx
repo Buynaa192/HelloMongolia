@@ -1,8 +1,6 @@
 "use client";
 
 import { useAuth } from "@/app/_providers/AuthProvider";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
 import { CompanyPackages } from "../_components/companyPackages";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";

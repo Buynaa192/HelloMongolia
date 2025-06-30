@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { api } from "@/axios";
 import { PackageCardSkeleton } from "./packageSkeleton";
 import { PackageType } from "@/app/_providers/AuthProvider";
-import Link from "next/link";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { UpdatePackageForm } from "./updatePackageForm";
 import { Button } from "@/components/ui/button";
