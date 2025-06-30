@@ -29,14 +29,22 @@ export const PartnerCompanies = () => {
 
   return (
     <div className="w-full h-fit relative flex flex-col items-center mb-25">
-      <motion.div initial={{ y: 60, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ duration: 1, ease: "easeOut" }} viewport={{ once: true }}>
+      <motion.div
+        initial={{ y: 60, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
         <HomePageTitle title="LOCALS EXPERTS WE TRUST" />
       </motion.div>
 
       {loading && companies.length === 0 ? (
         <div className="flex gap-4 overflow-x-auto mt-6">
           {[...Array(6)].map((_, i) => (
-            <Skeleton key={i} className="min-w-[112px] h-28 rounded-lg flex-shrink-0" />
+            <Skeleton
+              key={i}
+              className="min-w-[112px] h-28 rounded-lg flex-shrink-0"
+            />
           ))}
         </div>
       ) : (
@@ -56,7 +64,22 @@ export const PartnerCompanies = () => {
               className="min-w-[112px] h-28 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center justify-center flex-shrink-0"
               aria-label="Company logo link"
             >
-              <Image src={AvatarImage} alt="Company logo" width={112} height={112} className="object-contain" priority />
+              {/* <Image
+                src={AvatarImage}
+                alt="Company logo"
+                width={112}
+                height={112}
+                className="object-contain"
+                priority
+              /> */}
+              <Image
+                src={AvatarImage || "/images/placeholder.png"}
+                alt="Company logo"
+                width={112}
+                height={112}
+                className="object-contain"
+                priority
+              />
             </a>
           ))}
         </motion.div>

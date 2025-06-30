@@ -11,9 +11,26 @@ import { TravelPlanHome } from "./_components/travelPLanHome";
 
 import { ActivityType, PackageType } from "@/app/_providers/AuthProvider";
 
-export type TripType = "Scenery" | "Adventure" | "Cultural" | "Historical" | "Family" | "Scientific" | "Festival & Events" | "Off-road";
+export type TripType =
+  | "Scenery"
+  | "Adventure"
+  | "Cultural"
+  | "Historical"
+  | "Family"
+  | "Scientific"
+  | "Festival & Events"
+  | "Off-road";
 
-const VALID_TRIP_TYPES: TripType[] = ["Scenery", "Adventure", "Cultural", "Historical", "Family", "Scientific", "Festival & Events", "Off-road"];
+const VALID_TRIP_TYPES: TripType[] = [
+  "Scenery",
+  "Adventure",
+  "Cultural",
+  "Historical",
+  "Family",
+  "Scientific",
+  "Festival & Events",
+  "Off-road",
+];
 
 export default function PackagesExplore() {
   const searchParams = useSearchParams();
@@ -67,9 +84,13 @@ export default function PackagesExplore() {
   useEffect(() => {
     const filter = () => {
       const filtered = allPackages.filter((pkg) => {
-        const matchesKeyword = !keyword || pkg.description.toLowerCase().includes(keyword.toLowerCase());
+        const matchesKeyword =
+          !keyword ||
+          pkg.description.toLowerCase().includes(keyword.toLowerCase());
 
-        const matchesTripType = selectedTripTypes.length === 0 || selectedTripTypes.includes(pkg.tripType as TripType);
+        const matchesTripType =
+          selectedTripTypes.length === 0 ||
+          selectedTripTypes.includes(pkg.tripType as TripType);
 
         const matchesCost =
           selectedCosts.length === 0 ||
@@ -90,7 +111,11 @@ export default function PackagesExplore() {
           });
         const matchesActivity =
           selectedActivity.length === 0 ||
-          selectedActivity.some((selectedAct) => pkg.packageItem.some((item) => item.activity.some((act) => act._id === selectedAct._id)));
+          selectedActivity.some((selectedAct) =>
+            pkg.packageItem.some((item) =>
+              item.activity.some((act) => act._id === selectedAct._id)
+            )
+          );
 
         const pkgDuration = parseInt(pkg.duration);
         const matchesDuration =
@@ -117,16 +142,34 @@ export default function PackagesExplore() {
         const filterStart = startDate ? new Date(startDate) : null;
         const filterEnd = endDate ? new Date(endDate) : null;
 
-        const matchesDate = (!filterStart || availableUntil >= filterStart) && (!filterEnd || availableFrom <= filterEnd);
+        const matchesDate =
+          (!filterStart || availableUntil >= filterStart) &&
+          (!filterEnd || availableFrom <= filterEnd);
 
-        return matchesKeyword && matchesTripType && matchesCost && matchesDuration && matchesDate && matchesActivity;
+        return (
+          matchesKeyword &&
+          matchesTripType &&
+          matchesCost &&
+          matchesDuration &&
+          matchesDate &&
+          matchesActivity
+        );
       });
 
       setFilteredPackages(filtered);
     };
 
     filter();
-  }, [allPackages, keyword, selectedTripTypes, selectedCosts, selectedDurations, selectedActivity, startDate, endDate]);
+  }, [
+    allPackages,
+    keyword,
+    selectedTripTypes,
+    selectedCosts,
+    selectedDurations,
+    selectedActivity,
+    startDate,
+    endDate,
+  ]);
 
   const clearAllFilters = () => {
     setKeyword("");
@@ -151,7 +194,7 @@ export default function PackagesExplore() {
         endDate={endDate}
         setEndDate={setEndDate}
       />
-      <div className="flex">
+      <div className="flex h-fit relative">
         <SearchFilter
           selectedTripTypes={selectedTripTypes}
           setSelectedTripTypes={setSelectedTripTypes}
