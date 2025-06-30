@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
       "www.qantas.com",
       "www.escapetomongolia.com",
       "example.com",
+      "3nmhvj5b8bek5uam.public.blob.vercel-storage.com",
     ],
   },
 };

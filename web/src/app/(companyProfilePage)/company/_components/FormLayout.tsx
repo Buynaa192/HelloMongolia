@@ -1,4 +1,3 @@
-// FormLayout.tsx
 import {
   Form,
   FormField,
@@ -148,11 +147,7 @@ export const FormLayout = ({
                   {activityList?.map((act) => (
                     <label
                       key={act._id}
-                      className={`flex items-center gap-2 border p-2 rounded-lg cursor-pointer transition ${
-                        field.value.includes(act._id)
-                          ? "bg-blue-100 border-blue-500"
-                          : "border-gray-300"
-                      }`}>
+                      className={`flex items-center gap-2 border p-2 rounded-lg cursor-pointer transition `}>
                       <input
                         type="checkbox"
                         checked={field.value.includes(act._id)}

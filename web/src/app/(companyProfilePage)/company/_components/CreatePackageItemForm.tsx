@@ -48,18 +48,23 @@ export const CreatePackageItemForm = () => {
     };
     getActivities();
   }, []);
+
   const onSubmit = async (data: ItemFormType) => {
     const itemWithOrder = { ...data, order };
     const itemData: createPackageItemType = await createPackageItemFun(
       itemWithOrder
     );
+
     if (newPackage?._id && itemData.package._id) {
       await addItemToPackage(newPackage._id, itemData.package._id);
     }
 
     const nextOrder = order + 1;
 
+    console.log("GG", nextOrder, duration);
+
     if (nextOrder > duration) {
+      console.log("open");
       setIsOpen(true);
       setNewPackage(null);
     } else {

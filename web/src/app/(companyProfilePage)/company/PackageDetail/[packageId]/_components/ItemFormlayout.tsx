@@ -26,7 +26,7 @@ type Props = {
   loading: boolean;
 };
 
-export const FormLayout = ({
+export const ItemFormLayout = ({
   form,
   onSubmit,
   prevProfileImage,
@@ -120,7 +120,7 @@ export const FormLayout = ({
 
         <FormField
           control={form.control}
-          name="accomodation"
+          name="accommodation"
           render={({ field }) => (
             <AccommodationSelector
               value={field.value}
