@@ -12,13 +12,7 @@ import { ActivityType } from "@/app/_providers/AuthProvider";
 import { createPackageItemType, ItemFormType, itemSchema } from "./itemSchema";
 
 export const CreatePackageItemForm = () => {
-  const {
-    newPackage,
-    setNewPackage,
-    createPackageItemFun,
-    loading,
-    addItemToPackage,
-  } = usePackageContext();
+  const { newPackage, setNewPackage, createPackageItemFun, loading, addItemToPackage } = usePackageContext();
 
   const [activity, setActivity] = useState<ActivityType[]>();
   const [prevProfileImage, setPrevProfileImage] = useState("");
@@ -51,9 +45,7 @@ export const CreatePackageItemForm = () => {
 
   const onSubmit = async (data: ItemFormType) => {
     const itemWithOrder = { ...data, order };
-    const itemData: createPackageItemType = await createPackageItemFun(
-      itemWithOrder
-    );
+    const itemData: createPackageItemType = await createPackageItemFun(itemWithOrder);
 
     if (newPackage?._id && itemData.package._id) {
       await addItemToPackage(newPackage._id, itemData.package._id);
@@ -61,10 +53,7 @@ export const CreatePackageItemForm = () => {
 
     const nextOrder = order + 1;
 
-    console.log("GG", nextOrder, duration);
-
     if (nextOrder > duration) {
-      console.log("open");
       setIsOpen(true);
       setNewPackage(null);
     } else {
@@ -88,11 +77,7 @@ export const CreatePackageItemForm = () => {
         order={order}
         loading={loading}
       />
-      <AlertDial
-        title="All itinerary days have been successfully created!"
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      <AlertDial title="All itinerary days have been successfully created!" isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 };

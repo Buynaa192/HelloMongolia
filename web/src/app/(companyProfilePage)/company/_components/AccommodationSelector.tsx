@@ -2,12 +2,7 @@
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { api } from "@/axios";
 
@@ -40,12 +35,9 @@ export const AccommodationSelector = ({ value, onChange }: Props) => {
     };
 
     fetchAccommodations();
-    console.log("ac", accommodations);
   }, []);
 
-  const filtered = accommodations.filter((a) =>
-    a.hotelName.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = accommodations.filter((a) => a.hotelName.toLowerCase().includes(search.toLowerCase()));
 
   const createAccommodation = async () => {
     try {
@@ -73,9 +65,7 @@ export const AccommodationSelector = ({ value, onChange }: Props) => {
         value={accommodations.find((a) => a._id === value)?.hotelName || search}
         onChange={(e) => setSearch(e.target.value)}
         onBlur={() => {
-          const matched = accommodations.find((a) =>
-            a.hotelName.toLowerCase().includes(search.toLowerCase())
-          );
+          const matched = accommodations.find((a) => a.hotelName.toLowerCase().includes(search.toLowerCase()));
           if (matched) onChange(matched._id);
         }}
       />
@@ -85,13 +75,12 @@ export const AccommodationSelector = ({ value, onChange }: Props) => {
           {filtered.map((a) => (
             <div
               key={a._id}
-              className={`p-2 cursor-pointer hover:bg-gray-100 ${
-                a._id === value ? "bg-gray-200" : ""
-              }`}
+              className={`p-2 cursor-pointer hover:bg-gray-100 ${a._id === value ? "bg-gray-200" : ""}`}
               onClick={() => {
                 onChange(a._id);
                 setSearch(a.hotelName);
-              }}>
+              }}
+            >
               {a.hotelName}
             </div>
           ))}
@@ -106,16 +95,8 @@ export const AccommodationSelector = ({ value, onChange }: Props) => {
         </DialogTrigger>
         <DialogContent className="space-y-4">
           <DialogTitle>New Accommodation</DialogTitle>
-          <Input
-            placeholder="Hotel Name"
-            value={newHotelName}
-            onChange={(e) => setNewHotelName(e.target.value)}
-          />
-          <Input
-            placeholder="Address"
-            value={newAddress}
-            onChange={(e) => setNewAddress(e.target.value)}
-          />
+          <Input placeholder="Hotel Name" value={newHotelName} onChange={(e) => setNewHotelName(e.target.value)} />
+          <Input placeholder="Address" value={newAddress} onChange={(e) => setNewAddress(e.target.value)} />
           <Button onClick={createAccommodation} disabled={!newHotelName}>
             Create
           </Button>
