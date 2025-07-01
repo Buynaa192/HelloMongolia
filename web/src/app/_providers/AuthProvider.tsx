@@ -78,7 +78,6 @@ export type AccommodationType = {
 export type CompanyType = {
   _id: string;
   email: string;
-  password: string;
   name: string;
   background: string;
   AvatarImage: string;
@@ -142,6 +141,15 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     setAuthToken(token);
     getCompany();
   }, []);
+  const isProfileComplete = (company?: CompanyType): boolean => {
+    if (!company) return false;
+    return !!(company.name && company.AvatarImage && company.background && company.about && company.phoneNumber && company.websiteURL);
+  };
+  useEffect(() => {
+    if (!loading && company && !isProfileComplete(company)) {
+      router.push("/set-up-profile");
+    }
+  }, [loading, company]);
 
   return <AuthContext.Provider value={{ company, signIn, signOut, setCompany, getCompany }}>{!loading && children}</AuthContext.Provider>;
 };
