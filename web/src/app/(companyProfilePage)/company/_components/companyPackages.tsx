@@ -27,8 +27,7 @@ export const CompanyPackages = ({ companyId }: CompanyPackagesProps) => {
       <div
         className={`grid grid-cols-4 gap-6 transition-all duration-300 ${
           isExpanded ? "max-h-[600px] overflow-y-scroll pr-2" : ""
-        }`}
-      >
+        }`}>
         {packages.map((item) => (
           <PackageCard key={item._id} packageId={item._id} />
         ))}

@@ -5,21 +5,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { usePackageContext } from "./PackageProvider";
 import { api } from "@/axios";
-import { Stepper } from "./ui/Stepper";
-import { AlertDial } from "./Alert";
 import { FormLayout } from "./FormLayout";
 import { ActivityType } from "@/app/_providers/AuthProvider";
 import { createPackageItemType, ItemFormType, itemSchema } from "./itemSchema";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { PlusSquareIcon } from "lucide-react";
+import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
+import { ItemCard } from "../CreatePackagePage/_components/ItemCatd";
 
 export const CreatePackageItemForm = () => {
-  const { newPackage, setNewPackage, createPackageItemFun, loading, addItemToPackage } = usePackageContext();
+  const { createPackageItemFun, loading, items, setItems } =
+    usePackageContext();
 
   const [activity, setActivity] = useState<ActivityType[]>();
   const [prevProfileImage, setPrevProfileImage] = useState("");
   const [order, setOrder] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-
-  const duration = Number(newPackage?.duration) || 1;
+  const [isclicked, setIsclicked] = useState(false);
   const form = useForm<ItemFormType>({
     resolver: zodResolver(itemSchema),
     defaultValues: {
@@ -45,39 +48,80 @@ export const CreatePackageItemForm = () => {
 
   const onSubmit = async (data: ItemFormType) => {
     const itemWithOrder = { ...data, order };
-    const itemData: createPackageItemType = await createPackageItemFun(itemWithOrder);
-
-    if (newPackage?._id && itemData.package._id) {
-      await addItemToPackage(newPackage._id, itemData.package._id);
-    }
-
-    const nextOrder = order + 1;
-
-    if (nextOrder > duration) {
-      setIsOpen(true);
-      setNewPackage(null);
-    } else {
-      setOrder(nextOrder);
-      form.reset();
-      setPrevProfileImage("");
-    }
+    const itemData: createPackageItemType = await createPackageItemFun(
+      itemWithOrder
+    );
+    setItems((prev) => [...prev, itemData.package]);
+    setOrder((prev) => prev + 1);
+    form.reset();
+    setPrevProfileImage("");
+    setIsOpen(false);
   };
 
-  const steps = Array.from({ length: duration }, (_, i) => `Day ${i + 1}`);
-
   return (
-    <div className="space-y-6 w-full">
-      <Stepper steps={steps} currentStep={order} />
-      <FormLayout
-        form={form}
-        onSubmit={onSubmit}
-        prevProfileImage={prevProfileImage}
-        setPrevProfileImage={setPrevProfileImage}
-        activityList={activity}
-        order={order}
-        loading={loading}
-      />
-      <AlertDial title="All itinerary days have been successfully created!" isOpen={isOpen} setIsOpen={setIsOpen} />
-    </div>
+    <Card>
+      <CardContent className="w-full max-w-screen-lg mx-auto flex flex-col  gap-6 p-4">
+        <div className="flex flex-row justify-between">
+          <div className="flex flex-col gap-2">
+            <p className="font-bold text-2xl">Daily Itinerary</p>
+            <p>Add detailed day-by-day plans for your package</p>
+          </div>
+          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsclicked(!isclicked)}>
+                <PlusSquareIcon /> Add Day
+              </Button>
+            </DialogTrigger>
+
+            <FormLayout
+              form={form}
+              onSubmit={onSubmit}
+              prevProfileImage={prevProfileImage}
+              setPrevProfileImage={setPrevProfileImage}
+              activityList={activity}
+              order={order}
+              loading={loading}
+            />
+          </Dialog>
+        </div>
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {items.length === 0 ? (
+            <div className="flex justify-center items-center col-span-full">
+              <div className="w-[30%] flex flex-col item-center  justify-center gap-4 p-4">
+                <p className="text-xl font-medium">No itinerary items yet</p>
+                <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                  <DialogTrigger asChild>
+                    <Button type="button" onClick={() => setIsclicked(true)}>
+                      <PlusSquareIcon /> Add First Day
+                    </Button>
+                  </DialogTrigger>
+                  <FormLayout
+                    form={form}
+                    onSubmit={onSubmit}
+                    prevProfileImage={prevProfileImage}
+                    setPrevProfileImage={setPrevProfileImage}
+                    activityList={activity}
+                    order={order}
+                    loading={loading}
+                  />
+                </Dialog>
+              </div>
+            </div>
+          ) : (
+            items.map((item, index) => (
+              <ItemCard
+                key={item._id}
+                item={item}
+                index={index}
+                setItems={setItems}
+              />
+            ))
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 };

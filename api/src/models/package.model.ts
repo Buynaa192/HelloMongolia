@@ -40,10 +40,6 @@ const packageSchema = new Schema({
     type: Number,
     default: 0,
   },
-  itinerary: {
-    type: String,
-    required: false,
-  },
   tripType: {
     type: String,
     enum: [
