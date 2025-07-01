@@ -1,5 +1,4 @@
 import { activityModel } from "../models/activity.model";
-import { companyProfileModel } from "../models/companyProfile.model";
 import { destinationModel } from "../models/destination.model";
 import { packageModel } from "../models/package.model";
 
@@ -17,10 +16,9 @@ export const unifiedSearch = async (req, res) => {
 
     const containsRegex = new RegExp(safeQuery, "i");
 
-    const [destinations, activities, companies, packages] = await Promise.all([
+    const [destinations, activities, packages] = await Promise.all([
       destinationModel.find({ destinationName: containsRegex }),
       activityModel.find({ activityName: containsRegex }),
-      companyProfileModel.find({ companyName: containsRegex }),
       packageModel.find({ title: containsRegex }).populate("companyId"),
     ]);
 
@@ -38,7 +36,6 @@ export const unifiedSearch = async (req, res) => {
     interface SearchResult {
       destinations?: any[];
       activities?: any[];
-      companies?: any[];
       packages?: any[];
     }
 
@@ -49,9 +46,6 @@ export const unifiedSearch = async (req, res) => {
     }
     if (activities.length > 0) {
       result.activities = sortByStartsWith(activities, "activityName");
-    }
-    if (companies.length > 0) {
-      result.companies = sortByStartsWith(companies, "companyName");
     }
     if (packages.length > 0) {
       result.packages = sortByStartsWith(packages, "title");

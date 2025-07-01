@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CompanyType } from "../../_providers/AuthProvider";
 import { api } from "@/axios";
-import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
+
 import { CompanyCard } from "../_components/ariukasComponents/CompanyCard";
 
 export default function ExploreCompanies() {
