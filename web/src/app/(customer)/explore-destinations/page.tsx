@@ -112,7 +112,7 @@ export default function DestinatioExplore() {
               }}
             />
           </div>
-          {searchDestination.length > 0 && (
+          {isFocused && searchDestination.length > 0 && (
             <div className="max-h-[calc(100vh-540px)] overflow-y-auto overflow-x-hidden rounded-lg w-[1440px] gap-2 flex flex-col bg-black/60 relative">
               <p>Destinations</p>
               <Separator />
