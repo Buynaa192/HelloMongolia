@@ -37,7 +37,7 @@ export const ImageSlideHead = ({ packageDetail }: ImageSlideHeadProps) => {
           })}
         </div>
       )}
-      <div className=" w-full h-full  absolute inset-0 flex  packageDetails-end justify-between items-end bg-linear-to-tr from-black to-100% ">
+      <div className=" w-full h-full  absolute inset-0 flex  packageDetails-end justify-between items-end  ">
         <div className="w-[60%] h-fit flex flex-col  p-10  ">
           <div className="text-white text-[50px] font-bold  w-full">
             <div>{packageDetail.title}</div>
