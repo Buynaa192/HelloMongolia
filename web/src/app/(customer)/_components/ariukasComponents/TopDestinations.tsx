@@ -40,13 +40,7 @@ export const TopDestinationsHero = () => {
             transition={{ duration: 1, ease: "easeOut", delay: index * 0.2 }}
             viewport={{ once: true, amount: 0.3 }}
           >
-            <ShowRegion
-              key={region._id}
-              _id={region._id}
-              videoUrl={region.videoUrl}
-              regionName={region.regionName}
-              description={region.description}
-            />
+            <ShowRegion key={region._id} _id={region._id} videoUrl={region.videoUrl} regionName={region.regionName} description={region.description} />
           </motion.div>
         ))}
       </div>

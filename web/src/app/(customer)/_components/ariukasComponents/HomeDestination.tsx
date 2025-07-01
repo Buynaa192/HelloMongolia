@@ -76,7 +76,10 @@ export const ShowRegion = ({ videoUrl, regionName, _id, description: regionDetai
                 {activeDestination.activities.length > 0 ? (
                   <div className="list-disc list-inside italic ">
                     {activeDestination.activities.map((activity, i) => (
-                      <ul key={i}>{activity.activityName}</ul>
+                      <ul key={i}>
+                        {activity.emoji}
+                        {activity.activityName}
+                      </ul>
                     ))}
                   </div>
                 ) : (
@@ -90,7 +93,7 @@ export const ShowRegion = ({ videoUrl, regionName, _id, description: regionDetai
                     <ul className="italic ">
                       {activeDestination.weather.map(({ season, averageTempF }, i) => (
                         <li key={i}>
-                          <strong>{season}:</strong> {averageTempF}
+                          <strong>{season}:</strong> {averageTempF}°F
                         </li>
                       ))}
                     </ul>
@@ -100,9 +103,6 @@ export const ShowRegion = ({ videoUrl, regionName, _id, description: regionDetai
                 </div>
               )}
             </div>
-            <Button asChild className="text-black bg-white hover:bg-black hover:text-white mt-6 w-fit ">
-              <Link href={`/explore-destinations/${regionName}/${activeDestination._id}`}>Take me there!</Link>
-            </Button>
           </div>
         )}
       </div>
@@ -121,7 +121,7 @@ export const ShowRegion = ({ videoUrl, regionName, _id, description: regionDetai
                   selectedDestination?.destinationName === dest.destinationName ? "text-blue-600 font-bold" : "hover:text-blue-600"
                 }`}
               >
-                {dest.destinationName}
+                <Link href={`/explore-destinations/${regionName}/${dest._id}`}>{dest.destinationName}</Link>
               </li>
               {idx !== destinations.length - 1 && <span className="mx-2 select-none text-white">·</span>}
             </React.Fragment>
