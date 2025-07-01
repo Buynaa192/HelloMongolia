@@ -1,16 +1,14 @@
 "use cleint";
 
 import { Hero1and2Props } from "../../page";
-import { HeaderRadientDeco } from "./HeaderRadientDeco";
 import { Hero1Text } from "./Hero1Text";
 
 export const Hero1 = ({ radient, setRadient }: Hero1and2Props) => {
   return (
-    <div className="relative h-screen w-full">
-      <HeaderRadientDeco />
-      <div className="relative w-full h-screen flex flex-col">
+    <div className="relative w-full h-screen">
+      <div className="relative flex flex-col w-full h-screen">
         <video
-          className="absolute inset-0 w-full h-full object-cover z-0"
+          className="absolute inset-0 z-0 object-cover w-full h-full"
           autoPlay
           muted
           loop
@@ -25,7 +23,7 @@ export const Hero1 = ({ radient, setRadient }: Hero1and2Props) => {
       </div>
 
       <div
-        className="absolute bottom-0 left-0 w-full h-130 pointer-events-none "
+        className="absolute bottom-0 left-0 w-full pointer-events-none h-130 "
         style={{
           background: `linear-gradient(to bottom, transparent, ${radient})`,
         }}

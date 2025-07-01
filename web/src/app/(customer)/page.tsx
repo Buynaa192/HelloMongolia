@@ -16,7 +16,7 @@ export default function Home() {
   const [radient, setRadient] = useState<"white" | "black">("white");
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="flex flex-col w-full">
       <Hero1 radient={radient} setRadient={setRadient} />
       <Hero2 radient={radient} />
       <TopDestinationsHero />

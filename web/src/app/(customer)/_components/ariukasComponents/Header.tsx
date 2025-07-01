@@ -4,34 +4,45 @@ import { useAuth } from "@/app/_providers/AuthProvider";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { usePathname } from "next/navigation";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { LayoutDashboardIcon, LogOut, MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { Drawer } from "./HeaderMenuDrawer";
 
+const headers = [
+  { name: "Home", url: "/" },
+  { name: "Destinations", url: "/explore-destinations" },
+  { name: "Travel Plans", url: "/travel-plans" },
+  { name: "About", url: "/about-us" },
+  { name: "Partners", url: "/companies" },
+];
+
 export const Header = () => {
-  const router = useRouter();
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const { company, signOut } = useAuth();
-  const headers = [
-    { name: "Home", url: "/" },
-    { name: "Destinations", url: "/explore-destinations" },
-    { name: "Travel Plans", url: "/travel-plans" },
-    { name: "About", url: "/about-us" },
-    { name: "Partners", url: "/companies" },
-  ];
 
   return (
-    <div className="fixed w-full flex justify-between py-2 z-15 px-20 items-center lg:gap-60 bg-white/black backdrop-blur-lg text-lg">
-      <div className="w-[80%] lg:flex hidden justify-between">
+    <div className="fixed flex items-center justify-center w-full px-20 py-2 text-lg z-15 lg:gap-60 bg-white/black backdrop-blur-lg">
+      <div className="justify-between hidden gap-2 lg:flex">
         {headers.map(({ name, url }) => (
-          <Link key={name} href={url} className="text-white cursor-pointer text-m">
-            {name}
+          <Link key={name} href={url} className="text-white">
+            <Button
+              variant={pathname === url ? "secondary" : "ghost"}
+              className="font-medium cursor-pointer"
+            >
+              {name}
+            </Button>
           </Link>
         ))}
       </div>
-      <div className="lg:hidden flex">
+
+      <div className="flex lg:hidden">
         <button onClick={() => setIsOpen(true)}>
           <MenuIcon className="text-white" />
         </button>
@@ -49,34 +60,54 @@ export const Header = () => {
       </div>
 
       {company ? (
-        <div>
+        <div className="absolute h-10 right-4">
           <Popover>
-            <PopoverTrigger className="rounded-full overflow-hidden w-10 h-10">
-              <Image src={company.AvatarImage} alt="Company Avatar" width={40} height={40} className="rounded-full object-cover" />
+            <PopoverTrigger className="relative w-10 h-10 overflow-hidden border rounded-full cursor-pointer">
+              <Image
+                src={company.AvatarImage}
+                alt="Company Avatar"
+                fill
+                className="block object-cover"
+              />
             </PopoverTrigger>
-            <PopoverContent className="flex items-center gap-4  cursor-pointer">
-              <Link href={"/company"}>
-                <div className="flex items-center gap-2 hover:text-blue-600">
-                  <LayoutDashboardIcon size={16} />
-                  <p>Dashboard</p>
-                </div>
-              </Link>
+            <PopoverContent
+              align="end"
+              className="p-2 border-none shadow-2xl w-[240px]"
+            >
+              <div className="flex flex-col gap-2">
+                <Link href={"/company"}>
+                  <Button
+                    className="justify-start w-full cursor-pointer"
+                    size="lg"
+                  >
+                    <LayoutDashboardIcon size={16} />
+                    <p>Dashboard</p>
+                  </Button>
+                </Link>
 
-              <div onClick={signOut} className="flex items-center gap-2 hover:text-red-600 cursor-pointer">
-                <p>Log out</p>
-                <LogOut size={16} />
+                <Button
+                  onClick={signOut}
+                  className="justify-start w-full cursor-pointer"
+                >
+                  <LogOut size={16} />
+                  <p>Log out</p>
+                </Button>
               </div>
             </PopoverContent>
           </Popover>
         </div>
       ) : (
-        <div className="flex lg:flex gap-2 justify-end text-lg">
-          <Button variant="ghost" className="text-white hover:bg-blue-500 hover:text-white text-lg" onClick={() => router.push("/login")}>
-            Log in
-          </Button>
-          <Button variant="ghost" className="text-white hover:bg-white hover:text-black text-lg" onClick={() => router.push("/sign-up")}>
-            Sign up
-          </Button>
+        <div className="absolute flex justify-end gap-2 text-lg lg:flex right-4">
+          <Link href="/login">
+            <Button variant="ghost" className="text-white cursor-pointer">
+              Log in
+            </Button>
+          </Link>
+          <Link href="/sign-up">
+            <Button variant="ghost" className="text-white cursor-pointer">
+              Sign up
+            </Button>
+          </Link>
         </div>
       )}
     </div>
