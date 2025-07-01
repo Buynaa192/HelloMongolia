@@ -46,6 +46,7 @@ const SearchInMongoliaComponent = ({
         setQuery("");
         setResults(emptyResults);
         setLoading(false);
+        setIsFocused(true);
       }
     };
 
@@ -82,7 +83,7 @@ const SearchInMongoliaComponent = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
   };
-
+  console.log(results);
   return (
     <div
       className={`w-full flex flex-col items-center justify-center z-1000 ${
@@ -121,6 +122,7 @@ const SearchInMongoliaComponent = ({
       ) : (
         ""
       )}
+      {/* {isFocused? */}
       {query.trim().length >= 1 && (
         <div
           ref={containerRef}
@@ -132,6 +134,7 @@ const SearchInMongoliaComponent = ({
             </div>
           ) : searchResults ? (
             <div
+              // onClick={() => setIsFocused(false)}
               className={cn(
                 "grid gap-4 text-white rounded-md h-full ",
                 Object.values(results).filter((r) => r?.length > 0).length === 1
@@ -158,6 +161,7 @@ const SearchInMongoliaComponent = ({
           )}
         </div>
       )}
+      {/* : ""} */}
     </div>
   );
 };

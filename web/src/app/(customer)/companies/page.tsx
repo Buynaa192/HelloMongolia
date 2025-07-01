@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CompanyType } from "../../_providers/AuthProvider";
 import { api } from "@/axios";
-import { BackToHomePathButtons } from "../_components/ariukasComponents/BackToHomePagePathButtons";
+
 import { CompanyCard } from "../_components/ariukasComponents/CompanyCard";
 
 export default function ExploreCompanies() {
@@ -62,16 +62,16 @@ export default function ExploreCompanies() {
           </p>
         </div>
       </div>
-      <BackToHomePathButtons />
       <div className="w-full px-6 ">
-        <h1 className="text-3xl font-bold mb-8 text-center">
+        <h1 className="text-3xl font-bold my-8 text-center">
           Explore Tour Operators
         </h1>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10 max-w-5xl mx-auto ">
-          {companies?.map((company, index) => (
-            <CompanyCard key={index} company={company} />
-          ))}
+        <div className="flex justify-center lg:px-36 p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10  ">
+            {companies?.map((company, index) => (
+              <CompanyCard key={index} company={company} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
