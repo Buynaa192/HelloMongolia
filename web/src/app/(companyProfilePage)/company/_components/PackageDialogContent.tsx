@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { DeletePackage } from "./deletePackage";
 import { useState } from "react";
 import { usePackageContext } from "./PackageProvider";
-import { UpdatePackageForm } from "./updatePackageForm";
+import { UpdatePackageForm } from "../UpdatePackage/[packageId]/_components/updatePackageForm";
 
 type Props = {
   packageData: PackageType;

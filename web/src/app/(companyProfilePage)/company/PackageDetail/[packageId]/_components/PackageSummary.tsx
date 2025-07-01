@@ -5,7 +5,7 @@ import { PackageType } from "@/app/_providers/AuthProvider";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
-import { UpdatePackageForm } from "../../../_components/updatePackageForm";
+import { UpdatePackageForm } from "../../../UpdatePackage/[packageId]/_components/updatePackageForm";
 import { DeletePackage } from "../../../_components/deletePackage";
 
 type Props = {

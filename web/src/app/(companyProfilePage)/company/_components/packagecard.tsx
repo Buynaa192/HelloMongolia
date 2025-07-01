@@ -6,7 +6,6 @@ import { api } from "@/axios";
 import { PackageCardSkeleton } from "./packageSkeleton";
 import { PackageType } from "@/app/_providers/AuthProvider";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
-import { UpdatePackageForm } from "./updatePackageForm";
 import { Button } from "@/components/ui/button";
 import { DeletePackage } from "./deletePackage";
 import Link from "next/link";
@@ -84,15 +83,12 @@ export const PackageCard = ({ packageId }: PackageCardProps) => {
           ))}
           <div className="mt-6 flex flex-col justify-between sm:flex-row sm:flex-wrap gap-4 w-full">
             <div className="flex flex-1">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="bg-black border border-[#27272a] shadow-md w-full sm:flex-none">
-                    <Edit />
-                    Edit
-                  </Button>
-                </DialogTrigger>
-                <UpdatePackageForm packageData={packageData} />
-              </Dialog>
+              <Link href={`/company/UpdatePackage/${packageId} `}>
+                <Button className="bg-black border border-[#27272a] shadow-md w-full sm:flex-none">
+                  <Edit />
+                  Edit
+                </Button>
+              </Link>
             </div>
             <div className="flex flex-1">
               <Dialog>
