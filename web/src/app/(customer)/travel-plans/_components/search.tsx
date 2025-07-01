@@ -27,14 +27,14 @@ export const Search: React.FC<SearchProps> = ({
   const [showDates, setShowDates] = useState(false);
 
   return (
-    <div className="relative z-10 flex items-center justify-center w-full bg-transparent h-25">
-      <div className="w-[1000px] h-[60px] border rounded-[30px] bg-white/10 backdrop-blur-lg flex items-center pl-2 pr-2">
+    <div className="relative z-10 flex items-center justify-center w-full h-25">
+      <div className="w-[800px] h-[60px] border rounded-[30px] bg-white/10 backdrop-blur-lg flex items-center px-4">
         {/* Keyword Input */}
-        <div className="flex-1 h-full rounded-s-[30px] flex gap-2 items-center pl-2">
+        <div className="flex items-center flex-1 h-full gap-2">
           <SearchIcon />
           <input
             type="text"
-            className="h-full outline-none border-0 bg-transparent text-accent text-[14px]"
+            className="h-full w-full outline-none border-0 bg-transparent text-accent text-[14px]"
             placeholder="Any keyword here"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}

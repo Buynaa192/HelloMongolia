@@ -28,7 +28,7 @@ export const PartnerCompanies = () => {
   }, []);
 
   return (
-    <div className="w-full h-fit relative flex flex-col items-center mb-25">
+    <div className="relative flex flex-col items-center w-full h-fit mb-25">
       <motion.div
         initial={{ y: 60, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -39,7 +39,7 @@ export const PartnerCompanies = () => {
       </motion.div>
 
       {loading && companies.length === 0 ? (
-        <div className="flex gap-4 overflow-x-auto mt-6">
+        <div className="flex gap-4 mt-6 overflow-x-auto">
           {[...Array(6)].map((_, i) => (
             <Skeleton
               key={i}
@@ -49,7 +49,7 @@ export const PartnerCompanies = () => {
         </div>
       ) : (
         <motion.div
-          className="w-full flex gap-6 overflow-x-auto px-4 mt-6 scrollbar-hide"
+          className="flex w-full gap-6 px-4 mt-6 overflow-x-auto scrollbar-hide"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
@@ -61,7 +61,6 @@ export const PartnerCompanies = () => {
               href={`/companies/${_id}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="min-w-[112px] h-28 p-2 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center justify-center flex-shrink-0"
               aria-label="Company logo link"
             >
               {/* <Image
@@ -72,14 +71,15 @@ export const PartnerCompanies = () => {
                 className="object-contain"
                 priority
               /> */}
-              <Image
-                src={AvatarImage || "/images/placeholder.png"}
-                alt="Company logo"
-                width={112}
-                height={112}
-                className="object-contain"
-                priority
-              />
+              <div className="relative w-40 h-40 overflow-hidden rounded-xl">
+                <Image
+                  src={AvatarImage || "/images/placeholder.png"}
+                  alt="Company logo"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
             </a>
           ))}
         </motion.div>

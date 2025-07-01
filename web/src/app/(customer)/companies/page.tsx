@@ -29,7 +29,7 @@ export default function ExploreCompanies() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-black text-white ">
+    <div className="w-full min-h-screen text-white bg-black ">
       <div className="w-full h-[500px] relative">
         <Image
           src="https://res.cloudinary.com/df60cobe2/image/upload/v1750683343/f6beaae5087528cc4d696a2d3b514669f17b7dda_m8mgtu.jpg"
@@ -37,8 +37,8 @@ export default function ExploreCompanies() {
           alt="companiescover"
           className="object-cover"
         />
-        <div className="bg-black/50 absolute w-full h-full top-0 flex justify-center items-end px-6 py-10 gap-10 ">
-          <h1 className="w-full text-4xl md:text-5xl font-extrabold text-white justify-self-end">
+        <div className="absolute top-0 flex items-end justify-center w-full h-full gap-10 px-6 py-10 bg-black/50 ">
+          <h1 className="w-full text-4xl font-extrabold text-white md:text-5xl justify-self-end">
             Discover
             <div className="flex">
               {"Mongolia".split("").map((letter, i) => (
@@ -55,7 +55,7 @@ export default function ExploreCompanies() {
             </div>
             with Trusted Tour Experts
           </h1>
-          <p className="text-xl md:text-xl text-white/80 max-w-2xl">
+          <p className="max-w-2xl text-xl md:text-xl text-white/80">
             Browse a curated list of Mongolia’s leading tour operators offering
             unforgettable journeys across the steppe, desert, and mountains.
             Find your perfect travel partner today.
@@ -63,11 +63,11 @@ export default function ExploreCompanies() {
         </div>
       </div>
       <div className="w-full px-6 ">
-        <h1 className="text-3xl font-bold my-8 text-center">
+        <h1 className="my-8 text-3xl font-bold text-center">
           Explore Tour Operators
         </h1>
-        <div className="flex justify-center lg:px-36 p-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10  ">
+        <div className="flex justify-center p-6 lg:px-36">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-6 ">
             {companies?.map((company, index) => (
               <CompanyCard key={index} company={company} />
             ))}
