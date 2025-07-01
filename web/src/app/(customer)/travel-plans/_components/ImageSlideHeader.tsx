@@ -1,44 +1,30 @@
 "user client";
 import { PackageType } from "@/app/_providers/AuthProvider";
+import { useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 type ImageSlideHeadProps = {
   packageDetail: PackageType;
 };
 export const ImageSlideHead = ({ packageDetail }: ImageSlideHeadProps) => {
+  const [carousel, setCarousel] = useState(0);
   if (!packageDetail) return null;
   return (
     <div className="w-full h-180 relative overflow-hidden ">
-      {packageDetail.packageItem.length < 5 ? (
-        <img
-          src={packageDetail.coverPhoto}
-          className="w-full h-full object-cover"
-        />
-      ) : (
-        <div
-          className={`w-[500%] h-full flex absolute ${
-            packageDetail.packageItem.length >= 5 ? "animate-wiggle" : ""
-          } `}
-        >
-          {packageDetail.packageItem.slice(0, 5).map((it, index) => {
-            return (
-              <div key={index} className="w-[20%]">
-                <img
-                  src={it.destinationId?.destinationImages[0]}
-                  key={index}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.onerror = null;
-                    target.src =
-                      "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
-                  }}
-                  className="w-full h-full object-cover  "
-                />
-              </div>
-            );
-          })}
-        </div>
-      )}
-      <div className=" w-full h-full  absolute inset-0 flex  packageDetails-end justify-between items-end  ">
-        <div className="w-[60%] h-fit flex flex-col  p-10  ">
+      <img
+        src={
+          packageDetail.packageItem[carousel].destinationId
+            ?.destinationImages[0]
+        }
+        className="w-full h-full object-cover"
+      />
+      <div className=" w-full h-full  absolute inset-0 flex  packageDetails-end justify-between items-end border bg-linear-to-t from-black to-30%  ">
+        <div className="w-[60%] h-fit flex flex-col  p-10 border ">
           <div className="text-white text-[50px] font-bold  w-full">
             <div>{packageDetail.title}</div>
           </div>
@@ -53,6 +39,26 @@ export const ImageSlideHead = ({ packageDetail }: ImageSlideHeadProps) => {
           <div className="text-[20px] font-semibold">
             {packageDetail.description}
           </div>
+        </div>
+        <div className="flex items-center p-3">
+          {" "}
+          <Carousel className="w-full max-w-sm">
+            <CarouselContent className="-ml-1">
+              {packageDetail.packageItem.map((item, index) => (
+                <CarouselItem
+                  key={index}
+                  className="pl-1 md:basis-1/2 lg:basis-1/3"
+                  onClick={() => setCarousel(index)}
+                >
+                  <div className="p-1">
+                    <img src={item.destinationId?.destinationImages[0]} />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </div>
     </div>
