@@ -1,11 +1,12 @@
 "use client";
 
-import { PackageType } from "@/app/_providers/AuthProvider";
+import { PackageItemType, PackageType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import axios from "axios";
 import { createContext, useContext, useState, ReactNode } from "react";
 import { toast } from "sonner";
 import { createPackageItemType } from "./itemSchema";
+import { CreatePackageType } from "./createPackage";
 type CreatePackageItemInput = {
   order: number;
   title: string;
@@ -17,6 +18,7 @@ type CreatePackageItemInput = {
 };
 type PackageContextProps = {
   packages: PackageType[];
+  items: PackageItemType[];
   view: string;
   loading: boolean;
   error: string | null;
@@ -24,16 +26,15 @@ type PackageContextProps = {
   addPackage: (
     companyId: string,
     data: DataType,
-    setLoading: (loading: boolean) => void
-  ) => Promise<createPackageItemType>;
+    duration: number
+  ) => Promise<CreatePackageType>;
   updatePackage: (packageId: string, data: DataType) => Promise<void>;
   deletePackage: (
     packageId: string,
     setLoading: (loading: boolean) => void
   ) => Promise<void>;
   deletePackageItem: (packageItemId: string) => Promise<void>;
-  newPackage: PackageType | null;
-  setNewPackage: (value: PackageType | null) => void;
+  setItems: React.Dispatch<React.SetStateAction<PackageItemType[]>>;
   createPackageItemFun: (
     itemData: CreatePackageItemInput
   ) => Promise<createPackageItemType>;
@@ -44,14 +45,11 @@ type PackageContextProps = {
 export type DataType = {
   name: string;
   description: string;
-  duration: string;
   cost: number;
   tripType: string;
   availableFrom: string;
   availableUntil: string;
-  rating: number;
   coverPhoto?: File | string;
-  itinerary?: File | string;
 };
 
 const PackageContext = createContext({} as PackageContextProps);
@@ -77,7 +75,7 @@ export const uploadImage = async (file: File): Promise<string> => {
 
 export function PackageProvider({ children }: { children: ReactNode }) {
   const [packages, setPackages] = useState<PackageType[]>([]);
-  const [newPackage, setNewPackage] = useState<PackageType | null>(null);
+  const [items, setItems] = useState<PackageItemType[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [view, setView] = useState("Dashboard");
@@ -104,7 +102,7 @@ export function PackageProvider({ children }: { children: ReactNode }) {
   const addPackage = async (
     companyId: string,
     data: DataType,
-    setLoading: (loading: boolean) => void
+    duration: number
   ) => {
     try {
       setLoading(true);
@@ -120,25 +118,17 @@ export function PackageProvider({ children }: { children: ReactNode }) {
           ? await uploadImage(data.coverPhoto)
           : "";
 
-      const itineraryUrl =
-        typeof data.itinerary === "string"
-          ? data.itinerary
-          : data.itinerary
-          ? await uploadImage(data.itinerary)
-          : "";
-
       const response = await api.post(`/package`, {
         companyId,
         title: data.name,
         coverPhoto: coverPhotoUrl,
         description: data.description,
-        duration: data.duration,
+        duration: duration,
         availableFrom: availableFromDate,
         availableUntil: availableUntilDate,
         cost: costNumber,
-        itinerary: itineraryUrl,
         tripType: data.tripType,
-        rating: data.rating,
+        rating: 0,
       });
 
       toast.success("Package created successfully!");
@@ -185,7 +175,6 @@ export function PackageProvider({ children }: { children: ReactNode }) {
       await api.post(`/package/addPackageItem/${packageId}`, {
         packageItemId,
       });
-      toast.success("Itinerary added successfully");
     } catch (error) {
       console.error("addPackageItem error:", error);
       toast.error("Failed to add itinerary");
@@ -208,24 +197,14 @@ export function PackageProvider({ children }: { children: ReactNode }) {
           ? await uploadImage(data.coverPhoto)
           : "";
 
-      const itineraryUrl =
-        typeof data.itinerary === "string"
-          ? data.itinerary
-          : data.itinerary
-          ? await uploadImage(data.itinerary)
-          : "";
-
       const response = await api.put(`/package/${packageId}`, {
         title: data.name,
         coverPhoto: coverPhotoUrl,
         description: data.description,
-        duration: data.duration,
         availableFrom: availableFromDate,
         availableUntil: availableUntilDate,
         cost: costNumber,
-        itinerary: itineraryUrl,
         tripType: data.tripType,
-        rating: data.rating,
       });
 
       toast.success("Package updated successfully!");
@@ -275,10 +254,10 @@ export function PackageProvider({ children }: { children: ReactNode }) {
         packages,
         loading,
         error,
-        newPackage,
+        items,
         view,
         setView,
-        setNewPackage,
+        setItems,
         getPackages,
         addPackage,
         updatePackage,
@@ -286,8 +265,7 @@ export function PackageProvider({ children }: { children: ReactNode }) {
         deletePackageItem,
         createPackageItemFun,
         addItemToPackage,
-      }}
-    >
+      }}>
       {children}
     </PackageContext.Provider>
   );

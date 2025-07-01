@@ -7,14 +7,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { usePackageContext } from "./PackageProvider";
+import { useRouter } from "next/navigation";
 type AlertType = {
   title: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 };
 export const AlertDial = ({ title, isOpen, setIsOpen }: AlertType) => {
-  const { setView } = usePackageContext();
+  const router = useRouter();
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
@@ -24,13 +24,13 @@ export const AlertDial = ({ title, isOpen, setIsOpen }: AlertType) => {
         <AlertDialogFooter>
           <AlertDialogCancel
             onClick={() => {
-              setView("dashboard");
+              router.push("/company/AllPackages");
             }}>
             Return to dashboard
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
-              setView("create");
+              router.push("/company/CreatePackagePage");
             }}>
             Create a new travel package
           </AlertDialogAction>

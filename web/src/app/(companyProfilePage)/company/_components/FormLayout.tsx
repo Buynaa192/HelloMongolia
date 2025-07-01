@@ -14,15 +14,9 @@ import { DestinationSelector } from "./DestinationSelector";
 import { ActivityType } from "@/app/_providers/AuthProvider";
 import { ItemFormType } from "./itemSchema";
 import { AccommodationSelector } from "./AccommodationSelector";
-import { useRouter } from "next/navigation";
 import { UseFormReturn } from "react-hook-form";
-import { useState } from "react";
-import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
+import { DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { ActivitySelector } from "../CreatePackagePage/_components/ActivitySelector";
 type Props = {
   form: UseFormReturn<ItemFormType>;
   onSubmit: (data: ItemFormType) => Promise<void>;
@@ -31,7 +25,6 @@ type Props = {
   activityList?: ActivityType[];
   order: number;
   loading: boolean;
-  setIsclicked: (value: boolean) => void;
 };
 
 export const FormLayout = ({
@@ -41,13 +34,11 @@ export const FormLayout = ({
   setPrevProfileImage,
   activityList,
   loading,
-  setIsclicked,
+  order,
 }: Props) => {
-  const router = useRouter();
-
   return (
     <DialogContent className="w-full bg-white max-h-screen overflow-y-auto rounded-xl">
-      <DialogTitle>Update Package</DialogTitle>
+      <DialogTitle>Day {order} Details </DialogTitle>
 
       <Form {...form}>
         <form
@@ -150,28 +141,11 @@ export const FormLayout = ({
               <FormItem>
                 <FormLabel>Activities</FormLabel>
                 <FormControl>
-                  <div className="flex flex-wrap gap-4">
-                    {activityList?.map((act) => (
-                      <label
-                        key={act._id}
-                        className={`flex items-center gap-2 border p-2 rounded-lg cursor-pointer transition `}>
-                        <input
-                          type="checkbox"
-                          checked={field.value.includes(act._id)}
-                          onChange={(e) => {
-                            const checked = e.target.checked;
-                            const newValue = checked
-                              ? [...field.value, act._id]
-                              : field.value.filter((id) => id !== act._id);
-                            field.onChange(newValue);
-                          }}
-                        />
-                        <span>
-                          {act.emoji} {act.activityName}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
+                  <ActivitySelector
+                    activityList={activityList || []}
+                    selectedIds={field.value}
+                    onChange={field.onChange}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -180,7 +154,8 @@ export const FormLayout = ({
 
           <div className="flex justify-end pt-6">
             <Button
-              type="submit"
+              type="button"
+              onClick={form.handleSubmit(onSubmit)}
               className={`w-full md:w-auto flex justify-center items-center gap-2 px-6 py-3 rounded-md text-white ${
                 loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"
               }`}
@@ -188,10 +163,10 @@ export const FormLayout = ({
               {loading ? (
                 <>
                   <Loader className="animate-spin" size={18} />
-                  <span>Creating...</span>
+                  <span>Adding...</span>
                 </>
               ) : (
-                "Create Package"
+                "Add Day"
               )}
             </Button>
           </div>

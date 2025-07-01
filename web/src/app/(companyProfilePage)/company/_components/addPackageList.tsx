@@ -9,14 +9,14 @@ import { Loader } from "lucide-react";
 import { PackageItemCard } from "./packageItemCard";
 
 export const PackageItemList = ({ packageId }: { packageId: string }) => {
-  const { newPackage, addItemToPackage } = usePackageContext();
+  const { addItemToPackage } = usePackageContext();
   const [items, setItems] = useState<PackageItemType[]>([]);
   const [order, setOrder] = useState(1);
   const [isComplete, setIsComplete] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState<null | string>(null);
 
-  const duration = Number(newPackage?.duration) || 1;
+  const duration = 1;
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -40,7 +40,7 @@ export const PackageItemList = ({ packageId }: { packageId: string }) => {
     }
     setLoading(true);
     try {
-      await addItemToPackage(newPackage!._id, selectedItemId);
+      await addItemToPackage(packageId, selectedItemId);
       toast.success(`Day ${order} added`);
       if (order < duration) {
         setOrder(order + 1);

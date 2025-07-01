@@ -15,12 +15,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
-import { useAuth } from "@/app/_providers/AuthProvider";
+import { PackageType, useAuth } from "@/app/_providers/AuthProvider";
 import { Textarea } from "@/components/ui/textarea";
 import { usePackageContext } from "./PackageProvider";
-import { CreatePackageItinerary } from "./CreatePackageItinerary";
-import { CreatePackageItemForm } from "./CreatePackageItemForm";
 import { useRouter } from "next/navigation";
+import { CreatePackageItemForm } from "./CreatePackageItemForm";
+import { AlertDial } from "./Alert";
 
 export const ACCEPTED_IMAGE_TYPES = [
   "image/jpeg",
@@ -28,7 +28,10 @@ export const ACCEPTED_IMAGE_TYPES = [
   "image/png",
   "image/webp",
 ];
-
+export type CreatePackageType = {
+  message: string;
+  package: PackageType;
+};
 const schema = z.object({
   coverPhoto: z
     .any()
@@ -37,7 +40,6 @@ const schema = z.object({
     }),
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
-  duration: z.string().min(1),
   cost: z.number(),
   tripType: z.string().min(1),
   availableFrom: z.string(),
@@ -48,9 +50,11 @@ type FormData = z.infer<typeof schema>;
 
 export const CreatePackage = () => {
   const { company } = useAuth();
-  const { addPackage, newPackage, setNewPackage } = usePackageContext();
-  const [loading, setLoading] = useState(false);
+  const { addPackage, addItemToPackage, items, loading, setItems } =
+    usePackageContext();
   const [prevProfileImage, setPrevProfileImage] = useState("");
+  const [DialogOpen, setDialogOpen] = useState(false);
+  const [createdPackageId, setCreatedPackageId] = useState<string | null>(null);
   const router = useRouter();
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -71,11 +75,30 @@ export const CreatePackage = () => {
       return;
     }
 
-    const createdPackage = await addPackage(company._id, data, setLoading);
+    const duration = items.length;
 
-    if (createdPackage.package) {
-      setNewPackage(createdPackage.package);
+    const createdPackage: CreatePackageType = await addPackage(
+      company._id,
+      data,
+      duration
+    );
+
+    if (createdPackage?.package._id) {
+      setCreatedPackageId(createdPackage.package._id);
+      for (const item of items) {
+        try {
+          await addItemToPackage(createdPackage?.package._id, item._id);
+        } catch (err) {
+          console.error(`Failed to add item ${item._id}:`, err);
+        }
+      }
     }
+    form.reset();
+    setItems([]);
+    setPrevProfileImage("");
+    setTimeout(() => {
+      setDialogOpen(true);
+    }, 500);
   };
 
   return (
@@ -83,7 +106,7 @@ export const CreatePackage = () => {
       <div className=" gap-6">
         <div className="mb-4">
           <Button type="button" variant="outline" onClick={() => router.back()}>
-            <MoveLeftIcon /> back
+            <MoveLeftIcon className="mr-2" /> Back to Dashboard
           </Button>
         </div>
         <Form {...form}>
@@ -229,11 +252,34 @@ export const CreatePackage = () => {
                 </FormItem>
               )}
             />
+            <CreatePackageItemForm />
+            <div className="flex justify-end pt-6">
+              <Button
+                type="submit"
+                className={`w-full md:w-auto flex justify-center items-center gap-2 px-6 py-3 rounded-md text-white ${
+                  loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"
+                }`}
+                disabled={loading}>
+                {loading ? (
+                  <>
+                    <Loader className="animate-spin" size={18} />
+                    <span>Creating...</span>
+                  </>
+                ) : (
+                  "Create Package"
+                )}
+              </Button>
+            </div>
           </form>
         </Form>
       </div>
-
-      <CreatePackageItemForm />
+      {createdPackageId && (
+        <AlertDial
+          title="Package created successfully!"
+          isOpen={DialogOpen}
+          setIsOpen={setDialogOpen}
+        />
+      )}
     </div>
   );
 };

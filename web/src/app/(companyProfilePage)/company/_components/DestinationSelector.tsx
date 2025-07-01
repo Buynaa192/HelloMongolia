@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { FormItem, FormLabel } from "@/components/ui/form";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { api } from "@/axios";
 import { NewDestinationForm } from "./NewDestinationForm";
 
@@ -108,20 +115,23 @@ export const DestinationSelector = ({
       )}
 
       <div className="mt-4 text-center">
-        <Dialog open={modalOpen} modal={false}>
+        <Dialog open={modalOpen} onOpenChange={setModalOpen}>
           <DialogTrigger asChild>
-            <Button
-              onClick={() => setModalOpen(true)}
-              type="button"
-              variant="outline"
-              className="bg-green-400 hover:bg-green-500">
-              +Create a new destination
-            </Button>
+            <Button variant="outline">+ Create a new destination</Button>
           </DialogTrigger>
-          <NewDestinationForm
-            onCreate={handleCreateSuccess}
-            onClose={() => setModalOpen(false)}
-          />
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
+            <DialogHeader>
+              <DialogTitle>Create New Destination</DialogTitle>
+              <DialogDescription>
+                Fill in the destination details below.
+              </DialogDescription>
+            </DialogHeader>
+
+            <NewDestinationForm
+              onCreate={handleCreateSuccess}
+              onClose={() => setModalOpen(false)}
+            />
+          </DialogContent>
         </Dialog>
       </div>
     </>

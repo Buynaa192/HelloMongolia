@@ -2,25 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog";
-import {
   GoogleMap,
   Marker,
   useJsApiLoader,
   Autocomplete,
 } from "@react-google-maps/api";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/axios";
 import { toast } from "sonner";
 import { ActivityType } from "@/app/_providers/AuthProvider";
+import { Button } from "@/components/ui/button";
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
 
@@ -144,165 +136,150 @@ export function NewDestinationForm({
     }
   };
   return (
-    <DialogContent className="rounded-none outline-0 border-0 flex justify-center !max-w-screen items-center py-16 w-screen h-screen bg-black/50">
-      <div className="bg-white rounded-2xl border w-[500px] h-[800px] overflow-scroll p-6">
-        <DialogHeader>
-          <DialogTitle>Create New Destination</DialogTitle>
-          <DialogDescription>
-            Fill in the destination details below.
-          </DialogDescription>
-        </DialogHeader>
+    <div className="grid gap-4 py-4">
+      <Input
+        placeholder="name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      {isLoaded ? (
+        <>
+          <Autocomplete
+            onLoad={(ac) => {
+              ac.setOptions({
+                componentRestrictions: { country: "mn" },
+              });
+              setAutocomplete(ac);
+            }}
+            onPlaceChanged={() => {
+              const place = autocomplete?.getPlace();
+              if (!place?.geometry?.location) return;
 
-        <div className="grid gap-4 py-4">
-          <Input
-            placeholder="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          {isLoaded ? (
-            <>
-              <Autocomplete
-                onLoad={(ac) => {
-                  ac.setOptions({
-                    componentRestrictions: { country: "mn" },
-                  });
-                  setAutocomplete(ac);
-                }}
-                onPlaceChanged={() => {
-                  const place = autocomplete?.getPlace();
-                  if (!place?.geometry?.location) return;
+              const lat = place.geometry.location.lat();
+              const lng = place.geometry.location.lng();
+              setLocation({ lat, lng });
+              map?.panTo({ lat, lng });
 
-                  const lat = place.geometry.location.lat();
-                  const lng = place.geometry.location.lng();
-                  setLocation({ lat, lng });
-                  map?.panTo({ lat, lng });
-
-                  setSearchLocation(
-                    place.formatted_address || place.name || ""
-                  );
-                }}>
-                <Input
-                  ref={inputRef}
-                  placeholder="Search location on map"
-                  value={searchLocation}
-                  onChange={(e) => setSearchLocation(e.target.value)}
-                />
-              </Autocomplete>
-
-              <div className="w-full h-[400px] rounded overflow-hidden border">
-                <GoogleMap
-                  mapContainerStyle={{ width: "100%", height: "100%" }}
-                  center={location || defaultCenter}
-                  zoom={6}
-                  onLoad={(mapInstance) => setMap(mapInstance)}>
-                  {location && <Marker position={location} />}
-                </GoogleMap>
-              </div>
-            </>
-          ) : (
-            <p>Loading map...</p>
-          )}
-
-          <select
-            className="border rounded-md p-2"
-            value={region}
-            onChange={(e) => setRegion(e.target.value)}>
-            <option value="6859247b611c9aae4411aaa4">Southern Mongolia</option>
-            <option value="68592416611c9aae4411aaa2">Northern Mongolia</option>
-            <option value="685924ef611c9aae4411aaa7">Eastern Mongolia</option>
-            <option value="68592534611c9aae4411aaaa">Western Mongolia</option>
-          </select>
-
-          <Textarea
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-
-          <div>
-            <label className="block mb-2 font-medium text-gray-700">
-              Destination Images
-            </label>
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={handleDrop}
-              className="border border-dashed border-gray-400 rounded-md p-6 text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 cursor-pointer">
-              Click or drag images here to upload
-            </div>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              multiple
-              className="hidden"
-              onChange={handleImagesChange}
+              setSearchLocation(place.formatted_address || place.name || "");
+            }}>
+            <Input
+              ref={inputRef}
+              placeholder="Search location on map"
+              value={searchLocation}
+              onChange={(e) => setSearchLocation(e.target.value)}
             />
-            {previewUrls.length > 0 && (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
-                {previewUrls.map((url, index) => (
-                  <div
-                    key={index}
-                    className="relative border rounded-lg overflow-hidden shadow">
-                    <img
-                      src={url}
-                      alt={`Preview ${index + 1}`}
-                      className="w-full h-32 object-cover"
-                      onClick={() => window.open(url, "_blank")}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveImage(index)}
-                      className="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded hover:bg-red-700">
-                      ✕
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          </Autocomplete>
 
-          <div className="flex flex-wrap gap-3">
-            {activities.map((act) => (
-              <label
-                key={act._id}
-                className={`flex items-center gap-2 border p-2 rounded cursor-pointer transition ${
-                  selectedActivityIds.includes(act._id)
-                    ? "bg-blue-100 border-blue-500"
-                    : "border-gray-300"
-                }`}>
-                <input
-                  type="checkbox"
-                  checked={selectedActivityIds.includes(act._id)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedActivityIds((prev) => [...prev, act._id]);
-                    } else {
-                      setSelectedActivityIds((prev) =>
-                        prev.filter((id) => id !== act._id)
-                      );
-                    }
-                  }}
+          <div className="w-full h-[400px] rounded overflow-hidden border">
+            <GoogleMap
+              mapContainerStyle={{ width: "100%", height: "100%" }}
+              center={location || defaultCenter}
+              zoom={6}
+              onLoad={(mapInstance) => setMap(mapInstance)}>
+              {location && <Marker position={location} />}
+            </GoogleMap>
+          </div>
+        </>
+      ) : (
+        <p>Loading map...</p>
+      )}
+
+      <select
+        className="border rounded-md p-2"
+        value={region}
+        onChange={(e) => setRegion(e.target.value)}>
+        <option value="6859247b611c9aae4411aaa4">Southern Mongolia</option>
+        <option value="68592416611c9aae4411aaa2">Northern Mongolia</option>
+        <option value="685924ef611c9aae4411aaa7">Eastern Mongolia</option>
+        <option value="68592534611c9aae4411aaaa">Western Mongolia</option>
+      </select>
+
+      <Textarea
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+
+      <div>
+        <label className="block mb-2 font-medium text-gray-700">
+          Destination Images
+        </label>
+        <div
+          onClick={() => fileInputRef.current?.click()}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={handleDrop}
+          className="border border-dashed border-gray-400 rounded-md p-6 text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 cursor-pointer">
+          Click or drag images here to upload
+        </div>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          multiple
+          className="hidden"
+          onChange={handleImagesChange}
+        />
+        {previewUrls.length > 0 && (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+            {previewUrls.map((url, index) => (
+              <div
+                key={index}
+                className="relative border rounded-lg overflow-hidden shadow">
+                <img
+                  src={url}
+                  alt={`Preview ${index + 1}`}
+                  className="w-full h-32 object-cover"
+                  onClick={() => window.open(url, "_blank")}
                 />
-                <span>
-                  {act.emoji} {act.activityName}
-                </span>
-              </label>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveImage(index)}
+                  className="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded hover:bg-red-700">
+                  ✕
+                </button>
+              </div>
             ))}
           </div>
-        </div>
-
-        <DialogFooter className="flex justify-end gap-2">
-          <Button disabled={loading} onClick={handleSubmit}>
-            {loading ? "Creating..." : "Create"}
-          </Button>
-          <DialogClose asChild>
-            <Button variant="outline" disabled={loading} onClick={onClose}>
-              Cancel
-            </Button>
-          </DialogClose>
-        </DialogFooter>
+        )}
       </div>
-    </DialogContent>
+
+      <div className="flex flex-wrap gap-3">
+        {activities.map((act) => (
+          <label
+            key={act._id}
+            className={`flex items-center gap-2 border p-2 rounded cursor-pointer transition ${
+              selectedActivityIds.includes(act._id)
+                ? "bg-blue-100 border-blue-500"
+                : "border-gray-300"
+            }`}>
+            <input
+              type="checkbox"
+              checked={selectedActivityIds.includes(act._id)}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  setSelectedActivityIds((prev) => [...prev, act._id]);
+                } else {
+                  setSelectedActivityIds((prev) =>
+                    prev.filter((id) => id !== act._id)
+                  );
+                }
+              }}
+            />
+            <span>
+              {act.emoji} {act.activityName}
+            </span>
+          </label>
+        ))}
+      </div>
+      <div className="flex justify-end gap-2">
+        <Button disabled={loading} onClick={handleSubmit}>
+          {loading ? "Creating..." : "Create"}
+        </Button>
+
+        <Button variant="outline" disabled={loading} onClick={onClose}>
+          Cancel
+        </Button>
+      </div>
+    </div>
   );
 }
