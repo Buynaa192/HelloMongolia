@@ -36,13 +36,6 @@ export const UpdatePackageItemsForm = ({ packageItem }: Props) => {
   const [isclicked, setIsclicked] = useState(false);
   const form = useForm<ItemFormType>({
     resolver: zodResolver(itemSchema),
-    // defaultValues: {
-    //   title: packageItem.title,
-    //   description: packageItem.description,
-    //   destinationId: packageItem.destinationId?._id,
-    //   accommodation: packageItem.accommodation?._id,
-    //   activity: [],
-    // },
   });
   useEffect(() => {
     if (packageItem) {
@@ -51,7 +44,7 @@ export const UpdatePackageItemsForm = ({ packageItem }: Props) => {
         description: packageItem.description,
         destinationId: packageItem.destinationId?._id,
         accommodation: packageItem.accommodation?._id,
-        activity: [], // эсвэл packageItem.activity гэх мэт
+        activity: [],
       });
       setPrevProfileImage(packageItem.image);
     }
