@@ -11,7 +11,7 @@ type itemType = {
 export const DestinationCard = ({ item, region }: itemType) => {
   return (
     <Link href={`/explore-destinations/${region}/${item._id}`}>
-      <div className="w-full h-100 relative group overflow-hidden flex flex-col  rounded-lg border-1 gap-2">
+      <div className="w-full h-100 relative group overflow-hidden flex flex-col  rounded-lg  gap-2">
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
         <div className="w-full h-[600px] relative rounded-lg flex items-center justify-center">
           <Image src={item.destinationImages[0]} alt={item.destinationName} fill className="object-cover rounded-lg" sizes="(max-width: 768px) 100vw, 300px" />

@@ -100,7 +100,7 @@ export default function Destination() {
           </div>
         </div>
       </section>
-
+      <p className="text-white text-4xl">Packages:</p>
       <DesdinationPackage id={id} />
     </div>
   );

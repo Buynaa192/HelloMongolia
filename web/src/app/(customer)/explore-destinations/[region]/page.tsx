@@ -2,6 +2,7 @@
 import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
 import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
+import { PopularDestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestinationCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -80,13 +81,9 @@ export default function RegionPage() {
         <p className="font-bold text-2xl ml-10">Destinations</p>
         <div className="w-full grid grid-cols-4 gap-4">
           {destination.map((item, indx) => {
-            return <DestinationCard key={indx} item={item} region={region.region} />;
+            return <PopularDestinationCard key={indx} item={item} />;
           })}
         </div>
-      </div>
-      <div className="flex flex-col gap-3 m-4">
-        <p className="font-bold text-2xl ml-10">Packages:</p>
-        <div className="w-full grid grid-cols-4 gap-4"></div>
       </div>
     </div>
   );
