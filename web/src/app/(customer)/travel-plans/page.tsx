@@ -182,7 +182,7 @@ export default function PackagesExplore() {
   };
 
   return (
-    <div className="w-full h-full bg-transparent">
+    <div className="w-full h-full bg-transparent ">
       <TravelPlanHome />
 
       <Search
@@ -194,7 +194,7 @@ export default function PackagesExplore() {
         endDate={endDate}
         setEndDate={setEndDate}
       />
-      <div className="flex h-fit relative">
+      <div className="flex h-fit relative ">
         <SearchFilter
           selectedTripTypes={selectedTripTypes}
           setSelectedTripTypes={setSelectedTripTypes}

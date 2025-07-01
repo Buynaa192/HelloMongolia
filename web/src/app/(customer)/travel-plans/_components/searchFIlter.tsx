@@ -72,12 +72,12 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
   };
 
   return (
-    <div className="w-130 h-fit bg-transparent flex-col flex items-center z-10 sticky pl-20 top-20 ">
+    <div className="w-130 max-2xl:w-100 h-fit bg-transparent flex-col flex items-center z-10 sticky pl-20 max-2xl:pl-5 top-20 ">
       <div className="w-full h-[40px] flex items-center justify-between  ">
-        <div className=" font-semibold  w-70  text-white text-3xl ">
+        <div className=" font-semibold  w-70  text-white text-3xl max-2xl:text-2xl">
           All Search Filters
         </div>
-        <div className="flex h-10  items-center justify-end p-4">
+        <div className="flex h-10  items-center justify-end p-4 ">
           <Button
             onClick={clearAllFilters}
             className="w-[150px] text-white h-[40px] border-2 max-2xl:text-[18px] rounded-3xl flex items-center justify-center font-semibold shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:bg-white hover:text-black hover:shadow-lg duration-200"
@@ -90,8 +90,10 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
       <div className="flex flex-col w-fit h-[calc(80vh)]  text-accent gap-4 mt-4 overflow-scroll ">
         <div className="flex-1 h-fit pr-5 pl-5 ">
           <div className="flex flex-col gap-3">
-            <div className=" font-semibold text-2xl ">Trip type</div>
-            <div className="flex flex-wrap gap-3">
+            <div className=" font-semibold text-2xl max-2xl:text-[20px] ">
+              Trip type
+            </div>
+            <div className="flex flex-wrap gap-3  max-2xl:gap-2">
               {tripTypes.map((type) => {
                 const selected = selectedTripTypes.includes(type);
                 return (
@@ -116,8 +118,10 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
         </div>
         <div className="flex-1 h-fit pr-5 pl-5 ">
           <div className="flex flex-col gap-3">
-            <div className="text-2xl font-semibold  ">Cost</div>
-            <div className="flex flex-wrap gap-3">
+            <div className="text-2xl font-semibold max-2xl:text-[20px] ">
+              Cost
+            </div>
+            <div className="flex flex-wrap gap-3 max-2xl:gap-2">
               {cost.map((range) => {
                 const selected = selectedCosts.includes(range);
                 return (
@@ -142,8 +146,10 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
         </div>
         <div className="flex-1 h-fit pr-5 pl-5">
           <div className="flex flex-col gap-3">
-            <div className="text-2xl font-semibold  ">Duration</div>
-            <div className="flex flex-wrap gap-3">
+            <div className="text-2xl font-semibold max-2xl:text-[20px] ">
+              Duration
+            </div>
+            <div className="flex flex-wrap gap-3 max-2xl:gap-2">
               {duration.map((range) => {
                 const selected = selectedDurations.includes(range);
                 return (
@@ -168,8 +174,10 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
         </div>
         <div className="flex-1 h-fit pr-5 pl-5">
           <div className="flex flex-col gap-3">
-            <div className="text-2xl font-semibold  ">Activities</div>
-            <div className="flex flex-wrap gap-3">
+            <div className="text-2xl font-semibold max-2xl:text-[20px] ">
+              Activities
+            </div>
+            <div className="flex flex-wrap gap-3 max-2xl:gap-2">
               {allActivities.map((activity) => {
                 const selected = selectedActivities.some(
                   (a) => a._id === activity._id

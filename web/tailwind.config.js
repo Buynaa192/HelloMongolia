@@ -2,6 +2,10 @@ module.exports = {
   content: ["web/src/app/companies/page.tsx"],
   theme: {
     extend: {
+      screens: {
+        "2xl": "1440px",
+        "3xl": "1600px",
+      },
       keyframes: {
         wiggle: {
           "0%": { left: "0%" },
