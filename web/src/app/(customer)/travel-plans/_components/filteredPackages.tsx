@@ -11,22 +11,19 @@ export const FilteredPackages: React.FC<FilteredPackagesProps> = ({
   packages,
 }) => {
   return (
-    <div className="w-full flex flex-col bg-transparent relative ">
-      <div className="h-fit flex items-center text-[16px] font-semibold gap-3 text-accent">
-        <FilterIcon />
-        <div className="flex items-baseline gap-1">
-          {" "}
-          <p className="text-[20px]">{packages.length}</p> RESULTS
-        </div>
+    <div className="flex flex-col flex-1 gap-6 pl-6 bg-transparent">
+      <div className="flex items-center text-[16px] font-semibold gap-2 text-accent">
+        <FilterIcon size={16} />
+        <p>{packages.length} Results</p>
       </div>
 
-      <div className="w-full  bg-transparent ">
+      <div className="w-full">
         {packages.length == 0 ? (
           <div className="w-full flex justify-center text-[#e4e4e5]">
             There is no package here in your filter
           </div>
         ) : null}
-        <div className="w-full grid grid-cols-3 grid-rows-3 gap-3 max-2xl:gap-1 2xl:grid-cols-4 ">
+        <div className="grid w-full grid-cols-3 gap-4">
           {packages
             .slice()
             .reverse()

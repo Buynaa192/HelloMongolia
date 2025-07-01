@@ -194,7 +194,7 @@ export default function PackagesExplore() {
         endDate={endDate}
         setEndDate={setEndDate}
       />
-      <div className="flex h-fit relative ">
+      <div className="flex w-[1440px] m-auto py-16">
         <SearchFilter
           selectedTripTypes={selectedTripTypes}
           setSelectedTripTypes={setSelectedTripTypes}

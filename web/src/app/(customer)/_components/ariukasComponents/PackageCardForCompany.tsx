@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import { PackageType } from "@/app/_providers/AuthProvider";
 import Link from "next/link";
-import { FaGlobe, FaStar } from "react-icons/fa";
+import { FaClock, FaGlobe, FaStar } from "react-icons/fa";
 
 type Props = {
   pkg: PackageType;
@@ -8,11 +10,8 @@ type Props = {
 
 export const FinalPackageCard: React.FC<Props> = ({ pkg }) => {
   return (
-    <Link
-      href={`/travel-plans/${pkg._id}`}
-      className="w-full aspect-square flex items-center justify-center  relative text-accent"
-    >
-      <div className="flex w-[90%] h-[90%] rounded-2xl hover:shadow-2xl flex-col hover:w-[95%] hover:h-[95%] duration-200 relative">
+    <Link href={`/travel-plans/${pkg._id}`} className="w-full">
+      <div className="overflow-hidden border rounded-lg border-white/30">
         <img
           src={
             pkg.coverPhoto == null || pkg.coverPhoto == ""
@@ -25,52 +24,49 @@ export const FinalPackageCard: React.FC<Props> = ({ pkg }) => {
             target.src =
               "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
           }}
-          className="w-full h-full rounded-2xl object-cover"
+          className="object-cover w-full aspect-video"
         />
-        <div className="w-full h-fit max-2xl:h-fit flex flex-col p-3 max-2xl:p-2 absolute bottom-0 bg-black/10 backdrop-blur-lg rounded-b-2xl">
-          <div className="text-[12px] w-fit font-medium text-accent flex items-center gap-2">
-            <img
-              src={
-                pkg.companyId?.AvatarImage ||
-                "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png"
-              }
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.onerror = null;
-                target.src =
-                  "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
-              }}
-              className="h-7 max-2xl:h-6 rounded-[10px] w-7"
-            />
 
-            {pkg.companyId == undefined ? pkg._id : pkg.companyId.email}
+        <div className="flex flex-col w-full gap-4 p-4">
+          <div>
+            <p className="font-semibold text-white truncate text-md">
+              {pkg.title}
+            </p>
+            <p className="text-xs text-muted-foreground line-clamp-2">
+              {pkg.description}
+            </p>
           </div>
-          <div className="text-[24px] max-2xl:text-[16px]  font-bold truncate ">
-            {pkg.title ? pkg.title : pkg.description}
-          </div>
-          <div className="flex w-full justify-between items-center text-[12px] font-medium max-2xl:text-[8px] ">
-            <div className="flex gap-2 justify-between items-center">
-              <div className="flex items-center gap-1">
-                <FaGlobe className="text-primary" color="white" />
-                {pkg.tripType}
-              </div>
-              |
-              <div>
-                {pkg.duration.includes("days")
-                  ? pkg.duration
-                  : `${pkg.duration} days`}
-              </div>
-              |
-              <div className="flex items-center">
-                <FaStar className="mr-1" /> {pkg.rating.toFixed(1)}
-              </div>
+
+          <div className="flex items-center w-full gap-3 text-xs font-medium text-white">
+            <div className="flex items-center gap-1">
+              <FaGlobe className="text-xs text-muted-foreground" />
+              {pkg.tripType}
             </div>
-            <div className="text-[24px] max-2xl:text-[16px] font-bold text-green-500">
-              ${pkg.cost}
+
+            <div className="flex items-center gap-1">
+              <FaClock className="text-xs text-muted-foreground" />
+              {pkg.duration.includes("days")
+                ? pkg.duration
+                : `${pkg.duration} days`}
+            </div>
+
+            <div className="flex items-center gap-1">
+              <FaStar className="text-xs text-muted-foreground" />{" "}
+              {pkg.rating.toFixed(1)}
             </div>
           </div>
-          <p className="text-xs text-gray-400 max-2xl:text-[10px] ">
-            <span className="font-medium">Available:</span>{" "}
+
+          <p className="font-semibold text-white text-md">
+            ${pkg.cost}{" "}
+            <span className="text-xs font-normal text-muted-foreground">
+              per person
+            </span>
+          </p>
+
+          <p className="text-xs text-white">
+            <span className="font-medium text-muted-foreground">
+              Available:
+            </span>{" "}
             {new Date(pkg.availableFrom).toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
@@ -83,6 +79,24 @@ export const FinalPackageCard: React.FC<Props> = ({ pkg }) => {
               year: "numeric",
             })}
           </p>
+
+          <div className="text-[12px] w-fit font-medium text-accent flex items-center gap-2">
+            <img
+              src={
+                pkg.companyId?.AvatarImage ||
+                "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png"
+              }
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src =
+                  "https://res.cloudinary.com/df60cobe2/image/upload/v1750318124/NoImagePack_tyhsjd.png";
+              }}
+              className="h-6 rounded-[10px] w-6"
+            />
+
+            {pkg.companyId.email}
+          </div>
         </div>
       </div>
     </Link>

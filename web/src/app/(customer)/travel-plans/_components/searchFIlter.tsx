@@ -72,134 +72,116 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
   };
 
   return (
-    <div className="w-130 max-2xl:w-100 h-fit bg-transparent flex-col flex items-center z-10 sticky pl-20 max-2xl:pl-5 top-20 ">
-      <div className="w-full h-[40px] flex items-center justify-between  ">
-        <div className=" font-semibold  w-70  text-white text-3xl max-2xl:text-2xl">
-          All Search Filters
-        </div>
-        <div className="flex h-10  items-center justify-end p-4 ">
-          <Button
-            onClick={clearAllFilters}
-            className="w-[150px] text-white h-[40px] border-2 max-2xl:text-[18px] rounded-3xl flex items-center justify-center font-semibold shadow-[0px_0px_20px_-10px_rgba(0,0,0,0.5)] hover:bg-white hover:text-black hover:shadow-lg duration-200"
-          >
-            CLEAR
-          </Button>
-        </div>
+    <div className="flex flex-col items-center border rounded-md w-[460px] h-fit bg-white/5 border-none">
+      <div className="flex items-center justify-between w-full px-6 py-4 border-b border-b-white/20">
+        <p className="font-normal text-white text-md">All Search Filters</p>
+
+        <Button
+          variant="ghost"
+          onClick={clearAllFilters}
+          className="py-1 text-white cursor-pointer h-fit"
+        >
+          Clear
+        </Button>
       </div>
 
-      <div className="flex flex-col w-fit h-[calc(80vh)]  text-accent gap-4 mt-4 overflow-scroll ">
-        <div className="flex-1 h-fit pr-5 pl-5 ">
-          <div className="flex flex-col gap-3">
-            <div className=" font-semibold text-2xl max-2xl:text-[20px] ">
-              Trip type
-            </div>
-            <div className="flex flex-wrap gap-3  max-2xl:gap-2">
-              {tripTypes.map((type) => {
-                const selected = selectedTripTypes.includes(type);
-                return (
-                  <Badge
-                    key={type}
-                    onClick={() => handleTripTypeChange(type)}
-                    className={`pt-2 px-4 border-none cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
-                      selected ? "bg-white/40 text-white" : "border-accent"
+      <div className="flex flex-col gap-6 px-6 py-4">
+        <div className="flex flex-col gap-4">
+          <div className="font-normal text-white text-md">Trip type</div>
+          <div className="flex flex-wrap gap-3">
+            {tripTypes.map((type) => {
+              const selected = selectedTripTypes.includes(type);
+              return (
+                <Badge
+                  key={type}
+                  onClick={() => handleTripTypeChange(type)}
+                  className={`pt-2 px-4 border-none cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
+                    selected ? "bg-white/40 text-white" : "border-accent"
+                  }`}
+                >
+                  {type}
+                  <div
+                    className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300 ${
+                      selected ? "w-full border-white" : ""
                     }`}
-                  >
-                    {type}
-                    <div
-                      className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300 ${
-                        selected ? "w-full border-white" : ""
-                      }`}
-                    ></div>
-                  </Badge>
-                );
-              })}
-            </div>
+                  ></div>
+                </Badge>
+              );
+            })}
           </div>
         </div>
-        <div className="flex-1 h-fit pr-5 pl-5 ">
-          <div className="flex flex-col gap-3">
-            <div className="text-2xl font-semibold max-2xl:text-[20px] ">
-              Cost
-            </div>
-            <div className="flex flex-wrap gap-3 max-2xl:gap-2">
-              {cost.map((range) => {
-                const selected = selectedCosts.includes(range);
-                return (
-                  <Badge
-                    key={range}
-                    onClick={() => handleCostChange(range)}
-                    className={`pt-2 px-4 border-none cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
-                      selected ? "bg-white/40 text-white" : "border-accent"
+        <div className="flex flex-col gap-4">
+          <div className="font-normal text-white text-md">Cost</div>
+          <div className="flex flex-wrap gap-3">
+            {cost.map((range) => {
+              const selected = selectedCosts.includes(range);
+              return (
+                <Badge
+                  key={range}
+                  onClick={() => handleCostChange(range)}
+                  className={`pt-2 px-4 border-none cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
+                    selected ? "bg-white/40 text-white" : "border-accent"
+                  }`}
+                >
+                  {range}
+                  <div
+                    className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300  ${
+                      selected ? "w-full border-white" : ""
                     }`}
-                  >
-                    {range}
-                    <div
-                      className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300  ${
-                        selected ? "w-full border-white" : ""
-                      }`}
-                    ></div>
-                  </Badge>
-                );
-              })}
-            </div>
+                  ></div>
+                </Badge>
+              );
+            })}
           </div>
         </div>
-        <div className="flex-1 h-fit pr-5 pl-5">
-          <div className="flex flex-col gap-3">
-            <div className="text-2xl font-semibold max-2xl:text-[20px] ">
-              Duration
-            </div>
-            <div className="flex flex-wrap gap-3 max-2xl:gap-2">
-              {duration.map((range) => {
-                const selected = selectedDurations.includes(range);
-                return (
-                  <Badge
-                    key={range}
-                    onClick={() => handleDurationChange(range)}
-                    className={`pt-2 px-4 border-0 cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
-                      selected ? "bg-white/40 text-white" : "border-accent"
+        <div className="flex flex-col gap-4">
+          <div className="font-normal text-white text-md">Duration</div>
+          <div className="flex flex-wrap gap-3">
+            {duration.map((range) => {
+              const selected = selectedDurations.includes(range);
+              return (
+                <Badge
+                  key={range}
+                  onClick={() => handleDurationChange(range)}
+                  className={`pt-2 px-4 border-0 cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
+                    selected ? "bg-white/40 text-white" : "border-accent"
+                  }`}
+                >
+                  {range}
+                  <div
+                    className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300 ${
+                      selected ? "w-full border-white" : ""
                     }`}
-                  >
-                    {range}
-                    <div
-                      className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300 ${
-                        selected ? "w-full border-white" : ""
-                      }`}
-                    ></div>
-                  </Badge>
-                );
-              })}
-            </div>
+                  ></div>
+                </Badge>
+              );
+            })}
           </div>
         </div>
-        <div className="flex-1 h-fit pr-5 pl-5">
-          <div className="flex flex-col gap-3">
-            <div className="text-2xl font-semibold max-2xl:text-[20px] ">
-              Activities
-            </div>
-            <div className="flex flex-wrap gap-3 max-2xl:gap-2">
-              {allActivities.map((activity) => {
-                const selected = selectedActivities.some(
-                  (a) => a._id === activity._id
-                );
-                return (
-                  <Badge
-                    key={activity._id}
-                    onClick={() => handleActivityChange(activity)}
-                    className={`pt-2 px-4 border-0 cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
-                      selected ? "bg-white/40 text-white" : "border-accent"
+        <div className="flex flex-col gap-4">
+          <div className="font-normal text-white text-md">Activities</div>
+          <div className="flex flex-wrap gap-3">
+            {allActivities.map((activity) => {
+              const selected = selectedActivities.some(
+                (a) => a._id === activity._id
+              );
+              return (
+                <Badge
+                  key={activity._id}
+                  onClick={() => handleActivityChange(activity)}
+                  className={`pt-2 px-4 border-0 cursor-pointer transition-colors duration-200 text-sm font-medium group flex flex-col items-center  ${
+                    selected ? "bg-white/40 text-white" : "border-accent"
+                  }`}
+                >
+                  {activity.emoji} {activity.activityName}
+                  <div
+                    className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300 ${
+                      selected ? "w-full border-white" : ""
                     }`}
-                  >
-                    {activity.emoji} {activity.activityName}
-                    <div
-                      className={`w-0 border-1 border-[#f1f1f100] group-hover:w-full group-hover:border-white duration-300 ${
-                        selected ? "w-full border-white" : ""
-                      }`}
-                    ></div>
-                  </Badge>
-                );
-              })}
-            </div>
+                  ></div>
+                </Badge>
+              );
+            })}
           </div>
         </div>
       </div>
