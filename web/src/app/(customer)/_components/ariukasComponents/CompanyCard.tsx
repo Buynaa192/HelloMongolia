@@ -11,7 +11,7 @@ type CompanyCardProps = {
 export const CompanyCard = ({ company }: CompanyCardProps) => {
   return (
     <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl shadow-lg flex  flex-col justify-between items-center">
-      <div className="flex  gap-4">
+      <div className="flex w-full gap-4">
         <div className="relative w-24 h-24 rounded-full overflow-hidden">
           <Image
             src={
@@ -23,7 +23,7 @@ export const CompanyCard = ({ company }: CompanyCardProps) => {
             className="object-cover"
           />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 w-full">
           <h2 className="text-xl font-semibold">{company.name}</h2>
           <p className="text-sm text-gray-300 mt-1">{company.about}</p>
 
@@ -60,7 +60,7 @@ export const CompanyCard = ({ company }: CompanyCardProps) => {
           </div>
         </div>
       </div>
-      <Link href={`/companies/${company._id}`}>
+      <Link href={`/companies/${company._id}`} className="mt-4">
         <Button className="w-fit bg-white/70 text-black hover:bg-white hover:text-green-800 hover:font-bold">
           View more details
         </Button>
