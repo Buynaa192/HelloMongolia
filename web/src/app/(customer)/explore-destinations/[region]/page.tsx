@@ -1,7 +1,7 @@
 "use client";
 import { DestinationType, RegionType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
-import { DestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/destinationCard";
+
 import { PopularDestinationCard } from "@/components/buynaasComponents/popularDestinations.tsx/popularDestinationCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useParams } from "next/navigation";
