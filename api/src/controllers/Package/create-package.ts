@@ -11,9 +11,7 @@ export const createPackageController = async (req, res) => {
       availableFrom,
       availableUntil,
       cost,
-      itinerary,
       tripType,
-      rating,
     } = req.body;
 
     const newPackage = await packageModel.create({
@@ -25,9 +23,7 @@ export const createPackageController = async (req, res) => {
       availableFrom: new Date(availableFrom),
       availableUntil: new Date(availableUntil),
       cost: Number(cost),
-      itinerary,
       tripType,
-      rating: Number(rating),
       createdAt: new Date(),
       updatedAt: new Date(),
     });

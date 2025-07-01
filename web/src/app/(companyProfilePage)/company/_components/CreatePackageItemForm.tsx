@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PlusSquareIcon } from "lucide-react";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
-import { ItemCard } from "../CreatePackagePage/_components/ItemCard";
+import { ItemCard } from "../CreatePackagePage/_components/ItemCatd";
 
 export const CreatePackageItemForm = () => {
   const { createPackageItemFun, loading, items, setItems } =

@@ -1,6 +1,5 @@
 "use client";
 
-
 export const CreatePackageItinerary = () => {
   return (
     <div className="w-full max-w-screen-lg mx-auto px-4 py-6 space-y-6">
