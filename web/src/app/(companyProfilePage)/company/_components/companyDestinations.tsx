@@ -12,7 +12,6 @@ type CompanyPackagesProps = {
 
 export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
   const [error, setError] = useState<string | null>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
   const [destinations, setDestinations] = useState<DestinationType[]>();
   const [loading, setLoading] = useState(false);
   const [searchDestination, setSearchDestination] = useState("");
@@ -41,10 +40,6 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
     }
   }, [companyId]);
 
-  const toggleExpanded = () => {
-    setIsExpanded((prev) => !prev);
-  };
-
   if (loading) {
     return (
       <div className="grid grid-cols-3 gap-4">
@@ -70,9 +65,6 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
         .includes(searchDestination.toLowerCase())
     ) || [];
 
-  const displayedDestination = isExpanded
-    ? filteredDestinations
-    : filteredDestinations?.slice(0, 6);
   return (
     <section className="bg-white p-6 rounded-xl shadow-md mb-8">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">
@@ -86,9 +78,8 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
         onChange={(e) => setSearchDestination(e.target.value)}
       />
       <div
-        className={`grid grid-cols-3 gap-6 items-stretch transition-all duration-300 ${
-          isExpanded ? "max-h-[600px] overflow-y-scroll pr-2" : ""
-        }`}>
+        className={`grid grid-cols-3 gap-6 items-stretch transition-all duration-300`}
+      >
         {displayedDestination?.map((item) => (
           <DestinationCard key={item._id} destinationId={item._id} />
         ))}

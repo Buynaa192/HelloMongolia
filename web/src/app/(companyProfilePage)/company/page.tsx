@@ -2,7 +2,6 @@
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { CompanyPackages } from "./_components/companyPackages";
-import { CompanyDestinations } from "./_components/companyDestinations";
 import { useAuth } from "@/app/_providers/AuthProvider";
 export default function TravelDashboard() {
   const { company } = useAuth();
@@ -31,10 +30,6 @@ export default function TravelDashboard() {
         </header>
 
         {company?._id && <CompanyPackages companyId={company._id} />}
-
-        <div className="col-span-1 space-y-4">
-          {company?._id && <CompanyDestinations companyId={company?._id} />}
-        </div>
       </main>
     </div>
   );

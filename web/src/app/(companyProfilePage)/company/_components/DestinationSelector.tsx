@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { api } from "@/axios";
 import { NewDestinationForm } from "./NewDestinationForm";
+import Link from "next/link";
 
 type DestinationType = {
   _id: string;
@@ -103,7 +104,8 @@ export const DestinationSelector = ({
               selectedId === dest._id
                 ? "border-blue-600 ring-2 ring-blue-500"
                 : "border-gray-200"
-            }`}>
+            }`}
+          >
             <img
               src={dest.destinationImages[0]}
               alt={dest.destinationName}
@@ -119,7 +121,8 @@ export const DestinationSelector = ({
           <button
             type="button"
             onClick={() => setExpanded(!expanded)}
-            className="text-blue-600 underline text-sm">
+            className="text-blue-600 underline text-sm"
+          >
             {expanded ? "See less" : "See more"}
           </button>
         </div>
