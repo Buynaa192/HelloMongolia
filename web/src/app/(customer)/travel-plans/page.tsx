@@ -10,7 +10,6 @@ import { SearchFilter } from "./_components/searchFIlter";
 import { TravelPlanHome } from "./_components/travelPLanHome";
 
 import { ActivityType, PackageType } from "@/app/_providers/AuthProvider";
-import { Loader } from "lucide-react";
 
 export type TripType =
   | "Scenery"
