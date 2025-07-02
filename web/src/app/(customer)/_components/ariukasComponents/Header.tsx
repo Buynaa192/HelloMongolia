@@ -24,7 +24,7 @@ export const Header = () => {
   const { company, signOut } = useAuth();
 
   return (
-    <div className="fixed flex items-center justify-center w-full px-20 py-2 text-lg z-15 lg:gap-60 bg-white/black backdrop-blur-lg">
+    <div className="fixed flex items-center justify-center w-full px-20 py-2 text-lg z-999 lg:gap-60 bg-white/black backdrop-blur-lg ">
       <div className="justify-between hidden gap-2 lg:flex">
         {headers.map(({ name, url }) => (
           <Link key={name} href={url} className="text-white">
