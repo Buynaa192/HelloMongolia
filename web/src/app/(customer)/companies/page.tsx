@@ -6,22 +6,26 @@ import { CompanyType } from "../../_providers/AuthProvider";
 import { api } from "@/axios";
 
 import { CompanyCard } from "../_components/ariukasComponents/CompanyCard";
+import { Loader } from "lucide-react";
 
 export default function ExploreCompanies() {
   const [companies, setCompanies] = useState<CompanyType[]>([]);
   const [animated, setAnimated] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     setAnimated(true);
+    setIsLoading(true);
   }, []);
-
   useEffect(() => {
     const getCompanies = async () => {
+      setIsLoading(true);
       try {
         const res = await api.get(`/company`);
         setCompanies(res.data.companies);
       } catch (error) {
         console.error("Failed to fetch companies:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -67,11 +71,15 @@ export default function ExploreCompanies() {
           Explore Tour Operators
         </h1>
         <div className="flex justify-center p-6 lg:px-36">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-6 ">
-            {companies?.map((company, index) => (
-              <CompanyCard key={index} company={company} />
-            ))}
-          </div>
+          {isLoading ? (
+            <Loader color="white" />
+          ) : (
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-6 ">
+              {companies?.map((company, index) => (
+                <CompanyCard key={index} company={company} />
+              ))}
+            </div>
+          )}{" "}
         </div>
       </div>
     </div>
