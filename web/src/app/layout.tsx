@@ -19,7 +19,14 @@ export default function RootLayout({
         <AuthProvider>
           <div className="w-full">{children}</div>
         </AuthProvider>
-        <Toaster />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            style: {
+              color: "green",
+            },
+          }}
+        />
       </body>
     </html>
   );
