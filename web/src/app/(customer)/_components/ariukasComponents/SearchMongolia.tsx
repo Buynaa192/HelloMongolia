@@ -99,12 +99,12 @@ const SearchInMongoliaComponent = ({
 
       <form
         onSubmit={handleSubmit}
-        className="z-50 relative w-[300px] flex items-center border-2 border-white rounded-md overflow-hidden transition-all duration-500 ease-in-out focus-within:w-[400px]"
+        className="z-50 relative w-[300px] flex items-center border-2 border-white rounded-md overflow-hidden outline-none  transition-all duration-500 ease-in-out focus-within:w-[400px]"
       >
         <Input
           type="text"
           placeholder="🇲🇳 Search in Mongolia"
-          className="px-4 py-3 text-lg border-0 h-full text-white bg-transparent placeholder-white focus:outline-none w-full"
+          className="px-4 py-3 text-lg border-0 h-full text-white bg-transparent placeholder-white border-none w-full focus-visible:ring-transparent"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}

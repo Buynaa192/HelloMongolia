@@ -170,8 +170,8 @@ export default function CompanyProfile() {
             Our travel-plans
           </h2>
           {companyInfo && companyInfo.packages.length > 0 ? (
-            <div className="w-full flex overflow-x-scroll">
-              <div className="flex gap-4">
+            <div className="w-full flex justify-center">
+              <div className="grid grid-cols-4 gap-4">
                 {companyInfo?.packages.map((pack, index) => (
                   <FinalPackageCard key={index} pkg={pack} />
                 ))}
