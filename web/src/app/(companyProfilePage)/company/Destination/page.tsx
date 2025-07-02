@@ -1,6 +1,7 @@
 "use client";
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import { api } from "@/axios";
+import { Loader } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -45,7 +46,7 @@ export default function Destination() {
         />
       </div>
       {loading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl">
           {filteredDestinations.map((dest) => (
