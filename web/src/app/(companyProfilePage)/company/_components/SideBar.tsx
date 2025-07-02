@@ -1,6 +1,6 @@
 "use client";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { LogOut, LayoutDashboardIcon, Package, Settings, MapPin, Home, Ghost } from "lucide-react";
+import { LogOut, Package, Settings, MapPin, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import { usePackageContext } from "./PackageProvider";
