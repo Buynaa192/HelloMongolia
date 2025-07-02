@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { SearchDestination } from "./SearchDestinationResult";
 import { SearchActivities } from "./SearchActivitiesResult";
 import { SearchPackage } from "./searchPackagesResult";
+import { Input } from "@/components/ui/input";
 
 interface SearchInMongoliaProps {
   query: string;
@@ -99,15 +100,18 @@ const SearchInMongoliaComponent = ({
         onSubmit={handleSubmit}
         className="z-50 relative w-[300px] flex items-center border-2 border-white rounded-md overflow-hidden transition-all duration-500 ease-in-out focus-within:w-[400px]"
       >
-        <input
+        <Input
           type="text"
           placeholder="🇲🇳 Search in Mongolia"
-          className="px-4 py-3 text-lg text-white bg-transparent placeholder-white focus:outline-none w-full"
+          className="px-4 py-3 text-lg border-0 h-full text-white bg-transparent placeholder-white focus:outline-none w-full"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => {
-            setTimeout(() => setIsFocused(false), 100);
+            setTimeout(() => {
+              setIsFocused(false);
+              setQuery("");
+            }, 200);
           }}
           autoComplete="off"
         />
