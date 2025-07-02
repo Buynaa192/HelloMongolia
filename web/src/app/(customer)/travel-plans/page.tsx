@@ -10,6 +10,7 @@ import { SearchFilter } from "./_components/searchFIlter";
 import { TravelPlanHome } from "./_components/travelPLanHome";
 
 import { ActivityType, PackageType } from "@/app/_providers/AuthProvider";
+import { Loader } from "lucide-react";
 
 export type TripType =
   | "Scenery"
@@ -121,13 +122,11 @@ export default function PackagesExplore() {
             )
           );
 
-        const pkgDuration = parseInt(pkg.duration);
+        const pkgDuration = parseInt(`${pkg.packageItem.length}`);
         const matchesDuration =
           selectedDurations.length === 0 ||
           selectedDurations.some((range) => {
             switch (range) {
-              case "1 day":
-                return pkgDuration === 1;
               case "1-7 days":
                 return pkgDuration >= 1 && pkgDuration <= 7;
               case "7-14 days":
@@ -212,7 +211,13 @@ export default function PackagesExplore() {
           selectedActivities={selectedActivity}
           setSelectedActivities={setSelectedActivity}
         />
-        <FilteredPackages packages={filteredPackages} isLoading={isLoading} />
+        {isLoading ? (
+          <div className="w-full flex ">
+            <Loader color="white" />
+          </div>
+        ) : (
+          <FilteredPackages packages={filteredPackages} />
+        )}{" "}
       </div>
     </div>
   );

@@ -28,11 +28,7 @@ export const CostOverview = ({ packageDetail }: CompanyDetailsProps) => {
             <DurationIcon />:
           </div>
 
-          <div>
-            {packageDetail.duration.includes("days")
-              ? `${packageDetail.duration}`
-              : `${packageDetail.duration}days`}{" "}
-          </div>
+          <div>{packageDetail.packageItem.length} days</div>
         </div>
         <div className="flex gap-4 w-full  flex-1 text-[18px] justify-between">
           <div className="flex items-center gap-2 text-[#ababab]">

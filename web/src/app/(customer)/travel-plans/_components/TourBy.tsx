@@ -1,4 +1,6 @@
 import { PackageType } from "@/app/_providers/AuthProvider";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 
 type CompanyDetailsProps = {
@@ -17,7 +19,10 @@ export const TourBy = ({ packageDetail }: CompanyDetailsProps) => {
 
       <div className="w-full h-fit  flex flex-col p-5 text-2xl font-light gap-3 ">
         <div className="flex-1 h-fit flex flex-col  items-center gap-2">
-          <div className="w-30 flex overflow-hidden items-center  rounded-2xl">
+          <Link
+            href={`/companies/${packageDetail.companyId._id}`}
+            className="w-30 flex overflow-hidden items-center  rounded-2xl"
+          >
             {packageDetail.companyId.AvatarImage == "" ||
             packageDetail.companyId.AvatarImage == null ? (
               <img
@@ -46,7 +51,7 @@ export const TourBy = ({ packageDetail }: CompanyDetailsProps) => {
                 alt="Company background"
               />
             )}
-          </div>
+          </Link>
           <div className="text-[18px] font-bold">
             {packageDetail.companyId.name}
           </div>
@@ -76,24 +81,21 @@ export const TourBy = ({ packageDetail }: CompanyDetailsProps) => {
             </div>
           </div>{" "}
           <div className="w-full flex items-center justify-between ">
-            <div>Destinations:</div>
-
-            <div className="flex gap-2 text-accent">
-              {packageDetail.companyId.availableDestinations.length}
-              <p>
-                {packageDetail.companyId.availableDestinations.length == 0 ||
-                packageDetail.companyId.availableDestinations.length == 1
-                  ? "destination"
-                  : "destinations"}
-              </p>
-            </div>
-          </div>
-          <div className="w-full flex items-center justify-between ">
             <div className="w-25">Social URL:</div>
             <div className="text-accent">
-              {packageDetail.companyId.websiteURL == ""
-                ? packageDetail.companyId.email
-                : packageDetail.companyId.websiteURL}
+              {packageDetail.companyId.websiteURL && (
+                <a
+                  href={
+                    packageDetail.companyId.websiteURL.startsWith("http")
+                      ? packageDetail.companyId.websiteURL
+                      : `https://${packageDetail.companyId.websiteURL}`
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {packageDetail.companyId.websiteURL}
+                </a>
+              )}
             </div>
           </div>
           <div className="w-full flex items-center justify-between gap-2">

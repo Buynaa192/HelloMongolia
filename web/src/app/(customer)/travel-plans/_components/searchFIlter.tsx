@@ -43,7 +43,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
     "Off-road",
   ];
   const cost = ["0-500$", "500-1000$", "1000-5000$", "5000$+"];
-  const duration = ["1 day", "1-7 days", "7-14 days", "14-21 days", "21+ days"];
+  const duration = ["1-7 days", "7-14 days", "14-21 days", "21+ days"];
 
   const handleTripTypeChange = (type: TripType) => {
     setSelectedTripTypes((prev) =>
