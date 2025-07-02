@@ -20,12 +20,14 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
     "https://res.cloudinary.com/df60cobe2/image/upload/v1750665589/VIQtCstVCthMbWBgT9rqVdd8De4wpbaJyWfGqCCB_520_350_kuxh88.jpg",
   ];
 
-  const handleNextImage = () => setCurrentImage((prev) => (prev + 1) % images.length);
-  const handlePrevImage = () => setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+  const handleNextImage = () =>
+    setCurrentImage((prev) => (prev + 1) % images.length);
+  const handlePrevImage = () =>
+    setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
   console.log("Package Detail:", packageDetail);
 
   return (
-    <div className="w-full flex flex-col items-center p-6 ">
+    <div className="w-full flex flex-col items-center p-6 border-[1px] border-[#ababab] rounded-xl ">
       <h1 className="text-3xl font-bold mb-2">{packageDetail.title}</h1>
       <p className="text-gray-600 mb-6">
         {packageDetail.duration} day - {packageDetail.tripType}
@@ -39,7 +41,11 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
               setSelectedDay(idx);
               setCurrentImage(0);
             }}
-            className={`px-4 py-2 rounded-md text-sm font-medium border ${selectedDay === idx ? "bg-white text-black border-gray-300" : "bg-black text-white"}`}
+            className={`px-4 py-2 rounded-md text-sm font-medium border ${
+              selectedDay === idx
+                ? "bg-white text-black border-gray-300"
+                : "bg-black text-white"
+            }`}
           >
             Day {idx + 1}
           </button>
@@ -50,11 +56,23 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
         <div className="relative w-full h-[400px] bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
           {images.length > 0 ? (
             <>
-              <Image src={images[currentImage]} width={600} height={400} alt="Itinerary image" className="object-cover w-full h-full" />
-              <button onClick={handlePrevImage} className="absolute left-3 bg-black/50 text-white p-2 rounded-full">
+              <Image
+                src={images[currentImage]}
+                width={600}
+                height={400}
+                alt="Itinerary image"
+                className="object-cover w-full h-full"
+              />
+              <button
+                onClick={handlePrevImage}
+                className="absolute left-3 bg-black/50 text-white p-2 rounded-full"
+              >
                 <ChevronLeft />
               </button>
-              <button onClick={handleNextImage} className="absolute right-3 bg-black/50 text-white p-2 rounded-full">
+              <button
+                onClick={handleNextImage}
+                className="absolute right-3 bg-black/50 text-white p-2 rounded-full"
+              >
                 <ChevronRight />
               </button>
             </>
@@ -67,14 +85,19 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
           <h2 className="text-xl font-bold">
             {packageItem.title} - Day {selectedDay + 1}
           </h2>
-          <p className="text-gray-600 font-semibold text-2xl">{packageItem.destinationId?.destinationName} </p>
+          <p className="text-gray-600 font-semibold text-2xl">
+            {packageItem.destinationId?.destinationName}{" "}
+          </p>
           <p className="text-sm">{packageItem.description}</p>
 
           <div className="">
             <h2 className="font-semibold text-xl mb-3 ">Activities</h2>
             <div className="flex flex-wrap sm:grid-cols-3 gap-3 text-gray-700 ">
               {packageItem.activity.map((item, indx) => (
-                <Button key={indx} className="flex  items-center gap-2 bg-black/60 hover:bg-white hover:text-black text-white p-2 rounded-md shadow-sm ">
+                <Button
+                  key={indx}
+                  className="flex  items-center gap-2 bg-black/60 hover:bg-white hover:text-black text-white p-2 rounded-md shadow-sm "
+                >
                   <span className="text-lg">{item.emoji}</span>
                   <span>{item.activityName}</span>
                 </Button>
@@ -86,11 +109,16 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
             <div>
               <h3 className="font-semibold mt-4 mb-2">Highlights:</h3>
               <div className="flex gap-2 flex-wrap">
-                {(packageItem.destinationId.destinationName || "").split(" ").map((word, idx) => (
-                  <span key={idx} className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-md">
-                    {word}
-                  </span>
-                ))}
+                {(packageItem.destinationId.destinationName || "")
+                  .split(" ")
+                  .map((word, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-md"
+                    >
+                      {word}
+                    </span>
+                  ))}
               </div>
             </div>
           )}
@@ -99,19 +127,28 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
             <div>
               <h3 className="font-semibold mt-4 mb-1">Accommodation:</h3>
               <p className="text-sm">{packageItem.accommodation.hotelName}</p>
-              <p className="text-xs text-gray-500">{packageItem.accommodation.address}</p>
+              <p className="text-xs text-gray-500">
+                {packageItem.accommodation.address}
+              </p>
             </div>
           )}
 
           <div className="flex justify-between mt-6">
-            <Button onClick={() => setSelectedDay((prev) => Math.max(prev - 1, 0))} disabled={selectedDay === 0}>
+            <Button
+              onClick={() => setSelectedDay((prev) => Math.max(prev - 1, 0))}
+              disabled={selectedDay === 0}
+            >
               Previous Day
             </Button>
             <span className="text-sm text-gray-500">
               Day {selectedDay + 1} of {packageDetail.packageItem.length}
             </span>
             <Button
-              onClick={() => setSelectedDay((prev) => Math.min(prev + 1, packageDetail.packageItem.length - 1))}
+              onClick={() =>
+                setSelectedDay((prev) =>
+                  Math.min(prev + 1, packageDetail.packageItem.length - 1)
+                )
+              }
               disabled={selectedDay === packageDetail.packageItem.length - 1}
             >
               Next Day

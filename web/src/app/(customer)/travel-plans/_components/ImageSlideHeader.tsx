@@ -23,8 +23,8 @@ export const ImageSlideHead = ({ packageDetail }: ImageSlideHeadProps) => {
         }
         className="w-full h-full object-cover"
       />
-      <div className=" w-full h-full  absolute inset-0 flex  packageDetails-end justify-between items-end border bg-linear-to-t from-black to-30%  ">
-        <div className="w-[60%] h-fit flex flex-col  p-10 border ">
+      <div className=" w-full h-full  absolute inset-0 flex  packageDetails-end justify-between items-end  bg-linear-to-t from-black to-30%  ">
+        <div className="w-[60%] h-fit flex flex-col  p-10 ">
           <div className="text-white text-[50px] font-bold  w-full">
             <div>{packageDetail.title}</div>
           </div>
@@ -40,24 +40,28 @@ export const ImageSlideHead = ({ packageDetail }: ImageSlideHeadProps) => {
             {packageDetail.description}
           </div>
         </div>
-        <div className="flex items-center p-3">
-          {" "}
-          <Carousel className="w-full max-w-sm">
-            <CarouselContent className="-ml-1">
+        <div className="flex items-center p-3 right-10 relative">
+          <Carousel className="w-full max-w-150">
+            <CarouselPrevious className="bg-black" />
+            <CarouselContent className="-ml-1 ">
               {packageDetail.packageItem.map((item, index) => (
                 <CarouselItem
                   key={index}
                   className="pl-1 md:basis-1/2 lg:basis-1/3"
                   onClick={() => setCarousel(index)}
                 >
-                  <div className="p-1">
-                    <img src={item.destinationId?.destinationImages[0]} />
+                  <div className={`p-1 w-full h-full `}>
+                    <img
+                      src={item.destinationId?.destinationImages[0]}
+                      className={`rounded-[10px] h-full w-full hover:scale-[105%] duration-200  ${
+                        carousel == index ? "border-3 p-1 rounded-4xl" : ""
+                      }`}
+                    />
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselNext className="bg-black" />
           </Carousel>
         </div>
       </div>
