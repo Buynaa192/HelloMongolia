@@ -20,7 +20,7 @@ export const DesdinationPackage = ({ id }: idType) => {
   }, []);
 
   return (
-    <div className="w-full grid grid-cols-5  gap-4 p-4 text-white">
+    <div className="w-full grid grid-cols-3 gap-4 p-4 text-white">
       {packages.map((item, indx) => {
         return <FinalPackageCard key={indx} pkg={item} />;
       })}
