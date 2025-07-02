@@ -63,10 +63,7 @@ export default function PackagePage() {
       </div>
 
       <div className="w-[1440px] mt-10">
-        <div
-          className="text-accent text-3xl font-extrabold "
-          style={{ fontFamily: "Dancing script" }}
-        >
+        <div className="text-accent text-3xl font-extrabold " style={{ fontFamily: "Dancing script" }}>
           Destinations in MAP
         </div>
         <BasicGoogleMapWithDirections packageDetail={packageDetail} />
