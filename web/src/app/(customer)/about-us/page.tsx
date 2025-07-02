@@ -4,34 +4,24 @@ import Image from "next/image";
 
 const teamMembers = [
   {
-    name: "Member One",
-    image:
-      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
+    name: "Temka",
+    image: "/images/temka.jpg",
   },
   {
-    name: "Member Two",
-    image:
-      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
+    name: "Buynaa",
+    image: "/images/buyna.jpg",
   },
   {
-    name: "Member Three",
-    image:
-      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
+    name: "Unuu",
+    image: "/images/unur.jpg",
   },
   {
-    name: "Member Four",
-    image:
-      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
+    name: "Bulgaa",
+    image: "/images/bulgaa.jpg",
   },
   {
-    name: "Member Five",
-    image:
-      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
-  },
-  {
-    name: "Member Six",
-    image:
-      "https://res.cloudinary.com/df60cobe2/image/upload/v1750858909/w7v8xj5ekbdcciigg5og.jpg",
+    name: "Ariuka",
+    image: "/images/ariuka.jpg",
   },
 ];
 
@@ -86,10 +76,10 @@ export default function AboutPage() {
       <div className="py-16 bg-white/15">
         <div className="max-w-5xl px-4 mx-auto text-center">
           <h2 className="mb-8 text-3xl font-semibold">Meet our team:</h2>
-          <div className="grid items-center justify-center grid-cols-2 gap-6 md:grid-cols-6">
+          <div className="grid items-center justify-center grid-cols-2 gap-6 md:grid-cols-5">
             {teamMembers.map((member, idx) => (
               <div key={idx} className="flex flex-col items-center">
-                <div className="relative w-24 h-24 overflow-hidden rounded-full md:w-28 md:h-28">
+                <div className="relative w-32 h-32 overflow-hidden rounded-full md:w-28 md:h-28">
                   <Image
                     src={member.image}
                     alt={member.name}
