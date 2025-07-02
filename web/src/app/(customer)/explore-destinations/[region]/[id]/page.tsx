@@ -62,7 +62,7 @@ export default function Destination() {
   }
 
   return (
-    <div className="w-full   flex flex-col gap-6 pb-10 ">
+    <div className="w-full items-center  flex flex-col gap-6 pb-10 ">
       <DestinationHero destination={destination} />
       <DestinationIdBody destination={destination} />
     </div>
