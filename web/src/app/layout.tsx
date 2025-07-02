@@ -3,6 +3,12 @@
 import { Toaster } from "sonner";
 import { AuthProvider } from "./_providers/AuthProvider";
 import "./globals.css";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Hello Mongolia",
+  description: "Explore the beauty of Mongolia with Hello Mongolia",
+};
 
 export default function RootLayout({
   children,
