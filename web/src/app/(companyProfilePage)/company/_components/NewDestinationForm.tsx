@@ -16,25 +16,17 @@ import { Button } from "@/components/ui/button";
 
 const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!;
 
-type NewDestinationFormProps = {
-  onCreate: (newDestId: string) => void;
-  onClose: () => void;
-};
-
-export function NewDestinationForm({
-  onCreate,
-  onClose,
-}: NewDestinationFormProps) {
-  const [name, setName] = useState(""); //
+export function NewDestinationForm() {
+  const [name, setName] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
   const [region, setRegion] = useState("6859247b611c9aae4411aaa4");
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
     null
   );
+  const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState<ActivityType[]>([]);
   const [selectedActivityIds, setSelectedActivityIds] = useState<string[]>([]);
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -116,18 +108,25 @@ export function NewDestinationForm({
         images.map((file) => uploadImage(file))
       );
 
-      const res = await api.post("/destination/post", {
+      await api.post("/destination/post", {
         destinationName: name,
         destinationImages: uploadedImageUrls,
-        region: region,
-        description: description,
-        location: location,
+        region,
+        description,
+        location,
         activities: selectedActivityIds,
       });
 
       toast.success("Destination created!");
-      onCreate(res.data._id);
-      onClose();
+      setName("");
+      setDescription("");
+      setImages([]);
+      setPreviewUrls([]);
+      setLocation(null);
+      setSelectedActivityIds([]);
+      setTimeout(() => {
+        window.close();
+      }, 500);
     } catch (err) {
       toast.error("Error creating destination.");
       console.error(err);
@@ -136,156 +135,157 @@ export function NewDestinationForm({
     }
   };
   return (
-    <div className="grid gap-4 py-4">
-      <Input
-        placeholder="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      {isLoaded ? (
-        <>
-          <Autocomplete
-            onLoad={(ac) => {
-              ac.setOptions({
-                componentRestrictions: { country: "mn" },
-              });
-              setAutocomplete(ac);
-            }}
-            onPlaceChanged={() => {
-              const place = autocomplete?.getPlace();
-              if (!place?.geometry?.location) return;
-
-              const lat = place.geometry.location.lat();
-              const lng = place.geometry.location.lng();
-              setLocation({ lat, lng });
-              map?.panTo({ lat, lng });
-
-              setSearchLocation(place.formatted_address || place.name || "");
-            }}
-          >
-            <Input
-              ref={inputRef}
-              placeholder="Search location on map"
-              value={searchLocation}
-              onChange={(e) => setSearchLocation(e.target.value)}
-            />
-          </Autocomplete>
-
-          <div className="w-full h-[400px] rounded overflow-hidden border">
-            <GoogleMap
-              mapContainerStyle={{ width: "100%", height: "100%" }}
-              center={location || defaultCenter}
-              zoom={6}
-              onLoad={(mapInstance) => setMap(mapInstance)}
-            >
-              {location && <Marker position={location} />}
-            </GoogleMap>
-          </div>
-        </>
-      ) : (
-        <p>Loading map...</p>
-      )}
-
-      <select
-        className="border rounded-md p-2"
-        value={region}
-        onChange={(e) => setRegion(e.target.value)}
-      >
-        <option value="6859247b611c9aae4411aaa4">Southern Mongolia</option>
-        <option value="68592416611c9aae4411aaa2">Northern Mongolia</option>
-        <option value="685924ef611c9aae4411aaa7">Eastern Mongolia</option>
-        <option value="68592534611c9aae4411aaaa">Western Mongolia</option>
-      </select>
-
-      <Textarea
-        placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-
-      <div>
-        <label className="block mb-2 font-medium text-gray-700">
-          Destination Images
-        </label>
-        <div
-          onClick={() => fileInputRef.current?.click()}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={handleDrop}
-          className="border border-dashed border-gray-400 rounded-md p-6 text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 cursor-pointer"
-        >
-          Click or drag images here to upload
-        </div>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          className="hidden"
-          onChange={handleImagesChange}
+    <div className="w-full max-w-screen-lg mx-auto flex flex-col  gap-6 item-center justify-center bg-white p-8">
+      <p className="font-medium text-xl "> Create a new Destination</p>
+      <div className="grid gap-4 py-4">
+        <Input
+          placeholder="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
-        {previewUrls.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
-            {previewUrls.map((url, index) => (
-              <div
-                key={index}
-                className="relative border rounded-lg overflow-hidden shadow"
-              >
-                <img
-                  src={url}
-                  alt={`Preview ${index + 1}`}
-                  className="w-full h-32 object-cover"
-                  onClick={() => window.open(url, "_blank")}
-                />
-                <button
-                  type="button"
-                  onClick={() => handleRemoveImage(index)}
-                  className="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded hover:bg-red-700"
-                >
-                  ✕
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="flex flex-wrap gap-3">
-        {activities.map((act) => (
-          <label
-            key={act._id}
-            className={`flex items-center gap-2 border p-2 rounded cursor-pointer transition ${
-              selectedActivityIds.includes(act._id)
-                ? "bg-blue-100 border-blue-500"
-                : "border-gray-300"
-            }`}
-          >
-            <input
-              type="checkbox"
-              checked={selectedActivityIds.includes(act._id)}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  setSelectedActivityIds((prev) => [...prev, act._id]);
-                } else {
-                  setSelectedActivityIds((prev) =>
-                    prev.filter((id) => id !== act._id)
-                  );
-                }
+        {isLoaded ? (
+          <>
+            <Autocomplete
+              onLoad={(ac) => {
+                ac.setOptions({
+                  componentRestrictions: { country: "mn" },
+                });
+                setAutocomplete(ac);
               }}
-            />
-            <span>
-              {act.emoji} {act.activityName}
-            </span>
-          </label>
-        ))}
-      </div>
-      <div className="flex justify-end gap-2">
-        <Button disabled={loading} onClick={handleSubmit}>
-          {loading ? "Creating..." : "Create"}
-        </Button>
+              onPlaceChanged={() => {
+                const place = autocomplete?.getPlace();
+                if (!place?.geometry?.location) return;
 
-        <Button variant="outline" disabled={loading} onClick={onClose}>
-          Cancel
-        </Button>
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+                setLocation({ lat, lng });
+                map?.panTo({ lat, lng });
+
+                setSearchLocation(place.formatted_address || place.name || "");
+              }}>
+              <Input
+                ref={inputRef}
+                placeholder="Search location on map"
+                value={searchLocation}
+                onChange={(e) => setSearchLocation(e.target.value)}
+              />
+            </Autocomplete>
+
+            <div className="w-full h-[400px] rounded overflow-hidden border">
+              <GoogleMap
+                mapContainerStyle={{ width: "100%", height: "100%" }}
+                center={location || defaultCenter}
+                zoom={6}
+                onLoad={(mapInstance) => setMap(mapInstance)}>
+                {location && <Marker position={location} />}
+              </GoogleMap>
+            </div>
+          </>
+        ) : (
+          <p>Loading map...</p>
+        )}
+
+        <select
+          className="border rounded-md p-2"
+          value={region}
+          onChange={(e) => setRegion(e.target.value)}>
+          <option value="6859247b611c9aae4411aaa4">Southern Mongolia</option>
+          <option value="68592416611c9aae4411aaa2">Northern Mongolia</option>
+          <option value="685924ef611c9aae4411aaa7">Eastern Mongolia</option>
+          <option value="68592534611c9aae4411aaaa">Western Mongolia</option>
+        </select>
+
+        <Textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+
+        <div>
+          <label className="block mb-2 font-medium text-gray-700">
+            Destination Images
+          </label>
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleDrop}
+            className="border border-dashed border-gray-400 rounded-md p-6 text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 cursor-pointer">
+            Click or drag images here to upload
+          </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            className="hidden"
+            onChange={handleImagesChange}
+          />
+          {previewUrls.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+              {previewUrls.map((url, index) => (
+                <div
+                  key={index}
+                  className="relative border rounded-lg overflow-hidden shadow">
+                  <img
+                    src={url}
+                    alt={`Preview ${index + 1}`}
+                    className="w-full h-32 object-cover"
+                    onClick={() => window.open(url, "_blank")}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(index)}
+                    className="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded hover:bg-red-700">
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-wrap gap-3">
+          {activities.map((act) => (
+            <label
+              key={act._id}
+              className={`flex items-center gap-2 border p-2 rounded cursor-pointer transition ${
+                selectedActivityIds.includes(act._id)
+                  ? "bg-blue-100 border-blue-500"
+                  : "border-gray-300"
+              }`}>
+              <input
+                type="checkbox"
+                checked={selectedActivityIds.includes(act._id)}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setSelectedActivityIds((prev) => [...prev, act._id]);
+                  } else {
+                    setSelectedActivityIds((prev) =>
+                      prev.filter((id) => id !== act._id)
+                    );
+                  }
+                }}
+              />
+              <span>
+                {act.emoji} {act.activityName}
+              </span>
+            </label>
+          ))}
+        </div>
+        <div className="flex justify-end gap-2">
+          <Button disabled={loading} onClick={handleSubmit} type="button">
+            {loading ? "Creating..." : "Create"}
+          </Button>
+
+          <Button
+            variant="outline"
+            disabled={loading}
+            onClick={() => {
+              window.close();
+            }}>
+            Cancel
+          </Button>
+        </div>
       </div>
     </div>
   );

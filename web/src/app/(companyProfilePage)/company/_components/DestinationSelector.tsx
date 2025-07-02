@@ -1,21 +1,14 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { FormItem, FormLabel } from "@/components/ui/form";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { api } from "@/axios";
-import { NewDestinationForm } from "./NewDestinationForm";
+import { RefreshCcw } from "lucide-react";
 
 type DestinationType = {
   _id: string;
   destinationName: string;
   destinationImages: string[];
+  createdAt: string;
 };
 
 type DestinationSelectorProps = {
@@ -29,13 +22,16 @@ export const DestinationSelector = ({
 }: DestinationSelectorProps) => {
   const [destinations, setDestinations] = useState<DestinationType[]>([]);
   const [expanded, setExpanded] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   const loadDestinations = async () => {
     try {
       const res = await api.get("/destination");
-      setDestinations(res.data.destinations);
+      const sorted = res.data.destinations.sort(
+        (a: DestinationType, b: DestinationType) =>
+          new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime()
+      );
+      setDestinations(sorted);
     } catch (error) {
       console.error("Failed to fetch destinations:", error);
     }
@@ -44,7 +40,6 @@ export const DestinationSelector = ({
   useEffect(() => {
     loadDestinations();
   }, []);
-
   const sortedDestinations = useMemo(() => {
     if (!selectedId) return destinations;
     const idx = destinations.findIndex((d) => d._id === selectedId);
@@ -62,13 +57,8 @@ export const DestinationSelector = ({
 
   const visibleDestinations = expanded
     ? filteredDestinations
-    : filteredDestinations.slice(0, 3);
+    : filteredDestinations.slice(0, 4);
 
-  const handleCreateSuccess = (newId: string) => {
-    setDestinationId(newId);
-    setModalOpen(false);
-    loadDestinations();
-  };
   const selectedDestination = useMemo(() => {
     return destinations.find((d) => d._id === selectedId);
   }, [selectedId, destinations]);
@@ -76,13 +66,22 @@ export const DestinationSelector = ({
     <>
       <FormItem>
         <FormLabel>Search destinations by name</FormLabel>
-        <input
-          type="text"
-          placeholder="Search destinations..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full mb-4 p-2 border rounded"
-        />
+        <div className="flex flex-row gap-2">
+          <input
+            type="text"
+            placeholder="Search destinations..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full mb-4 p-2 border rounded"
+          />
+          <Button
+            type="button"
+            onClick={() => {
+              loadDestinations();
+            }}>
+            <RefreshCcw />
+          </Button>
+        </div>
       </FormItem>
 
       {selectedDestination && (
@@ -94,11 +93,14 @@ export const DestinationSelector = ({
         </div>
       )}
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2  gap-4">
         {visibleDestinations.map((dest) => (
           <div
             key={dest._id}
-            onClick={() => setDestinationId(dest._id)}
+            onClick={() => {
+              setDestinationId(dest._id);
+              setExpanded(false);
+            }}
             className={`cursor-pointer rounded-xl border p-3 shadow hover:ring-2 hover:ring-primary transition ${
               selectedId === dest._id
                 ? "border-blue-600 ring-2 ring-blue-500"
@@ -115,7 +117,7 @@ export const DestinationSelector = ({
         ))}
       </div>
 
-      {filteredDestinations.length > 3 && (
+      {destinations.length > 4 && (
         <div className="text-center mt-4">
           <button
             type="button"
@@ -128,24 +130,14 @@ export const DestinationSelector = ({
       )}
 
       <div className="mt-4 text-center">
-        <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-          <DialogTrigger asChild>
-            <Button variant="outline">+ Create a new destination</Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
-            <DialogHeader>
-              <DialogTitle>Create New Destination</DialogTitle>
-              <DialogDescription>
-                Fill in the destination details below.
-              </DialogDescription>
-            </DialogHeader>
-
-            <NewDestinationForm
-              onCreate={handleCreateSuccess}
-              onClose={() => setModalOpen(false)}
-            />
-          </DialogContent>
-        </Dialog>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => {
+            window.open("/company/CreateDestination", "_blank");
+          }}>
+          + Create a new destination
+        </Button>
       </div>
     </>
   );
