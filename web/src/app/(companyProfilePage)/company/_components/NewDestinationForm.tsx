@@ -34,6 +34,12 @@ export function NewDestinationForm() {
     useState<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [weather, setWeather] = useState([
+    { season: "Spring", averageTempF: 50 },
+    { season: "Summer", averageTempF: 75 },
+    { season: "Autumn", averageTempF: 55 },
+    { season: "Winter", averageTempF: 20 },
+  ]);
 
   const defaultCenter = { lat: 47.9184, lng: 106.9176 };
 
@@ -115,6 +121,7 @@ export function NewDestinationForm() {
         description,
         location,
         activities: selectedActivityIds,
+        weather,
       });
 
       toast.success("Destination created!");
@@ -129,11 +136,13 @@ export function NewDestinationForm() {
       }, 500);
     } catch (err) {
       toast.error("Error creating destination.");
+
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <div className="w-full max-w-screen-lg mx-auto flex flex-col  gap-6 item-center justify-center bg-white p-8">
       <p className="font-medium text-xl "> Create a new Destination</p>
@@ -162,7 +171,8 @@ export function NewDestinationForm() {
                 map?.panTo({ lat, lng });
 
                 setSearchLocation(place.formatted_address || place.name || "");
-              }}>
+              }}
+            >
               <Input
                 ref={inputRef}
                 placeholder="Search location on map"
@@ -176,7 +186,8 @@ export function NewDestinationForm() {
                 mapContainerStyle={{ width: "100%", height: "100%" }}
                 center={location || defaultCenter}
                 zoom={6}
-                onLoad={(mapInstance) => setMap(mapInstance)}>
+                onLoad={(mapInstance) => setMap(mapInstance)}
+              >
                 {location && <Marker position={location} />}
               </GoogleMap>
             </div>
@@ -188,7 +199,8 @@ export function NewDestinationForm() {
         <select
           className="border rounded-md p-2"
           value={region}
-          onChange={(e) => setRegion(e.target.value)}>
+          onChange={(e) => setRegion(e.target.value)}
+        >
           <option value="6859247b611c9aae4411aaa4">Southern Mongolia</option>
           <option value="68592416611c9aae4411aaa2">Northern Mongolia</option>
           <option value="685924ef611c9aae4411aaa7">Eastern Mongolia</option>
@@ -209,7 +221,8 @@ export function NewDestinationForm() {
             onClick={() => fileInputRef.current?.click()}
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
-            className="border border-dashed border-gray-400 rounded-md p-6 text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 cursor-pointer">
+            className="border border-dashed border-gray-400 rounded-md p-6 text-center text-gray-500 hover:border-blue-500 hover:text-blue-600 cursor-pointer"
+          >
             Click or drag images here to upload
           </div>
           <input
@@ -225,7 +238,8 @@ export function NewDestinationForm() {
               {previewUrls.map((url, index) => (
                 <div
                   key={index}
-                  className="relative border rounded-lg overflow-hidden shadow">
+                  className="relative border rounded-lg overflow-hidden shadow"
+                >
                   <img
                     src={url}
                     alt={`Preview ${index + 1}`}
@@ -235,7 +249,8 @@ export function NewDestinationForm() {
                   <button
                     type="button"
                     onClick={() => handleRemoveImage(index)}
-                    className="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded hover:bg-red-700">
+                    className="absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded hover:bg-red-700"
+                  >
                     ✕
                   </button>
                 </div>
@@ -252,7 +267,8 @@ export function NewDestinationForm() {
                 selectedActivityIds.includes(act._id)
                   ? "bg-blue-100 border-blue-500"
                   : "border-gray-300"
-              }`}>
+              }`}
+            >
               <input
                 type="checkbox"
                 checked={selectedActivityIds.includes(act._id)}
@@ -272,6 +288,24 @@ export function NewDestinationForm() {
             </label>
           ))}
         </div>
+        <div className="grid gap-4">
+          <label className="font-medium">Seasonal Weather (°F)</label>
+          {weather.map((w, i) => (
+            <div key={w.season} className="flex items-center gap-4">
+              <span className="w-20">{w.season}</span>
+              <input
+                type="number"
+                className="border px-2 py-1 rounded w-28"
+                value={w.averageTempF}
+                onChange={(e) => {
+                  const newWeather = [...weather];
+                  newWeather[i].averageTempF = parseFloat(e.target.value);
+                  setWeather(newWeather);
+                }}
+              />
+            </div>
+          ))}
+        </div>
         <div className="flex justify-end gap-2">
           <Button disabled={loading} onClick={handleSubmit} type="button">
             {loading ? "Creating..." : "Create"}
@@ -282,7 +316,8 @@ export function NewDestinationForm() {
             disabled={loading}
             onClick={() => {
               window.close();
-            }}>
+            }}
+          >
             Cancel
           </Button>
         </div>

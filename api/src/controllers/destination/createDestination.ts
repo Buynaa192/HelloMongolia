@@ -10,6 +10,7 @@ export const CreateDestination: RequestHandler = async (req, res) => {
       description,
       activities,
       location,
+      weather,
     } = req.body;
     const newDestination = await destinationModel.create({
       destinationName,
@@ -18,6 +19,7 @@ export const CreateDestination: RequestHandler = async (req, res) => {
       region,
       location,
       activities,
+      weather,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
