@@ -121,13 +121,11 @@ export default function PackagesExplore() {
             )
           );
 
-        const pkgDuration = parseInt(pkg.duration);
+        const pkgDuration = parseInt(`${pkg.packageItem.length}`);
         const matchesDuration =
           selectedDurations.length === 0 ||
           selectedDurations.some((range) => {
             switch (range) {
-              case "1 day":
-                return pkgDuration === 1;
               case "1-7 days":
                 return pkgDuration >= 1 && pkgDuration <= 7;
               case "7-14 days":
@@ -212,6 +210,7 @@ export default function PackagesExplore() {
           selectedActivities={selectedActivity}
           setSelectedActivities={setSelectedActivity}
         />
+
         <FilteredPackages packages={filteredPackages} isLoading={isLoading} />
       </div>
     </div>
