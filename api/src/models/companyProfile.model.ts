@@ -19,7 +19,8 @@ const companyProfileSchema = new Schema({
   },
   background: {
     type: String,
-    default: "",
+    default:
+      "https://res.cloudinary.com/generative-ai-demos/image/upload/c_auto,w_1000,ar_0.67,g_auto/samples/c_auto/travel_pyda9a.jpg",
   },
   AvatarImage: {
     type: String,
