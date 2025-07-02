@@ -2,11 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { api } from "@/axios";
-import { DestinationType, ActivityType } from "@/app/_providers/AuthProvider";
+import {
+  DestinationType,
+  ActivityType,
+  WeatherType,
+} from "@/app/_providers/AuthProvider";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-
 import { uploadImage } from "../../_components/PackageProvider";
 import { DestinationImages } from "./_components/DestinationImages";
 import { DestinationActivities } from "./_components/DestinationActivities";
@@ -21,7 +24,10 @@ export default function DestinationDetailPage() {
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
   const [newFiles, setNewFiles] = useState<File[]>([]);
   const [allActivities, setAllActivities] = useState<ActivityType[]>([]);
+  const [editableWeather, setEditableWeather] = useState<WeatherType[]>([]);
+
   const router = useRouter();
+
   useEffect(() => {
     (async () => {
       try {
@@ -32,6 +38,7 @@ export default function DestinationDetailPage() {
       }
     })();
   }, []);
+
   useEffect(() => {
     if (!destinationId) return;
     (async () => {
@@ -40,12 +47,14 @@ export default function DestinationDetailPage() {
           `/destination?destinationId=${destinationId}`
         );
         const data = res.data.destinations?.[0] || null;
+
         setDestination(data);
         setDesc(data?.description || "");
         setSelectedActivities(
           data?.activities?.map((a: ActivityType) => a._id) || []
         );
         setImages(data?.destinationImages || []);
+        setEditableWeather(data?.weather || []);
       } catch (e) {
         console.error(e);
       } finally {
@@ -65,12 +74,15 @@ export default function DestinationDetailPage() {
       }
 
       const updatedImages = [...images, ...uploadedUrls];
+
       await api.put(`/destination/put`, {
         id: destinationId,
         description: desc,
         activities: selectedActivities,
         destinationImages: updatedImages,
+        weather: editableWeather,
       });
+
       setDestination((prev) =>
         prev
           ? {
@@ -80,9 +92,11 @@ export default function DestinationDetailPage() {
               activities: allActivities.filter((a) =>
                 selectedActivities.includes(a._id)
               ),
+              weather: editableWeather,
             }
           : null
       );
+
       setImages(updatedImages);
       setIsEditing(false);
       setNewFiles([]);
@@ -110,6 +124,7 @@ export default function DestinationDetailPage() {
           ← Back
         </Button>
       </div>
+
       <DestinationImages
         images={images}
         setImages={setImages}
@@ -123,6 +138,7 @@ export default function DestinationDetailPage() {
           <CardTitle className="text-3xl font-bold mb-4">
             {destination.destinationName}
           </CardTitle>
+
           {isEditing ? (
             <Textarea
               value={desc}
@@ -134,6 +150,47 @@ export default function DestinationDetailPage() {
             <p className="text-gray-800 mb-4 whitespace-pre-line">
               {desc.length > 300 ? desc.slice(0, 300) + "..." : desc}
             </p>
+          )}
+
+          {isEditing && editableWeather.length > 0 && (
+            <div className="w-full flex flex-col gap-4 mb-4">
+              <p className="font-semibold">Weather (°F):</p>
+              {editableWeather.map((item, index) => (
+                <div key={item._id} className="flex gap-2 items-center">
+                  <span className="w-20 font-medium">{item.season}</span>
+                  <input
+                    type="number"
+                    value={item.averageTempF}
+                    onChange={(e) => {
+                      const updated = [...editableWeather];
+                      updated[index].averageTempF = parseFloat(e.target.value);
+                      setEditableWeather(updated);
+                    }}
+                    className="border rounded px-2 py-1 text-black w-24"
+                  />
+                  <span className="text-sm text-gray-600">
+                    ≈ {(((item.averageTempF - 32) * 5) / 9).toFixed(1)}°C
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {!isEditing && destination.weather.length > 0 && (
+            <div className="mb-4">
+              <p className="font-semibold mb-2">Seasonal Weather:</p>
+              <div className="flex flex-wrap gap-4 text-sm">
+                {destination.weather.map((item) => {
+                  const tempC = ((item.averageTempF - 32) * 5) / 9;
+                  return (
+                    <div key={item._id}>
+                      {item.season}: {tempC.toFixed(1)}°C / {item.averageTempF}
+                      °F
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           )}
 
           <div className="mb-4">
@@ -150,32 +207,37 @@ export default function DestinationDetailPage() {
                 {destination.activities.map((act) => (
                   <span
                     key={act._id}
-                    className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                    className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+                  >
                     {act.emoji} {act.activityName}
                   </span>
                 ))}
               </div>
             )}
           </div>
+
           <div className="flex justify-end gap-2">
             {isEditing ? (
               <>
                 <Button
                   className="bg-red-300 text-white hover:bg-red-400 shadow-md flex-1 sm:flex-none"
                   variant="outline"
-                  onClick={() => setIsEditing(false)}>
+                  onClick={() => setIsEditing(false)}
+                >
                   Cancel
                 </Button>
                 <Button
                   className="bg-green-500 text-white hover:bg-green-600 shadow-md flex-1 sm:flex-none"
-                  onClick={handleSave}>
+                  onClick={handleSave}
+                >
                   Save
                 </Button>
               </>
             ) : (
               <Button
                 className="bg-yellow-500 text-white hover:bg-yellow-600 shadow-md flex-1 sm:flex-none"
-                onClick={() => setIsEditing(true)}>
+                onClick={() => setIsEditing(true)}
+              >
                 Edit
               </Button>
             )}
