@@ -6,21 +6,21 @@ type CompanyDetailsProps = {
 };
 export const CompanyDetails = ({ packageDetail }: CompanyDetailsProps) => {
   return (
-    <div className="flex flex-col flex-1 border-[#ababab] border-[1px] p-3 rounded-xl">
-      <div className="flex flex-col w-full ">
-        <div
-          className="text-[30px] font-bold  pl-5"
-          style={{ fontFamily: "Dancing Script" }}
-        >
-          Trip Overview:
-        </div>
+    <div className="flex flex-col gap-6 flex-1 border border-white/40 bg-white/5 p-6 rounded-xl">
+      <div className="flex flex-col w-full gap-4">
+        <div className="text-2xl font-normal">Trip Overview:</div>
 
-        <div className="w-full flex gap-4 justify-center">
-          <p className="p-2 text-[20px] flex-2 text-[#ababab]">
-            {packageDetail.description}
-            {packageDetail.companyId.about}
-          </p>
-        </div>
+        <p className="text-lg flex-2 text-white/80 italic">
+          {packageDetail.description}
+        </p>
+      </div>
+
+      <div className="flex flex-col w-full gap-4">
+        <div className="text-2xl font-normal">Company Overview:</div>
+
+        <p className="text-lg flex-2 text-white/80 italic">
+          {packageDetail.companyId.about}
+        </p>
       </div>
     </div>
   );

@@ -8,15 +8,10 @@ type CompanyDetailsProps = {
 
 export const TourBy = ({ packageDetail }: CompanyDetailsProps) => {
   return (
-    <div className="w-full border-[1px] rounded-xl border-[#ababab]">
-      <div
-        className="text-[30px] font-bold  pl-3"
-        style={{ fontFamily: "Dancing Script" }}
-      >
-        Tour by:
-      </div>
+    <div className="w-full border border-white/40 rounded-xl p-4 bg-white/5">
+      <h1 className="text-xl font-normal mb-6">Tour by:</h1>
 
-      <div className="w-full h-fit  flex flex-col p-5 text-2xl font-light gap-3 ">
+      <div className="w-full h-fit  flex flex-col text-2xl font-light gap-3 ">
         <div className="flex-1 h-fit flex flex-col  items-center gap-2">
           <Link
             href={`/companies/${packageDetail.companyId._id}`}

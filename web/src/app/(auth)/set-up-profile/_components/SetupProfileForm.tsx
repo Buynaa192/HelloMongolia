@@ -126,7 +126,7 @@ export default function SetupProfileForm() {
         Rating: company.Rating,
       } as CompanyType);
 
-      router.push(`/company`);
+      router.push(`/company/AllPackages`);
     } catch {
       alert("Update failed.");
     } finally {

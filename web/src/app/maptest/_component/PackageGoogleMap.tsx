@@ -59,7 +59,7 @@ export default function PackageGoogleMap({
   if (!isLoaded) return <div>Loading map...</div>;
 
   return (
-    <div className="w-full mt-5">
+    <div className="w-full">
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={defaultCenter}
