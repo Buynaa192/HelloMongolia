@@ -52,15 +52,19 @@ export default function PackagesExplore() {
 
   const [allActivities, setAllActivities] = useState<ActivityType[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<ActivityType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchPackages = async () => {
+      setIsLoading(true);
       try {
         const res = await api.get("/package");
         setAllPackages(res.data.packages);
         setFilteredPackages(res.data.packages);
       } catch (err) {
         console.error("Failed to fetch packages", err);
+      } finally {
+        setIsLoading(false);
       }
     };
     const fetchActiviy = async () => {
@@ -208,7 +212,7 @@ export default function PackagesExplore() {
           selectedActivities={selectedActivity}
           setSelectedActivities={setSelectedActivity}
         />
-        <FilteredPackages packages={filteredPackages} />
+        <FilteredPackages packages={filteredPackages} isLoading={isLoading} />
       </div>
     </div>
   );
