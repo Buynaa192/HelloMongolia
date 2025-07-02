@@ -146,7 +146,9 @@ export function NewDestinationForm() {
   return (
     <div className="w-full max-w-screen-lg mx-auto flex flex-col  gap-6 item-center justify-center bg-white p-8">
       <p className="font-medium text-xl "> Create a new Destination</p>
+
       <div className="grid gap-4 py-4">
+        <h1> Destination name</h1>
         <Input
           placeholder="name"
           value={name}
@@ -154,6 +156,7 @@ export function NewDestinationForm() {
         />
         {isLoaded ? (
           <>
+            <h1> Search location on map</h1>
             <Autocomplete
               onLoad={(ac) => {
                 ac.setOptions({
@@ -195,7 +198,7 @@ export function NewDestinationForm() {
         ) : (
           <p>Loading map...</p>
         )}
-
+        <h1> Travel Type</h1>
         <select
           className="border rounded-md p-2"
           value={region}
@@ -206,7 +209,7 @@ export function NewDestinationForm() {
           <option value="685924ef611c9aae4411aaa7">Eastern Mongolia</option>
           <option value="68592534611c9aae4411aaaa">Western Mongolia</option>
         </select>
-
+        <h1>Description</h1>
         <Textarea
           placeholder="Description"
           value={description}
@@ -258,7 +261,7 @@ export function NewDestinationForm() {
             </div>
           )}
         </div>
-
+        <h1>Activities</h1>
         <div className="flex flex-wrap gap-3">
           {activities.map((act) => (
             <label

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { FormItem, FormLabel } from "@/components/ui/form";
 import { api } from "@/axios";
 import { RefreshCcw } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 type DestinationType = {
   _id: string;
@@ -57,7 +58,7 @@ export const DestinationSelector = ({
 
   const visibleDestinations = expanded
     ? filteredDestinations
-    : filteredDestinations.slice(0, 4);
+    : filteredDestinations.slice(0, 6);
 
   const selectedDestination = useMemo(() => {
     return destinations.find((d) => d._id === selectedId);
@@ -66,19 +67,22 @@ export const DestinationSelector = ({
     <>
       <FormItem>
         <FormLabel>Search destinations by name</FormLabel>
-        <div className="flex flex-row gap-2">
-          <input
+        <div className="flex flex-row gap-2 items-center">
+          <Input
             type="text"
             placeholder="Search destinations..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full mb-4 p-2 border rounded"
+            className="w-full p-2 border rounded"
           />
           <Button
             type="button"
+            size="icon"
+            className="cursor-pointer"
             onClick={() => {
               loadDestinations();
-            }}>
+            }}
+          >
             <RefreshCcw />
           </Button>
         </div>
@@ -93,7 +97,7 @@ export const DestinationSelector = ({
         </div>
       )}
 
-      <div className="grid grid-cols-2  gap-4">
+      <div className="grid grid-cols-3  gap-4">
         {visibleDestinations.map((dest) => (
           <div
             key={dest._id}
@@ -101,7 +105,7 @@ export const DestinationSelector = ({
               setDestinationId(dest._id);
               setExpanded(false);
             }}
-            className={`cursor-pointer rounded-xl border p-3 shadow hover:ring-2 hover:ring-primary transition ${
+            className={`cursor-pointer overflow-hidden rounded-xl border shadow hover:ring-2 hover:ring-primary transition ${
               selectedId === dest._id
                 ? "border-blue-600 ring-2 ring-blue-500"
                 : "border-gray-200"
@@ -110,9 +114,11 @@ export const DestinationSelector = ({
             <img
               src={dest.destinationImages[0]}
               alt={dest.destinationName}
-              className="w-full h-32 object-cover rounded-md mb-2"
+              className="w-full aspect-video object-cover"
             />
-            <p className="text-center font-medium">{dest.destinationName}</p>
+            <p className="text-center font-normal p-2">
+              {dest.destinationName}
+            </p>
           </div>
         ))}
       </div>
@@ -135,7 +141,8 @@ export const DestinationSelector = ({
           variant="outline"
           onClick={() => {
             window.open("/company/CreateDestination", "_blank");
-          }}>
+          }}
+        >
           + Create a new destination
         </Button>
       </div>

@@ -13,7 +13,7 @@ export const DestinationHero = ({ destination }: Props) => {
   const [mainImage, setMainImage] = useState(images[0]);
 
   return (
-    <section className="relative w-full h-[500px] overflow-hidden mt-15 bg-gray-100 ">
+    <section className="relative w-full h-[500px] overflow-hidden mt-15 bg-gray-100">
       {mainImage ? (
         <Image
           src={mainImage}

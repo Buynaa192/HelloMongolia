@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PackageType } from "@/app/_providers/AuthProvider";
 
@@ -22,14 +22,14 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
 
   const handleNextImage = () =>
     setCurrentImage((prev) => (prev + 1) % images.length);
+
   const handlePrevImage = () =>
     setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
-  console.log("Package Detail:", packageDetail);
 
   return (
-    <div className="w-full flex flex-col items-center p-6 border-[1px] border-[#ababab] rounded-xl ">
-      <h1 className="text-3xl font-bold mb-2">{packageDetail.title}</h1>
-      <p className="text-gray-600 mb-6">
+    <div className="w-full flex flex-col items-center p-6 bg-white/5 border border-white/40 rounded-xl ">
+      <h1 className="text-3xl font-medium mb-2">{packageDetail.title}</h1>
+      <p className="text-white/80 text-lg font-normal mb-6">
         {packageDetail.duration} day - {packageDetail.tripType}
       </p>
 
@@ -77,18 +77,20 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
               </button>
             </>
           ) : (
-            <p className="text-gray-400">No images</p>
+            <p className="text-gray-300">No images</p>
           )}
         </div>
 
         <div className="flex flex-col gap-4">
-          <h2 className="text-xl font-bold">
+          <h2 className="text-xl font-medium border-b pb-3 border-white/40">
             {packageItem.title} - Day {selectedDay + 1}
           </h2>
-          <p className="text-gray-600 font-semibold text-2xl">
+          <p className="text-white font-semibold text-3xl">
             {packageItem.destinationId?.destinationName}{" "}
           </p>
-          <p className="text-sm">{packageItem.description}</p>
+          <p className="text-sm text-white/80 italic">
+            {packageItem.description}
+          </p>
 
           <div className="">
             <h2 className="font-semibold text-xl mb-3 ">Activities</h2>
@@ -96,7 +98,7 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
               {packageItem.activity.map((item, indx) => (
                 <Button
                   key={indx}
-                  className="flex  items-center gap-2 bg-black/60 hover:bg-white hover:text-black text-white p-2 rounded-md shadow-sm "
+                  className="flex  items-center gap-2 bg-white hover:bg-white/80 text-black p-2 rounded-md shadow-sm "
                 >
                   <span className="text-lg">{item.emoji}</span>
                   <span>{item.activityName}</span>
@@ -105,45 +107,31 @@ export const ItineraryContent = ({ packageDetail }: Props) => {
             </div>
           </div>
 
-          {packageItem.destinationId?.destinationName && (
+          {packageItem.accommodation?.hotelName && (
             <div>
-              <h3 className="font-semibold mt-4 mb-2">Highlights:</h3>
-              <div className="flex gap-2 flex-wrap">
-                {(packageItem.destinationId.destinationName || "")
-                  .split(" ")
-                  .map((word, idx) => (
-                    <span
-                      key={idx}
-                      className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-md"
-                    >
-                      {word}
-                    </span>
-                  ))}
+              <h3 className="font-semibold text-xl mb-2">Accommodation:</h3>
+              <div className="flex gap-4 items-center">
+                <p className="text-lg">{packageItem.accommodation.hotelName}</p>
+                <div className="flex gap-1 items-center text-sm text-white/80">
+                  <MapPin size={16} /> {packageItem.accommodation.address}
+                </div>
               </div>
             </div>
           )}
 
-          {packageItem.accommodation?.hotelName && (
-            <div>
-              <h3 className="font-semibold mt-4 mb-1">Accommodation:</h3>
-              <p className="text-sm">{packageItem.accommodation.hotelName}</p>
-              <p className="text-xs text-gray-500">
-                {packageItem.accommodation.address}
-              </p>
-            </div>
-          )}
-
-          <div className="flex justify-between mt-6">
+          <div className="flex justify-between items-center mt-6">
             <Button
+              variant={"secondary"}
               onClick={() => setSelectedDay((prev) => Math.max(prev - 1, 0))}
               disabled={selectedDay === 0}
             >
               Previous Day
             </Button>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-100">
               Day {selectedDay + 1} of {packageDetail.packageItem.length}
             </span>
             <Button
+              variant={"secondary"}
               onClick={() =>
                 setSelectedDay((prev) =>
                   Math.min(prev + 1, packageDetail.packageItem.length - 1)

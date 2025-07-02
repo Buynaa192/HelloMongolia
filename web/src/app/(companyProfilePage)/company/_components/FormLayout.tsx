@@ -37,13 +37,14 @@ export const FormLayout = ({
   order,
 }: Props) => {
   return (
-    <DialogContent className="w-full bg-white max-h-screen overflow-y-auto rounded-xl">
-      <DialogTitle>Day {order} Details </DialogTitle>
+    <DialogContent className="bg-white max-h-10/12 !max-w-[800px] w-[800px] overflow-y-auto rounded-xl">
+      <DialogTitle className="mb-4 text-2xl">Day {order}</DialogTitle>
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="bg-white px-6  py-10 shadow-xl rounded-2xl space-y-8 w-full">
+          className="bg-white rounded-2xl space-y-6 w-full"
+        >
           <FormField
             control={form.control}
             name="title"
@@ -71,6 +72,7 @@ export const FormLayout = ({
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="image"
@@ -157,7 +159,8 @@ export const FormLayout = ({
               className={`w-full md:w-auto flex justify-center items-center gap-2 px-6 py-3 rounded-md text-white ${
                 loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"
               }`}
-              disabled={loading}>
+              disabled={loading}
+            >
               {loading ? (
                 <>
                   <Loader className="animate-spin" size={18} />

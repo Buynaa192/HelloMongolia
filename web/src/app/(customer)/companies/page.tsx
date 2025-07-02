@@ -34,7 +34,7 @@ export default function ExploreCompanies() {
 
   return (
     <div className="w-full min-h-screen text-white bg-black ">
-      <div className="w-full h-[500px] relative">
+      <div className="w-full h-[800px] relative">
         <Image
           src="https://res.cloudinary.com/df60cobe2/image/upload/v1750683343/f6beaae5087528cc4d696a2d3b514669f17b7dda_m8mgtu.jpg"
           fill
@@ -42,28 +42,30 @@ export default function ExploreCompanies() {
           className="object-cover"
         />
         <div className="absolute top-0 flex items-end justify-center w-full h-full gap-10 px-6 py-10 bg-black/50 ">
-          <h1 className="w-full text-4xl font-extrabold text-white md:text-5xl justify-self-end">
-            Discover
-            <div className="flex">
-              {"Mongolia".split("").map((letter, i) => (
-                <div
-                  key={i}
-                  className={`text-7xl duration-200 ${
-                    animated ? `animate-fadeRed` : ""
-                  }`}
-                  style={{ animationDelay: `${i * 0.2}s` }}
-                >
-                  {letter}
-                </div>
-              ))}
-            </div>
-            with Trusted Tour Experts
-          </h1>
-          <p className="max-w-2xl text-xl md:text-xl text-white/80">
-            Browse a curated list of Mongolia’s leading tour operators offering
-            unforgettable journeys across the steppe, desert, and mountains.
-            Find your perfect travel partner today.
-          </p>
+          <div className="flex items-end justify-center w-[1440px]">
+            <h1 className="w-full text-4xl font-extrabold text-white md:text-5xl justify-self-end">
+              Discover
+              <div className="flex">
+                {"Mongolia".split("").map((letter, i) => (
+                  <div
+                    key={i}
+                    className={`text-7xl duration-200 ${
+                      animated ? `animate-fadeRed` : ""
+                    }`}
+                    style={{ animationDelay: `${i * 0.2}s` }}
+                  >
+                    {letter}
+                  </div>
+                ))}
+              </div>
+              with Trusted Tour Experts
+            </h1>
+            <p className="max-w-2xl text-xl md:text-xl text-white/80">
+              Browse a curated list of Mongolia’s leading tour operators
+              offering unforgettable journeys across the steppe, desert, and
+              mountains. Find your perfect travel partner today.
+            </p>
+          </div>
         </div>
       </div>
       <div className="w-full px-6 ">
