@@ -72,11 +72,13 @@ export const UpdatePackageForm = ({ packageId }: Props) => {
 
   const onSubmit = async (data: FormData) => {
     await updatePackage(packageId, data, duration);
+    setTimeout(() => {
+      router.push("/company/AllPackages");
+    }, 500);
   };
   const getPackage = async () => {
     try {
       const res = await api.get(`/package?packageId=${packageId}`);
-      console.log(res.data.packages[0]);
       if (res) {
         setPackge(res.data.packages[0]);
       }
