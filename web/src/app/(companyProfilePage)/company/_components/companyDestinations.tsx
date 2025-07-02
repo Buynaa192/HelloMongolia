@@ -88,7 +88,8 @@ export const CompanyDestinations = ({ companyId }: CompanyPackagesProps) => {
       <div
         className={`grid grid-cols-3 gap-6 items-stretch transition-all duration-300 ${
           isExpanded ? "max-h-[600px] overflow-y-scroll pr-2" : ""
-        }`}>
+        }`}
+      >
         {displayedDestination?.map((item) => (
           <DestinationCard key={item._id} destinationId={item._id} />
         ))}

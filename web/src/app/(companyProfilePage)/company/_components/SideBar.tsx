@@ -4,7 +4,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { LogOut, LayoutDashboardIcon, Package, Settings } from "lucide-react";
+import {
+  LogOut,
+  LayoutDashboardIcon,
+  Package,
+  Settings,
+  MapPin,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/app/_providers/AuthProvider";
 import { usePackageContext } from "./PackageProvider";
@@ -70,6 +76,21 @@ export default function Sidebar() {
             >
               <Settings size={18} />
               Account settings
+            </Button>
+            <Button
+              variant="ghost"
+              className={`justify-start px-3 py-2 flex items-center gap-3 rounded-md transition text-sm ${
+                view === "Destination"
+                  ? "bg-[#27272a] text-white"
+                  : "text-gray-300 hover:bg-gray-800 hover:text-white"
+              }`}
+              onClick={() => {
+                setView("Destination");
+                router.push("/company/Destination");
+              }}
+            >
+              <MapPin size={18} />
+              Destinations
             </Button>
           </div>
         </nav>
