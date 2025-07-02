@@ -227,12 +227,12 @@ export const CreatePackage = () => {
                     Cover Photo
                   </FormLabel>
                   <FormControl>
-                    <div className="relative w-full h-64 border-2 border-dashed rounded-xl overflow-hidden bg-gray-50 flex items-center justify-center">
+                    <div className="relative w-full h-64  border-2 border-dashed rounded-xl overflow-hidden bg-gray-50 flex items-center justify-center">
                       {prevProfileImage ? (
                         <img
                           src={prevProfileImage}
                           alt="Cover Preview"
-                          className="object-cover w-full h-full"
+                          className="object-contain w-full h-full mx-auto"
                         />
                       ) : (
                         <span className="text-gray-400">No image selected</span>
