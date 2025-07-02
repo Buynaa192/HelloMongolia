@@ -97,8 +97,6 @@ const SearchInMongoliaComponent = ({
 
       <form
         onSubmit={handleSubmit}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
         className="z-50 relative w-[300px] flex items-center border-2 border-white rounded-md overflow-hidden transition-all duration-500 ease-in-out focus-within:w-[400px]"
       >
         <input
@@ -107,6 +105,10 @@ const SearchInMongoliaComponent = ({
           className="px-4 py-3 text-lg text-white bg-transparent placeholder-white focus:outline-none w-full"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => {
+            setTimeout(() => setIsFocused(false), 100);
+          }}
           autoComplete="off"
         />
         <button
@@ -130,7 +132,7 @@ const SearchInMongoliaComponent = ({
             <div className="w-full flex justify-center">
               <MyLoader />
             </div>
-          ) : searchResults ? (
+          ) : searchResults && isFocused ? (
             <div
               className={cn(
                 "grid gap-4 text-white rounded-md h-full ",
