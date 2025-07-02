@@ -134,25 +134,34 @@ export function PackageProvider({ children }: { children: ReactNode }) {
         tripType: data.tripType,
       });
 
-      toast.success("Package created successfully!");
+      toast.success("Package created successfully!", {
+        style: {
+          color: "green",
+        },
+      });
       return response.data;
     } catch (error) {
       console.error("addPackage error:", error);
-      toast.error("Failed to create package");
+      toast.error("Failed to create package", {
+        style: {
+          color: "red",
+        },
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const createPackageItemFun = async (itemData: CreatePackageItemInput) => {
-    const coverPhotoUrl =
-      typeof itemData.image === "string"
-        ? itemData.image
-        : itemData.image
-        ? await uploadImage(itemData.image)
-        : "";
     try {
       setLoading(true);
+      const coverPhotoUrl =
+        typeof itemData.image === "string"
+          ? itemData.image
+          : itemData.image
+          ? await uploadImage(itemData.image)
+          : "";
+
       const response = await api.post(`/packageItem`, {
         order: Number(itemData.order),
         title: itemData.title,
@@ -163,11 +172,19 @@ export function PackageProvider({ children }: { children: ReactNode }) {
         accommodation: itemData.accommodation,
       });
 
-      toast.success("Package Item created successfully!");
+      toast.success("Package Item created successfully!", {
+        style: {
+          color: "green",
+        },
+      });
       return response.data;
     } catch (error) {
       console.error("addPackageItem error:", error);
-      toast.error("Failed to create package item");
+      toast.error("Failed to create package item", {
+        style: {
+          color: "red",
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -180,7 +197,11 @@ export function PackageProvider({ children }: { children: ReactNode }) {
       });
     } catch (error) {
       console.error("addPackageItem error:", error);
-      toast.error("Failed to add itinerary");
+      toast.error("Failed to add itinerary", {
+        style: {
+          color: "red",
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -215,11 +236,19 @@ export function PackageProvider({ children }: { children: ReactNode }) {
         duration: duration,
       });
 
-      toast.success("Package updated successfully!");
+      toast.success("Package updated successfully!", {
+        style: {
+          color: "green",
+        },
+      });
       return response.data;
     } catch (error) {
       console.error("updatePackage error:", error);
-      toast.error("Failed to update package");
+      toast.error("Failed to update package", {
+        style: {
+          color: "red",
+        },
+      });
       throw error;
     } finally {
       setLoading(false);
@@ -233,11 +262,19 @@ export function PackageProvider({ children }: { children: ReactNode }) {
     try {
       setLoading(true);
       await api.delete(`/package/${packageId}`);
-      toast.success("Package deleted successfully");
+      toast.success("Package deleted successfully", {
+        style: {
+          color: "green",
+        },
+      });
       setPackages((prev) => prev.filter((pkg) => pkg._id !== packageId));
     } catch (error) {
       console.error("deletePackage error:", error);
-      toast.error("Failed to delete package");
+      toast.error("Failed to delete package", {
+        style: {
+          color: "red",
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -247,10 +284,18 @@ export function PackageProvider({ children }: { children: ReactNode }) {
     try {
       setLoading(true);
       await api.delete(`/packageItem/${packageItemId}`);
-      toast.success("Package item deleted successfully");
+      toast.success("Package item deleted successfully", {
+        style: {
+          color: "green",
+        },
+      });
     } catch (error) {
       console.error("deletePackageItem error:", error);
-      toast.error("Failed to delete package item");
+      toast.error("Failed to delete package item", {
+        style: {
+          color: "red",
+        },
+      });
     } finally {
       setLoading(false);
     }
