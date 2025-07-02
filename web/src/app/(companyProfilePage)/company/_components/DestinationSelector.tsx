@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { api } from "@/axios";
 import { NewDestinationForm } from "./NewDestinationForm";
-import Link from "next/link";
 
 type DestinationType = {
   _id: string;
