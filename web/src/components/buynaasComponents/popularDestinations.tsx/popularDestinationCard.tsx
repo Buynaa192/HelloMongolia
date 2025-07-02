@@ -10,7 +10,7 @@ type itemType = {
 
 export const PopularDestinationCard = ({ item }: itemType) => {
   return (
-    <Link href={`/explore-destinations/${item.region?.regionName}/${item._id}`}>
+    <Link href={`/explore-destinations/${item.region.regionName}/${item._id}`}>
       <div className="w-full aspect-[4/5] relative group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-white/10">
         <Image
           src={item.destinationImages[0] || item.destinationImages[1]}

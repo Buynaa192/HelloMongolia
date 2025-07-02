@@ -4,9 +4,7 @@ export const RegionDestination = async (req, res) => {
   try {
     const { regionID } = req.params;
 
-    const regionDestination = await destinationModel
-      .find({ region: regionID })
-      .populate("activities");
+    const regionDestination = await destinationModel.find({ region: regionID }).populate("activities").populate("region");
 
     res.status(200).json({ regionDestination });
   } catch (error) {

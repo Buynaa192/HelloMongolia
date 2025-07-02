@@ -25,9 +25,7 @@ export default function RegionPage() {
     };
 
     const getDestination = async () => {
-      const res = await api.get(
-        `/regions/destinations/${regn?._id || "68592416611c9aae4411aaa2"}`
-      );
+      const res = await api.get(`/regions/destinations/${regn?._id || "68592416611c9aae4411aaa2"}`);
       setDestination(res.data.regionDestination);
     };
 
@@ -75,15 +73,7 @@ export default function RegionPage() {
   return (
     <div className="flex flex-col w-screen h-full gap-4 overflow-hidden text-white">
       <div className="relative w-full h-[800px] overflow-hidden">
-        <video
-          key={regn?.videoUrl}
-          className="object-cover w-full h-full"
-          autoPlay
-          muted
-          loop
-          playsInline
-          src={regn?.videoUrl}
-        />
+        <video key={regn?.videoUrl} className="object-cover w-full h-full" autoPlay muted loop playsInline src={regn?.videoUrl} />
 
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-4 text-center text-white bg-black/30">
           <p className="font-bold text-[60px]">{region.region}</p>
