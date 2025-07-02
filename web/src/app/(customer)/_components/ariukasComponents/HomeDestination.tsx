@@ -112,7 +112,7 @@ export const ShowRegion = ({ videoUrl, regionName, _id, description: regionDetai
 
         <ul className="flex flex-wrap gap-2 justify-center items-center text-white">
           {destinations?.map((dest, idx) => (
-            <React.Fragment key={dest.destinationName}>
+            <React.Fragment key={dest._id}>
               <li
                 onClick={() => setSelectedDestination(dest)}
                 onMouseEnter={() => setHoveredDestination(dest)}
