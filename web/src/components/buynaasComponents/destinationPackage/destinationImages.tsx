@@ -2,83 +2,44 @@
 
 import { DestinationType } from "@/app/_providers/AuthProvider";
 import Image from "next/image";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
-import { useKeenSlider } from "keen-slider/react";
 
 type Props = {
   destination: DestinationType;
 };
 
 export const DestinationHero = ({ destination }: Props) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [sliderRef] = useKeenSlider<HTMLDivElement>({
-    loop: true,
-    mode: "snap",
-  });
-
   const images = destination.destinationImages;
+  const [mainImage, setMainImage] = useState(images[0]);
 
   return (
-    <section className="px-4 md:px-10 py-6 text-white mt-10">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-        <h1 className="text-3xl font-extrabold">{destination.destinationName}</h1>
+    <section className="relative w-full h-[500px] rounded-xl overflow-hidden mt-15 bg-gray-100 ">
+      {mainImage ? (
+        <Image src={mainImage} alt="Main image" fill className="object-cover w-full h-full " />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center bg-gray-300 text-xl">No Image</div>
+      )}
+
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+      <div className="absolute bottom-6 left-6 z-10 text-white space-y-2">
+        <h1 className="text-3xl font-bold">{destination.destinationName}</h1>
+        <div className="flex items-center gap-2 text-sm text-white/90">
+          <span>{destination.region.regionName}, Mongolia</span>
+        </div>
       </div>
 
-      {images.length === 1 && (
-        <div className="relative w-full h-[400px] rounded-xl overflow-hidden">
-          <Image src={images[0]} fill alt="Destination photo" className="object-cover rounded-xl" />
-        </div>
-      )}
-
-      {images.length === 2 && (
-        <div className="grid grid-cols-2 gap-2 h-[400px] rounded-xl overflow-hidden">
+      {images.length > 1 && (
+        <div className="absolute bottom-4 right-6 z-10 flex gap-2">
           {images.map((img, idx) => (
-            <div key={idx} className="relative w-full h-full">
-              <Image src={img} fill alt={`Image ${idx}`} className="object-cover rounded-xl" />
+            <div
+              key={idx}
+              className={`w-12 h-12 relative rounded-md overflow-hidden border-2 ${img === mainImage ? "border-white" : "border-transparent"} cursor-pointer`}
+              onClick={() => setMainImage(img)}
+            >
+              <Image src={img} alt={`thumb-${idx}`} fill className="object-cover" />
             </div>
           ))}
-        </div>
-      )}
-
-      {images.length >= 3 && (
-        <div className="grid grid-cols-4 grid-rows-2 gap-2 h-[400px] overflow-hidden rounded-xl">
-          <div className="row-span-2 col-span-2 relative">
-            <Image src={images[0]} fill alt={destination.destinationName} className="w-full h-full object-cover rounded-xl" />
-          </div>
-
-          {images.slice(1, 5).map((img, index) => {
-            const isLast = index === Math.min(3, images.slice(1).length - 1) && images.length > 4;
-
-            return (
-              <div key={index} className="relative">
-                <Image src={img} fill alt={`image-${index}`} className="w-full h-full object-cover rounded-xl" />
-                {isLast && (
-                  <div className="absolute bottom-2 right-2 z-10">
-                    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                      <DialogTrigger asChild>
-                        <button className="bg-white/80 backdrop-blur-md text-black px-3 py-1 text-sm rounded-md font-semibold hover:bg-white">
-                          Show All Photos
-                        </button>
-                      </DialogTrigger>
-                      <DialogContent className="h-150 p-0 overflow-hidden flex flex-col">
-                        <DialogHeader>
-                          <DialogTitle className="text-lg">All Photos</DialogTitle>
-                        </DialogHeader>
-                        <div ref={sliderRef} className="keen-slider h-full flex">
-                          {images.map((item, idx) => (
-                            <div className="keen-slider__slide flex justify-center items-center" key={idx}>
-                              <Image src={item} alt={`image-${idx}`} fill className="rounded-xl object-cover max-h-[80vh] w-auto" />
-                            </div>
-                          ))}
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  </div>
-                )}
-              </div>
-            );
-          })}
         </div>
       )}
     </section>
