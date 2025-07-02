@@ -10,6 +10,8 @@ import { ImageSlideHead } from "../_components/ImageSlideHeader";
 import { ItineraryContent } from "../_components/ItineraryContent";
 import { Itinerary } from "../_components/Itinerary";
 import { CompanyDetails } from "../_components/companyDetails";
+import { CostOverview } from "../_components/costOverview";
+import { TourBy } from "../_components/TourBy";
 type Params = {
   id: string;
 };
@@ -49,17 +51,21 @@ export default function PackagePage() {
     <>
       <div className="w-full flex items-center flex-col gap-4 bg-transparent text-accent ">
         <ImageSlideHead packageDetail={packageDetail} />
-        <div className="w-[1440px] flex flex-col gap-4">
-          <Itinerary />
-          <div className="w-full border-1 border-[#e4e4e5]"></div>
-          <ItineraryContent packageDetail={packageDetail} />
-          <CompanyDetails packageDetail={packageDetail} />
+        <div className="w-[1440px] flex  gap-4  justify-between">
+          <div className="w-full flex flex-col gap-4">
+            <CompanyDetails packageDetail={packageDetail} />
+            <ItineraryContent packageDetail={packageDetail} />
+          </div>
+          <div className="w-100  flex flex-col gap-3 sticky top-20 z-20 h-fit">
+            <CostOverview packageDetail={packageDetail} />
+            <TourBy packageDetail={packageDetail} />
+          </div>
         </div>
       </div>
 
-      <div className="w-[1440px]">
+      <div className="w-[1440px] mt-10">
         <div
-          className="text-accent text-4xl font-extrabold"
+          className="text-accent text-3xl font-extrabold "
           style={{ fontFamily: "Dancing script" }}
         >
           Destinations in MAP
