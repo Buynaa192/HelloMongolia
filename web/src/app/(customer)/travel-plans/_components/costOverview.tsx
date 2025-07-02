@@ -1,7 +1,7 @@
 import { PackageType } from "@/app/_providers/AuthProvider";
 import { DurationIcon } from "../assets/durationIcon";
-import { StarIcon, StarsIcon } from "lucide-react";
-import { CashIcon } from "../assets/cash";
+import { StarsIcon } from "lucide-react";
+
 import { FaStar } from "react-icons/fa";
 
 type CompanyDetailsProps = {

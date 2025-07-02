@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { Loader } from "lucide-react";
 import { ImageSlideHead } from "../_components/ImageSlideHeader";
 import { ItineraryContent } from "../_components/ItineraryContent";
-import { Itinerary } from "../_components/Itinerary";
 import { CompanyDetails } from "../_components/companyDetails";
 import { CostOverview } from "../_components/costOverview";
 import { TourBy } from "../_components/TourBy";

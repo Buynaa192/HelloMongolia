@@ -1,5 +1,4 @@
 import { PackageType } from "@/app/_providers/AuthProvider";
-import { StarIcon } from "lucide-react";
 import { FaStar } from "react-icons/fa";
 
 type CompanyDetailsProps = {

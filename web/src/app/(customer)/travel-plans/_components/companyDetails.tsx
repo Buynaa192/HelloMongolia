@@ -1,9 +1,6 @@
 "user client";
 import { PackageType } from "@/app/_providers/AuthProvider";
-import { DurationIcon } from "../assets/durationIcon";
-import { StarIcon } from "../assets/star";
-import { CashIcon } from "../assets/cash";
-import { StarsIcon } from "lucide-react";
+
 type CompanyDetailsProps = {
   packageDetail: PackageType;
 };
