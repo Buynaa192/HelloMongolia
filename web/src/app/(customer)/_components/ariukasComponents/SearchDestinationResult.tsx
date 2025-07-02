@@ -34,7 +34,7 @@ export const SearchDestination = ({ destinations }: SearchSectionType) => {
           <div className="flex-1 overflow-y-auto h-full rounded-md pl-5 pr-5 flex flex-col gap-5">
             {destinations.map((item) => (
               <Link
-                href={`explore-destinations/${item._id}`}
+                href={`explore-destinations/${item.region}/${item._id}`}
                 key={item._id}
                 className=" w-full flex relative "
               >
