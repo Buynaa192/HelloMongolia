@@ -69,7 +69,9 @@ export const DestinationSelector = ({
     setModalOpen(false);
     loadDestinations();
   };
-
+  const selectedDestination = useMemo(() => {
+    return destinations.find((d) => d._id === selectedId);
+  }, [selectedId, destinations]);
   return (
     <>
       <FormItem>
@@ -82,6 +84,15 @@ export const DestinationSelector = ({
           className="w-full mb-4 p-2 border rounded"
         />
       </FormItem>
+
+      {selectedDestination && (
+        <div className="mb-4 text-sm text-gray-600">
+          ✅ Selected destination:{" "}
+          <span className="font-medium text-black">
+            {selectedDestination.destinationName}
+          </span>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {visibleDestinations.map((dest) => (

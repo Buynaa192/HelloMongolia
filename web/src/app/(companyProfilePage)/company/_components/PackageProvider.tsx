@@ -28,7 +28,11 @@ type PackageContextProps = {
     data: DataType,
     duration: number
   ) => Promise<CreatePackageType>;
-  updatePackage: (packageId: string, data: DataType) => Promise<void>;
+  updatePackage: (
+    packageId: string,
+    data: DataType,
+    duration: number
+  ) => Promise<void>;
   deletePackage: (
     packageId: string,
     setLoading: (loading: boolean) => void
@@ -128,7 +132,6 @@ export function PackageProvider({ children }: { children: ReactNode }) {
         availableUntil: availableUntilDate,
         cost: costNumber,
         tripType: data.tripType,
-        rating: 0,
       });
 
       toast.success("Package created successfully!");
@@ -182,7 +185,11 @@ export function PackageProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     }
   };
-  const updatePackage = async (packageId: string, data: DataType) => {
+  const updatePackage = async (
+    packageId: string,
+    data: DataType,
+    duration: number
+  ) => {
     try {
       setLoading(true);
 
@@ -205,6 +212,7 @@ export function PackageProvider({ children }: { children: ReactNode }) {
         availableUntil: availableUntilDate,
         cost: costNumber,
         tripType: data.tripType,
+        duration: duration,
       });
 
       toast.success("Package updated successfully!");
