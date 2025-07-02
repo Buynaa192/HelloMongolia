@@ -28,7 +28,6 @@ export default function DestinationDetailPage() {
 
   const router = useRouter();
 
-  // Fetch activities once
   useEffect(() => {
     (async () => {
       try {
@@ -40,7 +39,6 @@ export default function DestinationDetailPage() {
     })();
   }, []);
 
-  // Fetch destination by ID
   useEffect(() => {
     if (!destinationId) return;
     (async () => {
@@ -65,7 +63,6 @@ export default function DestinationDetailPage() {
     })();
   }, [destinationId]);
 
-  // Save edits
   const handleSave = async () => {
     try {
       let uploadedUrls: string[] = [];
@@ -108,14 +105,12 @@ export default function DestinationDetailPage() {
     }
   };
 
-  // Toggle activity selection
   const toggleActivity = (id: string) => {
     setSelectedActivities((prev) =>
       prev.includes(id) ? prev.filter((a) => a !== id) : [...prev, id]
     );
   };
 
-  // Loading / Error states
   if (loading) return <div className="text-center p-8">Loading...</div>;
   if (!destination)
     return (
@@ -144,7 +139,6 @@ export default function DestinationDetailPage() {
             {destination.destinationName}
           </CardTitle>
 
-          {/* Description */}
           {isEditing ? (
             <Textarea
               value={desc}
@@ -158,7 +152,6 @@ export default function DestinationDetailPage() {
             </p>
           )}
 
-          {/* Editable Weather */}
           {isEditing && editableWeather.length > 0 && (
             <div className="w-full flex flex-col gap-4 mb-4">
               <p className="font-semibold">Weather (°F):</p>
@@ -223,7 +216,6 @@ export default function DestinationDetailPage() {
             )}
           </div>
 
-          {/* Buttons */}
           <div className="flex justify-end gap-2">
             {isEditing ? (
               <>
