@@ -1,5 +1,3 @@
-"use client";
-
 import { Toaster } from "sonner";
 import { AuthProvider } from "./_providers/AuthProvider";
 import "./globals.css";
