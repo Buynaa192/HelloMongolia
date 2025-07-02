@@ -85,7 +85,7 @@ export default function DestinatioExplore() {
           muted
           loop
           playsInline
-          src="https://res.cloudinary.com/df60cobe2/video/upload/v1750321530/hangaivideo_ys3x25.mp4"
+          src="https://res.cloudinary.com/df60cobe2/video/upload/v1751449018/Screen_Recording_2025-07-02_at_17.25.23_sls3qa.mov"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-white bg-black/30  px-4 text-center">
           <p className="font-bold text-[60px]">Wander far. Discover more.</p>
