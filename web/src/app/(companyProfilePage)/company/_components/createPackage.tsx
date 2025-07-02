@@ -55,6 +55,7 @@ export const CreatePackage = () => {
   const [prevProfileImage, setPrevProfileImage] = useState("");
   const [DialogOpen, setDialogOpen] = useState(false);
   const [createdPackageId, setCreatedPackageId] = useState<string | null>(null);
+  const [error, setError] = useState("");
   const router = useRouter();
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -74,7 +75,12 @@ export const CreatePackage = () => {
       console.error("Company ID not available");
       return;
     }
-
+    if (items.length === 0) {
+      setError(
+        "Please add at least one item to the package before submitting."
+      );
+      return;
+    }
     const duration = items.length;
 
     const createdPackage: CreatePackageType = await addPackage(
@@ -114,34 +120,34 @@ export const CreatePackage = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="bg-white px-6 md:px-12 py-10 shadow-xl rounded-2xl space-y-8 w-full">
             <p className="font-bold text-2xl">Package Details</p>
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Package Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="insert package name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="About the package..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Package Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="insert package name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="About the package..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -252,7 +258,7 @@ export const CreatePackage = () => {
                 </FormItem>
               )}
             />
-            <CreatePackageItemForm />
+            <CreatePackageItemForm error={error} setError={setError} />
             <div className="flex justify-end pt-6">
               <Button
                 type="submit"

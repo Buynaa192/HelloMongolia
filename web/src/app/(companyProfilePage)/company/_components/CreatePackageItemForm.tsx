@@ -13,8 +13,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PlusSquareIcon } from "lucide-react";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { ItemCard } from "../CreatePackagePage/_components/ItemCatd";
-
-export const CreatePackageItemForm = () => {
+type Props = {
+  error: string;
+  setError: (value: string) => void;
+};
+export const CreatePackageItemForm = ({ error, setError }: Props) => {
   const { createPackageItemFun, loading, items, setItems } =
     usePackageContext();
 
@@ -53,6 +56,7 @@ export const CreatePackageItemForm = () => {
     );
     setItems((prev) => [...prev, itemData.package]);
     setOrder((prev) => prev + 1);
+    setError("");
     form.reset();
     setPrevProfileImage("");
     setIsOpen(false);
@@ -92,6 +96,7 @@ export const CreatePackageItemForm = () => {
             <div className="flex justify-center items-center col-span-full">
               <div className="w-[30%] flex flex-col item-center  justify-center gap-4 p-4">
                 <p className="text-xl font-medium">No itinerary items yet</p>
+                <p className="font-bold text-sm text-red-500 ">{error}</p>
                 <Dialog open={isOpen} onOpenChange={setIsOpen}>
                   <DialogTrigger asChild>
                     <Button type="button" onClick={() => setIsclicked(true)}>
