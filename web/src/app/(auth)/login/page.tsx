@@ -5,14 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormControl,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormField, FormItem, FormControl, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/app/_providers/AuthProvider";
@@ -43,14 +36,10 @@ export default function LoginPage() {
       const company = await signIn(values.email, values.password);
       toast.success("Logged in successfully!");
 
-      const hasProfile =
-        !!company?.phoneNumber ||
-        !!company?.AvatarImage?.trim() ||
-        !!company?.background?.trim() ||
-        !!company?.name?.trim();
+      const hasProfile = !!company?.phoneNumber || !!company?.AvatarImage?.trim() || !!company?.background?.trim() || !!company?.name?.trim();
 
       setTimeout(() => {
-        router.push(hasProfile ? "/company" : "/set-up-profile");
+        router.push(hasProfile ? "/company/AllPackages" : "/set-up-profile");
       }, 1000);
     } catch (err) {
       console.error(err);
@@ -104,17 +93,12 @@ export default function LoginPage() {
             <div>
               <p>
                 Dont have an account ?
-                <Link
-                  href={"/sign-up"}
-                  className="text-blue-500 underline underline-offset-1">
+                <Link href={"/sign-up"} className="text-blue-500 underline underline-offset-1">
                   Sign up
                 </Link>
               </p>
             </div>
-            <Button
-              type="submit"
-              className="w-full bg-black text-white"
-              disabled={form.formState.isSubmitting}>
+            <Button type="submit" className="w-full bg-black text-white" disabled={form.formState.isSubmitting}>
               {form.formState.isSubmitting ? "Logging in..." : "Login"}
             </Button>
           </form>
