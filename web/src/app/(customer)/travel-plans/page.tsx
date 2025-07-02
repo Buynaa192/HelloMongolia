@@ -211,13 +211,8 @@ export default function PackagesExplore() {
           selectedActivities={selectedActivity}
           setSelectedActivities={setSelectedActivity}
         />
-        {isLoading ? (
-          <div className="w-full flex ">
-            <Loader color="white" />
-          </div>
-        ) : (
-          <FilteredPackages packages={filteredPackages} />
-        )}{" "}
+
+        <FilteredPackages packages={filteredPackages} isLoading={isLoading} />
       </div>
     </div>
   );
