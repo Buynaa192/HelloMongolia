@@ -1,22 +1,27 @@
-import React from "react";
-import { PackageItemType, PackageType } from "@/app/_providers/AuthProvider";
+import React, { useState } from "react";
+import { PackageItemType } from "@/app/_providers/AuthProvider";
 import { MapPin, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePackageContext } from "../../../_components/PackageProvider";
 import { UpdatePackageItemsForm } from "./UpdatePackageItem";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { ConfirmDeleteDialog } from "./ConfirmDeleteDialog";
 
 type Props = {
   item: PackageItemType;
   index: number;
+  getPackage: () => Promise<void>;
 };
 
-export const PackageItemCard = ({ item, index }: Props) => {
+export const PackageItemCard = ({ item, index, getPackage }: Props) => {
   const { deletePackageItem } = usePackageContext();
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
 
   const handleDelete = async () => {
     try {
       await deletePackageItem(item._id);
+      getPackage();
     } catch (err) {
       console.error("Failed to delete package item:", err);
     }
@@ -60,22 +65,35 @@ export const PackageItemCard = ({ item, index }: Props) => {
             {item.accommodation?.hotelName || "No accommodation"}
           </p>
         </div>
+
         <div className="flex flex-row justify-between">
           <button
-            onClick={handleDelete}
+            onClick={() => setDeleteOpen(true)}
             className="p-1 rounded hover:bg-red-100 transition">
             <Trash className="text-red-500 w-6 h-6" />
           </button>
-          <Dialog>
+
+          <Dialog open={editOpen} onOpenChange={setEditOpen}>
             <DialogTrigger asChild>
-              <Button className="text-white bg-yellow-500  rounded hover:bg-yellow-700 transition ">
+              <Button className="text-white bg-yellow-500 rounded hover:bg-yellow-700 transition">
                 Edit
               </Button>
             </DialogTrigger>
-            <UpdatePackageItemsForm packageItem={item} />
+            <UpdatePackageItemsForm
+              packageItem={item}
+              getPackage={getPackage}
+              setIsOpen={setEditOpen}
+            />
           </Dialog>
         </div>
       </div>
+
+      <ConfirmDeleteDialog
+        open={deleteOpen}
+        setOpen={setDeleteOpen}
+        title="Are you sure you want to delete this day?"
+        onConfirm={handleDelete}
+      />
     </div>
   );
 };

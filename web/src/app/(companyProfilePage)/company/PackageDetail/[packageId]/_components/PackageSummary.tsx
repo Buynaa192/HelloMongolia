@@ -63,7 +63,7 @@ export function PackageSummary({ packageData }: Props) {
                 Update
               </Button>
             </DialogTrigger>
-            <UpdatePackageForm packageData={packageData} />
+            {/* <UpdatePackageForm packageData={packageData} /> */}
           </Dialog>
 
           <Dialog>

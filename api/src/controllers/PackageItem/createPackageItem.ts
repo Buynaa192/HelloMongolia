@@ -1,4 +1,5 @@
 import { packageItemModel } from "../../models/packageItem.model";
+
 export const createPackageItemController = async (req, res) => {
   try {
     const {
@@ -21,10 +22,15 @@ export const createPackageItemController = async (req, res) => {
       createdAt: new Date(),
       updatedAt: new Date(),
     });
+    const populatedPackageItem = await packageItemModel
+      .findById(newPackageItem._id)
+      .populate("destinationId")
+      .populate("activity")
+      .populate("accommodation");
 
     return res
       .status(201)
-      .json({ message: "successfully created", package: newPackageItem });
+      .json({ message: "successfully created", package: populatedPackageItem });
   } catch (error) {
     console.error(error);
     return res

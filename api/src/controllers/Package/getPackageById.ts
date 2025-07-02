@@ -18,6 +18,10 @@ export const getPackageById: RequestHandler = async (req, res) => {
             path: "destinationId",
             model: "destination",
           },
+          {
+            path: "accommodation",
+            model: "accommodation",
+          },
         ],
       })
       .populate("companyId");

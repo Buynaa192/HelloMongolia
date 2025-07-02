@@ -4,36 +4,36 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { api } from "@/axios";
+import { ActivityType, PackageItemType } from "@/app/_providers/AuthProvider";
 import {
-  ActivityType,
-  PackageItemType,
-  PackageType,
-} from "@/app/_providers/AuthProvider";
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { PlusSquareIcon } from "lucide-react";
-import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
-import { usePackageContext } from "../../../_components/PackageProvider";
+  uploadImage
+} from "../../../_components/PackageProvider";
 import { ItemFormType } from "./itemsSchema";
-import {
-  createPackageItemType,
-  itemSchema,
-} from "../../../_components/itemSchema";
-import { FormLayout } from "../../../_components/FormLayout";
 import { DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { ItemFormLayout } from "./ItemFormlayout";
+import { toast } from "sonner";
+import { z } from "zod";
 type Props = {
   packageItem: PackageItemType;
+  getPackage: () => Promise<void>;
+  setIsOpen: (value: boolean) => void;
 };
-export const UpdatePackageItemsForm = ({ packageItem }: Props) => {
-  const { createPackageItemFun, loading, items, setItems } =
-    usePackageContext();
-
+const itemSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  image: z.any().optional(),
+  destinationId: z.string().min(1),
+  accommodation: z.string().min(1),
+  activity: z.array(z.string()).min(1),
+});
+export const UpdatePackageItemsForm = ({
+  packageItem,
+  getPackage,
+  setIsOpen,
+}: Props) => {
   const [activity, setActivity] = useState<ActivityType[]>();
   const [prevProfileImage, setPrevProfileImage] = useState("");
-  const [order, setOrder] = useState(1);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isclicked, setIsclicked] = useState(false);
+  const [loading, setLoading] = useState(false);
   const form = useForm<ItemFormType>({
     resolver: zodResolver(itemSchema),
   });
@@ -44,7 +44,7 @@ export const UpdatePackageItemsForm = ({ packageItem }: Props) => {
         description: packageItem.description,
         destinationId: packageItem.destinationId?._id,
         accommodation: packageItem.accommodation?._id,
-        activity: [],
+        activity: packageItem.activity?.map((a) => a._id) || [],
       });
       setPrevProfileImage(packageItem.image);
     }
@@ -63,28 +63,45 @@ export const UpdatePackageItemsForm = ({ packageItem }: Props) => {
   }, []);
 
   const onSubmit = async (data: ItemFormType) => {
-    const itemWithOrder = { ...data, order };
-    const itemData: createPackageItemType = await createPackageItemFun(
-      itemWithOrder
-    );
-    setItems((prev) => [...prev, itemData.package]);
-    setOrder((prev) => prev + 1);
-    form.reset();
-    setPrevProfileImage("");
-    setIsOpen(false);
+    setLoading(true);
+    const coverPhotoUrl =
+      typeof data.image === "string"
+        ? data.image
+        : data.image
+        ? await uploadImage(data.image)
+        : "";
+    try {
+      await api.put(`packageItem/${packageItem._id}`, {
+        image: coverPhotoUrl,
+        title: data.title,
+        destinationId: data.destinationId,
+        description: data.description,
+        activity: data.activity,
+        accommodation: data.accommodation,
+      });
+
+      toast.success("Package item updated successfully");
+      getPackage();
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Update error:", error);
+      toast.error("Failed to update package item");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <DialogContent className="w-full bg-white max-h-screen overflow-y-auto rounded-xl">
-      <DialogTitle>Day {order} Details </DialogTitle>
+      <DialogTitle>Day {packageItem.order} Details </DialogTitle>
 
-      <FormLayout
+      <ItemFormLayout
         form={form}
         onSubmit={onSubmit}
         prevProfileImage={prevProfileImage}
         setPrevProfileImage={setPrevProfileImage}
         activityList={activity}
-        order={order}
+        order={packageItem.order}
         loading={loading}
       />
     </DialogContent>

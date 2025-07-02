@@ -10,19 +10,21 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Loader, Camera } from "lucide-react";
+
 import { ActivityType } from "@/app/_providers/AuthProvider";
+
 import { UseFormReturn } from "react-hook-form";
 import { ItemFormType } from "../../../_components/itemSchema";
 import { DestinationSelector } from "../../../_components/DestinationSelector";
 import { AccommodationSelector } from "../../../_components/AccommodationSelector";
-
+import { ActivitySelector } from "../../../CreatePackagePage/_components/ActivitySelector";
 type Props = {
   form: UseFormReturn<ItemFormType>;
-  onSubmit: (data: ItemFormType) => void;
+  onSubmit: (data: ItemFormType) => Promise<void>;
   prevProfileImage: string;
   setPrevProfileImage: (url: string) => void;
   activityList?: ActivityType[];
-  order?: number;
+  order: number;
   loading: boolean;
 };
 
@@ -32,42 +34,42 @@ export const ItemFormLayout = ({
   prevProfileImage,
   setPrevProfileImage,
   activityList,
-  order,
   loading,
 }: Props) => {
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="bg-white px-6 md:px-12 py-10 shadow-xl rounded-2xl space-y-8 w-full">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        className="bg-white px-6  py-10 shadow-xl rounded-2xl space-y-8 w-full">
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Textarea {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="image"
@@ -136,55 +138,35 @@ export const ItemFormLayout = ({
             <FormItem>
               <FormLabel>Activities</FormLabel>
               <FormControl>
-                <div className="flex flex-wrap gap-4">
-                  {activityList?.map((act) => (
-                    <label
-                      key={act._id}
-                      className={`flex items-center gap-2 border p-2 rounded-lg cursor-pointer transition ${
-                        field.value.includes(act._id)
-                          ? "bg-blue-100 border-blue-500"
-                          : "border-gray-300"
-                      }`}>
-                      <input
-                        type="checkbox"
-                        checked={field.value.includes(act._id)}
-                        onChange={(e) => {
-                          const checked = e.target.checked;
-                          const newValue = checked
-                            ? [...field.value, act._id]
-                            : field.value.filter((id) => id !== act._id);
-                          field.onChange(newValue);
-                        }}
-                      />
-                      <span>
-                        {act.emoji} {act.activityName}
-                      </span>
-                    </label>
-                  ))}
-                </div>
+                <ActivitySelector
+                  activityList={activityList || []}
+                  selectedIds={field.value}
+                  onChange={field.onChange}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button
-          type="submit"
-          className={`w-full md:w-auto flex justify-center items-center gap-2 px-6 py-3 rounded-md text-white ${
-            loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"
-          }`}
-          disabled={loading}>
-          {loading ? (
-            <>
-              <Loader className="animate-spin" size={18} />
-              <span>{order ? "Adding..." : "Updating..."}</span>
-            </>
-          ) : order ? (
-            `Add day${order}`
-          ) : (
-            "Update"
-          )}
-        </Button>
+        <div className="flex justify-end pt-6">
+          <Button
+            type="button"
+            onClick={form.handleSubmit(onSubmit)}
+            className={`w-full md:w-auto flex justify-center items-center gap-2 px-6 py-3 rounded-md text-white ${
+              loading ? "bg-green-300" : "bg-green-600 hover:bg-green-700"
+            }`}
+            disabled={loading}>
+            {loading ? (
+              <>
+                <Loader className="animate-spin" size={18} />
+                <span>saving...</span>
+              </>
+            ) : (
+              "Save changes"
+            )}
+          </Button>
+        </div>
       </form>
     </Form>
   );

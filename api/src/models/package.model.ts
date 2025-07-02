@@ -56,7 +56,8 @@ const packageSchema = new Schema({
   },
   rating: {
     type: Number,
-    required: true,
+    required: false,
+    default: 0,
     min: 0,
     max: 5,
   },

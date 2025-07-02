@@ -21,14 +21,22 @@ import { PackageType } from "@/app/_providers/AuthProvider";
 import { usePackageContext } from "../../../_components/PackageProvider";
 import { api } from "@/axios";
 import { useRouter } from "next/navigation";
-import { UpdatePackageItemsForm } from "./UpdatePackageItem";
 import { PackageItemCard } from "./packageItemCard";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { AddPackageItemForm } from "./AddNewItem";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 const schema = z.object({
   coverPhoto: z.any().optional(),
   name: z.string().min(1, "Name is required"),
   description: z.string().min(1, "Description is required"),
-  duration: z.string().min(1),
   cost: z.number().min(1),
   tripType: z.string().min(1),
   availableFrom: z.string(),
@@ -43,8 +51,10 @@ export type Props = {
 
 export const UpdatePackageForm = ({ packageId }: Props) => {
   const [packge, setPackge] = useState<PackageType>();
-  const [prevProfileImage, setPrevProfileImage] = useState(packge?.coverPhoto);
+  const [prevProfileImage, setPrevProfileImage] = useState("");
   const { updatePackage, loading } = usePackageContext();
+  const [isOpen, setIsOpen] = useState(false);
+  const duration = packge?.packageItem ? packge.packageItem.length : 0;
   const router = useRouter();
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -52,27 +62,36 @@ export const UpdatePackageForm = ({ packageId }: Props) => {
     defaultValues: {
       name: "",
       description: "",
-      duration: "",
       cost: 0,
-      tripType: "",
-      // availableFrom:
-      //   new Date(packge?.availableFrom).toISOString().split("T")[0] ?? "",
-      // availableUntil:
-      //   new Date(packge?.availableUntil).toISOString().split("T")[0] ?? "",
+      tripType: "Adventure",
+      availableFrom: "",
+      availableUntil: "",
+      coverPhoto: undefined,
     },
   });
 
   const onSubmit = async (data: FormData) => {
-    // await updatePackage(packageData._id, data);
-    // if (onSuccess) onSuccess();
+    await updatePackage(packageId, data, duration);
+  };
+  const getPackage = async () => {
+    try {
+      const res = await api.get(`/package?packageId=${packageId}`);
+      console.log(res.data.packages[0]);
+      if (res) {
+        setPackge(res.data.packages[0]);
+      }
+    } catch (error) {
+      console.error("Failed to fetch package:", error);
+    }
   };
   useEffect(() => {
     if (packge) {
+      setPrevProfileImage(packge.coverPhoto);
+
       form.reset({
         coverPhoto: packge.coverPhoto,
         name: packge.title ?? "",
         description: packge.description ?? "",
-        duration: packge.duration ?? "",
         cost: packge.cost ?? 0,
         tripType: packge.tripType ?? "",
         availableFrom: packge.availableFrom
@@ -82,22 +101,12 @@ export const UpdatePackageForm = ({ packageId }: Props) => {
           ? new Date(packge.availableUntil).toISOString().split("T")[0]
           : "",
       });
-      setPrevProfileImage(packge.coverPhoto);
     }
   }, [packge]);
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await api.get(`/package?packageId=${packageId}`);
-        console.log(res.data.packages[0]);
-        if (res) {
-          setPackge(res.data.packages[0]);
-        }
-      } catch (error) {
-        console.error("Failed to fetch package:", error);
-      }
-    })();
+    getPackage();
   }, []);
+  console.log("photo", prevProfileImage);
   return (
     <div className="w-full max-w-screen-lg mx-auto flex flex-col  gap-6 item-center justify-center">
       <div className=" gap-6">
@@ -111,6 +120,7 @@ export const UpdatePackageForm = ({ packageId }: Props) => {
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-6 bg-white p-6 rounded-xl shadow-lg w-full">
+            <p className="font-medium text-xl">Update Package Details</p>
             <FormField
               control={form.control}
               name="coverPhoto"
@@ -119,11 +129,16 @@ export const UpdatePackageForm = ({ packageId }: Props) => {
                   <FormLabel>Cover Photo</FormLabel>
                   <FormControl>
                     <div className="relative w-full h-64 border border-dashed overflow-hidden rounded-xl">
-                      {prevProfileImage && (
+                      {prevProfileImage ? (
                         <img
                           src={prevProfileImage}
                           className="object-cover w-full h-full"
+                          alt="Cover Photo"
                         />
+                      ) : (
+                        <div className="flex items-center justify-center h-full text-gray-400">
+                          No image
+                        </div>
                       )}
                       <label className="absolute inset-0 flex items-center justify-center cursor-pointer bg-black/10 hover:bg-black/20 transition">
                         <Camera />
@@ -176,19 +191,6 @@ export const UpdatePackageForm = ({ packageId }: Props) => {
             />
 
             <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="duration"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Duration</FormLabel>
-                    <FormControl>
-                      <Input placeholder="3 days" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="cost"
@@ -253,23 +255,61 @@ export const UpdatePackageForm = ({ packageId }: Props) => {
                 )}
               />
             </div>
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {packge?.packageItem.map((item, index) => (
-                <PackageItemCard key={item._id} item={item} index={index} />
-              ))}
-            </div>
-            {/* {packge && <UpdatePackageItemsForm packge={packge} />} */}
+            <Card className="w-full">
+              <CardHeader className="flex flex-row justify-between">
+                <div>
+                  <CardTitle>Update your daily itinerary details</CardTitle>
+                  <CardDescription>
+                    Edit the destinations, activities, and notes for each day of
+                    your trip.
+                  </CardDescription>
+                </div>
+                <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                  <DialogTrigger asChild>
+                    <Button>Add Day</Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-3xl w-full max-h-screen overflow-y-auto bg-white rounded-xl">
+                    <DialogTitle>
+                      Day{" "}
+                      {packge?.packageItem.length
+                        ? packge?.packageItem.length + 1
+                        : 1}
+                    </DialogTitle>
+
+                    <AddPackageItemForm
+                      packageId={packageId}
+                      getPackage={getPackage}
+                      order={
+                        packge?.packageItem.length
+                          ? packge?.packageItem.length + 1
+                          : 1
+                      }
+                      setIsOpen={setIsOpen}
+                    />
+                  </DialogContent>
+                </Dialog>
+              </CardHeader>
+              <CardContent>
+                <div className="w-full grid grid-cols-3 gap-4">
+                  {packge?.packageItem.map((item, index) => (
+                    <PackageItemCard
+                      key={item._id}
+                      item={item}
+                      index={index}
+                      getPackage={getPackage}
+                    />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
             <div className="flex justify-between">
               <Button
+                disabled={loading}
                 type="submit"
                 className={`text-white px-4 py-2 rounded hover:bg-yellow-700 transition ${
                   loading ? "bg-yellow-200" : "bg-yellow-500"
                 }`}>
-                {loading ? (
-                  <Loader className="animate-spin" />
-                ) : (
-                  "Update Package"
-                )}
+                {loading ? <Loader className="animate-spin" /> : "Save changes"}
               </Button>
             </div>
           </form>
