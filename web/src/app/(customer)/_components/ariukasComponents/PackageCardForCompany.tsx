@@ -95,7 +95,7 @@ export const FinalPackageCard: React.FC<Props> = ({ pkg }) => {
               className="h-6 rounded-[10px] w-6"
             />
 
-            {pkg.companyId.email}
+            {pkg.companyId.name}
           </div>
         </div>
       </div>
